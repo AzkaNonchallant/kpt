@@ -140,7 +140,7 @@
                                     </button>
                                   <?php } ?>
                                   <a
-                                    href="javascript:void(0)"
+                                    target="_blank"
                                       class="btn btn-success btn-square text-light btn-sm"
                                       onclick="window.open(`<?= base_url() ?>gudang/gudang_barang/barang_keluar/barang_keluar/pdf_surat_jalan/<?= str_replace('/', '--', $k['kode_tf_out']) ?>`, 'surat_jalan', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes'); ">
                                       <i class="feather icon-file"></i>Cetak PDF

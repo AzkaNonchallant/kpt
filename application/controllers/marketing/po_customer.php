@@ -122,35 +122,87 @@ class po_customer extends MY_Controller {
         }
     }
 
-    public function pdf_po_customer()
-    {
-        $mpdf = new \Mpdf\Mpdf([
-            'tempDir' => FCPATH . 'assets/tmp',
-        ]);
+    // public function pdf_po_customer()
+    // {
+    //     $mpdf = new \Mpdf\Mpdf([
+    //         'tempDir' => FCPATH . 'assets/tmp',
+    //     ]);
 
-        $tgl = $this->input->get('date_from');
-        $tgl2 = $this->input->get('date_until');
-        $nama_barang = $this->input->get('nama_barang');
-        $nama_customer = $this->input->get('nama_customer');
+    //     $tgl = $this->input->get('date_from');
+    //     $tgl2 = $this->input->get('date_until');
+    //     $nama_barang = $this->input->get('nama_barang');
+    //     $nama_customer = $this->input->get('nama_customer');
 
-		$data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
-        $data['res_barang'] = $this->M_master_barang->get()->result_array();
-        $data['res_customer'] = $this->M_master_customer->get()->result_array();
-        $data['res_user'] = $this->M_users->get()->result_array();
+	// 	$data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
+    //     $data['res_barang'] = $this->M_master_barang->get()->result_array();
+    //     $data['res_customer'] = $this->M_master_customer->get()->result_array();
+    //     $data['res_user'] = $this->M_users->get()->result_array();
 
-        $data['tgl'] = $tgl;
-        $data['tgl2'] = $tgl2;
-        $data['nama_barang'] = $nama_barang;
-        $data['nama_customer'] = $nama_customer;
+    //     $data['tgl'] = $tgl;
+    //     $data['tgl2'] = $tgl2;
+    //     $data['nama_barang'] = $nama_barang;
+    //     $data['nama_customer'] = $nama_customer;
 
 
-        $d = $this->load->view('content/marketing/page_po_customer', $data, TRUE);
-        ob_clean();
-        header('Content-Type: application/pdf');
-        $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-        $mpdf->setFooter('Halaman {PAGENO}');
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/marketing/page_po_customer', $data, TRUE);
+    //     ob_clean();
+    //     header('Content-Type: application/pdf');
+    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
+    //     $mpdf->setFooter('Halaman {PAGENO}');
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
+
+public function pdf_po_customer()
+{
+    // === 1. Setup Dompdf options ===
+    $options = new \Dompdf\Options();
+    $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+    $options->set('isHtml5ParserEnabled', false);
+    $options->set('defaultFont', 'Helvetica');
+
+    $dompdf = new \Dompdf\Dompdf($options);
+
+    // === 2. Ambil input filter ===
+    $tgl = $this->input->get('date_from');
+    $tgl2 = $this->input->get('date_until');
+    $nama_barang = $this->input->get('nama_barang');
+    $nama_customer = $this->input->get('nama_customer');
+
+    // === 3. Ambil data dari model ===
+    $data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
+    $data['res_barang'] = $this->M_master_barang->get()->result_array();
+    $data['res_customer'] = $this->M_master_customer->get()->result_array();
+    $data['res_user'] = $this->M_users->get()->result_array();
+
+    $data['tgl'] = $tgl;
+    $data['tgl2'] = $tgl2;
+    $data['nama_barang'] = $nama_barang;
+    $data['nama_customer'] = $nama_customer;
+
+    // === 4. Load view HTML ===
+    $html = $this->load->view('content/marketing/page_po_customer', $data, TRUE);
+
+    // === 5. Set ukuran kertas ===
+    $dompdf->setPaper('A4', 'portrait');
+
+    // === 6. Render ===
+    $dompdf->loadHtml($html);
+    $dompdf->render();
+
+    // === 7. Tambah footer nomor halaman ===
+    $canvas = $dompdf->getCanvas();
+    $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+        $text = "Halaman $pageNumber dari $pageCount";
+        $font = $fontMetrics->getFont("Helvetica", "normal");
+        $size = 9;
+        $width = $fontMetrics->getTextWidth($text, $font, $size);
+        $canvas->text(550 - $width, 820, $text, $font, $size);
+    });
+
+    // === 8. Output ke browser ===
+    $dompdf->stream("Laporan_PO_Customer.pdf", ["Attachment" => false]);
+}
+
 
 }
