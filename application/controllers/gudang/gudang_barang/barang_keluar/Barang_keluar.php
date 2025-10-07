@@ -1,4 +1,7 @@
 <?php
+
+use Mpdf\Mpdf;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
 
@@ -192,29 +195,89 @@ class Barang_keluar extends MY_Controller {
 
     // METHOD TEST MPDF
     
+//     public function pdf_surat_jalan($no_sj = null)
+// {
+//     // Matikan output buffering default CI
+    
+    
+//     $kode_tf_out = str_replace("--", "/", $no_sj);
+
+//     try {
+//         $options = new \Dompdf\Options();
+//         $options->set('isRemoteEnabled', false); // pakai file lokal aja
+//         $options->set('isHtml5ParserEnabled', false);
+//         $options->set('defaultFont', 'Helvetica');
+
+//         $dompdf = new \Dompdf\Dompdf($options);
+
+//         $data['row'] = $this->M_barang_keluar->ambil_surat_jalan($kode_tf_out)->row_array();
+//         $data['detail'] = $this->M_barang_keluar->data_barang_keluar($kode_tf_out)->result_array();
+//         // echo json_encode($data['detail']);
+//         $html = $this->load->view('laporan/barang_keluar/pdf_surat_jalan_2', $data, TRUE);
+
+//         // Langsung output tanpa buffer
+//         $dompdf->loadHtml($html);
+//         $dompdf->setPaper('A4', 'portrait');
+//         $dompdf->render();
+//         $dompdf->stream("Surat_Jalan_$no_sj.pdf", array("Attachment" => false)); // false = preview di browser
+        
+//     } catch (\Mpdf\MpdfException $e) {
+//         die('Error generating PDF: ' . $e->getMessage());
+//     }
+//     exit;
+// }
 
 
-    public function pdf_surat_jalan($no_sj = null)
-    {
-        $kode_tf_out = str_replace("--", "/", $no_sj);
+public function pdf_surat_jalan($no_sj = null)
+{
+    // Bersihkan output buffer CodeIgniter (mencegah duplikasi data / error header)
+    if (ob_get_length()) ob_end_clean();
 
-        $mpdf = new \Mpdf\Mpdf([
-            'tempDir' => FCPATH . 'assets/tmp',
-        ]);
+    $kode_tf_out = str_replace("--", "/", $no_sj);
 
+    try {
+        // === 1️⃣ Setting optimal Dompdf ===
+        $options = new \Dompdf\Options();
+        $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 90);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+
+        // === 2️⃣ Ambil data dari model ===
         $data['row'] = $this->M_barang_keluar->ambil_surat_jalan($kode_tf_out)->row_array();
         $data['detail'] = $this->M_barang_keluar->data_barang_keluar($kode_tf_out)->result_array();
-
-        $html = $this->load->view('laporan/barang_keluar/pdf_surat_jalan', $data, TRUE);
-
-        // 🧹 bersihkan semua output buffer biar PDF tidak korup
-        ob_clean();
-        header('Content-Type: application/pdf');
-        
-        $mpdf->AddPage("P", "", "", "", "", "15", "15", "5", "15");
-        $mpdf->WriteHTML($html);
-        $mpdf->Output('Surat_Jalan.pdf', 'I'); // 'I' = tampil di browser
-        exit;
+        // echo json_encode($data['detail']);
+        // === 3️⃣ Load HTML View ===
+        $html = $this->load->view('laporan/barang_keluar/pdf_surat_jalan_2', $data, TRUE);
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'portrait');
+    // if (file_exists($cache)) {
+    //     readfile($cache);
+    //     exit;
+    // }
+    $dompdf->render();
+    // file_put_contents($cache, $dompdf->output());
+    $dompdf->stream("Surat_Jalan_$no_sj.pdf", ["Attachment" => false]);
+    } 
+    catch (Exception $e) {
+        // Tangani semua error (bukan cuma MpdfException)
+        log_message('error', 'PDF Surat Jalan gagal dibuat: ' . $e->getMessage());
+        echo 'Terjadi kesalahan saat membuat PDF. Coba lagi nanti.';
     }
+
+    exit;
+}
+
+
+
+
+
 }
 ?>

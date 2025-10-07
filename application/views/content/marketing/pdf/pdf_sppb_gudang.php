@@ -1,79 +1,71 @@
-
+<!DOCTYPE html>
 <html>
-
 <head>
-
-  <title>Surat Jalan</title>
-  <style type="text/css">
-
-  body{
-    font-family: sans-serif;
-  }
-  table{
-    width: 100%;
-    margin: 20px auto;
-    border-collapse: collapse;
-  }
-  table th,
-  table td{
-    border: 1px solid #3c3c3c;
-    padding: 3px 8px;
-  }
-  table td{
-    vertical-align: top;
-  }
-  a{
-    background: blue;
-    color: #fff;
-    padding: 8px 10px;
-    text-decoration: none;
-    border-radius: 2px;
-  }
-  #jj td{
-    border: 0px;
-    font-size: 13px;
-    padding: 0
-  }
-  #jj .jdl{
-    width: 30px;
-    line-height: 20px;
-    font-size: 14px;
-  }
-  #jj .td{
-    width: 1px;
-  }
-  .hh tr td{
-    border: 0;
-    padding: 0;
-  }
-  .hh{
-    margin-bottom: 2px;
-  }
+  <meta charset="utf-8">
+  <title>Laporan PO Customer</title>
+  <style>
+    body { font-family: sans-serif; font-size: 11px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #000; padding: 5px; }
+    th { background: #f2f2f2; }
+    .center { text-align: center; }
+    .right { text-align: right; }
   </style>
 </head>
 <body>
 
-    <?php
-    // $tgl =  explode('-', $row['tgl'])[2]."-".explode('-', $row['tgl'])[1]."-".explode('-', $row['tgl'])[0];
-    // $exp =  explode('-', $row['exp'])[2]."/".explode('-', $row['exp'])[1]."/".explode('-', $row['exp'])[0];
-    ?>
-    <br>
-    
-    <div style="border: 1; width: 100%;padding: 5;">
-      <table id="jj" style="margin:0">
+  <table width="100%">
+    <tr>
+      <td width="20%">
+        <img src="file://<?= FCPATH ?>assets/images/Logo_baru.jpg" width="70">
+      </td>
+      <td class="center">
+        <h2 style="margin:0;">PT KAPSULINDO PUTRA TRADING</h2>
+        <p style="margin:0;">PEDAGANG BESAR FARMASI (PBF)</p>
+        <p style="margin:0;">Jl. Pancasila 1 Cicadas, Gunung Putri - Bogor</p>
+      </td>
+      <td width="20%">
+        <img src="file://<?= FCPATH ?>assets/images/pom.jpeg" width="70">
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3 class="center">LAPORAN PO CUSTOMER</h3>
+  <p class="center">Periode: <?= $tgl ?> s/d <?= $tgl2 ?></p>
+
+  <table>
+    <thead>
+      <tr class="center">
+        <th>No</th>
+        <th>Nama Customer</th>
+        <th>Nama Barang</th>
+        <th>Qty</th>
+        <th>Tanggal PO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $no = 1; $total = 0; ?>
+      <?php foreach($result as $r): ?>
+        <?php $total += $r['jumlah_po_pembelian'] ?? 0; ?>
         <tr>
-          <td colspan="2" class="jdl"><b>SURAT PERINTAH PENGIRIMAN BARANG (GELATIN)<b></td>
-        </tr></br>
-        <tr>
-        <td class="jdl">SPPB</td><td>:</td><td class="jdl"></td>
+          <td class="center"><?= $no++ ?></td>
+          <td><?= $r['nama_customer'] ?></td>
+          <td><?= $r['nama_barang'] ?></td>
+          <td class="right"><?= number_format($r['jumlah_po_pembelian'],0,",",".") ?></td>
+          <td class="center"><?= date('d-m-Y', strtotime($r['tgl_po_customer'])) ?></td>
         </tr>
-        <tr>
-        <td class="jdl">KPD YTH</td><td>:</td><td class="jdl"></td>
-        </tr>
-        <tr>
-        <td class="jdl">TGL</td><td>:</td><td class="jdl"></td>
-        </tr>
-      </table>
-    </div>
-    <br>
+      <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="right"><b>Total</b></td>
+        <td class="right"><b><?= number_format($total,0,",",".") ?></b></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+
+</body>
 </html>

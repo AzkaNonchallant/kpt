@@ -78,8 +78,8 @@
 
                             <li class="nav-item pcoded-menu-caption">
                         <label>Accounting</label>
-                            <li class="nav-item <?=$uri == 'barang_stok'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_stok/barang_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-money-bill-wave"></i></span><span class="pcoded-mtext">Invoice</span></a>
+                            <li class="nav-item <?=$uri == 'invoice'?'active':''?>">
+                        <a href="<?=base_url('accounting/invoice')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-money-bill-wave"></i></span><span class="pcoded-mtext">Invoice</span></a>
                     </li>
 
                     <li class="nav-item pcoded-menu-caption">
@@ -203,4 +203,4 @@
             </div>
         </div>
     </nav>
-    <!-- [ navigation menu ] end
+    <!-- [ navigation menu ] end    
