@@ -115,7 +115,7 @@ class po_customer extends MY_Controller {
         $no_po = $this->input->post('no_po',TRUE);
 
         $row = $this->M_po_customer->cek_no_po($no_po)->row_array();
-        if ($row['count_np']==0) {
+        if ($row['count_np'] == 0) {
             echo "false";
         }else{
             echo "true";

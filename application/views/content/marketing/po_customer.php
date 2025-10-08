@@ -76,7 +76,7 @@
                                                             <th>Customer</th>
                                                             <th>Nama Barang</th>
                                                             <th>Jumlah PO</th>
-                                                            <th>Harga PO</th>
+                                                            <!-- <th>Harga PO</th> -->
                                                             <th>Outstanding</th>
                                                             <th>Status</th>
                                                             <th>Detail</th>
@@ -111,7 +111,7 @@
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
+                                                            <!-- <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td> -->
                                                             <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <td><?=$status?></td>
                                                             <td class="text-center">
@@ -361,6 +361,13 @@
                       <input type="text" class="form-control" id="harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
                   </div>
             </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
+            </div>
   
             <div class="col-md-4">
               <div class="form-group">
@@ -397,6 +404,23 @@
     $('#add').on('show.bs.modal', function(event) {
     });
 
+    // Fungsi untuk format angka ribuan
+    function formatRupiah(angka) {
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
+
     $("#no_po").keyup(function(){
       var no_po =  $("#no_po").val();
       jQuery.ajax({
@@ -415,6 +439,22 @@
         }            
       });
     })
+
+    // === START: OTOMATIS HITUNG TOTAL HARGA ===
+    $('#jumlah_po, #harga_po').on('keyup change', function() {
+      // ambil nilai dan bersihkan dari titik
+      let jumlah_po = $('#jumlah_po').val().replace(/\./g, '');
+      let harga_po = $('#harga_po').val().replace(/\./g, '');
+      
+      if (jumlah_po && harga_po) {
+        let total = parseInt(jumlah_po) * parseInt(harga_po);
+        $('#total_harga').val(formatRupiah(total.toString()));
+      } else {
+        $('#total_harga').val('');
+      }
+    });
+    // === END ===
+
 
     $("#jumlah_po").keyup(function(){
       var jumlah_po =  $("#jumlah_po").val().replaceAll('.','');
@@ -544,6 +584,12 @@
                       <input type="number" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
                   </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="v-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
+            </div>
   
             <div class="col-md-6">
                   <div class="form-group">
@@ -571,6 +617,24 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#detail').on('show.bs.modal', function (event) {
+
+      function formatRupiah(angka) {
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
+
+      
   var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
   var no_po = $(event.relatedTarget).data('no_po')
   var tgl_po = $(event.relatedTarget).data('tgl_po')
@@ -582,7 +646,8 @@ $(document).ready(function() {
   var harga_po = $(event.relatedTarget).data('harga_po') 
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
-
+  
+  
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
   $(this).find('#v-no_po').val(no_po)
   $(this).find('#v-tgl_po').val(tgl_po)
@@ -597,8 +662,8 @@ $(document).ready(function() {
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-mkt_admin').val(mkt_admin)
-
-
+  let total = parseInt(jumlah_po) * parseInt(harga_po);
+  $(this).find('#v-total_harga').val(formatRupiah(total.toString()));
   $(this).find('#v-tgl_po').datepicker().on('show.bs.modal', function(event) {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"
     event.stopPropagation();
@@ -664,11 +729,11 @@ $(document).ready(function() {
                   <select class="form-control chosen-select" id="e-id_barang" name="id_barang" autocomplete="off" required>
                     <option value="">-Pilih Nama Barang -</option>
                       <?php 
-                        foreach($res_barang as $b){ 
+                        foreach($res_barang as $b) :  
                       ?>
-                    <option data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" value="<?=$b['id_barang']?>">(<?=$b['kode_barang']?>) <?=$b['nama_barang']?></option>
+                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" value="<?=$b['id_barang']?>">(<?=$b['kode_barang']?>) <?=$b['nama_barang']?></option>
                       <?php
-                      }
+                      endforeach;
                       ?>
                   </select>
               </div>
@@ -700,6 +765,13 @@ $(document).ready(function() {
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
                       <input type="number" class="form-control" id="e-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
                   </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="e-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
             </div>
   
             <div class="col-md-6">
@@ -734,7 +806,120 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+  // Fungsi format angka ke rupiah
+  function formatRupiah(angka) {
+    if (!angka) return '';
+    let number_string = angka.toString().replace(/[^,\d]/g, ''),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    if (ribuan) {
+      let separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
+    }
+    return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+  }
+
+  // Saat modal EDIT ditampilkan
+  $('#edit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+
+    // Ambil data dari tombol trigger
+    var id_mkt_po_customer = button.data('id_mkt_po_customer');
+    var no_po = button.data('no_po');
+    var tgl_po = button.data('tgl_po');
+    var id_customer = button.data('id_customer');
+    var id_barang = button.data('id_barang');
+    var mesh = button.data('mesh');
+    var bloom = button.data('bloom');
+    var jumlah_po = button.data('jumlah_po');
+    var harga_po = button.data('harga_po');
+    var jenis_pembayaran = button.data('jenis_pembayaran');
+    var mkt_admin = button.data('mkt_admin');
+
+    // Isi data ke form edit
+    var modal = $(this);
+    modal.find('#e-id_mkt_po_customer').val(id_mkt_po_customer);
+    modal.find('#e-no_po').val(no_po);
+    modal.find('#e-tgl_po').val(tgl_po);
+    modal.find('#e-id_customer').val(id_customer).trigger("chosen:updated");
+    modal.find('#e-id_barang').val(id_barang).trigger("chosen:updated");
+    modal.find('#e-mesh').val(mesh);
+    modal.find('#e-bloom').val(bloom);
+    modal.find('#e-jumlah_po').val(jumlah_po);
+    modal.find('#e-harga_po').val(harga_po);
+    modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
+    modal.find('#e-mkt_admin').val(mkt_admin);
+
+    // === Tambahan field total harga (otomatis dihitung) ===
+    let total = (parseFloat(jumlah_po) || 0) * (parseFloat(harga_po) || 0);
+    modal.find('#e-total_harga').val(formatRupiah(total));
+
+    // Jalankan datepicker aman
+    modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
+      e.stopPropagation();
+    });
+
+    // Cek No PO agar tidak duplikat
+    $("#e-no_po").on('keyup', function(){
+      let no_po = $(this).val();
+      $.ajax({
+        url: "<?= base_url('marketing/po_customer/cek_no_po') ?>",
+        type: "post",
+        data: { no_po: no_po },
+        success: function(response){
+          if (response === "true") {
+            $("#e-no_po").addClass("is-invalid");
+            $("#simpan").attr("disabled", true);
+          } else {
+            $("#e-no_po").removeClass("is-invalid");
+            $("#simpan").attr("disabled", false);
+          }
+        }
+      });
+    });
+
+    // Ambil mesh dan bloom dari dropdown
+    $("#e-id_barang").on('change', function() {
+      let opt = $(this).find(':selected');
+      $('#e-mesh').val(opt.data('mesh') || '');
+      $('#e-bloom').val(opt.data('bloom') || '');
+    });
+
+    // === Perhitungan otomatis total harga ===
+    $("#e-jumlah_po, #e-harga_po").on('keyup change', function() {
+      let jumlah = parseFloat($("#e-jumlah_po").val().replace(/\./g,'')) || 0;
+      let harga = parseFloat($("#e-harga_po").val().replace(/\./g,'')) || 0;
+      let total = jumlah * harga;
+      $("#e-total_harga").val(formatRupiah(total));
+    });
+  });
+});
+</script>
+
+
+<!-- <script type="text/javascript">
+$(document).ready(function() {
     $('#edit').on('show.bs.modal', function (event) {
+
+      function formatRupiah(angka) {
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
+
   var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
   var no_po = $(event.relatedTarget).data('no_po')
   var tgl_po = $(event.relatedTarget).data('tgl_po')
@@ -761,6 +946,7 @@ $(document).ready(function() {
   $(this).find('#e-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#e-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#e-mkt_admin').val(mkt_admin)
+  
 
 
   $(this).find('#e-tgl_po').datepicker().on('show.bs.modal', function(event) {
@@ -803,4 +989,4 @@ $(document).ready(function() {
 
 })
 
-</script>
+</script> -->

@@ -549,7 +549,7 @@ $(document).ready(function() {
             <div class="col-md-4">
           <div class="form-group">
               <label for="kode_tf_out">Kode TF Out</label>
-              <input type="text" class="form-control" id="kode_tf_out" name="kode_tf_out" placeholder="Kode Tf Out" aria-describedby="validationServer03Feedback" autocomplete="off" required>
+                  <input type="text" class="form-control" id="kode_tf_out" name="kode_tf_out" placeholder="Kode Tf Out" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
               <div id="validationServer03Feedback" class="invalid-feedback">
                 Maaf Kode TF Out sudah ada.
           </div>
@@ -584,6 +584,25 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
     $('#kirim').on('show.bs.modal', function (event) {
+
+      $("#kode_tf_out").keyup(function(){
+      var kode_tf_out =  $("#kode_tf_out").val();
+      jQuery.ajax({
+        url: "<?=base_url()?>gudang/gudang_admin/admin_sppb/cek_kode_tf_out",
+        dataType:'text',
+        type: "post",
+        data:{kode_tf_out:kode_tf_out},
+        success:function(response){
+          if (response =="true") {
+            $("#kode_tf_out").addClass("is-invalid");
+            $("#simpan").attr("disabled","disabled");
+          }else{
+            $("#kode_tf_out").removeClass("is-invalid");
+            $("#simpan").removeAttr("disabled");
+          }
+        }            
+      });
+    })
   var id_mkt_sppb = $(event.relatedTarget).data('id_mkt_sppb')
   var no_sppb = $(event.relatedTarget).data('no_sppb')
   var tgl_sppb = $(event.relatedTarget).data('tgl_sppb')

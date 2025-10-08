@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
 class Invoice extends MY_Controller {
 
     public function __construct() {
@@ -208,14 +208,14 @@ class Invoice extends MY_Controller {
     public function pdf_invoice($id) {
         // === 1. Setup Dompdf options ===
         $options = new \Dompdf\Options();
-        $options->set('isRemoteEnabled', false);
-        $options->set('isFontSubsettingEnabled', false);
-        $options->set('defaultFont', 'Helvetica');
-        $options->set('enable_font_subsetting', true);
-        $options->set('dpi', 90);
-        $options->set('chroot', FCPATH);
-        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
-        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+            $options->set('isRemoteEnabled', false);
+            $options->set('isFontSubsettingEnabled', false);
+            $options->set('defaultFont', 'Helvetica');
+            $options->set('enable_font_subsetting', true);
+            $options->set('dpi', 90);
+            $options->set('chroot', FCPATH);
+            $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+            $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
         $dompdf = new \Dompdf\Dompdf($options);
 
         // === 2. Ambil data invoice ===
