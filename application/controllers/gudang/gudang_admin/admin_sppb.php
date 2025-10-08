@@ -39,7 +39,7 @@ class admin_sppb extends MY_Controller {
             $data['res_po'][$i]['sisa']=$sisa;
         }
         $data['res_user'] = $this->M_users->get()->result_array();
-        echo json_encode($data['result']);
+        // echo json_encode($data['result']);
     
 		$this->template->load('template', 'content/gudang/gudang_admin/admin_sppb_data',$data);
         // print_r($data);

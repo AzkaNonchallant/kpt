@@ -157,10 +157,14 @@ public function pdf_po_customer()
 {
     // === 1. Setup Dompdf options ===
     $options = new \Dompdf\Options();
-    $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
-    $options->set('isHtml5ParserEnabled', false);
-    $options->set('defaultFont', 'Helvetica');
-
+        $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 90);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
     $dompdf = new \Dompdf\Dompdf($options);
 
     // === 2. Ambil input filter ===
@@ -180,6 +184,7 @@ public function pdf_po_customer()
     $data['nama_barang'] = $nama_barang;
     $data['nama_customer'] = $nama_customer;
 
+    // echo json_encode($data['result']);
     // === 4. Load view HTML ===
     $html = $this->load->view('content/marketing/page_po_customer', $data, TRUE);
 

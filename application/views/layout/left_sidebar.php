@@ -95,19 +95,6 @@
                         <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Barang Keluar</span></a>
                     </li>
                    <li class="nav-item <?= $uri == 'barang_keluar' || $uri == 'laporan_barang_keluar' ? 'active pcoded-hasmenu' : 'pcoded-hasmenu' ?>">
-                <a href="#!" class="nav-link ">
-                    <span class="pcoded-micon"><i class="feather icon-trending-up"></i></span>
-                    <span class="pcoded-mtext">Accounting</span>
-                </a>
-                <ul class="pcoded-submenu">
-                    <li class="<?= $uri == 'barang_keluar' ? 'active' : '' ?>">
-                        <a href="<?= base_url('accounting/invoice') ?>">
-                            <span class="pcoded-mtext">Invoice</span>
-                        </a>
-                    </li>
-        
-    </ul>
-</li>
                     <!-- <li class="nav-item pcoded-menu-caption">
                         <label>Stock Sample</label>
                     </li>

@@ -60,10 +60,8 @@
         <td>
           
         </td>
-        <td style="text-align: center;padding-center: -20px;">
-          <?php $src = base_url('assets/images/icon.png'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 60px;height: 100px;" src="<?=$src?>">
+        <td style="text-align: center;padding: -20px;">
+          <img style="width: 60px;height: 100px;" src="<?= FCPATH.'assets/images/Logo_baru.jpg' ?>">
         </td>
         <td style="width: 460px;">
     <h2 style="line-height: 0.01; font-size: 30px;">PT KAPSULINDO NUSANTARA</h2>
@@ -71,10 +69,8 @@
     <p style="line-height: 0.01;font-size: 12px;">Jl. Pancasila 1 Cicadas Gunung Putrri - Kab. Bogor 16964, Indonesia</p>
     <p style="line-height: 0.01;font-size: 12px;">Tlp:(021) 8671165. Fax:(021) 8671168,86861734. Email: pbbbf@kapsulindo.co.id</p>
         </td>
-        <td style="padding-center:-10px; ">
-          <?php $src = base_url('assets/images/pom.jpeg'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 120px;height: 100px;" src="<?=$src?>">
+        <td style="padding:-10px; ">
+          <img style="width: 120px;height: 100px;" src="<?= FCPATH.'assets/images/pom.jpeg' ?>">
         </td>
         <td>
           
@@ -90,13 +86,13 @@
     <?php 
     if(count($result) == 0){
       echo "<center style='text-align: center;'><h3>Data Kosong</h3></center>";
-      $d = "display:none;";
+      // $d = "display:none;";
     }else{
 ?>
 
     
   
-                                                  <table style="width: 1000px;<?=$d?>">
+                                                  <table style="width: 1000px;">
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
@@ -113,8 +109,8 @@
                                                     	  $no=1;
                                                         $jml=0;
                                                     	foreach($result as $k){    
-                                                        $tgl_po =  explode('-', $k['tgl_po'])[2]."/".explode('-', $k['tgl_po'])[1]."/".explode('-', $k['tgl_po'])[0];   
-                                                        $jml+=$k['jumlah_po']; 
+                                                        $tgl_po =  explode('-', $k['tgl_po_customer'])[2]."/".explode('-', $k['tgl_po_customer'])[1]."/".explode('-', $k['tgl_po_customer'])[0];   
+                                                        $jml += $k['jumlah_po_customer']; 
                                                       ?>
                                                     	<tr>
                                                             <th><?=$no++?></th>
@@ -123,7 +119,7 @@
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td style="text-align: center;"><?=$k['mesh']?></td>
                                                             <td style="text-align: center;"><?=$k['bloom']?></td>
-                                                            <td style="text-align: right;"><?=number_format($k['jumlah_po'],0,",",".")?>&nbsp;<?=$k['satuan']?></td>
+                                                            <td style="text-align: right;"><?=number_format($k['jumlah_po_customer'],0,",",".")?>&nbsp;<?=$k['satuan']?></td>
                          
                                                             
                                                         </tr>
