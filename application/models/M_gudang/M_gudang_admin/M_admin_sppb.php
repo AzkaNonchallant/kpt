@@ -72,8 +72,14 @@ class M_admin_sppb extends CI_Model {
 
     public function cek_no_sppb($no_sppb){
         $sql = "
-            SELECT COUNT(a.no_sppb) count_ns FROM tb_mkt_sppb a
+            SELECT COUNT(a.no_sppb) AS count_ns FROM tb_mkt_sppb a
             WHERE a.no_sppb = '$no_sppb' AND a.is_deleted = 0";
+        return $this->db->query($sql);
+    }
+    public function cek_kode_tf_out($data){
+        $sql = "
+            SELECT COUNT(a.kode_tf_out) AS count_ns FROM tb_gudang_barang_keluar a
+            WHERE a.kode_tf_out = '$data' AND a.is_deleted = 0";
         return $this->db->query($sql);
     }
 

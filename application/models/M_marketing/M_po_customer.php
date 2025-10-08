@@ -110,8 +110,8 @@ class M_po_customer extends CI_Model {
 
     public function cek_no_po($no_po){
         $sql = "
-            SELECT COUNT(a.no_po) count_np FROM tb_mkt_po_customer a
-            WHERE a.no_po = '$no_po' AND a.is_deleted = 0";
+            SELECT COUNT(a.no_po_customer) count_np FROM tb_mkt_po_customer a
+            WHERE a.no_po_customer = '$no_po' AND a.is_deleted = 0";
         return $this->db->query($sql);
     }
 

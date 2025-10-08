@@ -9,6 +9,7 @@ class admin_sppb extends MY_Controller {
         parent::__construct();
         // check_not_login();
         $this->load->model('M_marketing/M_sppb');
+        $this->load->model('M_gudang/M_gudang_admin/M_admin_sppb');
         $this->load->model('M_marketing/M_po_customer');
         $this->load->model('M_master/M_master_barang');
         $this->load->model('M_master/M_master_customer');
@@ -102,6 +103,16 @@ class admin_sppb extends MY_Controller {
 
         $row = $this->M_sppb->cek_no_sppb($no_sppb)->row_array();
         if ($row['count_ns']==0) {
+            echo "false";
+        }else{
+            echo "true";
+        }
+    }
+
+    public function cek_kode_tf_out() {
+        $kode_tf_out = $this->input->post('kode_tf_out', TRUE);
+        $row = $this->M_admin_sppb->cek_kode_tf_out($kode_tf_out)->row_array();
+         if ($row['count_ns'] == 0) {
             echo "false";
         }else{
             echo "true";
