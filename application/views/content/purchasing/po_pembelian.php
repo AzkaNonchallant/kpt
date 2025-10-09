@@ -319,6 +319,13 @@
                       <input type="text" class="form-control" id="harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" onkeypress="return hanyaAngka(event)" maxlength="100" autocomplete="off" required>
                   </div>
             </div>
+
+             <div class="col-md-6">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
+            </div>
   
             <div class="col-md-6">
               <div class="form-group">
@@ -373,6 +380,38 @@
         }            
       });
     })
+
+    // Fungsi untuk format angka ribuan
+    function formatRupiah(angka) {
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
+
+    // === START: OTOMATIS HITUNG TOTAL HARGA ===
+    $('#jumlah_po_pembelian, #harga_po_pembelian').on('keyup change', function() {
+      // ambil nilai dan bersihkan dari titik
+      let jumlah_po = $('#jumlah_po_pembelian').val().replace(/\./g, '');
+      let harga_po = $('#harga_po_pembelian').val().replace(/\./g, '');
+      
+      if (jumlah_po && harga_po) {
+        let total = parseInt(jumlah_po) * parseInt(harga_po);
+        $('#total_harga').val(formatRupiah(total.toString()));
+      } else {
+        $('#total_harga').val('');
+      }
+    });
+    // === END ===
 
     $("select").on('change', function() {
       const selected = $(this).find(':selected').attr('data-mesh')
@@ -479,6 +518,12 @@
               <input type="text" class="form-control" id="v-harga_po_pembelian" readonly>
             </div>
           </div>
+           <div class="col-md-6">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="v-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
+            </div>
 
           <div class="col-md-6">
             <div class="form-group">
@@ -507,6 +552,22 @@
 $(document).ready(function() {
   $('#detail').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // tombol pemicu modal
+    
+      function formatRupiah(angka) {
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split(','),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
 
     var id_prc_po_pembelian = button.data('id_prc_po_pembelian');
     var no_po_pembelian     = button.data('no_po_pembelian');
@@ -530,6 +591,8 @@ $(document).ready(function() {
     $('#v-bloom').val(bloom);
     $('#v-jumlah_po_pembelian').val(jumlah_po_pembelian);
     $('#v-harga_po_pembelian').val(harga_po_pembelian);
+    let total = parseInt(jumlah_po_pembelian) * parseInt(harga_po_pembelian);
+  $(this).find('#v-total_harga').val(formatRupiah(total.toString()));
     $('#v-jenis_pembayaran').val(jenis_pembayaran);
     $('#v-prc_admin').val(prc_admin);
   });
@@ -618,6 +681,13 @@ $(document).ready(function() {
                       <input type="text" class="form-control" id="e-harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" onkeypress="return hanyaAngka(event)" maxlength="20" autocomplete="off" required>
                   </div>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="total_harga">Jumlah Harga (Rp)</label>
+                <input type="text" class="form-control" id="e-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
+              </div>
+            </div>
   
             <div class="col-md-6">
               <div class="form-group">
@@ -652,6 +722,21 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
     $('#edit').on('show.bs.modal', function (event) {
+
+      function formatRupiah(angka) {
+    if (!angka) return '';
+    let number_string = angka.toString().replace(/[^,\d]/g, ''),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    if (ribuan) {
+      let separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
+    }
+    return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+  }
+
   var id_prc_po_pembelian = $(event.relatedTarget).data('id_prc_po_pembelian') 
   var no_po_pembelian = $(event.relatedTarget).data('no_po_pembelian')
   var tgl_po_pembelian = $(event.relatedTarget).data('tgl_po_pembelian')
@@ -678,6 +763,9 @@ $(document).ready(function() {
   $(this).find('#e-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#e-prc_admin').val(prc_admin)
 
+  // === Tambahan field total harga (otomatis dihitung) ===
+    let total = (parseFloat(jumlah_po_pembelian) || 0) * (parseFloat(harga_po_pembelian) || 0);
+    $(this).find('#e-total_harga').val(formatRupiah(total));
 
   $(this).find('#e-tgl_po_pembelian').datepicker().on('show.bs.modal', function(event) {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"

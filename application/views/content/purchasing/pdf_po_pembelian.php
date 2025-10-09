@@ -97,7 +97,7 @@ if (empty($nama_barang) && empty($nama_supplier) && (empty($tgl) || empty($tgl2)
         <td>
           
         </td>
-        <td style="text-align: center;padding-center: -20px;">
+        <td style="text-align: center;padding: -20px;">
           <?php $src = base_url('assets/images/icon.png'); ?>
           <!-- <?=$src?> -->
           <img style="width: 60px;height: 100px;" src="<?=$src?>">
@@ -108,7 +108,7 @@ if (empty($nama_barang) && empty($nama_supplier) && (empty($tgl) || empty($tgl2)
     <p style="line-height: 0.01;font-size: 12px;">Jl. Pancasila 1 Cicadas Gunung Putrri - Kab. Bogor 16964, Indonesia</p>
     <p style="line-height: 0.01;font-size: 12px;">Tlp:(021) 8671165. Fax:(021) 8671168,86861734. Email: pbbbf@kapsulindo.co.id</p>
         </td>
-        <td style="padding-center:-10px; ">
+        <td style="padding:-10px; ">
           <?php $src = base_url('assets/images/pom.jpeg'); ?>
           <!-- <?=$src?> -->
           <img style="width: 120px;height: 100px;" src="<?=$src?>">
