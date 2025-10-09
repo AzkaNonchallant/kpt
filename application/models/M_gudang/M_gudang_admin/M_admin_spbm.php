@@ -112,7 +112,7 @@ class M_admin_spbm extends CI_Model {
             `gdg_admin`           = '{$data['gdg_admin']}',
             `updated_at`          = NOW(),
             `updated_by`          = '$id_user',
-            `is_deleted`          = `0`
+            `is_deleted`          = '0'
         WHERE `kode_tf_in` = '$data[kode_tf_in_2]'
     ";
         return $this->db->query($sql);
