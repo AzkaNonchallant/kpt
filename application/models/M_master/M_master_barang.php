@@ -57,14 +57,10 @@ class M_master_barang extends CI_Model {
     public function delete($data)
     {
         $id_user = $this->id_user();
-        //$sql = "
-          //  UPDATE `tb_barang` 
-           // SET `is_deleted`='1',`updated_at`=NOW(),`updated_by`='$id_user' 
-            //WHERE `id_barang`='$data[id_barang]'
-        //";
         $sql = "
-        DELETE FROM `tb_master_barang`
-         WHERE `id_barang`='$data[id_barang]'
+           UPDATE `tb_master_barang` 
+           SET `is_deleted`='1',`updated_at`=NOW(),`updated_by`='$id_user' 
+            WHERE `id_barang`='$data[id_barang]'
         ";
         return $this->db->query($sql);
     }

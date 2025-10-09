@@ -181,7 +181,7 @@ public function add($data)
 
         $sql = "
         UPDATE `tb_prc_po_pembelian`
-        SET is_deleted='1', updated_by='$id_user'
+        SET is_deleted='1', `updated_at`=NOW(),updated_by='$id_user'
         WHERE `id_prc_po_pembelian`='$data[id_prc_po_pembelian]'
         ";
         return $this->db->query($sql);

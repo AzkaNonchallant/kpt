@@ -95,7 +95,7 @@ class M_po_customer extends CI_Model {
 
         $sql = "
         UPDATE  tb_mkt_po_customer
-        SET is_deleted='1', updated_by='$id_user'
+        SET is_deleted='1', `updated_at`=NOW(),updated_by='$id_user'
          WHERE id_mkt_po_customer='$data[id_mkt_po_customer]'
         ";
         return $this->db->query($sql);

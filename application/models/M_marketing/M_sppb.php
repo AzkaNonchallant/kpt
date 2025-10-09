@@ -69,8 +69,9 @@ class M_sppb extends CI_Model {
         $id_user = $this->id_user();
 
         $sql = "
-        DELETE FROM tb_mkt_sppb
-         WHERE id_mkt_sppb='$data[id_mkt_sppb]'
+        UPDATE  tb_mkt_sppb
+        SET is_deleted='1', updated_at=NOW(), updated_by='$id_user'
+        WHERE id_mkt_sppb='$data[id_mkt_sppb]'
         ";
         return $this->db->query($sql);
     }
