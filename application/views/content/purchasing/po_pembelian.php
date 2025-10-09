@@ -115,8 +115,8 @@
                                                                   data-nama_barang="<?=$k['nama_barang']?>"
                                                                   data-mesh="<?=$k['mesh']?>"
                                                                   data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po_pembelian="<?=number_format($k['jumlah_po_pembelian'],0,",",".")?>"
-                                                                  data-harga_po_pembelian="<?= number_format($k['harga_po_pembelian'], 0, ",", ".") ?>"
+                                                                  data-jumlah_po_pembelian="<?=$k['jumlah_po_pembelian']?>"
+                                                                  data-harga_po_pembelian="<?= $k['harga_po_pembelian'] ?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran']?>"
                                                                   data-prc_admin="<?=$k['prc_admin']?>"
                                                                 >
@@ -142,8 +142,8 @@
                                                                   data-nama_barang="<?=$k['nama_barang']?>"
                                                                   data-mesh="<?=$k['mesh']?>"
                                                                   data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po_pembelian="<?=number_format($k['jumlah_po_pembelian'],0,",",".")?>"
-                                                                  data-harga_po_pembelian="<?=number_format($k['harga_po_pembelian'],0,",",".")?>"
+                                                                  data-jumlah_po_pembelian="<?=$k['jumlah_po_pembelian']?>"
+                                                                  data-harga_po_pembelian="<?=$k['harga_po_pembelian']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran']?>"
                                                                   data-prc_admin="<?=$k['prc_admin']?>"
                                                                 >
@@ -309,14 +309,14 @@
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah(Kg)" onkeypress="return hanyaAngka(event)" maxlength="100" autocomplete="off" required>
+                      <input type="text" class="form-control" id="jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah(Kg)" autocomplete="off" required>
                   </div>
             </div>
 
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="text" class="form-control" id="harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" onkeypress="return hanyaAngka(event)" maxlength="100" autocomplete="off" required>
+                      <input type="text" class="form-control" id="harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
                   </div>
             </div>
 
@@ -550,51 +550,48 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+  
   $('#detail').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget); // tombol pemicu modal
-    
-      function formatRupiah(angka) {
-      let number_string = angka.replace(/[^,\d]/g, '').toString(),
-          split   		= number_string.split(','),
-          sisa     		= split[0].length % 3,
-          rupiah     	= split[0].substr(0, sisa),
-          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+    function formatRupiah(angka) {
+    let number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split   		= number_string.split(','),
+        sisa     		= split[0].length % 3,
+        rupiah     	= split[0].substr(0, sisa),
+        ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
 
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return rupiah;
+    if (ribuan) {
+      let separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
     }
 
-    var id_prc_po_pembelian = button.data('id_prc_po_pembelian');
-    var no_po_pembelian     = button.data('no_po_pembelian');
-    var tgl_po_pembelian    = button.data('tgl_po_pembelian');
-    var nama_supplier       = button.data('nama_supplier');
-    var id_barang           = button.data('nama_barang');
-    var mesh                = button.data('mesh');
-    var bloom               = button.data('bloom');
-    var jumlah_po_pembelian = button.data('jumlah_po_pembelian');
-    var harga_po_pembelian  = button.data('harga_po_pembelian');
-    var jenis_pembayaran    = button.data('jenis_pembayaran');
-    var prc_admin           = button.data('prc_admin');
-
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return rupiah;
+  }
+    var id_prc_po_pembelian = $(event.relatedTarget).data('id_prc_po_pembelian');
+    var no_po_pembelian     = $(event.relatedTarget).data('no_po_pembelian');
+    var tgl_po_pembelian    = $(event.relatedTarget).data('tgl_po_pembelian');
+    var nama_supplier       = $(event.relatedTarget).data('nama_supplier');
+    var id_barang           = $(event.relatedTarget).data('nama_barang');
+    var mesh                = $(event.relatedTarget).data('mesh');
+    var bloom               = $(event.relatedTarget).data('bloom');
+    var jumlah_po_pembelian = $(event.relatedTarget).data('jumlah_po_pembelian');
+    var harga_po_pembelian  = $(event.relatedTarget).data('harga_po_pembelian');
+    var jenis_pembayaran    = $(event.relatedTarget).data('jenis_pembayaran');
+    var prc_admin           = $(event.relatedTarget).data('prc_admin');
     // Set value ke input
-    $('#v-prc_po_pembelian').val(id_prc_po_pembelian);
-    $('#v-no_po_pembelian').val(no_po_pembelian);
-    $('#v-tgl_po_pembelian').val(tgl_po_pembelian);
-    $('#v-nama_supplier').val(nama_supplier);
-    $('#v-id_barang').val(id_barang);
-    $('#v-mesh').val(mesh);
-    $('#v-bloom').val(bloom);
-    $('#v-jumlah_po_pembelian').val(jumlah_po_pembelian);
-    $('#v-harga_po_pembelian').val(harga_po_pembelian);
-    let total = parseInt(jumlah_po_pembelian) * parseInt(harga_po_pembelian);
+    $(this).find('#v-prc_po_pembelian').val(id_prc_po_pembelian);
+    $(this).find('#v-no_po_pembelian').val(no_po_pembelian);
+    $(this).find('#v-tgl_po_pembelian').val(tgl_po_pembelian);
+    $(this).find('#v-nama_supplier').val(nama_supplier);
+    $(this).find('#v-id_barang').val(id_barang);
+    $(this).find('#v-mesh').val(mesh);
+    $(this).find('#v-bloom').val(bloom);
+    $(this).find('#v-jumlah_po_pembelian').val(jumlah_po_pembelian);
+    $(this).find('#v-harga_po_pembelian').val(harga_po_pembelian);
+    $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran);
+    $(this).find('#v-prc_admin').val(prc_admin);
+  let total = parseInt(jumlah_po_pembelian) * parseInt(harga_po_pembelian);
   $(this).find('#v-total_harga').val(formatRupiah(total.toString()));
-    $('#v-jenis_pembayaran').val(jenis_pembayaran);
-    $('#v-prc_admin').val(prc_admin);
   });
 });
 </script>
@@ -671,14 +668,14 @@ $(document).ready(function() {
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="e-jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah(Kg)" onkeypress="return hanyaAngka(event)" maxlength="15" autocomplete="off" required>
+                      <input type="text" class="form-control" id="e-jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah(Kg)"  autocomplete="off" required>
                   </div>
             </div>
 
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="text" class="form-control" id="e-harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" onkeypress="return hanyaAngka(event)" maxlength="20" autocomplete="off" required>
+                      <input type="text" class="form-control" id="e-harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)"  autocomplete="off" required>
                   </div>
             </div>
 

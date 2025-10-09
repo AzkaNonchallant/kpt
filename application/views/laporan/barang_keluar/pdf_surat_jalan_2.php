@@ -1,561 +1,314 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
   <meta charset="utf-8">
-
   <title>Surat Jalan</title>
-
   <style>
-
     body {
-
       font-family: sans-serif;
-
-      font-size: 12px;
-
-      margin: 20px;
-
-      line-height: 1.2;
-
+      font-size: 14px;
+      margin: 15px 20px 10px 20px;
+      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 95vh;
     }
 
-
+    .content {
+      flex: 1;
+    }
 
     table {
-
       width: 100%;
-
       border-collapse: collapse;
-
-      margin-top: 10px;
-
+      margin-top: 5px;
     }
-
-
 
     td {
-
       border: 1px solid #000;
-
-      padding: 5px;
-
+      padding: 3px;
       text-align: left;
-
-      vertical-align: top;
-
+      height: 30px;
     }
-
-
 
     th {
-
-  background-color: #007bff; /* Warna biru */
-
-  color: white; /* Warna teks putih */
-
-  font-weight: bold;
-
-  }
-
-
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      padding: 4px;
+    }
 
     .no-border td {
-
       border: none;
-
-      padding: 2px 0;
-
+      padding: 1px 0;
     }
-
-
 
     .center { text-align: center; }
-
     .right { text-align: right; }
-
     .bold { font-weight: bold; }
-
     .header-table td { border: none; }
 
-
-
-    /* Fix Footer */
-
+    /* Footer at bottom */
     .footer {
-
-      margin-top: 30px;
-
-      font-size: 11px;
-
+      margin-top: auto;
+      font-size: 14px;
+      padding-top: 10px;
     }
-
-
 
     .note {
-
       font-style: italic;
-
-      font-size: 11px;
-
-      margin-top: 5px;
-
+      font-size: 10px;
+      margin-top: 3px;
     }
-
     
-
     .tab-footer td {
-
       border: none;
-
-      padding: 5px;
-
+      padding: 3px;
       vertical-align: top;
-
     }
-
     
-
     .info-table {
-
       width: 100%;
-
-      margin: 10px 0;
-
+      margin: 5px 0;
     }
-
     
-
     .info-table td {
-
-      padding: 2px 5px;
-
+      padding: 1px 3px;
       vertical-align: top;
-
     }
-
     
-
     .signature-table {
-
       width: 100%;
-
-      margin-top: 40px;
-
+      margin-top: 20px;
     }
-
     
-
     .signature-table td {
-
       border: none;
-
-      padding: 5px;
-
+      padding: 3px;
       vertical-align: top;
-
     }
-
     
-
     .underline {
-
       text-decoration: underline;
-
     }
-
     
-
     .header-info {
-
-      margin-bottom: 15px;
-
+      margin-bottom: 8px;
     }
-
     
-
     .header-info p {
-
-      margin: 2px 0;
-
+      margin: 1px 0;
     }
-
     
-
     .company-header {
-
-      margin-bottom: 10px;
-
+      margin-bottom: 8px;
     }
-
     
-
     .company-container {
-
       display: flex;
-
       align-items: flex-start;
-
-      gap: 15px;
-
+      gap: 10px;
+      margin-bottom: 5px;
     }
-
     
-
     .company-icon {
-
       width: 60px;
-
       height: 60px;
-
       flex-shrink: 0;
-
     }
-
     
-
     .company-details {
-
       flex: 1;
-
     }
 
+    h3.center {
+      margin: 8px 0 3px 0;
+    }
+
+    hr {
+      margin: 5px 0;
+    }
+
+    /* Signature spacing */
+    .signature-space {
+      height: 50px;
+      margin: 8px 0;
+    }
+
+    /* Force footer to bottom */
+    .footer-container {
+      position: relative;
+      width: 100%;
+    }
   </style>
-
 </head>
-
 <body>
 
-
-
-  <!-- Header Perusahaan -->
-
-  <div class="company-container">
-
-    <!-- Ikon Perusahaan -->
-
-    <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" class="company-icon" alt="Logo Perusahaan">
-
-    
-
-    <div class="company-details">
-
-      <table class="header-table company-header">
-
-        <tr>
-
-          <td width="70%">
-
-            <h2 style="margin:0;">PT KAPSULINDO PUTRA TRADING</h2>
-
-            <p style="margin:0; font-size: 14px;">PEDAGANG BESAR FARMASI</p>
-
-            <p style="margin:0;">JL. PANCASILA I CICADAS</p>
-
-            <p style="margin:0;">GUNUNG PUTRI - BOGOR</p>
-
-          </td>
-
-          <td width="30%" style="vertical-align: top;">
-
-            <table class="no-border">
-
-              <tr>
-
-                <td><b>NPWP</b></td>
-
-                <td>: </td>
-
-              </tr>
-
-              <tr>
-
-                <td><b>PBF No.</b></td>
-
-                <td>: </td>
-
-              </tr>
-
-              <tr>
-
-                <td><b>CDOB No.</b></td>
-
-                <td>: </td>
-
-              </tr>
-
-            </table>
-
-          </td>
-
-        </tr>
-
-      </table>
-
+  <div class="content">
+    <!-- Header Perusahaan -->
+    <div class="company-container">
+      <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" class="company-icon" alt="Logo Perusahaan" style="image: size 30px;">
+      
+      <div class="company-details">
+        <table class="header-table company-header">
+          <tr>
+            <td width="70%">
+              <h2 style="margin:0; font-size: 20px;">PT KAPSULINDO PUTRA TRADING</h2>
+              <p style="margin:0; font-size:12px;">PEDAGANG BESAR FARMASI</p>
+              <p style="margin:0; font-size:12px;">JL. PANCASILA I CICADAS</p>
+              <p style="margin:0; font-size:12px;">GUNUNG PUTRI - BOGOR</p>
+            </td>
+            <td width="30%" style="vertical-align: top;">
+              <table class="no-border">
+                <tr>
+                  <td><b>NPWP</b></td>
+                  <td>: </td>
+                </tr>
+                <tr>
+                  <td><b>PBF No.</b></td>
+                  <td>: </td>
+                </tr>
+                <tr>
+                  <td><b>CDOB No.</b></td>
+                  <td>: </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
 
-  </div>
-
-
-
-  <!-- Judul Surat Jalan -->
-
-  <h3 class="center" style="margin-bottom: 5px; margin-top: 20px;">SURAT JALAN</h3>
-
-  
-
-  <!-- Nomor dan Tanggal -->
-
-  <table class="no-border header-info">
-
-    <tr>
-
-      <td width="5%"><b>NO</b></td>
-
-      <td width="2%">:</td>
-
-      <td width="33%"><?= $row['no_surat_jalan'] ?></td>
-
-      <td width="15%"><b>TANGGAL</b></td>
-
-      <td width="2%">:</td>
-
-      <td width="33%"><?= date('d-M-Y', strtotime($row['tgl'])) ?></td>
-
-    </tr>
-
-    <tr>
-
-      <td><b>NO. SPPB</b></td>
-
-      <td>:</td>
-
-      <td><?= $row['no_sppb'] ?></td>
-
-      <td></td>
-
-      <td></td>
-
-      <td></td>
-
-    </tr>
-
-  </table>
-
-
-
-  <hr style="margin: 10px 0;">
-
-
-
-  <!-- Informasi Pembeli -->
-
-  <div style="margin-bottom: 10px;">
-
-    <p style="margin: 0; font-weight: bold;">PEMBELI</p>
-
-    <table class="no-border">
-
+    <!-- Judul Surat Jalan -->
+    <h3 class="center" style="margin-bottom: 3px; margin-top: 10px;">SURAT JALAN</h3>
+    
+    <!-- Nomor dan Tanggal -->
+    <table class="no-border header-info" ">
       <tr>
-
-        <td width="15%">NAMA</td>
-
+        <td width="5%"><b>NO</b></td>
         <td width="2%">:</td>
-
-        <td width="83%"><?= $row['nama_customer'] ?></td>
-
+        <td width="33%"><?= $row['no_surat_jalan'] ?></td>
       </tr>
-
       <tr>
-
-        <td>No. PO</td>
-
+        <td><b>NO. SPPB</b></td>
         <td>:</td>
-
-        <td><?= $row['no_po'] ?></td>
-
+        <td><?= $row['no_sppb'] ?></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
-
       <tr>
-
-        <td>ALAMAT</td>
-
-        <td>:</td>
-
-        <td><?= $row['alamat_customer'] ?></td>
-
+         <td width="15%"><b>TANGGAL</b></td>
+        <td width="2%">:</td>
+        <td width="33%"><?= date('d-M-Y', strtotime($row['tgl'])) ?></td>
       </tr>
-
-      <tr>
-
-        <td>ALAMAT KIRIM</td>
-
-        <td>:</td>
-
-        <td><?= $row['alamat_customer'] ?></td>
-
-      </tr>
-
     </table>
 
+    <hr style="margin: 5px 0;">
+
+    <!-- Informasi Pembeli -->
+    <div style="margin-bottom: 8px;">
+      <p style="margin: 0 0 2px 0; font-weight: bold;">PEMBELI</p>
+      <table class="no-border">
+        <tr>
+          <td width="15%">NAMA</td>
+          <td width="2%">:</td>
+          <td width="83%"><?= $row['nama_customer'] ?></td>
+        </tr>
+        <tr>
+          <td>No. PO</td>
+          <td>:</td>
+          <td><?= $row['no_po'] ?></td>
+        </tr>
+        <tr>
+          <td>ALAMAT</td>
+          <td>:</td>
+          <td><?= $row['alamat_customer'] ?></td>
+        </tr>
+        <tr>
+          <td>ALAMAT KIRIM</td>
+          <td>:</td>
+          <td><?= $row['alamat_customer'] ?></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Tabel Barang -->
+    <table>
+      <thead>
+        <tr class="center bold" style="border:1px solid;">
+          <th width="5%">No</th>
+          <th width="40%">Nama Barang</th>
+          <th width="15%">Jumlah</th>
+          <th width="15%">No. Batch</th>
+          <th width="15%">Tgl Expired</th>
+          <th width="10%">Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php 
+        $no = 1; 
+        $total = 0;
+        foreach ($detail as $d): 
+          $total += $d['jumlah_kirim'];
+          
+          $nama_barang_formatted = $d['nama_barang'];
+          if (!empty($d['bloom']) || !empty($d['mesh'])) {
+              $nama_barang_formatted .= " Bloom : " . $d['bloom'] . " Mesh : " . $d['mesh'];
+          }
+        ?>
+        <tr>
+          <td class="center"><?= $no++ ?></td>
+          <td><?= $nama_barang_formatted ?></td>
+          <td class="center"><?= number_format($d['jumlah_kirim'], 3) ?> <?= $d['satuan'] ?></td>
+          <td class="center"><?= $d['no_batch'] ?></td>
+          <td class="center">
+            <?= !empty($d['tgl_exp']) ? date('d/m/Y', strtotime($d['tgl_exp'])) : '-' ?>
+          </td>
+          <td class="center"><?= $d['note_gudang'] ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+      <?php if(count($detail) > 1): ?>
+      <tfoot>
+        <tr class="bold">
+          <td colspan="2" class="right">Total</td>
+          <td class="center"><?= number_format($total, 3) ?> <?= $d['satuan'] ?></td>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+      <?php endif; ?>
+    </table>
   </div>
-
-
-
-  <!-- Tabel Barang -->
-
-  <table>
-
-    <thead>
-
-      <tr class="center bold">
-
-        <th width="5%">No</th>
-
-        <th width="40%">Nama Barang</th>
-
-        <th width="15%">Jumlah</th>
-
-        <th width="15%">No. Batch</th>
-
-        <th width="15%">Tgl Expired</th>
-
-        <th width="10%">Keterangan</th>
-
-      </tr>
-
-    </thead>
-
-    <tbody>
-
-      <?php 
-
-      $no = 1; 
-
-      $total = 0;
-
-      foreach ($detail as $d): 
-
-        $total += $d['jumlah_kirim'];
-
-        
-
-        // Format nama barang sesuai contoh PDF: "Gelatine: GLOBAL Bloom : 150 Mesh : 08"
-
-        $nama_barang_formatted = $d['nama_barang'];
-
-        if (!empty($d['bloom']) || !empty($d['mesh'])) {
-
-            $nama_barang_formatted .= " Bloom : " . $d['bloom'] . " Mesh : " . $d['mesh'];
-
-        }
-
-      ?>
-
-      <tr>
-
-        <td class="center"><?= $no++ ?></td>
-
-        <td><?= $nama_barang_formatted ?></td>
-
-        <td class="center"><?= number_format($d['jumlah_kirim'], 3) ?> <?= $d['satuan'] ?></td>
-
-        <td class="center"><?= $d['no_batch'] ?></td>
-
-        <td class="center">
-
-          <?= !empty($d['tgl_exp']) ? date('d/m/Y', strtotime($d['tgl_exp'])) : '-' ?>
-
-        </td>
-
-        <td class="center"><?= $d['note_gudang'] ?></td>
-
-      </tr>
-
-      <?php endforeach; ?>
-
-    </tbody>
-
-    <?php if(count($detail) > 1): ?>
-
-    <tfoot>
-
-      <tr class="bold">
-
-        <td colspan="2" class="right">Total</td>
-
-        <td class="center"><?= number_format($total, 3) ?> <?= $d['satuan'] ?></td>
-
-        <td colspan="3"></td>
-
-      </tr>
-
-    </tfoot>
-
-    <?php endif; ?>
-
-  </table>
-
-
 
   
-
-
-
-  <!-- Tanda Tangan -->
-
   <div class="footer">
-
     <table class="tab-footer" width="100%" style="border: none;">
-
       <tr>
-
         <td width="50%" style="text-align:left; vertical-align: top;">
-
           <p style="margin:0;">Penanggung Jawab PBF</p>
-
           <p style="margin:0;">Bogor, <?= date('d-m-Y', strtotime($row['tgl'])) ?></p>
-
-          <br><br><br>
-
-          <p style="margin:0;">_</p>
-
+          <div class="signature-space"></div>
+          <p style="margin:0;">_________________________</p>
           <p style="margin:0;"><u>apt. Ahmad Farhan, S.Farm</u></p>
-
-          <p style="margin:0; font-size: 10px;">500.16.7.2/251/SIPA-1/00233/DPMPTSP/2025</p>
-
+          <br>
+          <p style="margin:0; font-size: 9px;">500.16.7.2/251/SIPA-1/00233/DPMPTSP/2025</p>
         </td>
-
         <td width="50%" style="text-align:left; vertical-align: top;">
-
           <p style="margin:0;">Barang diterima dalam kondisi baik tanggal...... oleh :</p>
-
-          <br><br><br>
-
-          <p style="margin:0;">_</p>
-
+          <div class="signature-space"></div>
+          <p style="margin:0;">_________________________</p>
           <p style="margin:0;">Pandu A</p>
-
           <p style="margin:0;">Nama Jelas & Stempel Perusahaan</p>
-
         </td>
-
       </tr>
-
     </table>
-
-    <p style="font-size:10px; margin-top:20px; text-align:center;">
-
+    <br>
+    <br>
+    <p style="font-size:14px; margin-top:10px; text-align:center; border: 1px solid">
       <i>Pengembalian dan penukaran barang maksimum 7 hari setelah barang diterima</i>
-
     </p>
-
   </div>
-
-
 
 </body>
-
 </html>
