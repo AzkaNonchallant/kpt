@@ -39,21 +39,23 @@ class Invoice extends MY_Controller {
         $tgl2 = $this->input->get('date_until');
         $nama_barang = $this->input->get('nama_barang');
         $nama_customer = $this->input->get('nama_customer');
+        $data['result'] = $this->M_invoice->get()->result_array();
+        // echo json_encode($data['result']);
 
 
 		// $data['row'] = $this->customer_m->get();
-		$data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
-            for($i=0; $i<count($data['result']);$i++){
-            $d['id_mkt_po_customer'] = $data['result'][$i]['id_mkt_po_customer'];
-            $jml_sppb = $this->M_sppb->jml_sppb($d)->row_array();
-            // $a=0;
-            // for($o=0; $o<count($donasi);$o++){
-            //     $a+=$donasi[$o]['donasi'];
-            // }
-            $sisa=$data['result'][$i]['jumlah_po_customer']-$jml_sppb['tot_sppb'];
-            $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
-            $data['result'][$i]['sisa']=$sisa;
-        }
+		// $data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
+        //     for($i=0; $i<count($data['result']);$i++){
+        //     $d['id_mkt_po_customer'] = $data['result'][$i]['id_mkt_po_customer'];
+        //     $jml_sppb = $this->M_sppb->jml_sppb($d)->row_array();
+        //     // $a=0;
+        //     // for($o=0; $o<count($donasi);$o++){
+        //     //     $a+=$donasi[$o]['donasi'];
+        //     // }
+        //     $sisa=$data['result'][$i]['jumlah_po_customer']-$jml_sppb['tot_sppb'];
+        //     $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
+        //     $data['result'][$i]['sisa']=$sisa;
+        // }
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
