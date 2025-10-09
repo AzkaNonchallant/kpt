@@ -721,21 +721,22 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#edit').on('show.bs.modal', function (event) {
-
-      function formatRupiah(angka) {
-    if (!angka) return '';
-    let number_string = angka.toString().replace(/[^,\d]/g, ''),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-    if (ribuan) {
-      let separator = sisa ? '.' : '';
-      rupiah += separator + ribuan.join('.');
-    }
-    return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+    function formatRupiah(angka) {
+  if (!angka) return '';
+  let number_string = angka.toString().replace(/[^,\d]/g, ''),
+      split = number_string.split(','),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+  if (ribuan) {
+    let separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
   }
+  return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+  }
+    $('#edit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+
 
   var id_prc_po_pembelian = $(event.relatedTarget).data('id_prc_po_pembelian') 
   var no_po_pembelian = $(event.relatedTarget).data('no_po_pembelian')
@@ -820,9 +821,16 @@ $(document).ready(function() {
       value = new Intl.NumberFormat('id-ID').format(value);
       this.value = value;
     });
+     // === Perhitungan otomatis total harga ===
+    $("#e-jumlah_po_pembelian, #e-harga_po_pembelian").on('keyup change', function() {
+      let jumlah = parseFloat($("#e-jumlah_po_pembelian").val().replace(/\./g,'')) || 0;
+      let harga = parseFloat($("#e-harga_po_pembelian").val().replace(/\./g,'')) || 0;
+      let total = jumlah * harga;
+      $("#e-total_harga").val(formatRupiah(total));
+    });
+  });
 
 })
 
-})
 
 </script>
