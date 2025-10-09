@@ -205,53 +205,59 @@ class Invoice extends MY_Controller {
 	}
     // PDF per invoice
 
-    public function pdf_invoice($id) {
-        // === 1. Setup Dompdf options ===
-        $options = new \Dompdf\Options();
-            $options->set('isRemoteEnabled', false);
-            $options->set('isFontSubsettingEnabled', false);
-            $options->set('defaultFont', 'Helvetica');
-            $options->set('enable_font_subsetting', true);
-            $options->set('dpi', 90);
-            $options->set('chroot', FCPATH);
-            $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
-            $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
-        $dompdf = new \Dompdf\Dompdf($options);
+    // public function pdf_invoice($id) {
+    //     // === 1. Setup Dompdf options ===
+    //     $options = new \Dompdf\Options();
+    //         $options->set('isRemoteEnabled', false);
+    //         $options->set('isFontSubsettingEnabled', false);
+    //         $options->set('defaultFont', 'Helvetica');
+    //         $options->set('enable_font_subsetting', true);
+    //         $options->set('dpi', 90);
+    //         $options->set('chroot', FCPATH);
+    //         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+    //         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+    //     $dompdf = new \Dompdf\Dompdf($options);
 
-        // === 2. Ambil data invoice ===
-        $invoice_data = $this->M_invoice->get_by_id($id);
+    //     // === 2. Ambil data invoice ===
+    //     $invoice_data = $this->M_invoice->get_by_id($id);
         
-        if (!$invoice_data) {
-            show_404();
-        }
+    //     if (!$invoice_data) {
+    //         show_404();
+    //     }
         
-        if (is_array($invoice_data)) {
-            $data['invoice'] = (object)$invoice_data;
-        } else {
-            $data['invoice'] = $invoice_data;
-        }
+    //     if (is_array($invoice_data)) {
+    //         $data['invoice'] = (object)$invoice_data;
+    //     } else {
+    //         $data['invoice'] = $invoice_data;
+    //     }
 
-        // === 3. Load view HTML ===
-        $html = $this->load->view('content/accounting/invoice_single_pdf', $data, TRUE);
+    //     // === 3. Load view HTML ===
+    //     $html = $this->load->view('content/accounting/invoice_single_pdf', $data, TRUE);
 
-        // === 4. Set ukuran kertas ===
-        $dompdf->setPaper('A4', 'portrait');
+    //     // === 4. Set ukuran kertas ===
+    //     $dompdf->setPaper('A4', 'portrait');
 
-        // === 5. Render ===
-        $dompdf->loadHtml($html);
-        $dompdf->render();
+    //     // === 5. Render ===
+    //     $dompdf->loadHtml($html);
+    //     $dompdf->render();
 
-        // === 6. Tambah footer nomor halaman ===
-        $canvas = $dompdf->getCanvas();
-        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
-            $text = "Halaman $pageNumber dari $pageCount";
-            $font = $fontMetrics->getFont("Helvetica", "normal");
-            $size = 9;
-            $width = $fontMetrics->getTextWidth($text, $font, $size);
-            $canvas->text(550 - $width, 820, $text, $font, $size);
-        });
+    //     // === 6. Tambah footer nomor halaman ===
+    //     $canvas = $dompdf->getCanvas();
+    //     $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+    //         $text = "Halaman $pageNumber dari $pageCount";
+    //         $font = $fontMetrics->getFont("Helvetica", "normal");
+    //         $size = 9;
+    //         $width = $fontMetrics->getTextWidth($text, $font, $size);
+    //         $canvas->text(550 - $width, 820, $text, $font, $size);
+    //     });
 
-        // === 7. Output ke browser ===
-        $dompdf->stream("Invoice_".$data['invoice']->no_invoice.".pdf", ["Attachment" => false]);
+    //     // === 7. Output ke browser ===
+    //     $dompdf->stream("Invoice_".$data['invoice']->no_invoice.".pdf", ["Attachment" => false]);
+    // }
+
+    // ==PDF INVOICE
+    public function pdf_invoice()
+    {
+        
     }
 }
