@@ -165,7 +165,7 @@
                                                                   data-invoice="<?= $k['invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
-                                                                  <i class="feather icon-package"></i>Kirim
+                                                                  <i class="feather icon-package"></i>Buat Invoice
                                                                 </button>
                                                               </div>
                                                               <?php } ?>
@@ -496,7 +496,10 @@ $(document).ready(function() {
           <div class="col-md-3">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">No inovoice</label>
-                    <input type="text" class="form-control" id="k-no_invoice" name="no_invoice" placeholder="No Invoice"  autocomplete="off" required>
+                    <input type="text" class="form-control" id="k-no_invoice" name="no_invoice" placeholder="No Invoice" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                     <div id="validationServer03Feedback" class="invalid-feedback">
+                      Maaf No Invoice sudah ada
+                    </div>
                 </div>
           </div>
           <div class="col-md-3">
@@ -560,19 +563,19 @@ $(document).ready(function() {
     event.stopPropagation();
   });
 
-  $("#k-no_po").keyup(function(){
-      var no_po =  $("#k-no_po").val();
+  $("#k-no_invoice").keyup(function(){
+      var no_invoice =  $("#k-no_invoice").val();
       jQuery.ajax({
-        url: "<?=base_url()?>marketing/po_customer/cek_no_po",
+        url: "<?=base_url()?>accounting/invoice/cek_no_invoice",
         dataType:'text',
         type: "post",
-        data:{no_po:no_po},
+        data:{no_invoice:no_invoice},
         success:function(response){
           if (response =="true") {
-            $("#k-no_po").addClass("is-invalid");
+            $("#k-no_invoice").addClass("is-invalid");
             $("#simpan").attr("disabled","disabled");
           }else{
-            $("#k-no_po").removeClass("is-invalid");
+            $("#k-no_invoice").removeClass("is-invalid");
             $("#simpan").removeAttr("disabled");
           }
         }            

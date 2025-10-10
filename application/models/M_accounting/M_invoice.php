@@ -89,4 +89,11 @@ class M_invoice extends CI_Model {
 
         return $this->db->query($sql);
     }
+
+     public function cek_no_invoice($no_invoice){
+        $sql = "
+            SELECT COUNT(a.no_invoice) count_ni FROM tb_acc_invoice a
+            WHERE a.no_invoice = '$no_invoice' AND a.is_deleted = 0";
+        return $this->db->query($sql);
+    }
 }
