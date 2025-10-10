@@ -35,11 +35,20 @@ class M_invoice extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-            INSERT INTO tb_acc_invoice (id_mkt_po_customer, no_invoice, tgl_invoice, op_acc, created_at, created_by, updated_at, updated_by, is_deleted) 
-            VALUES('$data[id_mkt_po_customer]', '$data[no_invoice]', '$data[tgl_invoice]', '$id_user', NOW(), $id_user, '0000-00-00', '0', '0')
+            INSERT INTO tb_acc_invoice (id_mkt_po_customer, no_invoice, tgl_invoice, status_invoice ,op_acc, created_at, created_by, updated_at, updated_by, is_deleted) 
+            VALUES('$data[id_mkt_po_customer]', '$data[no_invoice]', '$data[tgl_invoice]','Unpaid' ,'$id_user', NOW(), $id_user, '0000-00-00', '0', '0')
         ";
 
-        return $this->db->query($sql);
+        $this->db->query($sql);
+
+        $sql2 = "
+        UPDATE tb_mkt_po_customer
+        SET invoice='Selesai', updated_at=NOW(), updated_by='$id_user'
+        WHERE id_mkt_po_customer='$data[id_mkt_po_customer]'
+        "; 
+        $this->db->query($sql2);
+
+        return TRUE;
     }
 
     public function is_invoice_exist($id_po)
@@ -48,5 +57,12 @@ class M_invoice extends CI_Model {
     $cek = $this->db->get('tb_acc_invoice')->num_rows();
     return $cek > 0; // true jika sudah ada invoice
 }
+
+ public function cek_order()
+    {
+        $sql = "
+            SELECT COUNT(invoice) as tot_status_invoice FROM tb_mkt_po_customer WHERE invoice = 'Belum' AND is_deleted = 0";
+        return $this->db->query($sql);
+    }
 
 }

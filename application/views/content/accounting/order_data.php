@@ -13,7 +13,7 @@
                                     </div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:">Invoice</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Order</a></li>
                                         <!-- <li class="breadcrumb-item"><a href="javascript:"></a></li> -->
                                         <!-- Button trigger modal -->
                       										<!-- <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
@@ -33,7 +33,7 @@
                                 <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Data Invoice</h5>
+                                            <h5>Data Order</h5>
 
                                             <div class="float-right">
                                               <div class="input-group">
@@ -56,7 +56,7 @@
                                                         <div class="input-group-append">
                                                             <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                                                             <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                                                            <a href="<?=base_url()?>marketing/po_customer" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                                                            <a href="<?=base_url()?>accounting/order" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                                                         </div>
                                                     </div>
                                               </div>
@@ -113,7 +113,7 @@
                                                             <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <!-- <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td> -->
-                                                            <td><?=$k['status_invoice']?></td>
+                                                            <td><?=$k['invoice']?></td>
                                                             <td class="text-center">
                                                               <div class="btn-group " role="group" aria-label="Basic example">
                                                                 <button type="button" 
@@ -134,7 +134,7 @@
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
-                                                                  data-status_invoice="<?= $k['status_invoice']?>"
+                                                                  data-invoice="<?= $k['invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
                                                                   <i class="feather icon-eye"></i>Detail
@@ -162,7 +162,7 @@
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
-                                                                  data-status_invoice="<?= $k['status_invoice']?>"
+                                                                  data-invoice="<?= $k['invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
                                                                   <i class="feather icon-package"></i>Kirim
@@ -204,9 +204,9 @@
       var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
       
       if (filter_tgl =='' && filter_tgl2 !='') {
-        window.location = "<?=base_url()?>marketing/po_customer?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?=base_url()?>accouting/order?alert=warning&msg=dari tanggal belum diisi";
       }else if (filter_tgl !='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>marketing/po_customer?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?=base_url()?>accounting/order?alert=warning&msg=sampai tanggal belum diisi";
       }else{
         const query = new URLSearchParams({
                     nama_customer: filter_customer,
@@ -215,7 +215,7 @@
                     date_until: filter_tgl2
                 })
 
-        window.location = "<?=base_url() ?>accounting/invoice?"+ query.toString()
+        window.location = "<?=base_url() ?>accounting/order?"+ query.toString()
         
       }
     })
@@ -364,7 +364,7 @@ $(document).ready(function() {
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
-  var status_invoice = $(event.relatedTarget).data('status_invoice')
+  var invoice = $(event.relatedTarget).data('invoice')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
 
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
@@ -380,7 +380,7 @@ $(document).ready(function() {
   $(this).find('#v-harga_po').val(harga_po)
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
-  $(this).find('#v-status').val(status_invoice)
+  $(this).find('#v-status').val(invoice)
   $(this).find('#v-mkt_admin').val(mkt_admin)
 
 
@@ -479,7 +479,7 @@ $(document).ready(function() {
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Status</label>
-                      <input type="text" class="form-control" id="k-status_invoice" name="status" placeholder="Status Invoice" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="k-invoice" name="status" placeholder="Status Invoice" autocomplete="off" readonly>
                 </div>
             </div>
             <div class="col-md-3">
@@ -538,7 +538,7 @@ $(document).ready(function() {
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
-  var status_invoice = $(event.relatedTarget).data('status_invoice')
+  var invoice = $(event.relatedTarget).data('invoice')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
 
   $(this).find('#k-id_mkt_po_customer').val(id_mkt_po_customer)
@@ -551,7 +551,7 @@ $(document).ready(function() {
   $(this).find('#k-jumlah_po').val(jumlah_po)
   $(this).find('#k-harga_po').val(harga_po)
   $(this).find('#k-jenis_pembayaran').val(jenis_pembayaran)
-  $(this).find('#k-status_invoice').val(status_invoice)
+  $(this).find('#k-invoice').val(invoice)
   $(this).find('#k-mkt_admin').val(mkt_admin)
 
 

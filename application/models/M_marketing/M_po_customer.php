@@ -59,8 +59,8 @@ class M_po_customer extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-        INSERT INTO tb_mkt_po_customer(no_po_customer, tgl_po_customer, id_customer, id_barang,kode_tf_in, jumlah_po_customer, harga_po_customer, jenis_pembayaran_customer,status_invoice,mkt_admin,created_at, created_by, updated_at, updated_by, is_deleted) 
-        VALUES ('$data[no_po]','$data[tgl_po]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po]','$data[harga_po]','$data[jenis_pembayaran]','Unpaid','$data[mkt_admin]', NOW(),'$id_user','0000-00-00 00:00:00','','0')
+        INSERT INTO tb_mkt_po_customer(no_po_customer, tgl_po_customer, id_customer, id_barang,kode_tf_in, jumlah_po_customer, harga_po_customer, jenis_pembayaran_customer,invoice,mkt_admin,created_at, created_by, updated_at, updated_by, is_deleted) 
+        VALUES ('$data[no_po]','$data[tgl_po]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po]','$data[harga_po]','$data[jenis_pembayaran]','Belum','$data[mkt_admin]', NOW(),'$id_user','0000-00-00 00:00:00','','0')
         ";
         return $this->db->query($sql);
     }

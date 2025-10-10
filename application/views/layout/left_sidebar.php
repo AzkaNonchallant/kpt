@@ -79,7 +79,12 @@
                             <li class="nav-item pcoded-menu-caption">
                         <label>Accounting</label>
                         <li class="nav-item <?=$uri == 'invoice'?'active':''?>">
-                        <a href="<?=base_url('accounting/order')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-briefcase"></i></span><span class="pcoded-mtext">Order</span></a>
+                        <a href="<?=base_url('accounting/order')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-briefcase"></i></span><span class="pcoded-mtext">Order
+                                        <?php if ($cek_order != 0) { ?>
+                                        <span class="badge badge-pill badge-warning"><?= $cek_order ?></span>
+                                    <?php } ?>
+                        </span>
+                    </a>
                     </li>
                             <li class="nav-item <?=$uri == 'invoice'?'active':''?>">
                         <a href="<?=base_url('accounting/invoice')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-money-bill-wave"></i></span><span class="pcoded-mtext">Invoice</span></a>
