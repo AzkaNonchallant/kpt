@@ -156,12 +156,6 @@ class Invoice extends MY_Controller {
     public function update_status()
 	{
         $data['id_mkt_po_customer'] = $this->input->post('id_mkt_po_customer',TRUE);
-		// $data['no_po'] = $this->input->post('no_po',TRUE);
-        // $data['tgl_po'] = $this->convertDate($this->input->post('tgl_po',TRUE));
-        // $data['id_customer'] = $this->input->post('id_customer',TRUE);
-        // $data['id_barang'] = $this->input->post('id_barang',TRUE);
-        // $data['jumlah_po'] = $this->input->post('jumlah_po',TRUE);
-        // $data['harga_po'] = $this->input->post('harga_po',TRUE);
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran',TRUE);
         $data['status_invoice'] = $this->input->post('status_invoice', TRUE);
         $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
@@ -174,58 +168,22 @@ class Invoice extends MY_Controller {
             header('location:'.base_url('accounting/invoice').'?alert=danger&msg=Maaf anda gagal meng-update Data Invoice');
         }
 	}
-    // PDF per invoice
 
-    // public function pdf_invoice($id) {
-    //     // === 1. Setup Dompdf options ===
-    //     $options = new \Dompdf\Options();
-    //         $options->set('isRemoteEnabled', false);
-    //         $options->set('isFontSubsettingEnabled', false);
-    //         $options->set('defaultFont', 'Helvetica');
-    //         $options->set('enable_font_subsetting', true);
-    //         $options->set('dpi', 90);
-    //         $options->set('chroot', FCPATH);
-    //         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
-    //         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
-    //     $dompdf = new \Dompdf\Dompdf($options);
+    // === CEK NO INVOICE
 
-    //     // === 2. Ambil data invoice ===
-    //     $invoice_data = $this->M_invoice->get_by_id($id);
-        
-    //     if (!$invoice_data) {
-    //         show_404();
-    //     }
-        
-    //     if (is_array($invoice_data)) {
-    //         $data['invoice'] = (object)$invoice_data;
-    //     } else {
-    //         $data['invoice'] = $invoice_data;
-    //     }
+public function cek_no_invoice(){
+        $no_invoice = $this->input->post('no_invoice',TRUE);
 
-    //     // === 3. Load view HTML ===
-    //     $html = $this->load->view('content/accounting/invoice_single_pdf', $data, TRUE);
+        $row = $this->M_invoice->cek_no_invoice($no_invoice)->row_array();
+        if ($row['count_ni'] == 0) {
+            echo "false";
+        }else{
+            echo "true";
+        }
+    }
 
-    //     // === 4. Set ukuran kertas ===
-    //     $dompdf->setPaper('A4', 'portrait');
 
-    //     // === 5. Render ===
-    //     $dompdf->loadHtml($html);
-    //     $dompdf->render();
-
-    //     // === 6. Tambah footer nomor halaman ===
-    //     $canvas = $dompdf->getCanvas();
-    //     $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
-    //         $text = "Halaman $pageNumber dari $pageCount";
-    //         $font = $fontMetrics->getFont("Helvetica", "normal");
-    //         $size = 9;
-    //         $width = $fontMetrics->getTextWidth($text, $font, $size);
-    //         $canvas->text(550 - $width, 820, $text, $font, $size);
-    //     });
-
-    //     // === 7. Output ke browser ===
-    //     $dompdf->stream("Invoice_".$data['invoice']->no_invoice.".pdf", ["Attachment" => false]);
-    // }
-
+    // === END
     // ==PDF INVOICE
     public function pdf_invoice($id)
     {
