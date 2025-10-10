@@ -41,4 +41,12 @@ class M_invoice extends CI_Model {
 
         return $this->db->query($sql);
     }
+
+    public function is_invoice_exist($id_po)
+{
+    $this->db->where('id_mkt_po_customer', $id_po);
+    $cek = $this->db->get('tb_acc_invoice')->num_rows();
+    return $cek > 0; // true jika sudah ada invoice
+}
+
 }
