@@ -42,7 +42,6 @@ class Invoice extends MY_Controller {
         $data['result'] = $this->M_invoice->get()->result_array();
         // echo json_encode($data['result']);
 
-
 		// $data['row'] = $this->customer_m->get();
 		// $data['result'] = $this->M_po_customer->get($tgl, $tgl2, $nama_barang, $nama_customer);
         //     for($i=0; $i<count($data['result']);$i++){

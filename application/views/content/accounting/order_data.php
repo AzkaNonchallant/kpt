@@ -143,7 +143,7 @@
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group <?=$ds?>" role="group" aria-label="Basic example">
-                                                              <?php if ($level === "0") { ?>
+                                                              <?php if ($level === "0" && !$k['is_invoice_exist']) { ?>
                                                                  <button type="button" 
                                                                   class="btn btn-success btn-square btn-sm" 
                                                                   data-toggle="modal" 

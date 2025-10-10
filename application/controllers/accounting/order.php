@@ -42,6 +42,9 @@ class Order extends MY_Controller {
             $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
             $data['result'][$i]['sisa']=$sisa;
         }
+        foreach ($data['result'] as &$row) {
+            $row['is_invoice_exist'] = $this->M_invoice->is_invoice_exist($row['id_mkt_po_customer']);
+        }
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
@@ -64,9 +67,9 @@ class Order extends MY_Controller {
         $respon = $this->M_invoice->add($data);
 		// echo $respon;
         if($respon){
-        	header('location:'.base_url('accounting/invoice').'?alert=success&msg=Selamat anda berhasil Menambahkan data invoice');
+        	header('location:'.base_url('accounting/order').'?alert=success&msg=Selamat anda berhasil Menambahkan data invoice');
         }else{
-        	header('location:'.base_url('accounting/invoice').'?alert=danger&msg=Maaf anda gagal menambahkan invoice');
+        	header('location:'.base_url('accounting/order').'?alert=danger&msg=Maaf anda gagal menambahkan invoice');
         }
     }
 }
