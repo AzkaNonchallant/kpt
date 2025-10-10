@@ -1,75 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <title>Laporan Invoice</title>
-    <style>
-        body { font-family: Helvetica, Arial, sans-serif; margin: 20px; font-size: 11px; }
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
-        .header h1 { margin: 0; color: #333; font-size: 16px; }
-        .filter-info { margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 5px; }
-        .table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        .table th, .table td { border: 1px solid #ddd; padding: 6px; text-align: left; }
-        .table th { background-color: #f2f2f2; font-weight: bold; }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .footer { margin-top: 20px; text-align: center; font-size: 9px; color: #666; }
-        .total-row { font-weight: bold; background-color: #e9e9e9; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  <style>
+    body { font-family: sans-serif; font-size: 12px; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #000; padding: 6px; }
+    .no-border td, .no-border th { border: none; }
+    .right { text-align: right; }
+    .center { text-align: center; }
+    .bold { font-weight: bold; }
+    .title { text-align: center; margin-bottom: 10px; }
+    .section-title { font-weight: bold; margin-top: 15px; }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>LAPORAN INVOICE</h1>
-    </div>
 
-    <div class="filter-info">
-        <strong>Filter:</strong>
-        <?php if (!empty($filter['date_from']) && !empty($filter['date_until'])): ?>
-            Periode: <?php echo date('d/m/Y', strtotime($filter['date_from'])); ?> - <?php echo date('d/m/Y', strtotime($filter['date_until'])); ?>
-        <?php endif; ?>
-        <?php if (!empty($filter['customer'])): ?>
-            | Customer: <?php echo $filter['customer']; ?>
-        <?php endif; ?>
-    </div>
+  <!-- HEADER -->
+  <h2 class="title">FAKTUR / INVOICE</h2>
+  <table class="no-border">
+    <?php foreach($res_customer as $invoice) :  ?>
+    <tr>
+      <td><b>No :</b> <?= $invoice['no_invoice'] ?? 'KPT0001/2025' ?></td>
+    </tr>
+  </table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>No Invoice</th>
-                <th>Customer</th>
-                <th>Tanggal</th>
-                <th>Total</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $no = 1;
-            $total_all = 0;
-            foreach ($invoices as $inv): 
-                $total_all += $inv->total;
-            ?>
-            <tr>
-                <td class="text-center"><?php echo $no++; ?></td>
-                <td><?php echo $inv->no_invoice; ?></td>
-                <td><?php echo $inv->nama_customer; ?></td>
-                <td class="text-center"><?php echo date('d/m/Y', strtotime($inv->tgl_invoice)); ?></td>
-                <td class="text-right">Rp <?php echo number_format($inv->total, 0, ',', '.'); ?></td>
-                <td class="text-center"><?php echo $inv->status; ?></td>
-            </tr>
-            <?php endforeach; ?>
-            <tr class="total-row">
-                <td colspan="4" class="text-center"><strong>TOTAL</strong></td>
-                <td class="text-right"><strong>Rp <?php echo number_format($total_all, 0, ',', '.'); ?></strong></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+  <br>
 
-    <div class="footer">
-        <p>Dicetak pada: <?php echo date('d/m/Y H:i:s'); ?></p>
-        <p>Laporan ini dibuat secara otomatis</p>
-    </div>
+  <!-- DATA PENGUSAHA -->
+  <table class="no-border">
+    <tr><td colspan="2" class="bold">PENGUSAHA KENA PAJAK</td></tr>
+    <tr><td width="20%">Nama</td><td>: PT. KAPSULINDO PUTRA TRADING</td></tr>
+    <tr><td>Alamat</td><td>: Jl. Pancasila I, Cicadas, Gunung Putri</td></tr>
+    <tr><td>NPWP</td><td>: 1000.0000.0078.2717</td></tr>
+  </table>
+
+  <br>
+
+  <!-- DATA PEMBELI -->
+  <table class="no-border">
+    <tr><td colspan="2" class="bold">Pembeli Barang Kena Pajak / Penerima Jasa</td></tr>
+    <tr><td width="20%">Nama</td><td>: <?= $invoice['nama_customer'] ?? 'PT. ABC' ?></td></tr>
+    <tr><td>Alamat</td><td>: <?= $invoice['alamat_customer'] ?? 'Jl. Papandayan V , Gunung Putri - Bogor' ?></td></tr>
+    <tr><td>NPWP</td><td>: <?= $invoice['npwp_customer'] ?? '0000.0000.0000.0000' ?></td></tr>
+  </table>
+
+  <br>
+<?php  endforeach; ?>
+  <!-- TABEL BARANG -->
+  <table>
+    <thead>
+      <tr class="center bold">
+        <th>No</th>
+        <th>Barang / Jasa</th>
+        <th>Kuantitas</th>
+        <th>Harga Satuan</th>
+        <th>Harga Jual / Penggantian</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $no=1; $total=0; foreach ($items as $item): ?>
+      <tr>
+        <td class="center"><?= $no++ ?></td>
+        <td>Nama Barang:<?= $item['nama_barang'] ?> | Mesh:<?= $item['mesh']?> | Bloom:<?= $item['bloom']?></td>
+        <td class="center"><?= number_format($item['jumlah_po_customer'], 2, ',', '.') ?> <?= $item['satuan'] ?></td>
+        <td class="right">Rp. <?= number_format($item['harga_po_customer'], 2, ',', '.') ?></td>
+        <td class="right">Rp. <?= number_format($item['jumlah_po_customer'] * $item['harga_po_customer'], 2, ',', '.') ?></td>
+      </tr>
+      <?php $total += ($item['jumlah_po_customer'] * $item['harga_po_customer']); endforeach; ?>
+    </tbody>
+  </table>
+
+  <br>
+  <table class="no-border">
+    <tr>
+      <td class="right bold">Jumlah Harga Jual :</td>
+      <td class="right bold" width="25%">Rp. <?= number_format($total, 2, ',', '.') ?> Rp</td>
+    </tr>
+  </table>
+
+  <br>
+
+  <!-- BAGIAN FAKTUR -->
+  <table class="no-border">
+    <tr><td class="section-title">FAKTUR / INVOICE</td></tr>
+  </table>
+
+  <table>
+    <tr><td>Jumlah Harga Jual</td><td class="right">Rp. <?= number_format($total, 2, ',', '.') ?></td></tr>
+    <tr><td>Dikurangi potongan / uang muka</td><td class="right">Rp - </td></tr>
+    <?php
+      $dpp = ($total * 11) / 12;
+      $ppn = $dpp * 0.12;
+      $materai = 10000;
+      $grand_total = $dpp + $ppn + $materai;
+    ?>
+    <tr><td>Dasar Pengenaan Pajak (11/12 x Harga Jual)</td><td class="right">Rp.<?= number_format($dpp, 2, ',', '.') ?></td></tr>
+    <tr><td>PPN (12%)</td><td class="right">Rp. <?= number_format($ppn, 2, ',', '.') ?></td></tr>
+    <tr><td>Materai</td><td class="right">Rp. <?= number_format($materai, 2, ',', '.') ?></td></tr>
+    <tr class="bold"><td>Jumlah yang harus dibayar</td><td class="right">Rp. <?= number_format($grand_total, 2, ',', '.') ?></td></tr>
+  </table>
+
+  <br>
+
+  <!-- CATATAN -->
+   <?php  foreach ($res_customer as $invoice) ?>
+  <p><b>Catatan :</b></p>
+  <p>1. Pembayaran dengan giro/cheque atau transfer atas nama bila dibubuhi materai secukupnya.</p>
+  <p>2. Bank: BCA Cabang Gama Tower - Jakarta Selatan</p>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;a/n PT. KAPSULINDO NUSANTARA<br>&nbsp;&nbsp;&nbsp;&nbsp;a/c. 504.0000000</p>
+  <p>3. Tgl Jatuh Tempo: <?= date('d F Y', strtotime($invoice['tgl_jatuh_tempo'] ?? '2025-10-31')) ?></p>
+
+  <br><br>
+  <p class="right">Bogor, <?= date('d F Y', strtotime($invoice['tgl_invoice'] ?? '2025-10-01')) ?><br><br><br>
+  <b><?= $invoice['nama_admin'] ?? 'SRI WULAN' ?></b></p>
+
 </body>
 </html>

@@ -132,7 +132,7 @@
                                                               </div>
                                                              <a target="_blank"
                                                                 class="btn btn-info btn-square text-light btn-sm"
-                                                                onclick="window.open(`<?= base_url() ?>accounting/invoice/pdf_invoice/<?= $k['id_mkt_po_customer'] ?>`, 'invoice_pdf', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');">
+                                                                onclick="window.open(`<?= base_url() ?>accounting/invoice/pdf_invoice/<?= $k['id_acc_invoice'] ?>`, 'invoice_pdf', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');">
                                                                 <i class="feather icon-file"></i>Cetak PDF
                                                               </a>
                                     
