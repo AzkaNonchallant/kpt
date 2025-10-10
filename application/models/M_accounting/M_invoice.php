@@ -65,4 +65,28 @@ class M_invoice extends CI_Model {
         return $this->db->query($sql);
     }
 
+    public function data_customer_pdf($id)
+    {
+        $sql = "
+        SELECT a.*,b.id_customer,c.nama_customer,c.alamat_customer FROM tb_acc_invoice a
+        LEFT JOIN tb_mkt_po_customer b ON a.id_mkt_po_customer = b.id_mkt_po_customer
+        LEFT JOIN tb_master_customer c ON b.id_customer = c.id_customer
+        WHERE a.is_deleted = 0 AND id_acc_invoice = '$id'
+        ";
+
+        return $this->db->query($sql);
+    }
+
+    public function data_pdf($id)
+    {
+        $sql = "
+        SELECT a.*, b.*,c.nama_customer,c.alamat_customer,d.nama_barang,d.mesh,d.bloom,d.satuan FROM tb_acc_invoice a
+        LEFT JOIN tb_mkt_po_customer b ON a.id_mkt_po_customer = b.id_mkt_po_customer
+        LEFT JOIN tb_master_customer c ON b.id_customer = c.id_customer
+        LEFT JOIN tb_master_barang d ON b.id_barang = d.id_barang
+        WHERE a.is_deleted = '0' AND  id_acc_invoice = '$id'
+        ";
+
+        return $this->db->query($sql);
+    }
 }

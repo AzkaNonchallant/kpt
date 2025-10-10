@@ -16,18 +16,6 @@ class Invoice extends MY_Controller {
         // Remove M_invoice_item since it doesn't exist
     }
 
-    // tampil semua data invoice dengan filter
-    // public function index() {
-    //     $nama_customer = $this->input->get('nama_customer');
-    //     $date_from = $this->input->get('date_from');
-    //     $date_until = $this->input->get('date_until');
-        
-    //     $data['invoice'] = $this->M_invoice->get_all($nama_customer, $date_from, $date_until);
-    //     $data['res_customer'] = $this->M_invoice->get_customers();
-    //     $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
-    //     // echo json_encode($data['res_barang']);
-    //     $this->template->load('template','content/accounting/invoice_data', $data);
-    // }
     private function convertDate($date)
     {
         return explode('/', $date)[2]."-".explode('/', $date)[1]."-".explode('/', $date)[0];
@@ -163,24 +151,6 @@ class Invoice extends MY_Controller {
         redirect('accounting/invoice');
     }
 
-    // export PDF
-    public function export_pdf() {
-        $customer = $this->input->get('customer');
-        $date_from = $this->input->get('date_from');
-        $date_until = $this->input->get('date_until');
-        
-        $data['invoice'] = $this->M_invoice->get_all($customer, $date_from, $date_until);
-        $data['filter'] = [
-            'customer' => $customer,
-            'date_from' => $date_from,
-            'date_until' => $date_until
-        ];
-        
-        // Load library PDF
-        $this->load->library('pdf');
-        $html = $this->load->view('content/accounting/invoice_pdf', $data, true);
-        $this->pdf->generate($html, 'laporan_invoice_'.date('YmdHis'));
-    }
 
     
     public function update_status()
@@ -257,8 +227,46 @@ class Invoice extends MY_Controller {
     // }
 
     // ==PDF INVOICE
-    public function pdf_invoice()
+    public function pdf_invoice($id)
     {
-        
+         if (ob_get_length()) ob_end_clean();
+    try {
+        // === 1️⃣ Setting optimal Dompdf ===
+        $options = new \Dompdf\Options();
+        // $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        // $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 96);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+
+        // === 2️⃣ Ambil data dari model ===
+        $invoice['res_customer'] = $this->M_invoice->data_customer_pdf($id)->result_array();
+        $invoice['items'] = $this->M_invoice->data_pdf($id)->result_array();
+        // echo json_encode($invoice['res_customer']);
+        // === 3️⃣ Load HTML View ===
+        $html = $this->load->view('content/accounting/pdf/invoice_pdf', $invoice, TRUE);
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'potrait');
+    // if (file_exists($cache)) {
+    //     readfile($cache);
+    //     exit;
+    // }
+    $dompdf->render();
+    // file_put_contents($cache, $dompdf->output());
+    $dompdf->stream("Data_Invoice_$id.pdf", ["Attachment" => false]);
+    } 
+    catch (Exception $e) {
+        // Tangani semua error (bukan cuma MpdfException)
+        log_message('error', 'PDF Surat Jalan gagal dibuat: ' . $e->getMessage());
+        echo 'Terjadi kesalahan saat membuat PDF. Coba lagi nanti.';
     }
+
+    exit;
+}
 }
