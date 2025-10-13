@@ -195,7 +195,7 @@ public function cek_no_invoice(){
         // $options->set('isFontSubsettingEnabled', false);
         $options->set('defaultFont', 'Helvetica');
         $options->set('enable_font_subsetting', true);
-        $options->set('dpi', 96);
+        $options->set('dpi', 100);
         $options->set('chroot', FCPATH);
         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');

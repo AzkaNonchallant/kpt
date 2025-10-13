@@ -68,6 +68,7 @@ class po_customer extends MY_Controller {
         $data['jumlah_po'] = str_replace('.', '', $data['jumlah_po']); // Hapus titik pemisah ribuan
         $data['harga_po'] = $this->input->post('harga_po',TRUE);
         $data['harga_po'] = str_replace('.', '', $data['harga_po']); // Hapus titik pemisah ribuan
+        $data['keterangan'] = $this->input->post('keterangan',TRUE);
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran',TRUE);
         $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
 
@@ -88,6 +89,7 @@ class po_customer extends MY_Controller {
         $data['id_barang'] = $this->input->post('id_barang',TRUE);
         $data['jumlah_po'] = $this->input->post('jumlah_po',TRUE);
         $data['harga_po'] = $this->input->post('harga_po',TRUE);
+        $data['keterangan'] = $this->input->post('keterangan',TRUE);
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran',TRUE);
         $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
         

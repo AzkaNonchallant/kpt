@@ -133,6 +133,7 @@
                                                                   data-bloom="<?=$k['bloom']?>"
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
@@ -159,6 +160,7 @@
                                                                   data-bloom="<?=$k['bloom']?>"
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
@@ -367,6 +369,13 @@
                 <label for="total_harga">Jumlah Harga (Rp)</label>
                 <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="note_gudang">Keterangan Po</label>
+                        <textarea class="form-control" id="note_gudang" name="keterangan" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
+                </div>
             </div>
   
             <div class="col-md-4">
@@ -590,6 +599,13 @@
                 <input type="text" class="form-control" id="v-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="note_gudang">Keterangan Po</label>
+                        <textarea class="form-control" id="v-keterangan" name="keterangan_po" rows="3" placeholder="Note Untuk Gudang" autocomplete="off" readonly></textarea>
+                </div>
+            </div>
   
             <div class="col-md-6">
                   <div class="form-group">
@@ -619,8 +635,9 @@ $(document).ready(function() {
     $('#detail').on('show.bs.modal', function (event) {
 
       function formatRupiah(angka) {
+        if (!angka) return '0';
       let number_string = angka.replace(/[^,\d]/g, '').toString(),
-          split   		= number_string.split(','),
+          split   		= number_string.split('.'),
           sisa     		= split[0].length % 3,
           rupiah     	= split[0].substr(0, sisa),
           ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
@@ -644,6 +661,7 @@ $(document).ready(function() {
   var bloom = $(event.relatedTarget).data('bloom') 
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
+  var keterangan = $(event.relatedTarget).data('keterangan')
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
   
@@ -657,8 +675,9 @@ $(document).ready(function() {
   $(this).find('#v-id_barang').trigger("chosen:updated");
   $(this).find('#v-mesh').val(mesh)
   $(this).find('#v-bloom').val(bloom)
-  $(this).find('#v-jumlah_po').val(jumlah_po)
-  $(this).find('#v-harga_po').val(harga_po)
+  $(this).find('#v-jumlah_po').val(formatRupiah(jumlah_po.toString()))
+  $(this).find('#v-harga_po').val(formatRupiah(harga_po.toString()))
+  $(this).find('#v-keterangan').val(keterangan)
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-mkt_admin').val(mkt_admin)
@@ -773,6 +792,13 @@ $(document).ready(function() {
                 <input type="text" class="form-control" id="e-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="note_gudang">Keterangan Po</label>
+                        <textarea class="form-control" id="e-keterangan" name="keterangan" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
+                </div>
+            </div>
   
             <div class="col-md-6">
               <div class="form-group">
@@ -784,6 +810,8 @@ $(document).ready(function() {
                   </select>
               </div>
             </div>
+
+             
 
             <div class="col-md-6">
                   <div class="form-group">
@@ -836,6 +864,7 @@ $(document).ready(function() {
     var bloom = button.data('bloom');
     var jumlah_po = button.data('jumlah_po');
     var harga_po = button.data('harga_po');
+    var keterangan = button.data('keterangan');
     var jenis_pembayaran = button.data('jenis_pembayaran');
     var mkt_admin = button.data('mkt_admin');
 
@@ -850,6 +879,7 @@ $(document).ready(function() {
     modal.find('#e-bloom').val(bloom);
     modal.find('#e-jumlah_po').val(jumlah_po);
     modal.find('#e-harga_po').val(harga_po);
+    modal.find('#e-keterangan').val(keterangan);
     modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
     modal.find('#e-mkt_admin').val(mkt_admin);
 
