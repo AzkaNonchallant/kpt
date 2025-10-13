@@ -97,7 +97,7 @@
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
+                                                            <td class="text-right">Rp. <?=number_format($k['harga_po_customer'],0,",",".")?></td>
                                                             <td><?=$k['status_invoice']?></td>
                                                             <td class="text-center">
                                                               <div class="btn-group " role="group" aria-label="Basic example">
@@ -118,6 +118,7 @@
                                                                   data-bloom="<?=$k['bloom']?>"
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
                                                                   data-status_invoice="<?= $k['status_invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
@@ -279,14 +280,21 @@
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="number" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
                   </div>
             </div>
 
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="number" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
+                  </div>
+            </div>
+
+            <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah (Rp)</label>
+                      <input type="text" class="form-control" id="v-jumlah" name="jumlah_po" placeholder="Jumlah Po" autocomplete="off" readonly>
                   </div>
             </div>
   
@@ -294,6 +302,12 @@
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jenis Pembayaran</label>
                       <input type="text" class="form-control" id="v-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off" readonly>
+                  </div>
+            </div>
+            <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Keterangan Po</label>
+                      <textarea type="text" class="form-control" id="v-keterangan" name="keterangan" autocomplete="off" readonly></textarea>
                   </div>
             </div>
             <div class="col-md-6">
@@ -322,6 +336,34 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#detail').on('show.bs.modal', function (event) {
+
+     function formatRupiah(angka) {
+      if(!angka) {
+        return '0';
+      }
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split('.'),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + '.' + split[1] : rupiah;
+      return rupiah;
+    }
+
+    function rupiahToInt(rupiah) {
+  if (!rupiah) return 0;
+  // Hapus semua karakter selain angka
+  let clean = rupiah.toString().replace(/[^\d]/g, '');
+  return parseInt(clean, 10) || 0;
+}
+
+
   var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
   var no_po = $(event.relatedTarget).data('no_po')
   var tgl_po = $(event.relatedTarget).data('tgl_po')
@@ -331,10 +373,15 @@ $(document).ready(function() {
   var bloom = $(event.relatedTarget).data('bloom') 
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
+  var keterangan = $(event.relatedTarget).data('keterangan')
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var status_invoice = $(event.relatedTarget).data('status_invoice')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
 
+ // Konversi ke angka bersih sebelum dihitung
+    // let jumlah = jumlah_po.toString().replace(/\./g, '').replace(/,/g, '');
+    // let harga = harga_po.toString().replace(/\./g, '').replace(/,/g, '');
+let total = rupiahToInt(jumlah_po) * rupiahToInt(harga_po);
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
   $(this).find('#v-no_po').val(no_po)
   $(this).find('#v-tgl_po').val(tgl_po)
@@ -344,8 +391,10 @@ $(document).ready(function() {
   $(this).find('#v-id_barang').trigger("chosen:updated");
   $(this).find('#v-mesh').val(mesh)
   $(this).find('#v-bloom').val(bloom)
-  $(this).find('#v-jumlah_po').val(jumlah_po)
-  $(this).find('#v-harga_po').val(harga_po)
+  $(this).find('#v-keterangan').val(keterangan)
+  $(this).find('#v-jumlah_po').val(formatRupiah(jumlah_po.toString()))
+  $(this).find('#v-harga_po').val(formatRupiah(harga_po.toString()))
+  $(this).find('#v-jumlah').val(formatRupiah(total.toString()));
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-status').val(status_invoice)

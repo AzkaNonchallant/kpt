@@ -133,6 +133,7 @@
                                                                   data-bloom="<?=$k['bloom']?>"
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
                                                                   data-invoice="<?= $k['invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
@@ -161,6 +162,7 @@
                                                                   data-bloom="<?=$k['bloom']?>"
                                                                   data-jumlah_po="<?=$k['jumlah_po_customer']?>"
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
                                                                   data-invoice="<?= $k['invoice']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
@@ -328,12 +330,20 @@
                       <input type="text" class="form-control" id="v-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off" readonly>
                   </div>
             </div>
+            
             <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">Status</label>
-                      <input type="text" class="form-control" id="v-status" name="status" autocomplete="off" readonly>
-                  </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Status</label>
+                <input type="text" class="form-control" id="v-status" name="status" autocomplete="off" readonly>
+              </div>
             </div>
+            
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="note_gudang">Keterangan Po</label>
+                                    <textarea class="form-control" id="v-keterangan" name="keterangan" rows="3" placeholder="Keterangan po" autocomplete="off" readonly></textarea>
+                            </div>
+                        </div>
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Marketing Admin</label>
@@ -363,6 +373,7 @@ $(document).ready(function() {
   var bloom = $(event.relatedTarget).data('bloom') 
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
+  var keterangan = $(event.relatedTarget).data('keterangan')
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var invoice = $(event.relatedTarget).data('invoice')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
@@ -378,6 +389,7 @@ $(document).ready(function() {
   $(this).find('#v-bloom').val(bloom)
   $(this).find('#v-jumlah_po').val(jumlah_po)
   $(this).find('#v-harga_po').val(harga_po)
+  $(this).find('#v-keterangan').val(keterangan)
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-status').val(invoice)
@@ -488,6 +500,13 @@ $(document).ready(function() {
                       <input type="text" class="form-control" id="k-mkt_admin" name="mkt_admin" value="<?=$this->session->userdata('nama')?>"  autocomplete="off" readonly>
                   </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="note_gudang">Keterangan Po</label>
+                          <textarea class="form-control" id="k-keterangan" name="keterangan" rows="3" placeholder="Keterangan po" autocomplete="off" readonly></textarea>
+                </div>
+            </div>
             
           </div>
           <center><label for="pemeriksaan" class="font-weight-bold">Proses</label></center>
@@ -540,6 +559,7 @@ $(document).ready(function() {
   var bloom = $(event.relatedTarget).data('bloom') 
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
   var harga_po = $(event.relatedTarget).data('harga_po') 
+  var keterangan = $(event.relatedTarget).data('keterangan')
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var invoice = $(event.relatedTarget).data('invoice')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
@@ -553,6 +573,7 @@ $(document).ready(function() {
   $(this).find('#k-bloom').val(bloom)
   $(this).find('#k-jumlah_po').val(jumlah_po)
   $(this).find('#k-harga_po').val(harga_po)
+  $(this).find('#k-keterangan').val(keterangan)
   $(this).find('#k-jenis_pembayaran').val(jenis_pembayaran)
   $(this).find('#k-invoice').val(invoice)
   $(this).find('#k-mkt_admin').val(mkt_admin)

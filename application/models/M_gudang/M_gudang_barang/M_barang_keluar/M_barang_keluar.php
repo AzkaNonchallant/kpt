@@ -75,7 +75,7 @@ LEFT JOIN tb_mkt_po_customer d ON b.id_mkt_po_customer = d.id_mkt_po_customer
 LEFT JOIN tb_master_barang e ON d.id_barang = e.id_barang
 LEFT JOIN tb_master_customer f ON d.id_customer = f.id_customer
 LEFT JOIN tb_surat_jalan g ON a.kode_tf_out = g.kode_tf_out
-WHERE a.kode_tf_out = '$kode_tf_out' 
+WHERE a.kode_tf_out = '$kode_tf_out'
   AND a.is_deleted = 0 
   AND e.is_deleted = 0
 ORDER BY a.kode_tf_out ASC;

@@ -252,7 +252,7 @@ public function pdf_surat_jalan($no_sj = null)
 
         // === 2️⃣ Ambil data dari model ===
         $data['row'] = $this->M_barang_keluar->ambil_surat_jalan($kode_tf_out)->row_array();
-        $data['detail'] = $this->M_barang_keluar->data_barang_keluar($kode_tf_out)->result_array();
+        $data['detail'] = $this->M_barang_keluar->data_barang_keluar()->result_array();
         // echo json_encode($data['detail']);
         // === 3️⃣ Load HTML View ===
         $html = $this->load->view('laporan/barang_keluar/pdf_surat_jalan_2', $data, TRUE);

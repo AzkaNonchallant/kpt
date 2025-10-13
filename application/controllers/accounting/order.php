@@ -45,6 +45,8 @@ class Order extends MY_Controller {
         foreach ($data['result'] as &$row) {
             $row['is_invoice_exist'] = $this->M_invoice->is_invoice_exist($row['id_mkt_po_customer']);
         }
+
+        // echo json_encode($data['result']);
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();

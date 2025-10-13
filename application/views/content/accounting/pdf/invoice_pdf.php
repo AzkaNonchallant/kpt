@@ -4,18 +4,33 @@
   <meta charset="UTF-8">
   <title>Invoice</title>
   <style>
-    body { font-family: sans-serif; font-size: 12px; margin: 20px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #000; padding: 6px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body { font-family: sans-serif; font-size: 12px; margin: 20px;  padding: 10px; }
+    table { width: 100%; border-collapse: collapse; border: 1px solid  #000; }
+    th, td { border: 0.1px solid #000; padding: 6px; }
     .no-border td, .no-border th { border: none; }
-    .right { text-align: right; }
+    .right { text-align: right; margin-right: 20px; }
     .center { text-align: center; }
     .bold { font-weight: bold; }
     .title { text-align: center; margin-bottom: 10px; }
     .section-title { font-weight: bold; margin-top: 15px; }
+    
+    .bottom-image {
+      object-fit: cover;
+      position: absolute;
+      /* margin-bottom: 0px; */
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
+  <img src="<?= FCPATH . 'assets/images/Kop_Atas.png' ?>" alt="" width="766px" height="" >
+
 
   <!-- HEADER -->
   <h2 class="title">FAKTUR / INVOICE</h2>
@@ -61,7 +76,7 @@
     </thead>
     <tbody>
       <?php $no=1; $total=0; foreach ($items as $item): ?>
-      <tr>
+      <tr style="font-size: 12px;">
         <td class="center"><?= $no++ ?></td>
         <td>Nama Barang:<?= $item['nama_barang'] ?> | Mesh:<?= $item['mesh']?> | Bloom:<?= $item['bloom']?></td>
         <td class="center"><?= number_format($item['jumlah_po_customer'], 2, ',', '.') ?> <?= $item['satuan'] ?></td>
@@ -112,9 +127,10 @@
   <p>&nbsp;&nbsp;&nbsp;&nbsp;a/n PT. KAPSULINDO NUSANTARA<br>&nbsp;&nbsp;&nbsp;&nbsp;a/c. 504.0000000</p>
   <p>3. Tgl Jatuh Tempo: <?= date('d F Y', strtotime($invoice['tgl_jatuh_tempo'] ?? '2025-10-31')) ?></p>
 
-  <br><br>
-  <p class="right">Bogor, <?= date('d F Y', strtotime($invoice['tgl_invoice'] ?? '2025-10-01')) ?><br><br><br>
-  <b><?= $invoice['nama_admin'] ?? 'SRI WULAN' ?></b></p>
+  <br><br><br>
+  <p class="right">Bogor, <?= date('d F Y') ?><br><br><br>
+  <b><?= $invoice['name_admin'] ?? 'SRI WULAN' ?></b></p>
 
+  <img class="bottom-image" src="<?= FCPATH . 'assets/images/Kop_Bawah.png' ?>" alt="" width="800px" height="" >
 </body>
 </html>
