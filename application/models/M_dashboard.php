@@ -47,7 +47,4 @@ class M_dashboard extends CI_Model {
         $sql = "SELECT * FROM tb_user WHERE is_deleted = 0";
         return $this->db->query($sql);
     }
-
-
-
 }
