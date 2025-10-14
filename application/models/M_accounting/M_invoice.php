@@ -11,21 +11,40 @@ class M_invoice extends CI_Model {
         return $this->session->userdata("id_user");
     }
 
-    public function get()
+    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $nama_customer = null)
     {
+         if ($tgl != null && $tgl2 != null) {
+            $tgl = explode("/", $tgl);
+            $tgl = "$tgl[2]-$tgl[1]-$tgl[0]";
+            $tgl2 = explode("/", $tgl2);
+            $tgl2 = "$tgl2[2]-$tgl2[1]-$tgl2[0]";
+            $where[] = "AND a.tgl_invoice >= '$tgl' AND  a.tgl_invoice <= '$tgl2'";
+        } else if ($tgl ==null && $tgl2 ==null) {
+                $where[] = "";
+        } else {
+            return array();
+        }
 
-        // SELECT a.*,b.nama_customer,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan FROM tb_mkt_po_customer a
-        //     LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
-        //     LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
-        //     WHERE a.is_deleted = 0 $where ORDER BY a.tgl_po_customer DESC";
+        if ($nama_barang == null) {
+            $where[] = "";
+        }  else {
+            $where[] = "AND d.nama_barang = '$nama_barang'";
+        }
 
-        // //  $where = implode(" ", $where);
+        if ($nama_customer == null) {
+            $where[] = "";
+        }  else {
+            $where[] = "AND c.nama_customer = '$nama_customer'";
+        }
+
+        $where = implode(" ", $where);
+       
          $sql = "
             SELECT a.*,b.*,c.nama_customer,c.alamat_customer,d.nama_barang,d.mesh,d.bloom,d.satuan FROM tb_acc_invoice a
             LEFT JOIN tb_mkt_po_customer b ON a.id_mkt_po_customer = b.id_mkt_po_customer
             LEFT JOIN tb_master_customer c ON b.id_customer = c.id_customer
             LEFT JOIN tb_master_barang d ON b.id_barang = d.id_barang
-            WHERE a.is_deleted = 0 ORDER BY a.tgl_invoice DESC
+            WHERE a.is_deleted = 0 $where ORDER BY a.tgl_invoice DESC
          ";
 
          return $this->db->query($sql);
