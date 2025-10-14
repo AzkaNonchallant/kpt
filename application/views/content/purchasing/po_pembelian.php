@@ -1112,8 +1112,8 @@
                 $(this).find('#v-id_barang').val(id_barang);
                 $(this).find('#v-mesh').val(mesh);
                 $(this).find('#v-bloom').val(bloom);
-                $(this).find('#v-jumlah_po_pembelian').val(jumlah_po_pembelian);
-                $(this).find('#v-harga_po_pembelian').val(harga_po_pembelian);
+                $(this).find('#v-jumlah_po_pembelian').val(formatRupiah(jumlah_po_pembelian.toString()));
+                $(this).find('#v-harga_po_pembelian').val(formatRupiah(harga_po_pembelian.toString()));
                 $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran);
                 $(this).find('#v-prc_admin').val(prc_admin);
                 
