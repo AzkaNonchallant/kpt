@@ -51,8 +51,8 @@
                                                         <option <?= $nama_barang === $rb['nama_barang'] ? 'selected' : '' ?> value="<?= $rb['nama_barang'] ?>"><?= $rb['nama_barang'] ?> - Mesh <?= $rb['mesh'] ?></option>
                                                     <?php } ?>
                                                 </select>
-                                                        <input type="text" id="filter_tgl" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
-                                                        <input type="text" id="filter_tgl2" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
+                                                        <input type="text" id="filter_tgl" name="date_form" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
+                                                        <input type="text" id="filter_tgl2" name="date_until" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
                                                         <div class="input-group-append">
                                                             <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                                                             <button class="btn btn-primary" id="export" type="button">Cetak</button>
@@ -173,9 +173,9 @@
       var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
       
       if (filter_tgl =='' && filter_tgl2 !='') {
-        window.location = "<?=base_url()?>marketing/po_customer?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?=base_url()?>accounting/invoice?alert=warning&msg=dari tanggal belum diisi";
       }else if (filter_tgl !='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>marketing/po_customer?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?=base_url()?>accounting/invoice?alert=warning&msg=sampai tanggal belum diisi";
       }else{
         const query = new URLSearchParams({
                     nama_customer: filter_customer,

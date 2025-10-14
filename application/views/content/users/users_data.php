@@ -136,6 +136,16 @@
         <input type="text" class="form-control" id="" name="password" placeholder="ketik password" maxlength="100"  required>
       </div>
 		  <div class="form-group">
+            <label for="exampleFormControlInput1">Departement</label>
+            <select class="form-control" id="" name="departement" required>
+              <option value=""> - Pilih Departement - </option>
+              <option value="Purchasing">Purchasing</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Gudang">Gudang</option>
+              <option value="Accounting">Accounting</option>
+            </select>
+          </div>
+		  <div class="form-group">
             <label for="exampleFormControlInput1">Level</label>
             <select class="form-control" id="" name="level" required>
               <option value=""> - Pilih Level - </option>

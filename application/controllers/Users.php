@@ -26,6 +26,7 @@ class Users extends MY_Controller {
 		$data['username'] = $this->input->post('username',TRUE);
         $data['password'] = md5($this->input->post('password',TRUE));
         $data['nama'] = $this->input->post('nama',TRUE);
+        $data['departement'] = $this->input->post('departement',TRUE);
         $data['level'] = $this->input->post('level',TRUE);
         $data['alamat'] = $this->input->post('alamat',TRUE);
         $respon = $this->M_users->add($data);
