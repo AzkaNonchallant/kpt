@@ -731,14 +731,14 @@
             <div class="col-md-4">
                   <div class="form-group">
                     <label for="jumlah_kirim">Jumlah Kirim (kg)</label>
-                      <input type="number" class="form-control" id="v-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim(Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim(Kg)" autocomplete="off" readonly>
                   </div>
             </div>
 
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="harga_kirim">Harga Kirim (Rp/Kg)</label>
-                        <input type="number" class="form-control" id="v-harga_kirim" name="harga_kirim"  placeholder="Harga Kirim" autocomplete="off" readonly>
+                        <input type="text" class="form-control" id="v-harga_kirim" name="harga_kirim"  placeholder="Harga Kirim" autocomplete="off" readonly>
                 </div>
             </div>
 
@@ -770,6 +770,22 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+  function formatRupiah(angka) {
+                let number_string = angka.replace(/[^,\d]/g, '').toString(),
+                    split   		= number_string.split(','),
+                    sisa     		= split[0].length % 3,
+                    rupiah     	= split[0].substr(0, sisa),
+                    ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    let separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return rupiah;
+            }
     $('#detail').on('show.bs.modal', function (event) {
   var id_mkt_sppb = $(event.relatedTarget).data('id_mkt_sppb')
   var no_sppb = $(event.relatedTarget).data('no_sppb')
@@ -803,12 +819,12 @@ $(document).ready(function() {
   $(this).find('#v-nama_barang').val(nama_barang)
   $(this).find('#v-mesh').val(mesh)
   $(this).find('#v-bloom').val(bloom)
-  $(this).find('#v-jumlah_po').val(jumlah_po)
+  $(this).find('#v-jumlah_po').val(formatRupiah(jumlah_po.toString()) )
 
   $(this).find('#v-tgl_kirim').val(tgl_kirim)
-  $(this).find('#v-jumlah_kirim').val(jumlah_kirim)
+  $(this).find('#v-jumlah_kirim').val(formatRupiah(jumlah_kirim.toString()))
   $(this).find('#v-note_gudang').val(note_gudang)
-  $(this).find('#v-harga_kirim').val(harga_kirim)
+  $(this).find('#v-harga_kirim').val(formatRupiah(harga_kirim.toString()))
   $(this).find('#v-note_pembayaran').val(note_pembayaran)
   $(this).find('#v-mkt_admin').val(mkt_admin)
   $(this).find('#v-kode_tf_in').val(kode_tf_in)
@@ -923,14 +939,14 @@ $(document).ready(function() {
             <div class="col-md-4">
                   <div class="form-group">
                     <label for="jumlah_kirim">Jumlah Kirim (kg)</label>
-                      <input type="number" class="form-control" id="k-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim(Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="k-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim(Kg)" autocomplete="off" readonly>
                   </div>
             </div>
 
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="harga_kirim">Harga Kirim (Rp/Kg)</label>
-                        <input type="number" class="form-control" id="k-harga_kirim" name="harga_kirim"  placeholder="Harga Kirim" autocomplete="off" readonly>
+                        <input type="text" class="form-control" id="k-harga_kirim" name="harga_kirim"  placeholder="Harga Kirim" autocomplete="off" readonly>
                 </div>
             </div>
 
@@ -988,6 +1004,21 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
+  function formatRupiah(angka) {
+                let number_string = angka.replace(/[^,\d]/g, '').toString(),
+                    split   		= number_string.split(','),
+                    sisa     		= split[0].length % 3,
+                    rupiah     	= split[0].substr(0, sisa),
+                    ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    let separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return rupiah;
+            }
     $('#kirim').on('show.bs.modal', function (event) {
 
       $("#kode_tf_out").keyup(function(){
@@ -1039,11 +1070,11 @@ $(document).ready(function() {
   $(this).find('#k-nama_barang').val(nama_barang)
   $(this).find('#k-mesh').val(mesh)
   $(this).find('#k-bloom').val(bloom)
-  $(this).find('#k-jumlah_po').val(jumlah_po)
+  $(this).find('#k-jumlah_po').val(formatRupiah(jumlah_po.toString()) )
   $(this).find('#k-tgl_kirim').val(tgl_kirim)
-  $(this).find('#k-jumlah_kirim').val(jumlah_kirim)
+  $(this).find('#k-jumlah_kirim').val(formatRupiah(jumlah_kirim.toString()))
   $(this).find('#k-note_gudang').val(note_gudang)
-  $(this).find('#k-harga_kirim').val(harga_kirim)
+  $(this).find('#k-harga_kirim').val(formatRupiah(harga_kirim.toString()))
   $(this).find('#k-mkt_admin').val(mkt_admin)
   $(this).find('#k-id_customer').val(id_customer)
   $(this).find('#k-kode_tf_in').val(kode_tf_in)
