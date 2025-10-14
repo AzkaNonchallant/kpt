@@ -991,6 +991,8 @@
                 }
             });
 
+            $('#add').on('show.bs.modal', function (event) {
+
             // Add modal functionality
             $("#no_po_pembelian").keyup(function(){
                 var no_po_pembelian =  $("#no_po_pembelian").val();
@@ -1043,11 +1045,21 @@
 
             // Auto fill form fields
             $("select").on('change', function() {
-                const selected = $(this).find(':selected')
-                $('#mesh').val(selected.data('mesh') || '')
-                $('#bloom').val(selected.data('bloom') || '')
-                $('#nama_supplier').val(selected.data('nama_supplier') || '')
-            });
+                const selected = $(this).find(':selected').attr('data-mesh')
+                mesh = selected.replaceAll(' ', ' ')
+                $('#mesh').val(mesh)
+                });
+
+                $("select").on('change', function() {
+                const selected = $(this).find(':selected').attr('data-bloom')
+                bloom = selected.replaceAll(' ', ' ')
+                $('#bloom').val(bloom)
+                });
+                $("select").on('change', function() {
+                const selected = $(this).find(':selected').attr('data-nama_supplier')
+                bloom = selected.replaceAll(' ', ' ')
+                $('#nama_supplier').val(bloom)
+                });
 
             // Format number inputs
             document.getElementById('jumlah_po_pembelian').addEventListener('keyup', function(e) {
@@ -1060,6 +1072,7 @@
                 let value = this.value.replace(/\D/g,'');
                 value = new Intl.NumberFormat('id-ID').format(value);
                 this.value = value;
+            });
             });
 
             // Detail modal functionality

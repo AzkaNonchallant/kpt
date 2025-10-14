@@ -237,13 +237,13 @@
           
           $nama_barang_formatted = $d['nama_barang'];
           if (!empty($d['bloom']) || !empty($d['mesh'])) {
-              $nama_barang_formatted .= " Bloom : " . $d['bloom'] . " Mesh : " . $d['mesh'];
+              $nama_barang_formatted .= " -  " . $d['bloom'] . " - " . $d['mesh'];
           }
         ?>
         <tr>
           <td class="center"><?= $no++ ?></td>
           <td><?= $nama_barang_formatted ?></td>
-          <td class="center"><?= number_format($d['jumlah_kirim'], 3) ?> <?= $d['satuan'] ?></td>
+          <td class="center"><?=number_format($d['jumlah_kirim'],0,",",".")?>  <?= $d['satuan'] ?></td>
           <td class="center"><?= $d['no_batch'] ?></td>
           <td class="center">
             <?= !empty($d['tgl_exp']) ? date('d/m/Y', strtotime($d['tgl_exp'])) : '-' ?>
