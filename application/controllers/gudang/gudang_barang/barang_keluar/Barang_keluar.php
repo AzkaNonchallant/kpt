@@ -252,7 +252,7 @@ public function pdf_surat_jalan($no_sj = null)
 
         // === 2️⃣ Ambil data dari model ===
         $data['row'] = $this->M_barang_keluar->ambil_surat_jalan($kode_tf_out)->row_array();
-        $data['detail'] = $this->M_barang_keluar->data_barang_keluar()->result_array();
+        $data['detail'] = $this->M_barang_keluar->data_barang_keluar($kode_tf_out)->result_array();
         // echo json_encode($data['detail']);
         // === 3️⃣ Load HTML View ===
         $html = $this->load->view('laporan/barang_keluar/pdf_surat_jalan_2', $data, TRUE);
@@ -277,7 +277,49 @@ public function pdf_surat_jalan($no_sj = null)
 
 
 
+public function landscape_surat_jalan()
+{   
 
+    if (ob_get_length()) ob_end_clean();
+
+
+    try {
+        // === ⿡ Setting optimal Dompdf ===
+        $options = new \Dompdf\Options();
+        $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 180);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+
+        // === ⿢ Ambil data dari model ===
+        $data['row'] = $this->M_barang_keluar->ambil_surat_jalan2()->row_array();
+        $data['detail'] = $this->M_barang_keluar->data_barang_keluar2()->result_array();
+        // echo json_encode($data['detail']);
+        // === ⿣ Load HTML View ===
+        $html = $this->load->view('laporan/barang_keluar/page_laporan_barang_keluar', $data, TRUE);
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'landscape');
+    // if (file_exists($cache)) {
+    //     readfile($cache);
+    //     exit;
+    // }
+    $dompdf->render();
+    // file_put_contents($cache, $dompdf->output());
+    $dompdf->stream("laporan_barang.pdf", ["Attachment" => false]);
+    } 
+    catch (Exception $e) {
+        // Tangani semua error (bukan cuma MpdfException)
+        log_message('error', 'PDF Surat Jalan gagal dibuat: ' . $e->getMessage());
+        echo 'Terjadi kesalahan saat membuat PDF. Coba lagi nanti.';
+}
+}
 
 }
 ?>
