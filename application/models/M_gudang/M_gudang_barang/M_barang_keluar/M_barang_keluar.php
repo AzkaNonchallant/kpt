@@ -75,9 +75,33 @@ LEFT JOIN tb_mkt_po_customer d ON b.id_mkt_po_customer = d.id_mkt_po_customer
 LEFT JOIN tb_master_barang e ON d.id_barang = e.id_barang
 LEFT JOIN tb_master_customer f ON d.id_customer = f.id_customer
 LEFT JOIN tb_surat_jalan g ON a.kode_tf_out = g.kode_tf_out
-WHERE a.kode_tf_out = '$kode_tf_out'
+WHERE a.kode_tf_out = '$kode_tf_out' 
   AND a.is_deleted = 0 
   AND e.is_deleted = 0
+ORDER BY a.kode_tf_out ASC;
+";
+        return $this->db->query($sql);
+    }
+
+    public function data_barang_keluar2(){
+        $sql = "
+            SELECT 
+    a.*, 
+    b.*, 
+    c.no_batch,
+    c.tgl_exp,
+    d.id_barang,
+    e.nama_barang, e.satuan, e.mesh, e.bloom,
+    f.nama_customer
+FROM tb_gudang_barang_keluar a
+LEFT JOIN tb_mkt_sppb b ON a.id_mkt_sppb = b.id_mkt_sppb
+LEFT JOIN tb_gudang_barang_masuk c ON a.kode_tf_in = c.kode_tf_in
+LEFT JOIN tb_mkt_po_customer d ON b.id_mkt_po_customer = d.id_mkt_po_customer
+LEFT JOIN tb_master_barang e ON d.id_barang = e.id_barang
+LEFT JOIN tb_master_customer f ON d.id_customer = f.id_customer
+LEFT JOIN tb_surat_jalan g ON a.kode_tf_out = g.kode_tf_out
+WHERE 
+ e.is_deleted = 0
 ORDER BY a.kode_tf_out ASC;
 ";
         return $this->db->query($sql);
@@ -163,6 +187,14 @@ public function ambil_surat_jalan($kode_tf_out = null){
             SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_surat_jalan a
             LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
             WHERE a.is_deleted = 0 AND a.kode_tf_out = '$kode_tf_out' ORDER BY a.created_at DESC";
+        return $this->db->query($sql);
+    }
+
+    public function ambil_surat_jalan2(){
+        $sql = "
+            SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_surat_jalan a
+            LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+            WHERE a.is_deleted = 0 ORDER BY a.created_at DESC";
         return $this->db->query($sql);
     }
 }
