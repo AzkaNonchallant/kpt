@@ -38,6 +38,7 @@ class Barang_keluar extends MY_Controller {
         $data['nama_customer'] = $nama_customer;
         $data['no_sppb'] = $no_sppb;
 
+        // echo json_encode($data['result']);
         $this->template->load('template', 'content/gudang/gudang_barang/barang_keluar/barang_keluar_data', $data);
     }
 
