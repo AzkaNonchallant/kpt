@@ -625,7 +625,7 @@
 </script>
 
 <!-- Modal Add -->
-  <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
@@ -747,11 +747,11 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
 
 <!-- Modal View dan Edit tetap sama seperti sebelumnya -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).ready(function() {
 
     // Event: saat modal Add dibuka
@@ -789,7 +789,7 @@
     });
 
   });
-</script>
+</script> -->
 
 
 
@@ -867,21 +867,21 @@
       var gdg_admin = $(event.relatedTarget).data('gdg_admin')
 
 
-      $(this).find('#e-id_barang_keluar').val(id_barang_keluar)
-      $(this).find('#e-kode_tf_out').val(kode_tf_out)
-      $(this).find('#e-no_surat_jalan').val(no_surat_jalan)
-      $(this).find('#e-nama_customer').val(nama_customer)
-      $(this).find('#e-id_mkt_sppb').val(id_mkt_sppb)
-      $(this).find('#e-id_mkt_sppb').trigger("chosen:updated");
-      $(this).find('#e-no_sppb').val(no_sppb)
-      $(this).find('#e-nama_barang').val(nama_barang)
-      $(this).find('#e-mesh').val(mesh)
-      $(this).find('#e-bloom').val(bloom)
-      $(this).find('#e-jumlah_kirim').val(jumlah_kirim)
-      $(this).find('#e-tgl_kirim').val(tgl_kirim)
-      $(this).find('#e-note_gudang').val(note_gudang)
-      $(this).find('#e-gdg_admin').val(gdg_admin)
-      $(this).find('#e-tgl_kirim').datepicker().on('show.bs.modal', function(event) {
+      $(this).find('#edit-id_barang_keluar').val(id_barang_keluar)
+      $(this).find('#edit-kode_tf_out').val(kode_tf_out)
+      $(this).find('#edit-no_surat_jalan').val(no_surat_jalan)
+      $(this).find('#edit-nama_customer').val(nama_customer)
+      $(this).find('#edit-id_mkt_sppb').val(id_mkt_sppb)
+      $(this).find('#edit-id_mkt_sppb').trigger("chosen:updated");
+      $(this).find('#edit-no_sppb').val(no_sppb)
+      $(this).find('#edit-nama_barang').val(nama_barang)
+      $(this).find('#edit-mesh').val(mesh)
+      $(this).find('#edit-bloom').val(bloom)
+      $(this).find('#edit-jumlah_kirim').val(jumlah_kirim)
+      $(this).find('#edit-tgl_kirim').val(tgl_kirim)
+      $(this).find('#edit-note_gudang').val(note_gudang)
+      $(this).find('#edit-gdg_admin').val(gdg_admin)
+      $(this).find('#edit-tgl_kirim').datepicker().on('show.bs.modal', function(event) {
         // prevent datepicker from firing bootstrap modal "show.bs.modal"
         event.stopPropagation();
       });
@@ -940,7 +940,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Barang Keluar</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Detail Barang Keluar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -952,7 +952,7 @@
         <div class="col-md-4">
           <div class="form-group">
               <label for="kode_tf_out">Kode TF Out</label>
-              <input type="text" class="form-control" id="e-kode_tf_out" name="kode_tf_out" aria-describedby="validationServer03Feedback" autocomplete="off" readonly>
+              <input type="text" class="form-control" id="v-kode_tf_out" name="kode_tf_out" aria-describedby="validationServer03Feedback" autocomplete="off" readonly>
               <div id="validationServer03Feedback" class="invalid-feedback">
                 Maaf Kode TF Out sudah ada.
           </div>
@@ -962,32 +962,14 @@
             <div class="form-group">
               <label for="no_surat_jalan">No Surat Jalan</label>
               <!-- <input type="text" class="form-control" id="no_surat_jalan" name="no_surat_jalan" placeholder="No Surat Jalan" maxlength="20" required> -->
-              <input type="text" class="form-control" id="e-no_surat_jalan" name="no_surat_jalan" autocomplete="off" required>
+              <input type="text" class="form-control" id="v-no_surat_jalan" name="no_surat_jalan" autocomplete="off" required readonly>
             </div>
           </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="id_mkt_sppb">Nomor SPPB</label>
-                <select class="form-control chosen-select" id="e-id_mkt_sppb" name="id_mkt_sppb" autocomplete="off" required>
-                  <option value="">-Pilih NO SPPB -</option>
-                  <?php
-                  foreach ($res_sppb as $rs) {
-                    // $tgl_kirim =  explode('-', $rs['tgl_kirim'])[2] . "/" . explode('-', $rs['tgl_kirim'])[1] . "/" . explode('-', $rs['tgl_kirim'])[0];
-                  ?>
-                    <option
-                      data-nama_customer="<?= $rs['nama_customer'] ?>"
-                      data-nama_barang="<?= $rs['nama_barang'] ?>"
-                      data-mesh="<?= $rs['mesh'] ?>"
-                      data-bloom="<?= $rs['bloom'] ?>"
-                      data-jumlah_kirim="<?= $rs['jumlah_kirim'] ?>"
-                      data-tgl_kirim="<?= $rs['tgl_kirim'] ?>"
-                      data-note_gudang="<?= $rs['note_gudang'] ?>"
-                      value="<?= $rs['id_mkt_sppb'] ?>"><?= $rs['no_sppb'] ?></option>
-                  <?php
-                  }
-                  ?>
-                </select>
+                <input type="text" class="form-control" id="v-no_sppb" name="no_sppb" autocomplete="off" required readonly>
               </div>
             </div>
 
@@ -995,65 +977,62 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Nama Customer</label>
-                <input type="text" class="form-control" id="e-nama_customer" name="nama_customer" placeholder="Nama Customer" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-nama_customer" name="nama_customer" placeholder="Nama Customer" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Nama Barang </label>
-                <input class="form-control" id="e-nama_barang" name="nama_barang" placeholder="Nama Barang" autocomplete="off" readonly>
+                <input class="form-control" id="v-nama_barang" name="nama_barang" placeholder="Nama Barang" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Mesh </label>
-                <input type="text" class="form-control" id="e-mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Bloom </label>
-                <input type="text" class="form-control" id="e-bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Jumlah Kirim (Kg) </label>
-                <input type="text" class="form-control" id="e-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-jumlah_kirim" name="jumlah_kirim" placeholder="Jumlah Kirim" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Tanggal Kirim </label>
-                <input type="text" class="form-control" id="e-tgl_kirim" name="tgl_kirim" placeholder="Tanggal Kirim" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-tgl_kirim" name="tgl_kirim" placeholder="Tanggal Kirim" autocomplete="off" readonly>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="note_gudang">Note Untuk Gudang</label>
-                <textarea class="form-control" id="e-note_gudang" name="note_gudang" rows="3" placeholder="Note Untuk Gudang" autocomplete="off" readonly></textarea>
+                <textarea class="form-control" id="v-note_gudang" name="note_gudang" rows="3" placeholder="Note Untuk Gudang" autocomplete="off" readonly></textarea>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Gudang Admin</label>
-                <input type="text" class="form-control" id="e-gdg_admin" name="gdg_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
+                <input type="text" class="form-control" id="v-gdg_admin" name="gdg_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
               </div>
             </div>
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary"
-              onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">Update</button>
-
           </div>
       </form>
     </div>
@@ -1079,21 +1058,20 @@
       var gdg_admin = $(event.relatedTarget).data('gdg_admin')
 
 
-      $(this).find('#e-id_barang_keluar').val(id_barang_keluar)
-      $(this).find('#e-kode_tf_out').val(kode_tf_out)
-      $(this).find('#e-no_surat_jalan').val(no_surat_jalan)
-      $(this).find('#e-nama_customer').val(nama_customer)
-      $(this).find('#e-id_mkt_sppb').val(id_mkt_sppb)
-      $(this).find('#e-id_mkt_sppb').trigger("chosen:updated");
-      $(this).find('#e-no_sppb').val(no_sppb)
-      $(this).find('#e-nama_barang').val(nama_barang)
-      $(this).find('#e-mesh').val(mesh)
-      $(this).find('#e-bloom').val(bloom)
-      $(this).find('#e-jumlah_kirim').val(jumlah_kirim)
-      $(this).find('#e-tgl_kirim').val(tgl_kirim)
-      $(this).find('#e-note_gudang').val(note_gudang)
-      $(this).find('#e-gdg_admin').val(gdg_admin)
-      $(this).find('#e-tgl_kirim').datepicker().on('show.bs.modal', function(event) {
+      $(this).find('#v-id_barang_keluar').val(id_barang_keluar)
+      $(this).find('#v-kode_tf_out').val(kode_tf_out)
+      $(this).find('#v-no_surat_jalan').val(no_surat_jalan)
+      $(this).find('#v-nama_customer').val(nama_customer)
+      $(this).find('#v-id_mkt_sppb').val(id_mkt_sppb)
+      $(this).find('#v-no_sppb').val(no_sppb)
+      $(this).find('#v-nama_barang').val(nama_barang)
+      $(this).find('#v-mesh').val(mesh)
+      $(this).find('#v-bloom').val(bloom)
+      $(this).find('#v-jumlah_kirim').val(jumlah_kirim)
+      $(this).find('#v-tgl_kirim').val(tgl_kirim)
+      $(this).find('#v-note_gudang').val(note_gudang)
+      $(this).find('#v-gdg_admin').val(gdg_admin)
+      $(this).find('#v-tgl_kirim').datepicker().on('show.bs.modal', function(event) {
         // prevent datepicker from firing bootstrap modal "show.bs.modal"
         event.stopPropagation();
       });
