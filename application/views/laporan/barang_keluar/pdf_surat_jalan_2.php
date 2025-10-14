@@ -278,7 +278,8 @@
           <p style="margin:0;">Bogor, <?= date('d-m-Y', strtotime($row['tgl'])) ?></p>
           <div class="signature-space"></div>
           <p style="margin:0;">_________________________</p>
-          <p style="margin:0;"><u>apt. Ahmad Farhan, S.Farm</u></p>
+          <br>
+          <p style="margin:0;">apt. Ahmad Farhan, S.Farm</p>
           <br>
           <p style="margin:0; font-size: 9px;">500.16.7.2/251/SIPA-1/00233/DPMPTSP/2025</p>
         </td>
@@ -286,7 +287,9 @@
           <p style="margin:0;">Barang diterima dalam kondisi baik tanggal...... oleh :</p>
           <div class="signature-space"></div>
           <p style="margin:0;">_________________________</p>
+          <br>
           <p style="margin:0;">Pandu A</p>
+          <br>
           <p style="margin:0;">Nama Jelas & Stempel Perusahaan</p>
         </td>
       </tr>
