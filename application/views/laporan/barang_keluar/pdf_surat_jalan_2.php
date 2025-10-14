@@ -7,7 +7,7 @@
     body {
       font-family: sans-serif;
       font-size: 14px;
-      margin: 15px 20px 10px 20px;
+      /* margin: 15px 20px 10px 20px; */
       line-height: 1;
       display: flex;
       flex-direction: column;
@@ -140,45 +140,28 @@
       position: relative;
       width: 100%;
     }
+
+    img {
+      max-width: 100%;
+    }
+
+    .image {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: -100;
+      /* opacity: 0.5; */
+    }
   </style>
 </head>
 <body>
 
+  <img src="<?= FCPATH . 'assets/images/Kop_Atas.png'?>" alt="">
   <div class="content">
     <!-- Header Perusahaan -->
     <div class="company-container">
-      <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" class="company-icon" alt="Logo Perusahaan" style="image: size 30px;">
-      
-      <div class="company-details">
-        <table class="header-table company-header">
-          <tr>
-            <td width="70%">
-              <h2 style="margin:0; font-size: 20px;">PT KAPSULINDO PUTRA TRADING</h2>
-              <p style="margin:0; font-size:12px;">PEDAGANG BESAR FARMASI</p>
-              <p style="margin:0; font-size:12px;">JL. PANCASILA I CICADAS</p>
-              <p style="margin:0; font-size:12px;">GUNUNG PUTRI - BOGOR</p>
-            </td>
-            <td width="30%" style="vertical-align: top;">
-              <table class="no-border">
-                <tr>
-                  <td><b>NPWP</b></td>
-                  <td>: </td>
-                </tr>
-                <tr>
-                  <td><b>PBF No.</b></td>
-                  <td>: </td>
-                </tr>
-                <tr>
-                  <td><b>CDOB No.</b></td>
-                  <td>: </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
     <!-- Judul Surat Jalan -->
     <h3 class="center" style="margin-bottom: 3px; margin-top: 10px;">SURAT JALAN</h3>
     
@@ -282,6 +265,11 @@
   </div>
 
   
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <div class="footer">
     <table class="tab-footer" width="100%" style="border: none;">
       <tr>
@@ -305,10 +293,13 @@
     </table>
     <br>
     <br>
-    <p style="font-size:14px; margin-top:10px; text-align:center; border: 1px solid">
+    <br>
+    <br>
+    <p style="font-size:12px; margin-top:10px; text-align:center; ">
       <i>Pengembalian dan penukaran barang maksimum 7 hari setelah barang diterima</i>
     </p>
   </div>
 
+  <img class="image" src="<?= FCPATH . '/assets/images/Kop_Bawah.png'?>" alt="">
 </body>
 </html>

@@ -242,7 +242,7 @@ public function pdf_surat_jalan($no_sj = null)
         $options->set('isFontSubsettingEnabled', false);
         $options->set('defaultFont', 'Helvetica');
         $options->set('enable_font_subsetting', true);
-        $options->set('dpi', 90);
+        $options->set('dpi', 87);
         $options->set('chroot', FCPATH);
         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');

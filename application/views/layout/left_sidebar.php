@@ -1,3 +1,11 @@
+<?php
+$id_user = $this->session->userdata('id_user');
+$query = $this->db->get_where('tb_user', ['id_user' => $id_user]);
+$user = $query->row();
+$departemen = $user->departement; 
+$level = $this->session->userdata('level');
+?>
+
 <!--[ navigation menu ] start -->
     <nav class="pcoded-navbar">
         <div class="navbar-wrapper">
@@ -18,33 +26,43 @@
                     $uri = $this->uri->segment(1);
                 ?>
                 <ul class="nav pcoded-inner-navbar" style="list-style: none;">
+                    
                     <li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
                     </li>
                     <li class="nav-item <?=$uri == ''?'active':''?>">
                         <a href="<?=base_url()?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+                    <?php if ($departemen == 'Marketing' || $departemen== 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Master </label>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item <?=$uri == 'supplier'?'active':''?>">
                         <a href="<?=base_url('master/master_supplier')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">Supplier</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Marketing' || $level == 0) : ?>
                     <li class="nav-item <?=$uri == 'customer'?'active':''?>">
                         <a href="<?=base_url('master/master_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Customer</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item <?=$uri == 'master_barang'?'active':''?>">
                         <a href="<?=base_url('master/master_barang')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Bahan Baku</span></a>
                     </li>
-
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Purchasing </label>
                     </li>
                     <li class="nav-item <?=$uri == 'purchasing/po_pembelian'?'active':''?>">
                         <a href="<?=base_url('purchasing/po_pembelian')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Pembelian</span></a>
                     </li>
+                    <?php endif; ?>
 
-
+                    <?php if ($departemen == 'Marketing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Marketing </label>
                     </li>
@@ -54,10 +72,12 @@
                     <li class="nav-item <?=$uri == 'marketing/sppb'?'active':''?>">
                         <a href="<?=base_url('marketing/sppb')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-square"></i></span><span class="pcoded-mtext">SPPB</span></a>
                     </li>
-
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Gudang Administrasi </label>
                     </li>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_spbm'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_admin/admin_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPBM
                             <?php if ($cek_spbm != 0) { ?>
@@ -66,7 +86,10 @@
                             </span>
                         </a>
                     </li>
-
+                    <?php endif; ?>
+                    <?php endif; ?>
+                    
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item <?= $uri == 'gudang/gudang_admin/admin_sppb' ? 'active' : '' ?>">
                                 <a href="<?= base_url('gudang/gudang_admin/admin_sppb') ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPPB
                                     <?php if ($cek_sppb != 0) { ?>
@@ -75,9 +98,11 @@
                                     </span>
                                 </a>
                             </li>
-
+                    <?php endif; ?>
+                         <?php if ($departemen == 'Accounting' || $level == 0) : ?>
                             <li class="nav-item pcoded-menu-caption">
                         <label>Accounting</label>
+                         <?php if ($departemen == 'Accounting' || $level == 0) : ?>
                         <li class="nav-item <?=$uri == 'invoice'?'active':''?>">
                         <a href="<?=base_url('accounting/order')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-briefcase"></i></span><span class="pcoded-mtext">Order
                                         <?php if ($cek_order != 0) { ?>
@@ -86,22 +111,33 @@
                         </span>
                     </a>
                     </li>
+                    <?php endif; ?>
+                     <?php endif; ?>
+                      <?php if ($departemen == 'Accounting' || $level == 0) : ?>
                             <li class="nav-item <?=$uri == 'invoice'?'active':''?>">
                         <a href="<?=base_url('accounting/invoice')?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-money-bill-wave"></i></span><span class="pcoded-mtext">Invoice</span></a>
                     </li>
-
+                    <?php endif; ?>
+                        <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Gudang Stok</label>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item <?=$uri == 'barang_stok'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_stok/barang_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-grid"></i></span><span class="pcoded-mtext">Stok Barang</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_masuk'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_masuk/barang_masuk')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Barang Masuk</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Barang Keluar</span></a>
                     </li>
+                    <?php endif; ?>
                    <li class="nav-item <?= $uri == 'barang_keluar' || $uri == 'laporan_barang_keluar' ? 'active pcoded-hasmenu' : 'pcoded-hasmenu' ?>">
                     <!-- <li class="nav-item pcoded-menu-caption">
                         <label>Stock Sample</label>
@@ -112,21 +148,31 @@
                     <li class="nav-item  <?=$uri == 'sample_out'?'active':''?>">
                         <a href="<?=base_url('sample_out')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Sample OUT</span></a>
                     </li> -->
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Laporan</label>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_stok'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_stok/laporan_barang_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stok Barang</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_stok'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_stok/laporan_kartu_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Kartu Stok</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_masuk'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_masuk/laporan_barang_masuk')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Barang Masuk</span></a>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_keluar'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_keluar/laporan_barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Barang Keluar</span></a>
                     </li>
+                    <?php endif; ?>
                     <!-- <li class="nav-item  <?=$uri == 'laporan_barang_stok_2'?'active':''?>">
                         <a href="<?=base_url('laporan_barang_stok_2')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stok Barang</span></a>
                     </li>
@@ -198,4 +244,4 @@
             </div>
         </div>
     </nav>
-    <!-- [ navigation menu ] end    
+    <!-- [ navigation menu ] end
