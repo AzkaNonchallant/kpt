@@ -70,7 +70,7 @@ $level = $this->session->userdata('level');
                         <a href="<?=base_url('marketing/po_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Customer</span></a>
                     </li>
                      <li class="nav-item <?=$uri == 'marketing/po_customer'?'active':''?>">
-                        <a href="<?=base_url('marketing/po_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Sample</span></a>
+                        <a href="<?=base_url('marketing/po_customer_sample')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Sample</span></a>
                     </li>
                     <li class="nav-item <?=$uri == 'marketing/sppb'?'active':''?>">
                         <a href="<?=base_url('marketing/sppb')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-square"></i></span><span class="pcoded-mtext">SPPB</span></a>
