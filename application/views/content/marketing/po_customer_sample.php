@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PO Customer</title>
+    <title>PO Sample</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -405,6 +405,7 @@
     </style>
 </head>
 
+
 <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -420,11 +421,11 @@
                                     </div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:">PO Customer</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">PO Sample</a></li>
                                         <li class="breadcrumb-item"><a href="javascript:"></a></li>
                                         <!-- Button trigger modal -->
                       										<button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
-                      											<i class="feather icon-plus"></i>Tambah PO Customer
+                      											<i class="feather icon-plus"></i>Tambah PO Sample
                       										</button>
                                     </ul>
                                 </div>
@@ -440,7 +441,7 @@
                                 <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Data PO Customer</h5>
+                                            <h5>Data PO Sample</h5>
 
                                             <div class="float-right">
                                               <div class="input-group">
