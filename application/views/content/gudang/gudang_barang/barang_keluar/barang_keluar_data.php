@@ -804,7 +804,7 @@
           <span>&times;</span>
         </button>
       </div>
-      <form method="post" action="<?= base_url() ?>gudang/gudang_barang/barang_keluar/barang_keluar/edit">
+      <form method="post" action="<?= base_url() ?>gudang/gudang_barang/barang_keluar/barang_keluar/update">
         <input type="hidden" id="edit-id_barang_keluar" name="id_barang_keluar">
         <div class="modal-body">
           <div class="row">

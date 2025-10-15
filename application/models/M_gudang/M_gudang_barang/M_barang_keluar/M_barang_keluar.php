@@ -151,7 +151,7 @@ ORDER BY a.kode_tf_out ASC;
         $id_user = $this->id_user();
         $sql = "
             UPDATE `tb_gudang_barang_keluar` 
-            SET `kode_tf_out`='$data[kode_tf_out]',`no_surat_jalan`='$data[no_surat_jalan]',`id_mkt_sppb`='$data[id_mkt_sppb]',`gdg_admin`='$data[gdg_admin]',`updated_at`=NOW(),`updated_by`='$id_user' 
+            SET `no_surat_jalan`='$data[no_surat_jalan]',`updated_at`=NOW(),`updated_by`='$id_user' 
             WHERE `id_barang_keluar`='$data[id_barang_keluar]'
         ";
         return $this->db->query($sql);

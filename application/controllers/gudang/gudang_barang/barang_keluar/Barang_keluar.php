@@ -93,7 +93,6 @@ class Barang_keluar extends MY_Controller {
     public function update()
     {
         $data['id_barang_keluar'] = $this->input->post('id_barang_keluar',TRUE);
-        $data['kode_tf_out'] = $this->input->post('kode_tf_out',TRUE);
         $data['no_surat_jalan'] = $this->input->post('no_surat_jalan',TRUE);
         $data['id_mkt_sppb'] = $this->input->post('id_mkt_sppb',TRUE);
         $data['gdg_admin'] = $this->input->post('gdg_admin',TRUE);
