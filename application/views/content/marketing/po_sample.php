@@ -1185,7 +1185,7 @@ $(document).ready(function() {
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" required>
+                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                   </div>
             </div>
 
@@ -1295,7 +1295,7 @@ $(document).ready(function() {
        let opt = $(this).find(':selected');
        modal.find('#e-mesh').val(opt.data('mesh') || '');
        modal.find('#e-bloom').val(opt.data('bloom') || '');
-       modal.find('#e-stock').val(opt.data('gdg_qty_in') || '');
+       modal.find('#e-stock').val(formatRupiah(opt.data('gdg_qty_in')) || '');
      });
     // Jalankan datepicker aman
     modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
@@ -1321,7 +1321,11 @@ $(document).ready(function() {
       });
     });
 
-
+    document.getElementById('e-jumlah_po').addEventListener('keyup', function(e) {
+    let value = this.value.replace(/\D/g,'');
+    value = new Intl.NumberFormat('id-ID').format(value);
+    this.value = value;
+    });
 
     // === Perhitungan otomatis total harga ===
   });
