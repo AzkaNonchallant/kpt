@@ -480,13 +480,13 @@
                                                         <tr>
                                                             <th>#</th>
                                                             <th>Tgl PO</th>
-                                                            <th>No PO</th>
+                                                            <!-- <th>No PO</th> -->
                                                             <th>Customer</th>
                                                             <th>Nama Barang</th>
                                                             <th>Jumlah PO</th>
                                                             <!-- <th>Harga PO</th> -->
-                                                            <th>Outstanding</th>
-                                                            <th>Status</th>
+                                                            <!-- <th>Outstanding</th> -->
+                                                            <!-- <th>Status</th> -->
                                                             <th>Detail</th>
                                                             <th class="text-center">Aksi</th>
                                                         </tr>
@@ -496,53 +496,48 @@
                                                       $level = $this->session->userdata('level');
                                                     	$no=1;
                                                     	foreach($result as $k){ 
-                                                      $tgl_po =  explode('-', $k['tgl_po_customer'])[2]."/".explode('-', $k['tgl_po_customer'])[1]."/".explode('-', $k['tgl_po_customer'])[0];
-                                                      if ($k['tot_sppb']==0) {
-                                                        $ds="";
-                                                      }else{
-                                                        $ds="d-none";
-                                                      }
+                                                      $tgl_po =  explode('-', $k['tgl_po_sample'])[2]."/".explode('-', $k['tgl_po_sample'])[1]."/".explode('-', $k['tgl_po_sample'])[0];
+                                                    //   if ($k['tot_sppb']==0) {
+                                                    //     $ds="";
+                                                    //   }else{
+                                                    //     $ds="d-none";
+                                                    //   }
                                                     
-                                                      if ($k['tot_sppb']==0) {
-                                                        $status="Draft";
-                                                      }else if ($k['tot_sppb']<>0 & $k['sisa'] <>0){
-                                                        $status="Proses";
-                                                      }else if ($k['tot_sppb']<>0 & $k['sisa'] ==0){
-                                                        $status="Selesai";
-                                                      }
+                                                    //   if ($k['tot_sppb']==0) {
+                                                    //     $status="Draft";
+                                                    //   }else if ($k['tot_sppb']<>0 & $k['sisa'] <>0){
+                                                    //     $status="Proses";
+                                                    //   }else if ($k['tot_sppb']<>0 & $k['sisa'] ==0){
+                                                    //     $status="Selesai";
+                                                    //   }
                                                       ?>
 
                                                     	<tr>
                                                             <th scope="row"><?=$no++?></th>
                                                             <td><?=$tgl_po?></td>
-                                                            <td><?=$k['no_po_customer']?></td>
+                                                            <!-- <td><?=$k['no_po_customer']?></td> -->
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
-                                                            <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
+                                                            <td class="text-right"><?=number_format($k['jumlah_po_sample'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <!-- <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td> -->
-                                                            <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td><?=$status?></td>
+                                                            <!-- <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td> -->
+                                                            <!-- <td><?=$status?></td> -->
                                                             <td class="text-center">
                                                               <div class="btn-group " role="group" aria-label="Basic example">
                                                                 <button type="button" 
                                                                   class="btn btn-info btn-square btn-sm" 
                                                                   data-toggle="modal" 
                                                                   data-target="#detail" 
-
-                                                                  data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
-                                                                  data-no_po="<?=$k['no_po_customer']?>"
-                                                                  data-tgl_po="<?=$tgl_po?>"
-                                                                  
+                                                                  data-id_mkt_po_sample="<?=$k['id_mkt_po_sample']?>"
+                                                                  data-tgl_po_sample="<?=$tgl_po?>"
                                                                   data-id_customer="<?=$k['id_customer']?>"
                                                                   data-nama_customer="<?=$k['nama_customer']?>"
                                                                   data-id_barang="<?=$k['id_barang']?>"
                                                                   data-nama_barang="<?=$k['nama_barang']?>"
                                                                   data-mesh="<?=$k['mesh']?>"
                                                                   data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po="<?=$k['jumlah_po_customer']?>"
-                                                                  data-harga_po="<?=$k['harga_po_customer']?>"
-                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
-                                                                  data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                  data-jumlah_po_sample="<?=$k['jumlah_po_sample']?>"
+                                                                  data-keterangan="<?=$k['ket_po_sample']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
                                                                   <i class="feather icon-eye"></i>Detail
@@ -550,32 +545,31 @@
                                                               </div>
                                                             </td>
                                                             <td class="text-center">
-                                                              <div class="btn-group <?=$ds?>" role="group" aria-label="Basic example">
+                                                              <div class="btn-group" role="group" aria-label="Basic example">
                                                               <?php if ($level === "0") { ?>
                                                                 <button type="button" 
                                                                   class="btn btn-warning btn-square btn-sm" 
                                                                   data-toggle="modal" 
                                                                   data-target="#edit" 
-
-                                                                  data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
-                                                                  data-no_po="<?=$k['no_po_customer']?>"
-                                                                  data-tgl_po="<?=$tgl_po?>"
-                                                                  
+                                                                  data-id_mkt_po_sample="<?=$k['id_mkt_po_sample']?>"
+                                                                  data-tgl_po_sample="<?=$tgl_po?>"
                                                                   data-id_customer="<?=$k['id_customer']?>"
+                                                                  data-nama_customer="<?=$k['nama_customer']?>"
                                                                   data-id_barang="<?=$k['id_barang']?>"
                                                                   data-nama_barang="<?=$k['nama_barang']?>"
                                                                   data-mesh="<?=$k['mesh']?>"
                                                                   data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po="<?=$k['jumlah_po_customer']?>"
-                                                                  data-harga_po="<?=$k['harga_po_customer']?>"
-                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
-                                                                  data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                  data-jumlah_po_sample="<?=$k['jumlah_po_sample']?>"
+                                                                  data-keterangan_sample="<?=$k['ket_po_sample']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
+                                                                  <?php foreach($res_barang as $b) :?>
+                                                                    data-gdg_qty_in="<?=$b['gdg_qty_in']?>"
+                                                                    <?php endforeach; ?>
                                                                 >
                                                                   <i class="feather icon-edit-2"></i>Edit
                                                                 </button>
                                                                 <a  
-                                                                  href="<?=base_url()?>marketing/po_customer/delete/<?=$k['id_mkt_po_customer']?>" 
+                                                                  href="<?=base_url()?>marketing/po_sample/delete/<?=$k['id_mkt_po_sample']?>" 
                                                                   class="btn btn-danger btn-square text-light btn-sm" 
                                                                   onclick = "if (! confirm('Apakah Anda Yakin?')) { return false; }"
                                                                 >
@@ -672,12 +666,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?=base_url()?>marketing/po_customer/add">
+      <form method="post" action="<?=base_url()?>marketing/po_sample/add">
       <div class="modal-body">
         
         <div class="row">
 
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">No PO</label>
                   <input type="text" class="form-control" id="no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
@@ -685,12 +679,12 @@
                       Maaf No PO sudah ada.
                     </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="tgl_po">Tanggal PO</label>
-                        <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" required>
+                    <label for="tgl_po">Tanggal PO Sample</label>
+                        <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample"  placeholder="Tanggal PO Sample" autocomplete="off" required>
                 </div>
           </div>
 
@@ -758,35 +752,35 @@
             <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                      <input type="text" class="form-control" id="jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                       <div id="validationServer03Feedback" class="invalid-feedback">
                         Maaf Jumlah Kirim tidak boleh lebih dari Stock.
                       </div>
                   </div>
             </div>
 
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
                       <input type="text" class="form-control" id="harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
                   </div>
-            </div>
-
+            </div> -->
+<!-- 
             <div class="col-md-4">
               <div class="form-group">
                 <label for="total_harga">Jumlah Harga (Rp)</label>
                 <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="note_gudang">Keterangan Po</label>
-                        <textarea class="form-control" id="note_gudang" name="keterangan" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
+                    <label for="note_gudang">Keterangan Po Sample</label>
+                        <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
                 </div>
             </div>
   
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Jenis Pembayaran</label>
                   <select class="form-control chosen-select" id="jenis_pembayaran" name="jenis_pembayaran" autocomplete="off">
@@ -795,7 +789,7 @@
                     <option value="Kredit">Kredit</option>
                   </select>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-4">
                   <div class="form-group">
@@ -943,7 +937,8 @@
         
         <div class="row">
   
-            <div class="col-md-6">
+        <input type="hidden" id="v-id_mkt_po_sample" name="id_mkt_po_sample">
+            <!-- <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlInput1">No PO</label>
                   <input type="text" class="form-control" id="v-no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
@@ -951,12 +946,12 @@
                       Maaf No PO sudah ada.
                     </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="tgl_po">Tanggal PO</label>
-                        <input type="text" class="form-control datepicker" id="v-tgl_po" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" readonly>
+                    <label for="tgl_po">Tanggal PO Sample</label>
+                        <input type="text" class="form-control datepicker" id="v-tgl_po_sample" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" readonly>
                 </div>
             </div>
 
@@ -991,36 +986,37 @@
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="number" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
                   </div>
             </div>
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
                       <input type="number" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
                   </div>
-            </div>
-            <div class="col-md-6">
+            </div> -->
+
+            <!-- <div class="col-md-6">
               <div class="form-group">
                 <label for="total_harga">Jumlah Harga (Rp)</label>
                 <input type="text" class="form-control" id="v-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="note_gudang">Keterangan Po</label>
+                    <label for="note_gudang">Keterangan Po Sample</label>
                         <textarea class="form-control" id="v-keterangan" name="keterangan_po" rows="3" placeholder="Note Untuk Gudang" autocomplete="off" readonly></textarea>
                 </div>
             </div>
   
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jenis Pembayaran</label>
                       <input type="text" class="form-control" id="v-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off" readonly>
                   </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Marketing Admin</label>
@@ -1060,23 +1056,23 @@ $(document).ready(function() {
     }
 
       
-  var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
-  var no_po = $(event.relatedTarget).data('no_po')
-  var tgl_po = $(event.relatedTarget).data('tgl_po')
+  var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_sample') 
+  // var no_po = $(event.relatedTarget).data('no_po')
+  var tgl_po = $(event.relatedTarget).data('tgl_po_sample')
   var id_customer = $(event.relatedTarget).data('nama_customer') 
   var id_barang = $(event.relatedTarget).data('nama_barang')
   var mesh = $(event.relatedTarget).data('mesh') 
   var bloom = $(event.relatedTarget).data('bloom') 
-  var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
-  var harga_po = $(event.relatedTarget).data('harga_po') 
+  var jumlah_po = $(event.relatedTarget).data('jumlah_po_sample') 
+  // var harga_po = $(event.relatedTarget).data('harga_po') 
   var keterangan = $(event.relatedTarget).data('keterangan')
-  var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
+  // var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
   
   
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
-  $(this).find('#v-no_po').val(no_po)
-  $(this).find('#v-tgl_po').val(tgl_po)
+  // $(this).find('#v-no_po').val(no_po)
+  $(this).find('#v-tgl_po_sample').val(tgl_po)
   $(this).find('#v-id_customer').val(id_customer)
   $(this).find('#v-id_customer').trigger("chosen:updated");
   $(this).find('#v-id_barang').val(id_barang)
@@ -1084,13 +1080,13 @@ $(document).ready(function() {
   $(this).find('#v-mesh').val(mesh)
   $(this).find('#v-bloom').val(bloom)
   $(this).find('#v-jumlah_po').val(formatRupiah(jumlah_po.toString()))
-  $(this).find('#v-harga_po').val(formatRupiah(harga_po.toString()))
+  // $(this).find('#v-harga_po').val(formatRupiah(harga_po.toString()))
   $(this).find('#v-keterangan').val(keterangan)
-  $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
-  $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
+  // $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
+  // $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-mkt_admin').val(mkt_admin)
-  let total = parseInt(jumlah_po) * parseInt(harga_po);
-  $(this).find('#v-total_harga').val(formatRupiah(total.toString()));
+  // let total = parseInt(jumlah_po) * parseInt(harga_po);
+  // $(this).find('#v-total_harga').val(formatRupiah(total.toString()));
   $(this).find('#v-tgl_po').datepicker().on('show.bs.modal', function(event) {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"
     event.stopPropagation();
@@ -1111,13 +1107,13 @@ $(document).ready(function() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?=base_url()?>marketing/po_customer/update">
+      <form method="post" action="<?=base_url()?>marketing/po_sample/update">
       <div class="modal-body">
-      <input type="hidden" id="e-id_mkt_po_customer" name="id_mkt_po_customer">
+      <input type="hidden" id="e-id_mkt_po_sample" name="id_mkt_po_sample">
         
         <div class="row">
   
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlInput1">No PO</label>
                   <input type="text" class="form-control" id="e-no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
@@ -1125,12 +1121,12 @@ $(document).ready(function() {
                       Maaf No PO sudah ada.
                     </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6">
               <div class="form-group">
                 <label for="tgl_po">Tanggal PO</label>
-                  <input type="text" class="form-control datepicker" id="e-tgl_po" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" required>
+                  <input type="text" class="form-control datepicker" id="e-tgl_po" name="tgl_po_sample"  placeholder="Tanggal PO" autocomplete="off" required>
               </div>
             </div>
 
@@ -1179,15 +1175,21 @@ $(document).ready(function() {
                       <input type="text" class="form-control" id="e-bloom" name="bloom" placeholder="Bloom" readonly>
                   </div>
             </div>
-
             <div class="col-md-6">
                   <div class="form-group">
-                    <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="number" class="form-control" id="e-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" required>
+                    <label for="exampleFormControlInput1">Stock</label>
+                      <input type="text" class="form-control" id="e-stock" name="stock" placeholder="Stock" readonly>
                   </div>
             </div>
 
             <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah(kg)</label>
+                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" required>
+                  </div>
+            </div>
+
+            <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
                       <input type="number" class="form-control" id="e-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
@@ -1199,16 +1201,16 @@ $(document).ready(function() {
                 <label for="total_harga">Jumlah Harga (Rp)</label>
                 <input type="text" class="form-control" id="e-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="note_gudang">Keterangan Po</label>
-                        <textarea class="form-control" id="e-keterangan" name="keterangan" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
+                        <textarea class="form-control" id="e-keterangan" name="ket_po_sample" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
                 </div>
             </div>
   
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Jenis Pembayaran</label>
                   <select class="form-control chosen-select" id="e-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off">
@@ -1217,7 +1219,7 @@ $(document).ready(function() {
                     <option value="Kredit">Kredit</option>
                   </select>
               </div>
-            </div>
+            </div> -->
 
              
 
@@ -1263,38 +1265,38 @@ $(document).ready(function() {
     var button = $(event.relatedTarget);
 
     // Ambil data dari tombol trigger
-    var id_mkt_po_customer = button.data('id_mkt_po_customer');
-    var no_po = button.data('no_po');
-    var tgl_po = button.data('tgl_po');
+    var id_mkt_po_customer = button.data('id_mkt_po_sample');
+    var tgl_po = button.data('tgl_po_sample');
     var id_customer = button.data('id_customer');
     var id_barang = button.data('id_barang');
     var mesh = button.data('mesh');
     var bloom = button.data('bloom');
-    var jumlah_po = button.data('jumlah_po');
-    var harga_po = button.data('harga_po');
-    var keterangan = button.data('keterangan');
-    var jenis_pembayaran = button.data('jenis_pembayaran');
+    var jumlah_po = button.data('jumlah_po_sample');
+    var keterangan = button.data('keterangan_sample');
+    var gdg_qty_in = button.data('gdg_qty_in');
     var mkt_admin = button.data('mkt_admin');
 
     // Isi data ke form edit
     var modal = $(this);
-    modal.find('#e-id_mkt_po_customer').val(id_mkt_po_customer);
-    modal.find('#e-no_po').val(no_po);
+    modal.find('#e-id_mkt_po_sample').val(id_mkt_po_customer);
+    // modal.find('#e-no_po').val(no_po);
     modal.find('#e-tgl_po').val(tgl_po);
     modal.find('#e-id_customer').val(id_customer).trigger("chosen:updated");
     modal.find('#e-id_barang').val(id_barang).trigger("chosen:updated");
     modal.find('#e-mesh').val(mesh);
     modal.find('#e-bloom').val(bloom);
-    modal.find('#e-jumlah_po').val(jumlah_po);
-    modal.find('#e-harga_po').val(harga_po);
+    modal.find('#e-jumlah_po').val(formatRupiah(jumlah_po.toString()));
     modal.find('#e-keterangan').val(keterangan);
-    modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
+    modal.find('#e-stock').val(formatRupiah(gdg_qty_in.toString()));
     modal.find('#e-mkt_admin').val(mkt_admin);
 
-    // === Tambahan field total harga (otomatis dihitung) ===
-    let total = (parseFloat(jumlah_po) || 0) * (parseFloat(harga_po) || 0);
-    modal.find('#e-total_harga').val(formatRupiah(total));
 
+    $("#e-id_barang").on('change', function() {
+       let opt = $(this).find(':selected');
+       modal.find('#e-mesh').val(opt.data('mesh') || '');
+       modal.find('#e-bloom').val(opt.data('bloom') || '');
+       modal.find('#e-stock').val(opt.data('gdg_qty_in') || '');
+     });
     // Jalankan datepicker aman
     modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
       e.stopPropagation();
@@ -1319,20 +1321,9 @@ $(document).ready(function() {
       });
     });
 
-    // Ambil mesh dan bloom dari dropdown
-    $("#e-id_barang").on('change', function() {
-      let opt = $(this).find(':selected');
-      $('#e-mesh').val(opt.data('mesh') || '');
-      $('#e-bloom').val(opt.data('bloom') || '');
-    });
+
 
     // === Perhitungan otomatis total harga ===
-    $("#e-jumlah_po, #e-harga_po").on('keyup change', function() {
-      let jumlah = parseFloat($("#e-jumlah_po").val().replace(/\./g,'')) || 0;
-      let harga = parseFloat($("#e-harga_po").val().replace(/\./g,'')) || 0;
-      let total = jumlah * harga;
-      $("#e-total_harga").val(formatRupiah(total));
-    });
   });
 });
 </script>
