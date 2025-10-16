@@ -40,7 +40,7 @@ private function convertDate($date)
         $data['res_barang'] = $this->M_master_barang->get()->result_array();
         $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
-        $data['kode_tf_in'] = $this->M_barang_masuk-> get_kode_tf_in()->result_array();
+        // $data['kode_tf_in'] = $this->M_barang_masuk-> get_kode_tf_in()->result_array();
 
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;

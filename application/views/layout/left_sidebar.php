@@ -93,6 +93,16 @@ $level = $this->session->userdata('level');
                     <?php endif; ?>
                     
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
+                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_spbm'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_admin/admin_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample
+                            <?php if ($cek_spbm != 0) { ?>
+                                <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
+                            <?php } ?>
+                            </span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item <?= $uri == 'gudang/gudang_admin/admin_sppb' ? 'active' : '' ?>">
                                 <a href="<?= base_url('gudang/gudang_admin/admin_sppb') ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPPB
                                     <?php if ($cek_sppb != 0) { ?>
@@ -141,6 +151,29 @@ $level = $this->session->userdata('level');
                         <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Barang Keluar</span></a>
                     </li>
                     <?php endif; ?>
+
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Gudang Sample</label>
+                    </li>
+                    <?php endif; ?>
+
+                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
+                    <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Sample Stock</span></a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
+                    <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample Masuk</span></a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
+                    <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Sample Keluar</span></a>
+                    </li>
+                    <?php endif; ?>`
+                
                    <li class="nav-item <?= $uri == 'barang_keluar' || $uri == 'laporan_barang_keluar' ? 'active pcoded-hasmenu' : 'pcoded-hasmenu' ?>">
                     <!-- <li class="nav-item pcoded-menu-caption">
                         <label>Stock Sample</label>

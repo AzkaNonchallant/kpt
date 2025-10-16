@@ -990,14 +990,14 @@
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="number" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
                   </div>
             </div>
 
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="number" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
+                      <input type="text" class="form-control" id="v-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
                   </div>
             </div>
             <div class="col-md-6">
@@ -1182,14 +1182,14 @@ $(document).ready(function() {
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="number" class="form-control" id="e-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" required>
+                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                   </div>
             </div>
 
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="number" class="form-control" id="e-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
+                      <input type="text" class="form-control" id="e-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                   </div>
             </div>
 
@@ -1284,8 +1284,8 @@ $(document).ready(function() {
     modal.find('#e-id_barang').val(id_barang).trigger("chosen:updated");
     modal.find('#e-mesh').val(mesh);
     modal.find('#e-bloom').val(bloom);
-    modal.find('#e-jumlah_po').val(jumlah_po);
-    modal.find('#e-harga_po').val(harga_po);
+    modal.find('#e-jumlah_po').val(formatRupiah(jumlah_po.toString()));
+    modal.find('#e-harga_po').val(formatRupiah(harga_po.toString()));
     modal.find('#e-keterangan').val(keterangan);
     modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
     modal.find('#e-mkt_admin').val(mkt_admin);
@@ -1317,12 +1317,22 @@ $(document).ready(function() {
         }
       });
     });
+    document.getElementById('e-jumlah_po').addEventListener('keyup', function(e) {
+    let value = this.value.replace(/\D/g,'');
+    value = new Intl.NumberFormat('id-ID').format(value);
+    this.value = value;
+    });
+    document.getElementById('e-harga_po').addEventListener('keyup', function(e) {
+    let value = this.value.replace(/\D/g,'');
+    value = new Intl.NumberFormat('id-ID').format(value);
+    this.value = value;
+    });
 
     // Ambil mesh dan bloom dari dropdown
     $("#e-id_barang").on('change', function() {
       let opt = $(this).find(':selected');
-      $('#e-mesh').val(opt.data('mesh') || '');
-      $('#e-bloom').val(opt.data('bloom') || '');
+      $(this).find('#e-mesh').val(opt.data('mesh') || '');
+      $(this).find('#e-bloom').val(opt.data('bloom') || '');
     });
 
     // === Perhitungan otomatis total harga ===

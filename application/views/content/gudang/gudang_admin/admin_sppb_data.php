@@ -556,6 +556,7 @@
                                                                   data-note_gudang="<?=$k['note_gudang']?>"
                                                                   data-harga_kirim="<?=$k['harga_kirim']?>"
                                                                   data-note_pembayaran="<?=$k['note_pembayaran']?>"
+                                                                  data-kode_tf_out="<?=$k['kode_tf_out']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
 
                                                                 >
@@ -970,10 +971,7 @@ $(document).ready(function() {
             <div class="col-md-4">
           <div class="form-group">
               <label for="kode_tf_out">Kode TF Out</label>
-                  <input type="text" class="form-control" id="kode_tf_out" name="kode_tf_out" placeholder="Kode Tf Out" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-              <div id="validationServer03Feedback" class="invalid-feedback">
-                Maaf Kode TF Out sudah ada.
-          </div>
+                  <input type="text" class="form-control" id="kode_tf_out" name="kode_tf_out" placeholder="Kode Tf Out" autocomplete="off"  readonly>
         </div>
         </div>
           <div class="col-md-4">
@@ -1020,28 +1018,9 @@ $(document).ready(function() {
                 return rupiah;
             }
     $('#kirim').on('show.bs.modal', function (event) {
-
-      $("#kode_tf_out").keyup(function(){
-      var kode_tf_out =  $("#kode_tf_out").val();
-      jQuery.ajax({
-        url: "<?=base_url()?>gudang/gudang_admin/admin_sppb/cek_kode_tf_out",
-        dataType:'text',
-        type: "post",
-        data:{kode_tf_out:kode_tf_out},
-        success:function(response){
-          if (response =="true") {
-            $("#kode_tf_out").addClass("is-invalid");
-            $("#simpan").attr("disabled","disabled");
-          }else{
-            $("#kode_tf_out").removeClass("is-invalid");
-            $("#simpan").removeAttr("disabled");
-          }
-        }            
-      });
-    })
-  var id_mkt_sppb = $(event.relatedTarget).data('id_mkt_sppb')
-  var no_sppb = $(event.relatedTarget).data('no_sppb')
-  var tgl_sppb = $(event.relatedTarget).data('tgl_sppb')
+      var id_mkt_sppb = $(event.relatedTarget).data('id_mkt_sppb')
+      var no_sppb = $(event.relatedTarget).data('no_sppb')
+      var tgl_sppb = $(event.relatedTarget).data('tgl_sppb')
   
   var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer')
   var no_po = $(event.relatedTarget).data('no_po')  
@@ -1052,13 +1031,13 @@ $(document).ready(function() {
   var mesh = $(event.relatedTarget).data('mesh') 
   var bloom = $(event.relatedTarget).data('bloom')
   var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
-
   var tgl_kirim = $(event.relatedTarget).data('tgl_kirim') 
   var jumlah_kirim = $(event.relatedTarget).data('jumlah_kirim') 
   var note_gudang = $(event.relatedTarget).data('note_gudang')
   var harga_kirim = $(event.relatedTarget).data('harga_kirim')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin')
   var kode_tf_in = $(event.relatedTarget).data('kode_tf_in')
+  var kode_tf_out = $(event.relatedTarget).data('kode_tf_out')
 
   $(this).find('#k-id_mkt_sppb').val(id_mkt_sppb)
   $(this).find('#k-no_sppb').val(no_sppb)
@@ -1078,8 +1057,9 @@ $(document).ready(function() {
   $(this).find('#k-mkt_admin').val(mkt_admin)
   $(this).find('#k-id_customer').val(id_customer)
   $(this).find('#k-kode_tf_in').val(kode_tf_in)
-
-
+  $(this).find('#kode_tf_out').val(kode_tf_out)
+  
+  
   $(this).find('#k-tgl_sppb').datepicker().on('show.bs.modal', function(event) {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"
     event.stopPropagation();
@@ -1089,7 +1069,7 @@ $(document).ready(function() {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"
     event.stopPropagation();
   });
-
+  
 })
 
 })
