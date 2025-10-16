@@ -425,7 +425,10 @@
                                         <li class="breadcrumb-item"><a href="javascript:"></a></li>
                                         <!-- Button trigger modal -->
                       										<button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
-                      											<i class="feather icon-plus"></i>Tambah PO Sample
+                      											<i class="feather icon-plus"></i>Tambah Gudang
+                      										</button>
+                      										<button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
+                      											<i class="feather icon-plus"></i>Tambah Customer
                       										</button>
                                     </ul>
                                 </div>
@@ -519,7 +522,6 @@
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_sample'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <!-- <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td> -->
                                                             <!-- <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td> -->
                                                             <!-- <td><?=$status?></td> -->
                                                             <td class="text-center">
@@ -669,19 +671,7 @@
       <form method="post" action="<?=base_url()?>marketing/po_sample/add">
       <div class="modal-body">
         
-        <div class="row">
-
-            <!-- <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">No PO</label>
-                  <input type="text" class="form-control" id="no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                    <div id="validationServer03Feedback" class="invalid-feedback">
-                      Maaf No PO sudah ada.
-                    </div>
-              </div>
-            </div> -->
-
-            <div class="col-md-4">
+        <div class="row">            <div class="col-md-4">
                 <div class="form-group">
                     <label for="tgl_po">Tanggal PO Sample</label>
                         <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample"  placeholder="Tanggal PO Sample" autocomplete="off" required>
@@ -751,8 +741,17 @@
 
             <div class="col-md-4">
                   <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                      <input type="text" class="form-control" id="jumlah_zak" name="jumlah_Zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                      <div id="validationServer03Feedback" class="invalid-feedback">
+                        Maaf Jumlah Kirim tidak boleh lebih dari Stock.
+                      </div>
+                  </div>
+            </div>
+            <div class="col-md-4">
+                  <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                      <input type="text" class="form-control" id="jumlah_kg" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
                       <div id="validationServer03Feedback" class="invalid-feedback">
                         Maaf Jumlah Kirim tidak boleh lebih dari Stock.
                       </div>
@@ -850,35 +849,8 @@
         }            
       });
     })
-
-    // === START: OTOMATIS HITUNG TOTAL HARGA ===
-    $('#jumlah_po, #harga_po').on('keyup change', function() {
-      // ambil nilai dan bersihkan dari titik
-      let jumlah_po = $('#jumlah_po').val().replace(/\./g, '');
-      let harga_po = $('#harga_po').val().replace(/\./g, '');
-      
-      if (jumlah_po && harga_po) {
-        let total = parseInt(jumlah_po) * parseInt(harga_po);
-        $('#total_harga').val(formatRupiah(total.toString()));
-      } else {
-        $('#total_harga').val('');
-      }
-    });
-    // === END ===
-
-
-    $("#jumlah_po").keyup(function(){
-      var jumlah_po =  $("#jumlah_po").val().replaceAll('.','');
-      var gdg_qty_in =  $("#gdg_qty_in").val().replaceAll('.','');
-      if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
-        $("#jumlah_po").addClass("is-invalid");
-        $("#simpan").attr("disabled","disabled");
-      }else{
-        $("#jumlah_po").removeClass("is-invalid");
-        $("#simpan").removeAttr("disabled");
-      }
-    })
-
+        
+    
     $("select").on('change', function() {
       const selected = $(this).find(':selected').attr('data-kode_tf_in')
       kode_tf_in = selected.replaceAll(' ', ' ')
@@ -896,27 +868,41 @@
       bloom = selected.replaceAll(' ', ' ')
       $('#bloom').val(bloom)
     });
-
+    
     $("select").on('change', function() {
-  const selected = $(this).find(':selected').attr('data-gdg_qty_in');
-  // Pastikan nilainya berupa angka dulu
-  let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
-  // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
-  gdg_qty_in = new Intl.NumberFormat('id-ID').format(gdg_qty_in);
-  // Masukkan hasil format ke input
-  $('#gdg_qty_in').val(gdg_qty_in);
+      const selected = $(this).find(':selected').attr('data-gdg_qty_in');
+      // Pastikan nilainya berupa angka dulu
+      let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
+      // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
+      gdg_qty_in = new Intl.NumberFormat('id-ID').format(gdg_qty_in);
+      // Masukkan hasil format ke input
+      $('#gdg_qty_in').val(gdg_qty_in);
+    });
+    
+  $('#jumlah_zak').on('input', function() {
+let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
+zak = parseFloat(zak) || 0; // ubah ke angka, default 0
+let kg = zak * 25; // hitung total
+
+// Format hasilnya agar rapi (pakai titik ribuan)
+let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+$('#jumlah_kg').val(formattedKg);
+$("#jumlah_kg").keyup(function(){
+  var jumlah_po =  $("#jumlah_kg").val().replaceAll('.','');
+  var gdg_qty_in =  $("#gdg_qty_in").val().replaceAll('.','');
+  if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
+    $("#jumlah_kg").addClass("is-invalid");
+    $("#simpan").attr("disabled","disabled");
+  }else{
+    $("#jumlah_kg").removeClass("is-invalid");
+    $("#simpan").removeAttr("disabled");
+  }
+})
 });
 
-
-    document.getElementById('jumlah_po').addEventListener('keyup', function(e) {
+    document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
     let value = this.value.replace(/\D/g,'');
     value = new Intl.NumberFormat('id-ID').format(value);
-    this.value = value;
-    });
-
-    document.getElementById('harga_po').addEventListener('keyup', function(e) {
-    let value = this.value.replace(/\D/g, ''); // Hanya angka
-    value = new Intl.NumberFormat('id-ID').format(value); // Format ke ribuan
     this.value = value;
     });
 
@@ -987,6 +973,13 @@
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah(kg)</label>
                       <input type="text" class="form-control" id="v-jumlah_po" name="jumlah_po" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
+                  </div>
+            </div>
+
+            <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                      <input type="text" class="form-control" id="jumlah_zak" name="jumlah_Zak" placeholder="Jumlah(Zak)" autocomplete="off" readonly>
                   </div>
             </div>
 
@@ -1064,12 +1057,14 @@ $(document).ready(function() {
   var mesh = $(event.relatedTarget).data('mesh') 
   var bloom = $(event.relatedTarget).data('bloom') 
   var jumlah_po = $(event.relatedTarget).data('jumlah_po_sample') 
-  // var harga_po = $(event.relatedTarget).data('harga_po') 
   var keterangan = $(event.relatedTarget).data('keterangan')
-  // var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
+  let zak = jumlah_po / 25;
+  let formattedZak = zak.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
   
   
+  $(this).find('#jumlah_zak').val(formattedZak)
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
   // $(this).find('#v-no_po').val(no_po)
   $(this).find('#v-tgl_po_sample').val(tgl_po)
@@ -1184,44 +1179,24 @@ $(document).ready(function() {
 
             <div class="col-md-6">
                   <div class="form-group">
-                    <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                    <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                      <input type="text" class="form-control" id="e-jumlah_zak" name="jumlah_zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                   </div>
             </div>
-
-            <!-- <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="number" class="form-control" id="e-harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
-                  </div>
-            </div>
-
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="total_harga">Jumlah Harga (Rp)</label>
-                <input type="text" class="form-control" id="e-total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
-              </div>
-            </div> -->
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah(kg)</label>
+                      <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                  </div>
+            </div>
+
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="note_gudang">Keterangan Po</label>
                         <textarea class="form-control" id="e-keterangan" name="ket_po_sample" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
                 </div>
-            </div>
-  
-            <!-- <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jenis Pembayaran</label>
-                  <select class="form-control chosen-select" id="e-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off">
-                    <option value="">- Pilih Jenis Pembayaran -</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Kredit">Kredit</option>
-                  </select>
-              </div>
-            </div> -->
-
-             
+            </div>           
 
             <div class="col-md-6">
                   <div class="form-group">
@@ -1275,11 +1250,13 @@ $(document).ready(function() {
     var keterangan = button.data('keterangan_sample');
     var gdg_qty_in = button.data('gdg_qty_in');
     var mkt_admin = button.data('mkt_admin');
+    let zak = jumlah_po / 25;
+    let formattedZak = zak.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
     // Isi data ke form edit
     var modal = $(this);
     modal.find('#e-id_mkt_po_sample').val(id_mkt_po_customer);
-    // modal.find('#e-no_po').val(no_po);
+    modal.find('#e-jumlah_zak').val(formattedZak);
     modal.find('#e-tgl_po').val(tgl_po);
     modal.find('#e-id_customer').val(id_customer).trigger("chosen:updated");
     modal.find('#e-id_barang').val(id_barang).trigger("chosen:updated");
@@ -1289,39 +1266,32 @@ $(document).ready(function() {
     modal.find('#e-keterangan').val(keterangan);
     modal.find('#e-stock').val(formatRupiah(gdg_qty_in.toString()));
     modal.find('#e-mkt_admin').val(mkt_admin);
-
-
     $("#e-id_barang").on('change', function() {
        let opt = $(this).find(':selected');
        modal.find('#e-mesh').val(opt.data('mesh') || '');
        modal.find('#e-bloom').val(opt.data('bloom') || '');
        modal.find('#e-stock').val(formatRupiah(opt.data('gdg_qty_in')) || '');
      });
+
+    $('#e-jumlah_zak').on('input', function() {
+    let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
+    zak = parseFloat(zak) || 0; // ubah ke angka, default 0
+    let kg = zak * 25; // hitung total
+    
+    // Format hasilnya agar rapi (pakai titik ribuan)
+    let formattedKg = kg;
+    $('#e-jumlah_po').val(formattedKg);
+    });
     // Jalankan datepicker aman
     modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
       e.stopPropagation();
     });
-
-    // Cek No PO agar tidak duplikat
-    $("#e-no_po").on('keyup', function(){
-      let no_po = $(this).val();
-      $.ajax({
-        url: "<?= base_url('marketing/po_customer/cek_no_po') ?>",
-        type: "post",
-        data: { no_po: no_po },
-        success: function(response){
-          if (response === "true") {
-            $("#e-no_po").addClass("is-invalid");
-            $("#simpan").attr("disabled", true);
-          } else {
-            $("#e-no_po").removeClass("is-invalid");
-            $("#simpan").attr("disabled", false);
-          }
-        }
-      });
-    });
-
     document.getElementById('e-jumlah_po').addEventListener('keyup', function(e) {
+    let value = this.value.replace(/\D/g,'');
+    value = new Intl.NumberFormat('id-ID').format(value);
+    this.value = value;
+    });
+    document.getElementById('e-jumlah_zak').addEventListener('keyup', function(e) {
     let value = this.value.replace(/\D/g,'');
     value = new Intl.NumberFormat('id-ID').format(value);
     this.value = value;
