@@ -1043,6 +1043,21 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#view').on('show.bs.modal', function(event) {
+
+      function formatRupiah(angka) {
+    if (!angka) return '';
+    let number_string = angka.toString().replace(/[^,\d]/g, ''),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    if (ribuan) {
+      let separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
+    }
+    return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+  }
+
       var id_barang_keluar = $(event.relatedTarget).data('id_barang_keluar')
       var kode_tf_out = $(event.relatedTarget).data('kode_tf_out')
       var no_surat_jalan = $(event.relatedTarget).data('no_surat_jalan')
@@ -1067,7 +1082,7 @@
       $(this).find('#v-nama_barang').val(nama_barang)
       $(this).find('#v-mesh').val(mesh)
       $(this).find('#v-bloom').val(bloom)
-      $(this).find('#v-jumlah_kirim').val(jumlah_kirim)
+      $(this).find('#v-jumlah_kirim').val(formatRupiah(jumlah_kirim.toString()))
       $(this).find('#v-tgl_kirim').val(tgl_kirim)
       $(this).find('#v-note_gudang').val(note_gudang)
       $(this).find('#v-gdg_admin').val(gdg_admin)

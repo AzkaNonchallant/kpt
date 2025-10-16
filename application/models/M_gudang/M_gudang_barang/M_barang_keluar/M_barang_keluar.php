@@ -124,15 +124,28 @@ ORDER BY a.kode_tf_out ASC;
     {
         $id_user = $this->id_user();
         $sql = "
-        INSERT INTO `tb_gudang_barang_keluar`(`kode_tf_out`, `kode_tf_in`,`id_mkt_sppb`, `no_surat_jalan`,`gdg_admin`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`)
-        VALUES ('$data[kode_tf_out]','$data[kode_tf_in]','$data[id_mkt_sppb]','$data[no_surat_jalan]','$data[gdg_admin]',NOW(),'$id_user','0000-00-00 00:00:00','','0')
+        UPDATE `tb_gudang_barang_keluar`
+        SET `kode_tf_in` = '$data[kode_tf_in]', `no_surat_jalan`='$data[no_surat_jalan]',`gdg_admin` =  '$data[gdg_admin]',`created_at` = NOW(), `created_by` = '$id_user',`updated_at`=NOW(),`updated_by`='$id_user', `is_deleted`='0'
+        WHERE `kode_tf_out`='$data[kode_tf_out]'
         ";
          $this->db->query($sql);
+
+
+         // 2. Insert ke tb_surat_jalan
+
           $sql2 = "
             INSERT INTO `tb_surat_jalan`(`kode_tf_out`, `no_surat_jalan`, `tgl`, `id_customer`,`no_sppb`, `no_po`,  `note` ,`created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`)
             VALUES ('$data[kode_tf_out]','$data[no_surat_jalan]',NOW(),'$data[id_customer]','$data[no_sppb]', '$data[no_po]', '$data[note_gudang]'  ,NOW(),'$id_user','0000-00-00 00:00:00','0','0')
         ";
         $this->db->query($sql2);
+
+        //merubah status sppb menjadi selesai
+        $sql3 = "
+        UPDATE `tb_mkt_sppb`
+        SET `status_sppb`='Selesai'
+        WHERE `id_mkt_sppb`='$data[id_mkt_sppb]'
+        ";
+        $this->db->query($sql3);
         return TRUE;
     }
 
