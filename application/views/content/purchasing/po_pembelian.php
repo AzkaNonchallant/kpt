@@ -696,7 +696,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Jenis Pembayaran</label>
-                                    <select class="form-control chosen-select" id="jenis_pembayaran" name="jenis_pembayaran" autocomplete="off">
+                                    <select class="form-control chosen-select" id="jenis_pembayaran" name="jenis_pembayaran" autocomplete="off" required>
                                         <option value="">- Pilih Jenis Pembayaran -</option>
                                         <option value="Cash">Cash</option>
                                         <option value="Kredit">Kredit</option>

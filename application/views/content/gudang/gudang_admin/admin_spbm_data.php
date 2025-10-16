@@ -867,8 +867,14 @@ $(document).ready(function() {
 
             <div class="col-md-3">
                   <div class="form-group">
+                    <label for="exampleFormControlInput1">Jumlah (Zak)</label>
+                      <input type="text" class="form-control" id="jumlah_zak" name="gdg_qty_zak" placeholder="Jumlah" autocomplete="off" required>
+                  </div>
+            </div>
+            <div class="col-md-3">
+                  <div class="form-group">
                     <label for="exampleFormControlInput1">Jumlah (Kg)</label>
-                      <input type="text" class="form-control" id="gdg_qty_in" name="gdg_qty_in" placeholder="Jumlah" autocomplete="off" required>
+                      <input type="text" class="form-control" id="jumlah_kg" name="gdg_qty_in" placeholder="Jumlah" autocomplete="off" readonly>
                   </div>
             </div>
 
@@ -962,11 +968,21 @@ $(document).ready(function() {
     //   this.value = value;
     // });
 
-        document.getElementById('gdg_qty_in').addEventListener('keyup', function(e) {
+        document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
     let value = this.value.replace(/\D/g,'');
     value = new Intl.NumberFormat('id-ID').format(value);
     this.value = value;
     });
+
+    $('#jumlah_zak').on('input', function() {
+    let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
+    zak = parseFloat(zak) || 0; // ubah ke angka, default 0
+    let kg = zak * 25; // hitung total
+
+    // Format hasilnya agar rapi (pakai titik ribuan)
+    let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    $('#jumlah_kg').val(formattedKg);
+  });
 
       $(this).find('#tgl_msk_gdg').datepicker().on('show.bs.modal', function(event) {
     // prevent datepicker from firing bootstrap modal "show.bs.modal"
