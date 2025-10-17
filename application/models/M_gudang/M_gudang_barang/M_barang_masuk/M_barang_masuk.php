@@ -56,7 +56,7 @@ class M_barang_masuk extends CI_Model {
         public function get3($id = null ){
             
         $sql = "
-            SELECT a.*,b.id_barang,b.jumlah_po_pembelian,b.harga_po_pembelian,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan,d.nama_supplier FROM tb_gudang_barang_masuk a
+            SELECT a.*,b.id_barang,b.jumlah_po_pembelian,b.harga_po_pembelian,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan,d.nama_supplier,d.pic_supplier FROM tb_gudang_barang_masuk a
             LEFT JOIN tb_prc_po_pembelian b ON a.id_prc_po_pembelian = b.id_prc_po_pembelian
             LEFT JOIN tb_master_barang c ON b.id_barang = c.id_barang
             LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
