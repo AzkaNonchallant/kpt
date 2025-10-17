@@ -60,6 +60,29 @@ $level = $this->session->userdata('level');
                     <li class="nav-item <?=$uri == 'purchasing/po_pembelian'?'active':''?>">
                         <a href="<?=base_url('purchasing/po_pembelian')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Pembelian</span></a>
                     </li>
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                        <a id="badge-1" href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+                            <span class="pcoded-mtext">Purchasing</span>
+                        </a>
+                        <ul class="pcoded-submenu">
+                            <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                                <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Import</span></a>
+                                <ul class="pcoded-submenu">
+                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_import') ?>" class="">PO Import</a></li>
+                                    <!-- <li class="nav-item <?= $uri == 'Supplier' ? 'active' : '' ?>"><a href="<?= base_url('Purchasing/Po_rekap/Prc_po_rekap') ?>" class="">Rekap Import</a></li> -->
+                                   
+                                </ul>
+                            </li>    
+                        </ul>
+                        <ul class="pcoded-submenu">
+                            <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                                <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Reg</span></a>
+                                <ul class="pcoded-submenu">
+                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_regional/po_reg') ?>" class="">PO Regional</a></li>
+                                </ul>
+                            </li>    
+                        </ul>
+                    </li>
                     <?php endif; ?>
 
                     <?php if ($departemen == 'Marketing' || $level == 0) : ?>
@@ -93,8 +116,8 @@ $level = $this->session->userdata('level');
                     <?php endif; ?>
                     
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
-                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_spbm'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_admin/admin_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample
+                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_sample'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_admin/admin_sample')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample
                             <?php if ($cek_spbm != 0) { ?>
                                 <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
                             <?php } ?>
@@ -165,7 +188,7 @@ $level = $this->session->userdata('level');
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample Masuk</span></a>
+                        <a href="<?=base_url('gudang/gudang_sample/sample_masuk')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample Masuk</span></a>
                     </li>
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
