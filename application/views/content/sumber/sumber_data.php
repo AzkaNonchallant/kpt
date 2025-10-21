@@ -374,9 +374,8 @@ $(document).ready(function () {
         $('#e-provinsi').empty().append('<option value="" disabled selected hidden>- Pilih Provinsi -</option>');
         $.each(data, function (i, provinsi) {
           const selected = provinsi.id == selectedId ? "selected" : "";
-          $('#e-provinsi').append(
-            <option value="${provinsi.id}" data-nama="${provinsi.name}" ${selected}>${provinsi.name} (${provinsi.id})</option>
-          );
+          // Build option as a normal JS string to avoid invalid unquoted tokens
+          $('#e-provinsi').append('<option value="' + provinsi.id + '" data-nama="' + provinsi.name + '" ' + selected + '>' + provinsi.name + ' (' + provinsi.id + ')</option>');
         });
         $('#e-provinsi').trigger("chosen:updated");
 
@@ -401,9 +400,7 @@ $(document).ready(function () {
         $('#e-kota').empty().append('<option value="" disabled selected hidden>- Pilih Kota -</option>');
         $.each(data, function (i, kota) {
           const selected = kota.id == selectedKotaId ? "selected" : "";
-          $('#e-kota').append(
-            <option value="${kota.id}" data-nama="${kota.name}" ${selected}>${kota.name} (${kota.id})</option>
-          );
+          $('#e-kota').append('<option value="' + kota.id + '" data-nama="' + kota.name + '" ' + selected + '>' + kota.name + ' (' + kota.id + ')</option>');
         });
         $('#e-kota').trigger("chosen:updated");
       },
