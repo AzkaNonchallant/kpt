@@ -53,6 +53,7 @@ class Po_pembelian extends MY_Controller {
         $data['harga_po_pembelian'] = $this->input->post('harga_po_pembelian',TRUE);
         $data['harga_po_pembelian'] = str_replace('.', '', $data['harga_po_pembelian']); // Hapus titik pemisah ribuan
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran',TRUE);
+        $data['ket_po'] = $this->input->post('ket_po', TRUE);
         $data['prc_admin'] = $this->input->post('prc_admin',TRUE);
 
         $respon = $this->M_po_pembelian->add($data);
@@ -112,29 +113,30 @@ class Po_pembelian extends MY_Controller {
 
     public function pdf_po_pembelian()
     {
-        $mpdf = new \Mpdf\Mpdf();
+    //     $mpdf = new \Mpdf\Mpd();
 
-        $tgl = $this->input->get('date_from');
-        $tgl2 = $this->input->get('date_until');
-        $nama_barang = $this->input->get('nama_barang');
-        $nama_supplier = $this->input->get('nama_supplier');
+    //     $tgl = $this->input->get('date_from');
+    //     $tgl2 = $this->input->get('date_until');
+    //     $nama_barang = $this->input->get('nama_barang');
+    //     $nama_supplier = $this->input->get('nama_supplier');
 
-		$data['result'] = $this->M_po_pembelian->get($tgl, $tgl2, $nama_barang, $nama_supplier);
-        $data['res_barang'] = $this->M_master_barang->get()->result_array();
-        $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
-        $data['res_user'] = $this->M_users->get()->result_array();
+	// 	$data['result'] = $this->M_po_pembelian->get($tgl, $tgl2, $nama_barang, $nama_supplier);
+    //     $data['res_barang'] = $this->M_master_barang->get()->result_array();
+    //     $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
+    //     $data['res_user'] = $this->M_users->get()->result_array();
 
-        $data['tgl'] = $tgl;
-        $data['tgl2'] = $tgl2;
-        $data['nama_barang'] = $nama_barang;
-        $data['nama_supplier'] = $nama_supplier;
+    //     $data['tgl'] = $tgl;
+    //     $data['tgl2'] = $tgl2;
+    //     $data['nama_barang'] = $nama_barang;
+    //     $data['nama_supplier'] = $nama_supplier;
 
 
-        $d = $this->load->view('content/purchasing/pdf_po_pembelian', $data, TRUE);
-        $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-        $mpdf->setFooter('Halaman {PAGENO}');
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/purchasing/pdf_po_pembelian', $data, TRUE);
+    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
+    //     $mpdf->setFooter('Halaman {PAGENO}');
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
 
+}
 }

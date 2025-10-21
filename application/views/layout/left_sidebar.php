@@ -68,7 +68,7 @@ $level = $this->session->userdata('level');
                             <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                                 <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Import</span></a>
                                 <ul class="pcoded-submenu">
-                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_import') ?>" class="">PO Import</a></li>
+                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_import') ?>" class="feather icon-plus-circle">PO Import</a></li>
                                     <!-- <li class="nav-item <?= $uri == 'Supplier' ? 'active' : '' ?>"><a href="<?= base_url('Purchasing/Po_rekap/Prc_po_rekap') ?>" class="">Rekap Import</a></li> -->
                                    
                                 </ul>
@@ -78,7 +78,7 @@ $level = $this->session->userdata('level');
                             <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                                 <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Reg</span></a>
                                 <ul class="pcoded-submenu">
-                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_regional/po_reg') ?>" class="">PO Regional</a></li>
+                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_regional/po_reg') ?>" class="feather icon-plus-circle">PO Regional</a></li>
                                 </ul>
                             </li>    
                         </ul>
@@ -183,7 +183,7 @@ $level = $this->session->userdata('level');
 
                      <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Sample Stock</span></a>
+                        <a href="<?=base_url('gudang/gudang_sample/sample_stock')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Sample Stock</span></a>
                     </li>
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
@@ -193,7 +193,7 @@ $level = $this->session->userdata('level');
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_keluar/barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Sample Keluar</span></a>
+                        <a href="<?=base_url('gudang/gudang_sample/sample_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-minus-circle"></i></span><span class="pcoded-mtext">Sample Keluar</span></a>
                     </li>
                     <?php endif; ?>`
                 
@@ -258,6 +258,9 @@ $level = $this->session->userdata('level');
                     </li>
                     <li class="nav-item  <?=$uri == 'users'?'active':''?>  <?=$display?>">
                         <a href="<?=base_url('users')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Kelola User</span></a>
+                    </li>
+                    <li class="nav-item  <?=$uri == 'sumber'?'active':''?>  <?=$display?>">
+                        <a href="<?=base_url('sumber')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Kelola Sumber</span></a>
                     </li>
                     <!-- <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Master</span></a>

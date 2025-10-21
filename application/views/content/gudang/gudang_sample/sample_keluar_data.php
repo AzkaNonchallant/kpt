@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Masuk</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #4361ee;
@@ -24,11 +22,6 @@
             --transition: all 0.3s ease;
         }
         
-        body {
-            background-color: #f5f7fb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         .sample-container {
             padding: 20px;
             background-color: #f5f7fb;
@@ -37,10 +30,6 @@
         
         .page-header {
             margin-bottom: 25px;
-            background: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
         }
         
         .page-title {
@@ -66,11 +55,6 @@
         .breadcrumb-item a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .breadcrumb-item.active {
-            color: var(--gray);
         }
         
         .card {
@@ -79,17 +63,12 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             margin-bottom: 25px;
-            transition: var(--transition);
-        }
-        
-        .card:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
         
         .card-header {
             background: white;
             border-bottom: 1px solid var(--light-gray);
-            padding: 15px 20px;
+            padding: 15px 15px;
             border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
             display: flex;
             align-items: center;
@@ -117,7 +96,6 @@
             align-items: center;
             gap: 5px;
             border: none;
-            font-size: 14px;
         }
         
         .btn-primary {
@@ -135,19 +113,9 @@
             color: white;
         }
         
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
-        }
-        
         .btn-info {
             background: linear-gradient(135deg, var(--info), #3a86ff);
             color: white;
-        }
-        
-        .btn-info:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(72, 149, 239, 0.3);
         }
         
         .btn-warning {
@@ -155,34 +123,14 @@
             color: white;
         }
         
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(174, 73, 118, 0.3);
-        }
-        
         .btn-danger {
             background: linear-gradient(135deg, var(--danger), #d00000);
             color: white;
         }
         
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(230, 57, 70, 0.3);
-        }
-        
         .btn-secondary {
             background: linear-gradient(135deg, var(--gray), #495057);
             color: white;
-        }
-        
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
-        }
-        
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
         }
         
         .table-responsive {
@@ -201,22 +149,21 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
-            padding: 12px 15px;
+            padding: 8px 9px;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 12px;
             line-height: 1.5;
             letter-spacing: 0.5px;
             white-space: nowrap;
-            vertical-align: middle;
         }
         
         .table tbody td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             vertical-align: middle;
             border-bottom: 1px solid var(--light-gray);
             white-space: nowrap;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .table tbody tr {
@@ -249,7 +196,6 @@
             color: #6c757d;
             font-style: italic;
             background-color: #f8f9fa;
-            text-align: center;
         }
         
         .alert {
@@ -257,7 +203,6 @@
             border-radius: 6px;
             margin-bottom: 20px;
             border: 1px solid transparent;
-            font-weight: 500;
         }
         
         .alert-info {
@@ -326,78 +271,11 @@
             border-radius: 8px;
             padding: 10px 15px;
             transition: var(--transition);
-            font-size: 14px;
         }
         
         .form-control:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .form-label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-        
-        .input-group {
-            border-radius: 8px;
-        }
-        
-        .input-group .form-control {
-            border-radius: 8px;
-        }
-        
-        .input-group-append .btn {
-            border-radius: 0 8px 8px 0;
-            height: 42px;
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-        
-        .modal-title {
-            font-weight: 700;
-        }
-        
-        .modal-content {
-            border-radius: var(--border-radius);
-            border: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .close {
-            color: white;
-            opacity: 0.8;
-        }
-        
-        .close:hover {
-            color: white;
-            opacity: 1;
-        }
-        
-        .badge {
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        
-        .status-completed {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
-        .status-cancelled {
-            background-color: #f8d7da;
-            color: #721c24;
         }
         
         @media (max-width: 768px) {
@@ -430,18 +308,6 @@
             .filter-actions .btn {
                 flex: 1;
             }
-            
-            .table-responsive {
-                font-size: 12px;
-            }
-            
-            .table thead th {
-                padding: 8px 10px;
-            }
-            
-            .table tbody td {
-                padding: 8px 10px;
-            }
         }
     </style>
 </head>
@@ -458,12 +324,11 @@
               <div class="row align-items-center">
                 <div class="col-md-12">
                   <div class="page-header-title">
-                    <h5 class="m-b-10">Data Sample Masuk</h5>
+                    <!-- <h5 class="m-b-10">Data Sample Masuk</h5> -->
                   </div>
                   <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Gudang</a></li>
-                    <li class="breadcrumb-item active">Sample Masuk</li>
+                    <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="feather icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="javascript:">Sample Masuk</a></li>
                   </ul>
                 </div>
               </div>
@@ -479,7 +344,7 @@
                 <div class="col-xl-12">
                   <div class="card">
                     <div class="card-header">
-                      <h5><i class="fas fa-boxes me-2"></i>Data Sample Masuk</h5>
+                      <h5>Data Sample Masuk</h5>
                       <div class="float-right">
                         <div class="input-group">
                           <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
@@ -501,14 +366,10 @@
                           <input type="text" id="filter_tgl" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" autocomplete="off">
                           <input type="text" id="filter_tgl2" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" autocomplete="off">
                           <div class="input-group-append">
-                            <button class="btn btn-secondary" id="lihat" type="button">
-                              <i class="fas fa-eye me-1"></i> Lihat
-                            </button>
-                            <button class="btn btn-primary" id="export" type="button">
-                              <i class="fas fa-print me-1"></i> Cetak
-                            </button>
-                            <a href="<?=base_url()?>gudang/sample_masuk" class="btn btn-warning" id="refresh" type="button">
-                              <i class="fas fa-refresh"></i>
+                            <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
+                            <button class="btn btn-primary" id="export" type="button">Cetak</button>
+                            <a href="<?=base_url()?>gudang/sample_masuk" style="width: 40px;" class="btn btn-warning" id="refresh" type="button">
+                              <i class="feather icon-refresh-ccw"></i>
                             </a>
                           </div>
                         </div>
@@ -516,9 +377,8 @@
                     </div>
                     <div class="card-block table-border-style">
                       <?php if (!empty($_GET['msg'])): ?>
-                        <div class="alert alert-<?= $_GET['alert'] ?? 'info' ?> alert-dismissible fade show" role="alert">
+                        <div class="alert alert-<?= $_GET['alert'] ?? 'info' ?>">
                           <?= $_GET['msg'] ?>
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                       <?php endif; ?>
 
@@ -526,14 +386,14 @@
                         <table class="table datatable table-hover table-striped table-sm">
                           <thead>
                             <tr>
-                              <th class="text-center">No</th>
+                              <th>No</th>
                               <th>Tanggal Masuk</th>
-                              <th>Kode Sample</th>
                               <th>Nama Barang</th>
-                              <th>Nama Customer</th>
+                              <th>Nama Gudang</th>
                               <th>ID Barang</th>
                               <th class="text-center">Jumlah</th>
-                              <th class="text-center">Aksi</th>
+                              <th>Keterangan</th>
+                              
                             </tr>
                           </thead>
                           <tbody>
@@ -555,55 +415,27 @@
                                     }
                                     ?>
                                   </td>
-                                  <td>
-                                    <?php if (!empty($row['kode_sample_in'])): ?>
-                                      <span class="badge bg-primary"><?= $row['kode_sample_in'] ?></span>
-                                    <?php else: ?>
-                                      -
-                                    <?php endif; ?>
-                                  </td>
+                                 
                                   <td><?= $row['nama_barang'] ?? '-' ?></td>
                                   <td><?= $row['nama_customer'] ?? '-' ?></td>
                                   <td><?= $row['id_barang'] ?? '-' ?></td>
                                   <td class="text-center">
                                     <?php 
                                     if (isset($row['jumlah_masuk'])) {
-                                      echo '<span class="badge bg-success">' . number_format($row['jumlah_masuk'], 0, ",", ".") . '</span>';
+                                      echo number_format($row['jumlah_masuk'], 0, ",", ".");
                                     } else {
                                       echo '-';
                                     }
                                     ?>
                                   </td>
-                                 
-                                  <td class="text-center">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                      <button type="button" 
-                                        class="btn btn-info btn-sm" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#detailModal"
-                                        data-id_sample_masuk="<?= $row['id_sample_masuk'] ?? '' ?>"
-                                        data-tgl_masuk_sample="<?= $row['tgl_masuk_sample'] ?? '' ?>"
-                                        data-kode_sample_in="<?= $row['kode_sample_in'] ?? '' ?>"
-                                        data-nama_barang="<?= $row['nama_barang'] ?? '' ?>"
-                                        data-nama_customer="<?= $row['nama_customer'] ?? '' ?>"
-                                        data-id_barang="<?= $row['id_barang'] ?? '' ?>"
-                                        data-jumlah_masuk="<?= $row['jumlah_masuk'] ?? '' ?>"
-                                        data-no_pengiriman="<?= $row['no_pengiriman'] ?? '' ?>"
-                                        data-kurir="<?= $row['kurir'] ?? '' ?>"
-                                        data-ket_masuk="<?= $row['ket_masuk'] ?? '' ?>"
-                                        data-gudang_admin="<?= $row['gudang_admin'] ?? '' ?>"
-                                      >
-                                        <i class="fas fa-eye me-1"></i> Detail
-                                      </button>
-                                    </div>
-                                  </td>
+                                  <td><?= $row['ket_masuk'] ?? '-' ?></td>
+                                
                                 </tr>
                               <?php endforeach; ?>
                             <?php else: ?>
                               <tr>
                                 <td colspan="9" class="text-center no-data">
-                                  <i class="fas fa-inbox fa-3x mb-3 text-muted"></i>
-                                  <p class="mb-0">Belum ada data sample masuk.</p>
+                                  Belum ada data sample masuk.
                                 </td>
                               </tr>
                             <?php endif; ?>
@@ -623,95 +455,8 @@
     </div>
   </section>
 
-  <!-- Modal Detail Sample Masuk -->
-  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="detailModalLabel">
-            <i class="fas fa-info-circle me-2"></i>Detail Sample Masuk
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Kode Sample In</label>
-              <input type="text" class="form-control" id="v-kode_sample_in" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Tanggal Masuk Sample</label>
-              <input type="text" class="form-control" id="v-tgl_masuk_sample" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Nama Barang</label>
-              <input type="text" class="form-control" id="v-nama_barang" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">ID Barang</label>
-              <input type="text" class="form-control" id="v-id_barang" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Nama Customer</label>
-              <input type="text" class="form-control" id="v-nama_customer" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Jumlah Masuk</label>
-              <input type="text" class="form-control" id="v-jumlah_masuk" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">No Pengiriman</label>
-              <input type="text" class="form-control" id="v-no_pengiriman" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Kurir</label>
-              <input type="text" class="form-control" id="v-kurir" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Gudang Admin</label>
-              <input type="text" class="form-control" id="v-gudang_admin" readonly>
-            </div>
-
-            <div class="col-md-12 mb-3">
-              <label class="form-label">Keterangan Masuk</label>
-              <textarea class="form-control" id="v-ket_masuk" rows="3" readonly></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            <i class="fas fa-times me-1"></i> Tutup
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.id.min.js"></script>
-
   <script type="text/javascript">
     $(document).ready(function() {
-      // Inisialisasi datepicker
-      $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        language: 'id',
-        autoclose: true,
-        todayHighlight: true
-      });
-
-      // Filter Lihat
       $('#lihat').click(function () {
         var filter_barang = $('#filter_barang').find(':selected').val();
         var filter_customer = $('#filter_customer').find(':selected').val();
@@ -734,7 +479,6 @@
         }
       });
 
-      // Export PDF
       $('#export').click(function () {
         var filter_barang = $('#filter_barang').find(':selected').val();
         var filter_customer = $('#filter_customer').find(':selected').val();
@@ -756,49 +500,6 @@
           var url = "<?= base_url() ?>gudang/sample_masuk/pdf_sample_masuk?" + query.toString();
           window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
         }
-      });
-
-      // Modal Detail
-      var detailModal = document.getElementById('detailModal');
-      detailModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        
-        // Ambil data dari atribut data-*
-        var tgl_masuk_sample = button.getAttribute('data-tgl_masuk_sample');
-        var kode_sample_in = button.getAttribute('data-kode_sample_in');
-        var nama_barang = button.getAttribute('data-nama_barang');
-        var nama_customer = button.getAttribute('data-nama_customer');
-        var id_barang = button.getAttribute('data-id_barang');
-        var jumlah_masuk = button.getAttribute('data-jumlah_masuk');
-        var no_pengiriman = button.getAttribute('data-no_pengiriman');
-        var kurir = button.getAttribute('data-kurir');
-        var ket_masuk = button.getAttribute('data-ket_masuk');
-        var gudang_admin = button.getAttribute('data-gudang_admin');
-
-        // Format tanggal jika perlu
-        if (tgl_masuk_sample) {
-          var tglParts = tgl_masuk_sample.split('-');
-          if (tglParts.length === 3) {
-            tgl_masuk_sample = tglParts[2] + "/" + tglParts[1] + "/" + tglParts[0];
-          }
-        }
-
-        // Format jumlah masuk
-        if (jumlah_masuk) {
-          jumlah_masuk = Number(jumlah_masuk).toLocaleString('id-ID');
-        }
-
-        // Set nilai ke modal
-        document.getElementById('v-tgl_masuk_sample').value = tgl_masuk_sample || '-';
-        document.getElementById('v-kode_sample_in').value = kode_sample_in || '-';
-        document.getElementById('v-nama_barang').value = nama_barang || '-';
-        document.getElementById('v-nama_customer').value = nama_customer || '-';
-        document.getElementById('v-id_barang').value = id_barang || '-';
-        document.getElementById('v-jumlah_masuk').value = jumlah_masuk || '-';
-        document.getElementById('v-no_pengiriman').value = no_pengiriman || '-';
-        document.getElementById('v-kurir').value = kurir || '-';
-        document.getElementById('v-ket_masuk').value = ket_masuk || '-';
-        document.getElementById('v-gudang_admin').value = gudang_admin || '-';
       });
     });
   </script>

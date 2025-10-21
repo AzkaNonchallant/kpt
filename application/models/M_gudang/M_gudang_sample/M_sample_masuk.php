@@ -11,7 +11,7 @@ class M_sample_masuk extends CI_Model {
     }
 
     // Ambil data dengan filter tanggal, nama barang, atau kode_tf_in
-    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $kode_tf_in = null){
+    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $kode_sample_in = null){
         $this->db->select('a.*, b.nama_barang, c.nama_customer');
         $this->db->from('tb_sample_masuk a');
         $this->db->join('tb_master_barang b', 'a.id_barang = b.id_barang', 'left');
@@ -34,8 +34,8 @@ class M_sample_masuk extends CI_Model {
             $this->db->where('b.nama_barang', $nama_barang);
         }
 
-        if ($kode_tf_in != null) {
-            $this->db->where('a.kode_tf_in', $kode_tf_in);
+        if ($kode_sample_in != null) {
+            $this->db->where('a.kode_sample_in', $kode_sample_in);
         }
 
         $this->db->order_by('a.id_sample_masuk', 'DESC');
@@ -49,8 +49,25 @@ class M_sample_masuk extends CI_Model {
     }
 
     // Ambil data lengkap dengan relasi
-    public function get3(){
-        return $this->get(); // reuse get()
+     public function get3($id = null ){
+            
+           $sql = "
+    SELECT 
+        a.id_sample_masuk,
+        a.id_mkt_po_sample,
+        a.id_customer,
+        a.id_barang,
+        a.ket_masuk,
+        b.nama_customer,
+        c.nama_barang
+    FROM tb_sample_masuk a
+    LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+    LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
+    WHERE a.is_deleted = 0
+    ORDER BY a.id_sample_masuk DESC
+";
+return $this->db->query($sql);
+
     }
 
     // Ambil 1 row by id
@@ -58,6 +75,43 @@ class M_sample_masuk extends CI_Model {
         $q = $this->db->get_where('tb_sample_masuk', ['id_sample_masuk' => $id_sample_masuk, 'is_deleted' => 0]);
         return $q->row_array();
     }
+
+    public function get4(){
+    $sql = "
+        SELECT 
+            a.id_barang,
+            a.kode_sample_in, 
+            b.nama_barang,
+            b.bloom,
+            b.mesh,
+            c.id_prc_po_pembelian,
+            d.gdg_qty_in
+        FROM tb_sample_masuk a
+        LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
+        LEFT JOIN tb_prc_po_pembelian c ON  a.id_barang = c.id_barang
+        LEFT JOIN tb_gudang_barang_masuk d ON c.id_prc_po_pembelian = d.id_prc_po_pembelian
+        WHERE a.is_deleted = 0
+        ORDER BY a.created_at ASC
+    ";
+
+    return $this->db->query($sql);
+}
+
+public function get5(){
+    $sql = "
+        SELECT 
+            a.id_customer, 
+            b.nama_customer
+        FROM tb_sample_masuk a
+        LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+        WHERE a.is_deleted = 0
+        ORDER BY a.created_at ASC
+    ";
+
+    return $this->db->query($sql);
+}
+
+
 
     // Insert baru
     public function insert($data){
@@ -67,7 +121,7 @@ class M_sample_masuk extends CI_Model {
             'tgl_masuk_sample' => isset($data['tgl_masuk_sample']) ? $data['tgl_masuk_sample'] : null, // expect yyyy-mm-dd
             'id_customer'      => isset($data['id_customer']) ? $data['id_customer'] : null,
             'id_barang'        => isset($data['id_barang']) ? $data['id_barang'] : null,
-            'kode_tf_in'       => isset($data['kode_tf_in']) ? $data['kode_tf_in'] : null,
+            'kode_sample_in'       => isset($data['kode_sample_in']) ? $data['kode_sample_in'] : null,
             'jumlah_masuk'     => isset($data['jumlah_masuk']) ? $data['jumlah_masuk'] : 0,
             'no_pengiriman'    => isset($data['no_pengiriman']) ? $data['no_pengiriman'] : null, // TAMBAH INI
             'kurir'            => isset($data['kurir']) ? $data['kurir'] : null, // TAMBAH INI
@@ -94,7 +148,7 @@ class M_sample_masuk extends CI_Model {
             'tgl_masuk_sample' => isset($data['tgl_masuk_sample']) ? $data['tgl_masuk_sample'] : null,
             'id_customer'      => isset($data['id_customer']) ? $data['id_customer'] : null,
             'id_barang'        => isset($data['id_barang']) ? $data['id_barang'] : null,
-            'kode_tf_in'       => isset($data['kode_tf_in']) ? $data['kode_tf_in'] : null,
+            'kode_sample_in'       => isset($data['kode_sample_in']) ? $data['kode_sample_in'] : null,
             'jumlah_masuk'     => isset($data['jumlah_masuk']) ? $data['jumlah_masuk'] : 0,
             'ket_masuk'        => isset($data['ket_masuk']) ? $data['ket_masuk'] : null,
             'gudang_admin'     => isset($data['gudang_admin']) ? $data['gudang_admin'] : null,
@@ -118,9 +172,9 @@ class M_sample_masuk extends CI_Model {
     }
 
     // Cek kode tf in (kembalikan jumlah)
-    public function cek_kode_tf_in($kode_tf_in){
-        if (empty($kode_tf_in)) return 0;
-        $this->db->where('kode_tf_in', $kode_tf_in);
+    public function cek_kode_sample_in($kode_sample_in){
+        if (empty($kode_sample_in)) return 0;
+        $this->db->where('kode_sample_in', $kode_sample_in);
         $this->db->where('is_deleted', 0);
         return $this->db->count_all_results('tb_sample_masuk');
     }
@@ -134,10 +188,43 @@ class M_sample_masuk extends CI_Model {
         return $q->row();
     }
 
+
+//     public function jml_po_sample($id_mkt_po_sample){
+//     $this->db->select_sum('jumlah_order', 'total_order'); // ganti kolom sesuai tabel kamu
+//     $this->db->where('id_mkt_po_sample', $id_mkt_po_sample);
+//     $this->db->where('is_deleted', 0);
+//     $q = $this->db->get('tb_mkt_po_sample');
+//     return $q->row();
+// }
+
+
+     public function jml_po_sample($data){
+        $sql = "
+            SELECT sum(jumlah_masuk) tot_sample_masuk FROM `tb_sample_masuk` 
+            WHERE id_sample_masuk ='$data[id_sample_masuk]' AND is_deleted = 0"; 
+        return $this->db->query($sql);
+        }
+
+    // public function jml_sample2_masuk($id_barang){
+    //     $sql = "
+    // SELECT SUM(jumlah_sample) AS total_sample 
+    // FROM tb_mkt_po_sample
+    // WHERE id_mkt_po_sample = '$id_mkt_po_sample'
+    // AND is_deleted = 0
+    // ";
+    // return $this->db->query($sql);
+
+    // }
+
+    //  $sql = "
+    //         SELECT sum(gdg_qty_in) tot_barang_masuk FROM `tb_gudang_barang_masuk` 
+    //         WHERE id_barang_masuk ='$data[id_barang_masuk]' AND is_deleted = 0"; 
+    //     return $this->db->query($sql);
+
     // Ambil kode transfer terakhir
-    public function get_kode_tf_in(){
-        $this->db->select_max('kode_tf_in', 'kode_tf_in');
-        $q = $this->db->get('tb_sample_masuk');
-        return $q->row();
-    }
+    // public function get_kode_sample_in(){
+    //     $this->db->select_max('kode_sample_in', 'kode_sample_in');
+    //     $q = $this->db->get('tb_sample_masuk');
+    //     return $q->row();
+    // }
 }

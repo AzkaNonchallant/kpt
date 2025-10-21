@@ -27,19 +27,8 @@ class Barang_masuk extends MY_Controller {
         $nama_barang = $this->input->get('nama_barang');
         $no_batch = $this->input->get('no_batch');
 
-		// $data['row'] = $this->customer_m->get();
 		$data['result'] = $this->M_barang_masuk->get($tgl, $tgl2, $nama_barang, $no_batch);
-        // for($i=0; $i<count($data['result']);$i++){
-        //     $d['kode_tf_in'] = $data['result'][$i]['kode_tf_in'];
-        //     $jml_sppb = $this->M_sppb->jml_sppb_keluar($d)->row_array();
-        //     // $a=0;
-        //     // for($o=0; $o<count($donasi);$o++){
-        //     //     $a+=$donasi[$o]['donasi'];
-        //     // }
-        //     $stok=$data['result'][$i]['qty_in']-$jml_sppb['tot_sppb'];
-        //     $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
-        //     $data['result'][$i]['stok']=$stok;
-
+       
         $data['res_batch'] = $this->M_barang_masuk->get2()->result_array();
         $data['res_barang'] = $this->M_master_barang->get()->result_array();
         $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
@@ -66,16 +55,7 @@ class Barang_masuk extends MY_Controller {
 
 		// $data['row'] = $this->customer_m->get();
 		$data['result'] = $this->M_barang_masuk->get($tgl, $tgl2, $nama_barang, $no_batch);
-        // for($i=0; $i<count($data['result']);$i++){
-        //     $d['kode_tf_in'] = $data['result'][$i]['kode_tf_in'];
-        //     $jml_sppb = $this->M_sppb->jml_sppb_keluar($d)->row_array();
-        //     // $a=0;
-        //     // for($o=0; $o<count($donasi);$o++){
-        //     //     $a+=$donasi[$o]['donasi'];
-        //     // }
-        //     $stok=$data['result'][$i]['qty_in']-$jml_sppb['tot_sppb'];
-        //     $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
-        //     $data['result'][$i]['stok']=$stok;
+        
     
         $data['res_barang'] = $this->M_master_barang->get()->result_array();
         $data['res_supplier'] = $this->M_master_supplier->get()->result_array();

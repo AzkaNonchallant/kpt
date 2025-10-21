@@ -42,11 +42,13 @@ class M_admin_sample extends CI_Model {
                     a.status, 
                     c.kode_barang, c.nama_barang, c.mesh, c.bloom, c.satuan, c.id_supplier,
                     d.tgl_msk_gdg, d.no_batch,
-                    e.nama_customer
+                    e.nama_customer,
+                    f.kode_sample_in
                 FROM tb_mkt_po_sample a
                 LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
                 LEFT JOIN tb_gudang_barang_masuk d ON d.id_prc_po_pembelian = a.id_mkt_po_sample
                 LEFT JOIN tb_master_customer e ON a.id_customer = e.id_customer
+                LEFT JOIN tb_sample_masuk f ON a.id_mkt_po_sample = f.id_mkt_po_sample
                 WHERE a.is_deleted = 0 
                 $where
                 ORDER BY a.tgl_po_sample DESC
@@ -169,19 +171,16 @@ public function proses($data)
         return $this->db->query($sql);
     }
 
-    public function delete($id)
+    public function delete($data)
     {
         $id_user = $this->id_user();
         $sql = "
-            UPDATE tb_mkt_po_sample
-            SET 
-                is_deleted = 1,
-                updated_at = NOW(),
-                updated_by = '$id_user'
-            WHERE id_mkt_po_sample = '$id'
-        ";
+          DELETE FROM `tb_mkt_po_sample`
+             WHERE id_mkt_po_sample = '$data[id_mkt_po_sample]'
+         ";
         return $this->db->query($sql);
     }
+
 
     public function cek_sample()
     {

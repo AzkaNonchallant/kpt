@@ -37,6 +37,7 @@ class admin_sample extends MY_Controller {
         $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
+        $data['res_sample'] = $this->M_sample_masuk->get4()->result_array();
 
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;

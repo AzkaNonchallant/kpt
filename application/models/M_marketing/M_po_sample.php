@@ -24,6 +24,52 @@ class M_po_sample extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
+        INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
+        VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
+        ";
+
+        $this->db->query($sql);
+
+        $id_po_sample = $this->db->insert_id();
+
+        // ======================
+    // 2. Generate kode TFIN berurutan
+    // ======================
+    $this->db->select('kode_sample_in');
+    $this->db->from('tb_sample_masuk');
+    $this->db->like('kode_sample_in', 'SAMPLEIN-', 'after');
+    $this->db->order_by('id_sample_masuk', 'DESC'); // pakai id biar aman
+    $this->db->limit(1);
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        $lastKode = $query->row()->kode_tf_in;
+        $lastNumber = (int) str_replace('SAMPLEIN-', '', $lastKode);
+        $newNumber = $lastNumber + 1;
+    } else {
+        $newNumber = 1; // kalau belum ada data
+    }
+
+    $kode_tf = 'SAMPLEIN-' . $newNumber;
+
+    // ======================
+    // 3. Insert ke tb_gudang_barang_masuk
+    // ======================
+    $data_gudang = [
+        'kode_sample_in' => $kode_tf,
+        'id_mkt_po_sample' => $id_po_sample,
+        // 'gdg_qty_in' => $data['jumlah_po_pembelian'],
+        'created_at' => date('Y-m-d H:i:s'),
+        'created_by' => $id_user
+    ];
+
+    $this->db->insert('tb_sample_masuk', $data_gudang);
+    }
+
+     public function add2($data)
+    {
+        $id_user = $this->id_user();
+        $sql = "
         INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,kode_tf_in,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
         VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
         ";
