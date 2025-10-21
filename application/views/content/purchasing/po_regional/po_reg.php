@@ -166,7 +166,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="no_po_reg">No PO Reg</label>
-                                <input type="text" class="form-control" id="no_po_reg" name="no_po_reg" maxlength="20" placeholder="No PO Reg" aria-describedby="validationServer03Feedback" autocomplete="off" required>
+                                <input type="text" class="form-control" id="no_po_reg" name="no_po_reg" maxlength="20" placeholder="No PO Reg" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off" required>
                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                     Maaf Nomor PO Import sudah ada.
                                 </div>
@@ -199,7 +199,7 @@
                                     <option value="" disabled selected hidden>- Pilih Nama Barang -</option>
                                     <?php foreach ($res_barang as $b): ?>
                                     <option value="<?= $b['id_barang'] ?>" 
-                                    data-mesh="<?= $b['mesh'] ?>" data-bloom="<?=$b['bloom']?>"><?= $b['nama_barang'] ?> (<?= $b['kode_barang'] ?>)</option>
+                                    data-mesh="<?= $b['mesh'] ?>" data-bloom="<?=$b['bloom']?>"><?= $b['nama_barang'] ?> (<?= $b['no_batch'] ?>)</option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -366,7 +366,25 @@ $(document).ready(function() {
     $('#pic_supplier').val(golongan);  
   });
 
-  $('#add').on('submit', function(e) {
+  $("#no_po_reg").keyup(function() {
+    var no_po_reg = $(this).val();
+    $.ajax({
+      url: "<?= base_url() ?>purchasing/po_regional/po_reg/check_no_po_reg",
+      dataType: 'text',
+      type: "post",
+      data: { no_po_reg },
+      success: function(response) {
+        if (response == "true") {
+          $("#no_po_reg").addClass("is-invalid");
+          $("#simpan").attr("disabled", "disabled");
+        } else {
+          $("#no_po_reg").removeClass("is-invalid");
+          $("#simpan").removeAttr("disabled");
+        }
+      }
+    });
+});
+    $('#add').on('submit', function(e) {
     // Ambil nilai aslinya (tanpa format)
     const jumlah = unformatRupiah($('#jumlah').val());
     const harga = unformatRupiah($('#harga_perunit').val());
@@ -741,20 +759,6 @@ $(document).ready(function() {
                                 <input type="text" class="form-control" id="e-pic2" name="pic2" placeholder="Pic2">
                                 </div>
                             </div>
-
-<!-- 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="e-pajak">Pajak</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="font-size: small;">Rp</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="e-pajak" name="pajak" placeholder="Pajak" required>
-                                </div>             
-                            </div>
-                        </div> -->
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="e-total_harga">Total Harga</label>

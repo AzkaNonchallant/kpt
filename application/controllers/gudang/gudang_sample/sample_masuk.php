@@ -39,6 +39,8 @@ class sample_masuk extends MY_Controller {
         $data['res_barang'] = $this->M_master_barang->get()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
+        $data['res_sample'] = $this->M_sample_masuk->get4()->result_array();
+        $data['res_gud'] = $this->M_sample_masuk->get5()->result_array();
 
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;
@@ -64,7 +66,7 @@ class sample_masuk extends MY_Controller {
         $data['tgl_masuk_sample'] = $this->convertDate($this->input->post('tgl_masuk_sample', TRUE));
         $data['id_customer'] = $this->input->post('id_customer', TRUE);
         $data['id_barang'] = $this->input->post('id_barang', TRUE);
-        $data['kode_tf_in'] = $this->input->post('kode_tf_in', TRUE);
+        $data['kode_sample_in'] = $this->input->post('kode_sample_in', TRUE);
         $data['jumlah_masuk'] = $this->input->post('jumlah_masuk', TRUE);
         $data['jumlah_masuk'] = str_replace('.', '', $data['jumlah_masuk']);
         $data['ket_masuk'] = $this->input->post('ket_masuk', TRUE);
@@ -77,8 +79,8 @@ class sample_masuk extends MY_Controller {
         }
 
         // Cek kode TF IN jika perlu
-        if (!empty($data['kode_tf_in'])) {
-            $cek_kode = $this->M_sample_masuk->cek_kode_tf_in($data['kode_tf_in']);
+        if (!empty($data['kode_sample_in'])) {
+            $cek_kode = $this->M_sample_masuk->cek_kode_sample_in($data['kode_sample_in']);
             if ($cek_kode > 0) {
                 header('location:'.base_url('gudang/gudang_admin/admin_sample').'?alert=danger&msg=Kode TF IN sudah digunakan');
                 return;
@@ -119,7 +121,7 @@ class sample_masuk extends MY_Controller {
         $data['tgl_masuk_sample'] = $this->convertDate($this->input->post('tgl_masuk_sample', TRUE));
         $data['id_customer'] = $this->input->post('id_customer', TRUE);
         $data['id_barang'] = $this->input->post('id_barang', TRUE);
-        $data['kode_tf_in'] = $this->input->post('kode_tf_in', TRUE);
+        $data['kode_sample_in'] = $this->input->post('kode_sample_in', TRUE);
         $data['jumlah_masuk'] = $this->input->post('jumlah_masuk', TRUE);
         $data['jumlah_masuk'] = str_replace('.', '', $data['jumlah_masuk']);
         $data['ket_masuk'] = $this->input->post('ket_masuk', TRUE);
@@ -145,10 +147,10 @@ class sample_masuk extends MY_Controller {
         }
     }
 
-    public function cek_kode_tf_in()
+    public function cek_kode_sample_in()
     {
-        $kode_tf_in = $this->input->post('kode_tf_in', TRUE);
-        $count = $this->M_sample_masuk->cek_kode_tf_in($kode_tf_in);
+        $kode_sample_in = $this->input->post('kode_sample_in', TRUE);
+        $count = $this->M_sample_masuk->cek_kode_sample_in($kode_sample_in);
         
         if ($count == 0) {
             echo "false";

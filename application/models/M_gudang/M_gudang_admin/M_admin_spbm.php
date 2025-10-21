@@ -95,25 +95,26 @@ class M_admin_spbm extends CI_Model {
 {
         $id_user = $this->id_user();
         // $sql = "
-        // INSERT INTO `tb_gudang_barang_masuk`(`id_prc_po_pembelian`, `no_batch`, `gdg_qty_in`, `tgl_msk_gdg`,`tgl_bayar_pib`, `tgl_exp`, `no_bl`,`keterangan`,`gdg_admin`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
+        // INSERT INTO tb_gudang_barang_masuk(id_prc_po_pembelian, no_batch, gdg_qty_in, tgl_msk_gdg,tgl_bayar_pib, tgl_exp, no_bl,keterangan,gdg_admin, created_at, created_by, updated_at, updated_by, is_deleted) 
         // VALUES ('$data[id_prc_po_pembelian]','$data[no_batch]','$data[gdg_qty_in]','$data[tgl_msk_gdg]','$data[tgl_bayar_pib]','$data[tgl_exp]','$data[no_bl]','$data[keterangan]','$data[gdg_admin]',NOW(),'$id_user','0000-00-00 00:00:00','','0')
         // ";
         $sql = "
-        UPDATE `tb_gudang_barang_masuk`
+        UPDATE tb_gudang_barang_masuk
         SET 
-            `id_prc_po_pembelian` = '{$data['id_prc_po_pembelian']}',
-            `no_batch`            = '{$data['no_batch']}',
-            `gdg_qty_in`          = '{$data['gdg_qty_in']}',
-            `tgl_msk_gdg`         = '{$data['tgl_msk_gdg']}',
-            `tgl_bayar_pib`       = '{$data['tgl_bayar_pib']}',
-            `tgl_exp`             = '{$data['tgl_exp']}',
-            `no_bl`               = '{$data['no_bl']}',
-            `keterangan`          = '{$data['keterangan']}',
-            `gdg_admin`           = '{$data['gdg_admin']}',
-            `updated_at`          = NOW(),
-            `updated_by`          = '$id_user',
-            `is_deleted`          = '0'
-        WHERE `kode_tf_in` = '$data[kode_tf_in_2]'
+            id_prc_po_pembelian = '{$data['id_prc_po_pembelian']}',
+            no_batch            = '{$data['no_batch']}',
+            gdg_qty_in          = '{$data['gdg_qty_in']}',
+            tgl_msk_gdg         = '{$data['tgl_msk_gdg']}',
+            tgl_bayar_pib       = '{$data['tgl_bayar_pib']}',
+            tgl_exp             = '{$data['tgl_exp']}',
+            no_bl               = '{$data['no_bl']}',
+            jenis_transaksi_gudang = '{$data['jenis_transaksi_gudang']}',
+            keterangan          = '{$data['keterangan']}',
+            gdg_admin           = '{$data['gdg_admin']}',
+            updated_at          = NOW(),
+            updated_by          = '$id_user',
+            is_deleted          = '0'
+        WHERE kode_tf_in = '$data[kode_tf_in_2]'
     ";
         return $this->db->query($sql);
     }
@@ -121,9 +122,9 @@ class M_admin_spbm extends CI_Model {
     public function update_status_po($id_prc_po_pembelian, $status_po_pembelian)
     {
         $sql = "
-        UPDATE `tb_prc_po_pembelian`
-        SET `status_po_pembelian`='$status_po_pembelian'
-        WHERE `id_prc_po_pembelian`='$id_prc_po_pembelian';
+        UPDATE tb_prc_po_pembelian
+        SET status_po_pembelian='$status_po_pembelian'
+        WHERE id_prc_po_pembelian='$id_prc_po_pembelian';
         ";
         return $this->db->query($sql);
     }
@@ -132,9 +133,9 @@ class M_admin_spbm extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-            UPDATE `tb_barang_masuk` 
-            SET `kode_tf_in`='$data[kode_tf_in]',`no_batch`='$data[no_batch]',`tgl_msk_gdg`='$data[tgl_msk_gdg]',`jenis_transaksi`='$data[jenis_transaksi]',`tgl_bayar_pib`='$data[tgl_bayar_pib]',`id_barang`='$data[id_barang]',`qty_in`='$data[qty_in]',`tgl_exp`='$data[tgl_exp]',`no_bl`='$data[no_bl]',`keterangan`='$data[keterangan]',`gdg_admin`='$data[gdg_admin]',`updated_at`=NOW(),`updated_by`='$id_user' 
-            WHERE `id_barang_masuk`='$data[id_barang_masuk]'
+            UPDATE tb_barang_masuk 
+            SET kode_tf_in='$data[kode_tf_in]',no_batch='$data[no_batch]',tgl_msk_gdg='$data[tgl_msk_gdg]',jenis_transaksi='$data[jenis_transaksi]',tgl_bayar_pib='$data[tgl_bayar_pib]',id_barang='$data[id_barang]',qty_in='$data[qty_in]',tgl_exp='$data[tgl_exp]',no_bl='$data[no_bl]',keterangan='$data[keterangan]',gdg_admin='$data[gdg_admin]',updated_at=NOW(),updated_by='$id_user' 
+            WHERE id_barang_masuk='$data[id_barang_masuk]'
         ";
         return $this->db->query($sql);
         // return $sql;
@@ -145,8 +146,8 @@ class M_admin_spbm extends CI_Model {
         $id_user = $this->id_user();
 
         $sql = "
-        DELETE FROM `tb_barang_masuk`
-         WHERE `id_barang_masuk`='$data[id_barang_masuk]'
+        DELETE FROM tb_barang_masuk
+         WHERE id_barang_masuk='$data[id_barang_masuk]'
         ";
         return $this->db->query($sql);
     }
@@ -155,7 +156,7 @@ class M_admin_spbm extends CI_Model {
     public function jml_barang_masuk($data){
         // $kode_user = $this->kode_user();
         $sql = "
-            SELECT sum(qty_in) tot_barang_masuk FROM `tb_barang_masuk`
+            SELECT sum(qty_in) tot_barang_masuk FROM tb_barang_masuk
             WHERE id_barang = '$data[id_barang]' AND  is_deleted = 0";
         return $this->db->query($sql);
     }

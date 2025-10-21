@@ -13,6 +13,7 @@ class admin_spbm extends MY_Controller {
         $this->load->model('M_master/M_master_supplier');
         $this->load->model('M_gudang/M_gudang_barang/M_barang_masuk/M_barang_masuk');
         $this->load->model('M_users');
+        $this->load->model('M_sumber');
     }
 
 private function convertDate($date)
@@ -40,6 +41,7 @@ private function convertDate($date)
         $data['res_barang'] = $this->M_master_barang->get()->result_array();
         $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
+        $data['res_sumber'] = $this->M_sumber->get2()->result_array();
         // $data['kode_tf_in'] = $this->M_barang_masuk-> get_kode_tf_in()->result_array();
 
         $data['tgl'] = $tgl;
@@ -62,6 +64,8 @@ private function convertDate($date)
         $data['tgl_bayar_pib'] = $this->convertDate($this->input->post('tgl_bayar_pib',TRUE));
         $data['tgl_exp'] = $this->convertDate($this->input->post('tgl_exp',TRUE));
         $data['no_bl'] = $this->input->post('no_bl',TRUE);
+        $data['id_sumber'] = $this->input->post('id_sumber',TRUE);
+        $data['jenis_transaksi_gudang'] = $this->input->post('jenis_transaksi', TRUE);
         $data['keterangan'] = $this->input->post('keterangan',TRUE);
         $data['gdg_admin'] = $this->input->post('gdg_admin',TRUE);
 

@@ -11,6 +11,7 @@ class po_sample extends MY_Controller {
         $this->load->model('M_marketing/M_po_sample');
         $this->load->model('M_marketing/M_sppb');
         $this->load->model('M_master/M_master_barang');
+        $this->load->model('M_gudang/M_gudang_sample/M_sample_masuk');
         $this->load->model('M_gudang/M_gudang_barang/M_barang_masuk/M_barang_masuk');
         $this->load->model('M_master/M_master_customer');
         $this->load->model('M_users');
@@ -20,8 +21,7 @@ class po_sample extends MY_Controller {
     private function convertDate($date)
     {
         return explode('/', $date)[2]."-".explode('/', $date)[1]."-".explode('/', $date)[0];
-    }
-
+	}
 	public function index()
 	{
 
@@ -48,12 +48,14 @@ class po_sample extends MY_Controller {
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
+        $data['res_sample'] = $this->M_sample_masuk->get4()->result_array();
+        $data['res_gud'] = $this->M_sample_masuk->get5()->result_array();
 
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;
         $data['nama_barang'] = $nama_barang;
         $data['nama_customer'] = $nama_customer;
-        // echo json_encode($data['result']);
+        // echo json_encode($data['res_sample']);
 		$this->template->load('template', 'content/marketing/po_sample',$data);
         // print_r($data);
 
@@ -65,7 +67,7 @@ class po_sample extends MY_Controller {
         $data['tgl_po_sample'] = $this->convertDate($this->input->post('tgl_po_sample',TRUE));
         $data['id_customer'] = $this->input->post('id_customer',TRUE);
         $data['id_barang'] = $this->input->post('id_barang',TRUE);
-        $data['kode_tf_in'] = $this->input->post('kode_tf_in',TRUE);
+        // $data['kode_tf_in'] = $this->input->post('kode_tf_in',TRUE);
         $data['jumlah_po_sample'] = $this->input->post('jumlah_po_sample',TRUE);
         $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']); // Hapus titik pemisah ribuan
         $data['ket_po_sample'] = $this->input->post('ket_po_sample',TRUE);
@@ -79,6 +81,28 @@ class po_sample extends MY_Controller {
         	header('location:'.base_url('marketing/po_sample').'?alert=danger&msg=Maaf anda gagal menambah PO Customer');
         }
 	}
+
+    // public function add2()
+	// {
+	// 	$data['no_po'] = $this->input->post('no_po',TRUE);
+    //     $data['tgl_po_sample'] = $this->convertDate($this->input->post('tgl_po_sample',TRUE));
+    //     $data['id_customer'] = $this->input->post('id_customer',TRUE);
+    //     $data['id_barang'] = $this->input->post('id_barang',TRUE);
+    //     $data['kode_tf_in'] = $this->input->post('kode_tf_in',TRUE);
+    //     $data['jumlah_po_sample'] = $this->input->post('jumlah_po_sample',TRUE);
+    //     $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']); // Hapus titik pemisah ribuan
+    //     $data['ket_po_sample'] = $this->input->post('ket_po_sample',TRUE);
+    //     $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
+
+    //     $respon = $this->M_po_sample->add2($data);
+
+    //     if($respon){
+    //     	header('location:'.base_url('marketing/po_sample').'?alert=success&msg=Selamat anda berhasil menambah PO Customer');
+    //     }else{
+    //     	header('location:'.base_url('marketing/po_sample').'?alert=danger&msg=Maaf anda gagal menambah PO Customer');
+    //     }
+	// }
+
 	public function update()
 	{
         $data['id_mkt_po_sample'] = $this->input->post('id_mkt_po_sample',TRUE);

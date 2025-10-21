@@ -55,43 +55,6 @@ class M_po_pembelian extends CI_Model {
             return $this->db->query($sql);
     }
 
-    // public function add($data)
-    // {
-    //     $id_user = $this->id_user();
-    //     $sql = "
-    //     INSERT INTO `tb_prc_po_pembelian`(`no_po_pembelian`, `tgl_po_pembelian`, `id_barang`, `jumlah_po_pembelian`, `harga_po_pembelian`, `jenis_pembayaran`,`prc_admin`, `status_po_pembelian`,`created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
-    //     VALUES ('$data[no_po_pembelian]','$data[tgl_po_pembelian]','$data[id_barang]','$data[jumlah_po_pembelian]','$data[harga_po_pembelian]','$data[jenis_pembayaran]','$data[prc_admin]', 'Proses', NOW(),'$id_user','0000-00-00 00:00:00','','0')
-    //     ";
-    //     return $this->db->query($sql);
-    // }
-
-//     public function add($data)
-// {
-//     $id_user = $this->id_user();
-
-//     // 1. Insert ke tb_prc_po_pembelian
-//     $sql = "
-//     INSERT INTO `tb_prc_po_pembelian`
-//     (`no_po_pembelian`, `tgl_po_pembelian`, `id_barang`, `jumlah_po_pembelian`, `harga_po_pembelian`, `jenis_pembayaran`, `prc_admin`, `status_po_pembelian`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
-//     VALUES 
-//     (
-//         '{$data['no_po_pembelian']}',
-//         '{$data['tgl_po_pembelian']}',
-//         '{$data['id_barang']}',
-//         '{$data['jumlah_po_pembelian']}',
-//         '{$data['harga_po_pembelian']}',
-//         '{$data['jenis_pembayaran']}',
-//         '{$data['prc_admin']}',
-//         'Proses',
-//         NOW(),
-//         '$id_user',
-//         '0000-00-00 00:00:00',
-//         '',
-//         '0'
-//     )
-//     ";
-//     $this->db->query($sql);
-// }
 
 public function add($data)
 {
@@ -102,7 +65,7 @@ public function add($data)
     // ======================
     $sql = "
         INSERT INTO `tb_prc_po_pembelian`
-        (`no_po_pembelian`, `tgl_po_pembelian`, `id_barang`, `jumlah_po_pembelian`, `harga_po_pembelian`, `jenis_pembayaran`, `prc_admin`, `status_po_pembelian`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
+        (`no_po_pembelian`, `tgl_po_pembelian`, `id_barang`, `jumlah_po_pembelian`, `harga_po_pembelian`, `jenis_pembayaran`, `ket_po`,`prc_admin`, `status_po_pembelian`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
         VALUES 
         (
             '{$data['no_po_pembelian']}',
@@ -111,6 +74,7 @@ public function add($data)
             '{$data['jumlah_po_pembelian']}',
             '{$data['harga_po_pembelian']}',
             '{$data['jenis_pembayaran']}',
+            '{$data['ket_po']}',
             '{$data['prc_admin']}',
             'Proses',
             NOW(),

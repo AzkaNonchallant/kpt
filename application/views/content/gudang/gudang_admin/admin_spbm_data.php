@@ -762,7 +762,7 @@ $(document).ready(function() {
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit PO Pembelian</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Proses PO Pembelian</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -821,18 +821,17 @@ $(document).ready(function() {
 
             <div class="col-md-3">
               <div class="form-group">
+                <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                  <input type="text" class="form-control" id="p-jumlah_zak" name="jumlah_zak" placeholder="Jumlah(Kg)" onkeypress="return hanyaAngka(event)" maxlength="15" autocomplete="off" readonly>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
                 <label for="exampleFormControlInput1">Jumlah(kg)</label>
                   <input type="text" class="form-control" id="p-jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah(Kg)" onkeypress="return hanyaAngka(event)" maxlength="15" autocomplete="off" readonly>
               </div>
             </div>
 
-            <!-- <div class="col-md-3">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Harga(Rp/kg)</label>
-                  <input type="text" class="form-control" id="p-harga_po_pembelian" name="harga_po_pembelian" placeholder="Harga(Rp/Kg)" onkeypress="return hanyaAngka(event)" maxlength="15" autocomplete="off" readonly>
-              </div>
-            </div> -->
-          
             <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Purchasing Admin</label>
@@ -859,6 +858,20 @@ $(document).ready(function() {
             </div>
 
             <div class="col-md-3">
+              <div class="form-group">
+                <label for="id_customer">Jenis Transaksi</label>
+                  <select class="form-control chosen-select" id="jenis_transaksi" name="jenis_transaksi" autocomplete="off" required>
+                    <option value="">-Pilih Jenis Transaksi -</option>
+                    <option value="Stok Awal">Stok Awal</option>
+                    <option value="Penerimaan">Penerimaan</option>
+                    <option value="Koreksi Stok">Koreksi Stok</option>
+                    <option value="Recall">Recall</option>
+                    <option value="Return">Return</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">No Batch</label>
                       <input type="text" class="form-control" id="no_batch" name="no_batch" placeholder="No Batch" autocomplete="off" required>
@@ -867,8 +880,11 @@ $(document).ready(function() {
 
             <div class="col-md-3">
                   <div class="form-group">
-                    <label for="exampleFormControlInput1">Jumlah (Zak)</label>
-                      <input type="text" class="form-control" id="jumlah_zak" name="gdg_qty_zak" placeholder="Jumlah" autocomplete="off" required>
+                    <label for="jumlah_zak">Jumlah (Zak)</label>
+                      <input type="text" class="form-control" id="jumlah_zak" name="jumlah_zak" placeholder="Jumlah" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                       <div id="validationServer03Feedback" class="invalid-feedback">
+                        Maaf Jumlah Kirim tidak boleh lebih dari Stock.
+                      </div>
                   </div>
             </div>
             <div class="col-md-3">
@@ -899,6 +915,7 @@ $(document).ready(function() {
                   </div>
             </div>
 
+
             <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Keterangan</label>
@@ -927,6 +944,29 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+  function formatRupiah(angka) {
+        if (!angka) return '0';
+      let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split   		= number_string.split('.'),
+          sisa     		= split[0].length % 3,
+          rupiah     	= split[0].substr(0, sisa),
+          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return rupiah;
+    }
+
+    function unformatRupiah(angka) {
+        if (!angka) return 0;
+        return parseInt(angka.toString().replace(/\./g, '').replace(/[^0-9]/g, ''), 10);
+    }
+
     $('#proses').on('show.bs.modal', function (event) {
   var id_prc_po_pembelian = $(event.relatedTarget).data('id_prc_po_pembelian') 
   var no_po_pembelian = $(event.relatedTarget).data('no_po_pembelian')
@@ -942,6 +982,11 @@ $(document).ready(function() {
   var kode_tf_in = $(event.relatedTarget).data('kode_tf_in') 
   var kode_tf_in_2 = $(event.relatedTarget).data('kode_tf_in') 
 
+  let jumlah_po = unformatRupiah(jumlah_po_pembelian)
+  let zak = jumlah_po / 25;
+
+  let formattedZak = formatRupiah(zak.toString());
+  $(this).find('#p-jumlah_zak').val(formattedZak)
   $(this).find('#p-id_prc_po_pembelian').val(id_prc_po_pembelian)
   $(this).find('#p-no_po_pembelian').val(no_po_pembelian)
   $(this).find('#p-tgl_po_pembelian').val(tgl_po_pembelian)
@@ -956,17 +1001,26 @@ $(document).ready(function() {
   $(this).find('#p-kode_tf_in').val(kode_tf_in)
   $(this).find('#p-kode_tf_in_2').val(kode_tf_in_2)
 
+
+  $("#jumlah_zak").keyup(function(){
+      var jumlah_zak =  $("#jumlah_zak").val().replaceAll('.','');
+      var jumlah_po =  $("#p-jumlah_zak").val().replaceAll('.','');
+      if (unformatRupiah(jumlah_zak) > unformatRupiah(jumlah_po)) {
+        $("#jumlah_zak").addClass("is-invalid");
+        $("#simpan").attr("disabled","disabled");
+      }else{
+        $("#jumlah_zak").removeClass("is-invalid");
+        $("#simpan").removeAttr("disabled");
+      }
+    })
+
       document.getElementById('p-jumlah_po_pembelian').addEventListener('keyup', function(e) {
       let value = this.value.replace(/\D/g,'');
       value = new Intl.NumberFormat('id-ID').format(value);
       this.value = value;
     });
 
-    //   document.getElementById('p-harga_po_pembelian').addEventListener('keyup', function(e) {
-    //   let value = this.value.replace(/\D/g,'');
-    //   value = new Intl.NumberFormat('id-ID').format(value);
-    //   this.value = value;
-    // });
+    
 
         document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
     let value = this.value.replace(/\D/g,'');

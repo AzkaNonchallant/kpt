@@ -370,10 +370,11 @@
                                                             <th>Tgl PO Sample</th>
                                                             <th>Customer</th>
                                                             <th>Nama Barang</th>
-                                                            <th>Jumlah PO</th>
-                                                            <th>Kode TF IN</th>
+                                                            <th>Jumlah KG</th>
+                                                            <th>JUmlah Zak</th>
+                                                            <th>Kode Sample IN</th>
                                                             <th>Keterangan</th>
-                                                            <th>Marketing Admin</th>
+                                                            
                                                             <th>Status</th> 
                                                             <th>Aksi</th>
                                                         </tr>
@@ -409,9 +410,10 @@
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_sample'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td><?=$k['kode_tf_in']?></td>
+                                                            <td>-</td>
+                                                            <td><?=$k['kode_sample_in']?></td>
                                                             <td><?=$k['ket_po_sample']?></td>
-                                                            <td><?=$k['mkt_admin']?></td>
+                                                            
                                                             <td class="text-center"><?=$status_badge?></td> <!-- Kolom Status -->
                                                             <td class="text-center">
                                                                 <div class="action-buttons">
@@ -429,10 +431,10 @@
                                                                         data-nama_barang="<?=$k['nama_barang']?>"
                                                                         data-mesh="<?=$k['mesh']?>"
                                                                         data-bloom="<?=$k['bloom']?>"
-                                                                        data-kode_tf_in="<?=$k['kode_tf_in']?>"
+                                                                        data-kode_tf_in="<?=$k['kode_sample_in']?>"
                                                                         data-jumlah_po_sample="<?=number_format($k['jumlah_po_sample'],0,",",".")?>"
                                                                         data-ket_po_sample="<?=$k['ket_po_sample']?>"
-                                                                        data-mkt_admin="<?=$k['mkt_admin']?>">
+                                                                       
                                                                         <i class="feather icon-edit-2"></i>Proses
                                                                     </button>
                                                                     <?php endif; ?>
@@ -448,17 +450,25 @@
                                                                         data-id_barang="<?=$k['id_barang']?>"
                                                                         data-mesh="<?=$k['mesh']?>"
                                                                         data-bloom="<?=$k['bloom']?>"
-                                                                        data-kode_tf_in="<?=$k['kode_tf_in']?>"
+                                                                        data-kode_tf_in="<?=$k['kode_sample_in']?>"
                                                                         data-jumlah_po_sample="<?=number_format($k['jumlah_po_sample'],0,",",".")?>"
                                                                         data-ket_po_sample="<?=$k['ket_po_sample']?>"
-                                                                        data-mkt_admin="<?=$k['mkt_admin']?>">
+                                                                       
                                                                         <i class="feather icon-edit"></i>Edit
                                                                     </button>
                                                                     
-                                                                    <a href="<?=base_url()?>gudang/gudang_admin/admin_sample/delete/<?=$k['id_mkt_po_sample']?>" 
+                                                                   
+                                                                      <!-- <a  href="<?= base_url() ?>gudang/gudang_admin/admin_sample/delete/<?= str_replace('/', '--', $k['id_mkt_po_sample']) ?>"
                                                                     class="btn btn-danger btn-square text-light btn-sm" 
                                                                     onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
                                                                     <i class="feather icon-trash-2"></i>Hapus
+                                                                    </a> -->
+
+                                                                     <a
+                                                                        href="<?= base_url() ?>gudang/gudang_admin/admin_sample/delete/<?= str_replace('/', '--', $k['id_mkt_po_sample']) ?>"
+                                                                        class="btn btn-danger btn-square text-light btn-sm"
+                                                                        onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
+                                                                        <i class="feather icon-trash-2"></i>hapus
                                                                     </a>
                                                                 </div>
                                                             </td>
@@ -675,12 +685,7 @@
                                     <input type="text" class="form-control" id="e-jumlah_po_sample" name="jumlah_po_sample" placeholder="Jumlah" autocomplete="off" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="e-mkt_admin">Marketing Admin</label>
-                                    <input type="text" class="form-control" id="e-mkt_admin" name="mkt_admin" value="<?=$this->session->userdata('nama')?>" readonly>
-                                </div>
-                            </div>
+                           
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="e-ket_po_sample">Keterangan</label>
@@ -724,7 +729,7 @@
                 var kode_tf_in = button.data('kode_tf_in');
                 var jumlah_po_sample = button.data('jumlah_po_sample');
                 var ket_po_sample = button.data('ket_po_sample');
-                var mkt_admin = button.data('mkt_admin');
+               
 
                 $(this).find('#p-id_mkt_po_sample').val(id_mkt_po_sample);
                 $(this).find('#p-tgl_po_sample').val(tgl_po_sample);
