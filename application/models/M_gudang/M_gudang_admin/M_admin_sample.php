@@ -37,7 +37,7 @@ class M_admin_sample extends CI_Model {
         $where = implode(" ", $where);
 
         $sql = "
-                SELECT 
+               SELECT 
                     a.*, 
                     a.status, 
                     c.kode_barang, c.nama_barang, c.mesh, c.bloom, c.satuan, c.id_supplier,
@@ -64,41 +64,23 @@ public function proses($data)
     $id_user = $this->id_user();
     
     $sql = "
-        INSERT INTO `tb_sample_masuk` 
-        (
-            `id_mkt_po_sample`, 
-            `tgl_masuk_sample`, 
-            `id_customer`, 
-            `id_barang`, 
-            `kode_tf_in`, 
-            `jumlah_masuk`, 
-            `ket_masuk`, 
-            `gudang_admin`, 
-            `created_at`, 
-            `created_by`, 
-            `updated_at`, 
-            `updated_by`, 
-            `is_deleted`
-        ) 
-        VALUES 
-        (
-            '{$data['id_mkt_po_sample']}',
-            '{$data['tgl_keluar_sample']}',
-            '{$data['id_customer']}',
-            '{$data['id_barang']}',
-            '{$data['kode_tf_in']}',
-            '{$data['jumlah_dikirim']}',
-            '{$data['ket_pengiriman']}',
-            '{$data['gdg_admin']}',
-            NOW(),
-            '$id_user',
-            NOW(),
-            '$id_user',
-            '0'
-        )
+        UPDATE tb_sample_masuk 
+        SET tgl_masuk_sample='$data[tgl_masuk_sample]', id_customer='$data[id_customer]', id_barang='$data[id_barang]',jumlah_masuk='$data[jumlah_masuk]',
+        ket_masuk='$data[ket_masuk]',gudang_admin='$id_user', is_deleted='0'
+        WHERE kode_sample_in='$data[kode_sample_in]' 
     ";
     
-    return $this->db->query($sql);
+     $this->db->query($sql);
+
+     $sql2 = "
+     UPDATE tb_mkt_po_sample SET
+     status='processed'
+     WHERE id_mkt_po_sample='$data[id_mkt_po_sample]'
+     ";
+
+     $this->db->query($sql2);
+
+     return TRUE;
 }
 
    
@@ -175,7 +157,7 @@ public function proses($data)
     {
         $id_user = $this->id_user();
         $sql = "
-          DELETE FROM `tb_mkt_po_sample`
+          DELETE FROM tb_mkt_po_sample
              WHERE id_mkt_po_sample = '$data[id_mkt_po_sample]'
          ";
         return $this->db->query($sql);
