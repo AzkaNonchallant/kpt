@@ -372,7 +372,7 @@
                                                             <th>Nama Barang</th>
                                                             <th>Jumlah KG</th>
                                                             <th>JUmlah Zak</th>
-                                                            <th>Kode Sample IN</th>
+                                                            <th>Kode Sample OUT</th>
                                                             <th>Keterangan</th>
                                                             
                                                             <th>Status</th> 
@@ -410,8 +410,8 @@
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_sample'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td><?= $k['jumlah_po_sample'] / 25?>s</td>
-                                                            <td><?=$k['kode_sample_in']?></td>
+                                                            <td>-</td>
+                                                            <td><?=$k['kode_sample_out']?></td>
                                                             <td><?=$k['ket_po_sample']?></td>
                                                             
                                                             <td class="text-center"><?=$status_badge?></td> <!-- Kolom Status -->
@@ -431,7 +431,7 @@
                                                                         data-nama_barang="<?=$k['nama_barang']?>"
                                                                         data-mesh="<?=$k['mesh']?>"
                                                                         data-bloom="<?=$k['bloom']?>"
-                                                                        data-kode_tf_in="<?=$k['kode_sample_in']?>"
+                                                                        data-kode_tf_in="<?=$k['kode_sample_out']?>"
                                                                         data-jumlah_po_sample="<?=number_format($k['jumlah_po_sample'],0,",",".")?>"
                                                                         data-ket_po_sample="<?=$k['ket_po_sample']?>"
                                                                        
@@ -439,7 +439,7 @@
                                                                     </button>
                                                                     <?php endif; ?>
                                                                     
-                                                                    
+                                                                    <!-- Tombol Edit dan Hapus tetap muncul -->
                                                                     <!-- <button type="button" 
                                                                         class="btn btn-info btn-sm" 
                                                                         data-toggle="modal" 
@@ -450,7 +450,7 @@
                                                                         data-id_barang="<?=$k['id_barang']?>"
                                                                         data-mesh="<?=$k['mesh']?>"
                                                                         data-bloom="<?=$k['bloom']?>"
-                                                                        data-kode_tf_in="<?=$k['kode_sample_in']?>"
+                                                                        data-kode_tf_in="<?=$k['kode_sample_out']?>"
                                                                         data-jumlah_po_sample="<?=number_format($k['jumlah_po_sample'],0,",",".")?>"
                                                                         data-ket_po_sample="<?=$k['ket_po_sample']?>"
                                                                        
@@ -499,7 +499,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="<?=base_url()?>gudang/gudang_admin/admin_sample/proses">
+                <form method="post" action="<?=base_url()?>gudang/gudang_admin/admin_sample_keluar/proses">
                     <div class="modal-body">
                         <input type="hidden" id="p-id_mkt_po_sample" name="id_mkt_po_sample">
                         
@@ -559,7 +559,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode TF IN</label>
-                                    <input type="text" class="form-control" id="p-kode_tf_in" name="kode_sample_in" readonly>
+                                    <input type="text" class="form-control" id="p-kode_tf_in" name="kode_sample_out" readonly>
                                 </div>
                             </div>
                         </div>

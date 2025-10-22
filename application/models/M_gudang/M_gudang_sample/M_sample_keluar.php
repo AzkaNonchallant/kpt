@@ -5,220 +5,223 @@ class M_sample_keluar extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    function id_user(){
+
+    private function id_user(){
         return $this->session->userdata("id_user");
     }
 
-    public function get($tgl = null, $tgl2 = null, $nama_customer = null, $no_sppb = null){
+    // Ambil data dengan filter tanggal, nama barang, atau kode_tf_in
+    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $kode_sample_out = null){
+        $this->db->select('a.*, b.nama_barang, c.nama_customer');
+        $this->db->from('tb_sample_keluar a');
+        $this->db->join('tb_master_barang b', 'a.id_barang = b.id_barang', 'left');
+        $this->db->join('tb_master_customer c', 'a.id_customer = c.id_customer', 'left');
+        $this->db->where('a.is_deleted', 0);
 
         if ($tgl != null && $tgl2 != null) {
-            $tgl = explode("/", $tgl);
-            $tgl = "$tgl[2]-$tgl[1]-$tgl[0]";
-            $tgl2 = explode("/", $tgl2);
-            $tgl2 = "$tgl2[2]-$tgl2[1]-$tgl2[0]";
-            $where[] = "AND a.tgl_msk_gdg >= '$tgl' AND  a.tgl_msk_gdg <= '$tgl2'";
-        } else if ($tgl ==null && $tgl2 ==null) {
-                $where[] = "";
-        } else {
-            return array();
+            // expecting dd/mm/yyyy inputs
+            $t1 = explode('/', $tgl);
+            $t2 = explode('/', $tgl2);
+            if (count($t1) === 3 && count($t2) === 3) {
+                $from = $t1[2].'-'.$t1[1].'-'.$t1[0];
+                $to   = $t2[2].'-'.$t2[1].'-'.$t2[0];
+                $this->db->where("a.tgl_masuk_sample >=", $from);
+                $this->db->where("a.tgl_masuk_sample <=", $to);
+            }
         }
 
-        if ($nama_customer == null) {
-            $where[] = "";
-        }  else {
-            $where[] = "AND d.nama_customer = '$nama_customer'";
+        if ($nama_barang != null) {
+            $this->db->where('b.nama_barang', $nama_barang);
         }
 
-        if ($no_sppb == null) {
-            $where[] = "";
-        }  else {
-            $where[] = "AND b.no_sppb = '$no_sppb'";
+        if ($kode_sample_out != null) {
+            $this->db->where('a.kode_sample_out', $kode_sample_out);
         }
 
-        $where = implode(" ", $where);
+        $this->db->order_by('a.id_sample_keluar', 'DESC');
+        $q = $this->db->get();
+        return $q->result_array();
+    }
 
-       $sql = "
+    // Ambil semua data (raw)
+    public function get2(){
+        return $this->db->get_where('tb_sample_keluar', ['is_deleted' => 0])->result_array();
+    }
+
+    // Ambil data lengkap dengan relasi
+     public function get3($id = null ){
+            
+           $sql = "
+    SELECT 
+        a.id_sample_keluar,
+        a.id_mkt_po_sample,
+        a.id_customer,
+        a.id_barang,
+        b.nama_customer,
+        c.nama_barang
+    FROM tb_sample_keluar a
+    LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+    LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
+    WHERE a.is_deleted = 0
+    ORDER BY a.id_sample_keluar DESC
+";
+return $this->db->query($sql);
+
+    }
+
+    // Ambil 1 row by id
+    public function get_by_id($id_sample_keluar){
+        $q = $this->db->get_where('tb_sample_keluar', ['id_sample_keluar' => $id_sample_keluar, 'is_deleted' => 0]);
+        return $q->row_array();
+    }
+
+    public function get4(){
+    $sql = "
         SELECT 
-            a.id_mkt_po_sample,
-            a.tgl_po_sample,
-            a.jumlah_po_sample,
-            a.ket_po_sample,
-            a.id_customer,
             a.id_barang,
-            b.nama_customer,
-            c.nama_barang,
-            c.mesh,
-            c.bloom
-        FROM tb_mkt_po_sample a
-        LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
-        LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
+            a.kode_sample_out, 
+            b.nama_barang,
+            b.bloom,
+            b.mesh,
+            c.id_prc_po_pembelian,
+            d.gdg_qty_in
+        FROM tb_sample_keluar a
+        LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
+        LEFT JOIN tb_prc_po_pembelian c ON  a.id_barang = c.id_barang
+        LEFT JOIN tb_gudang_barang_masuk d ON c.id_prc_po_pembelian = d.id_prc_po_pembelian
         WHERE a.is_deleted = 0
-        ORDER BY a.created_at DESC
+        ORDER BY a.created_at ASC
     ";
+
     return $this->db->query($sql);
 }
-    // File: application/models/M_barang_keluar.php
 
-    // public function add_surat_jalan($data)
-    // {
-    //     $id_user = $this->id_user();
+public function get5(){
+    $sql = "
+        SELECT 
+            a.id_customer, 
+            b.nama_customer
+        FROM tb_sample_keluar a
+        LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+        WHERE a.is_deleted = 0
+        ORDER BY a.created_at ASC
+    ";
+
+    return $this->db->query($sql);
+}
+
+
+
+    // Insert baru
+    public function insert($data){
+        // map expected fields (defensive)
+        $row = [
+            'id_mkt_po_sample' => isset($data['id_mkt_po_sample']) ? $data['id_mkt_po_sample'] : null,
+            'tgl_masuk_sample' => isset($data['tgl_masuk_sample']) ? $data['tgl_masuk_sample'] : null, // expect yyyy-mm-dd
+            'id_customer'      => isset($data['id_customer']) ? $data['id_customer'] : null,
+            'id_barang'        => isset($data['id_barang']) ? $data['id_barang'] : null,
+            'kode_sample_out'       => isset($data['kode_sample_out']) ? $data['kode_sample_out'] : null,
+            'jumlah_masuk'     => isset($data['jumlah_masuk']) ? $data['jumlah_masuk'] : 0,
+            'ket_masuk'        => isset($data['ket_masuk']) ? $data['ket_masuk'] : null,
+            'gudang_admin'     => isset($data['gudang_admin']) ? $data['gudang_admin'] : null,
+            'created_at'       => date('Y-m-d H:i:s'),
+            'created_by'       => $this->id_user(),
+            'updated_at'       => date('Y-m-d H:i:s'),
+            'updated_by'       => $this->id_user(),
+            'is_deleted'       => 0
+        ];
+
+        return $this->db->insert('tb_sample_keluar', $row);
+    }
+
+    // Update existing
+    public function update($data){
+        if (empty($data['id_sample_keluar'])) {
+            return false;
+        }
+
+        $row = [
+            'id_mkt_po_sample' => isset($data['id_mkt_po_sample']) ? $data['id_mkt_po_sample'] : null,
+            'tgl_masuk_sample' => isset($data['tgl_masuk_sample']) ? $data['tgl_masuk_sample'] : null,
+            'id_customer'      => isset($data['id_customer']) ? $data['id_customer'] : null,
+            'id_barang'        => isset($data['id_barang']) ? $data['id_barang'] : null,
+            'kode_sample_out'       => isset($data['kode_sample_out']) ? $data['kode_sample_out'] : null,
+            'jumlah_masuk'     => isset($data['jumlah_masuk']) ? $data['jumlah_masuk'] : 0,
+            'ket_masuk'        => isset($data['ket_masuk']) ? $data['ket_masuk'] : null,
+            'gudang_admin'     => isset($data['gudang_admin']) ? $data['gudang_admin'] : null,
+            'updated_at'       => date('Y-m-d H:i:s'),
+            'updated_by'       => $this->id_user(),
+        ];
+
+        $this->db->where('id_sample_keluar', $data['id_sample_keluar']);
+        return $this->db->update('tb_sample_keluar', $row);
+    }
+
+    // Soft delete
+    public function delete($id_sample_keluar){
+        $row = [
+            'is_deleted' => 1,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_by' => $this->id_user()
+        ];
+        $this->db->where('id_sample_keluar', $id_sample_keluar);
+        return $this->db->update('tb_sample_keluar', $row);
+    }
+
+    // Cek kode tf in (kembalikan jumlah)
+    public function cek_kode_sample_out($kode_sample_out){
+        if (empty($kode_sample_out)) return 0;
+        $this->db->where('kode_sample_out', $kode_sample_out);
+        $this->db->where('is_deleted', 0);
+        return $this->db->count_all_results('tb_sample_keluar');
+    }
+
+    // Hitung total sample masuk (misal per barang)
+    public function jml_sample_keluar($id_barang){
+        $this->db->select_sum('jumlah_masuk', 'total_masuk');
+        $this->db->where('id_barang', $id_barang);
+        $this->db->where('is_deleted', 0);
+        $q = $this->db->get('tb_sample_keluar');
+        return $q->row();
+    }
+
+
+//     public function jml_po_sample($id_mkt_po_sample){
+//     $this->db->select_sum('jumlah_order', 'total_order'); // ganti kolom sesuai tabel kamu
+//     $this->db->where('id_mkt_po_sample', $id_mkt_po_sample);
+//     $this->db->where('is_deleted', 0);
+//     $q = $this->db->get('tb_mkt_po_sample');
+//     return $q->row();
+// }
+
+
+     public function jml_po_sample($data){
+        $sql = "
+            SELECT sum(jumlah_masuk) tot_sample_keluar FROM `tb_sample_keluar` 
+            WHERE id_sample_keluar ='$data[id_sample_keluar]' AND is_deleted = 0"; 
+        return $this->db->query($sql);
+        }
+
+    // public function jml_sample2_masuk($id_barang){
     //     $sql = "
-    //     INSERT INTO `tb_surat_jalan`(`kode_tf_out`, `no_surat_jalan`, `tgl`, `id_customer`,`no_sppb`, `no_po`,  `note` ,`created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`)
-    //     VALUES ('$data[kode_tf_out]','$data[no_surat_jalan]',NOW(),'$data[id_customer]','$data[no_sppb]', '$data[no_po]', '$data[note_gudang]'  ,NOW(),'$id_user','0000-00-00 00:00:00','','0')
-    //     ";
-    //     return $this->db->query($sql);
+    // SELECT SUM(jumlah_sample) AS total_sample 
+    // FROM tb_mkt_po_sample
+    // WHERE id_mkt_po_sample = '$id_mkt_po_sample'
+    // AND is_deleted = 0
+    // ";
+    // return $this->db->query($sql);
+
     // }
 
-public function data_barang_keluar($kode_tf_out){
-        $sql = "
-            SELECT 
-    a.*, 
-    b.*, 
-    c.no_batch,
-    c.tgl_exp,
-    d.id_barang,
-    e.nama_barang, e.satuan, e.mesh, e.bloom,
-    f.nama_customer
-FROM tb_gudang_barang_keluar a
-LEFT JOIN tb_mkt_sppb b ON a.id_mkt_sppb = b.id_mkt_sppb
-LEFT JOIN tb_gudang_barang_masuk c ON a.kode_tf_in = c.kode_tf_in
-LEFT JOIN tb_mkt_po_customer d ON b.id_mkt_po_customer = d.id_mkt_po_customer
-LEFT JOIN tb_master_barang e ON d.id_barang = e.id_barang
-LEFT JOIN tb_master_customer f ON d.id_customer = f.id_customer
-LEFT JOIN tb_surat_jalan g ON a.kode_tf_out = g.kode_tf_out
-WHERE a.kode_tf_out = '$kode_tf_out' 
-  AND a.is_deleted = 0 
-  AND e.is_deleted = 0
-ORDER BY a.kode_tf_out ASC;
-";
-        return $this->db->query($sql);
-    }
+    //  $sql = "
+    //         SELECT sum(gdg_qty_in) tot_barang_masuk FROM `tb_gudang_barang_masuk` 
+    //         WHERE id_barang_masuk ='$data[id_barang_masuk]' AND is_deleted = 0"; 
+    //     return $this->db->query($sql);
 
-    public function data_barang_keluar2(){
-        $sql = "
-            SELECT 
-    a.*, 
-    b.*, 
-    c.no_batch,
-    c.tgl_exp,
-    d.id_barang,
-    e.nama_barang, e.satuan, e.mesh, e.bloom,
-    f.nama_customer
-FROM tb_gudang_barang_keluar a
-LEFT JOIN tb_mkt_sppb b ON a.id_mkt_sppb = b.id_mkt_sppb
-LEFT JOIN tb_gudang_barang_masuk c ON a.kode_tf_in = c.kode_tf_in
-LEFT JOIN tb_mkt_po_customer d ON b.id_mkt_po_customer = d.id_mkt_po_customer
-LEFT JOIN tb_master_barang e ON d.id_barang = e.id_barang
-LEFT JOIN tb_master_customer f ON d.id_customer = f.id_customer
-LEFT JOIN tb_surat_jalan g ON a.kode_tf_out = g.kode_tf_out
-WHERE 
- e.is_deleted = 0
-ORDER BY a.kode_tf_out ASC;
-";
-        return $this->db->query($sql);
-    }
-    public function cek_surat_jalan($no_surat_jalan){
-        $sql = "
-            SELECT COUNT(a.kode_tf_out) count_sj FROM tb_surat_jalan a
-            WHERE a.no_surat_jalan = '$no_surat_jalan' AND a.is_deleted = 0";
-        return $this->db->query($sql);
-    }
-
-    public function cek_kode_tf_out($kode_tf_out){
-        $sql = "
-            SELECT COUNT(a.kode_tf_out) count_kto FROM tb_surat_jalan a
-            WHERE a.kode_tf_out = '$kode_tf_out' AND a.is_deleted = 0";
-        return $this->db->query($sql);
-    }
-
-    public function add_barang_keluar($data)
-    {
-        $id_user = $this->id_user();
-        $sql = "
-        UPDATE `tb_gudang_barang_keluar`
-        SET `kode_tf_in` = '$data[kode_tf_in]', `no_surat_jalan`='$data[no_surat_jalan]',`gdg_admin` =  '$data[gdg_admin]',`created_at` = NOW(), `created_by` = '$id_user',`updated_at`=NOW(),`updated_by`='$id_user', `is_deleted`='0'
-        WHERE `kode_tf_out`='$data[kode_tf_out]'
-        ";
-         $this->db->query($sql);
-
-
-         // 2. Insert ke tb_surat_jalan
-
-          $sql2 = "
-            INSERT INTO `tb_surat_jalan`(`kode_tf_out`, `no_surat_jalan`, `tgl`, `id_customer`,`no_sppb`, `no_po`,  `note` ,`created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`)
-            VALUES ('$data[kode_tf_out]','$data[no_surat_jalan]',NOW(),'$data[id_customer]','$data[no_sppb]', '$data[no_po]', '$data[note_gudang]'  ,NOW(),'$id_user','0000-00-00 00:00:00','0','0')
-        ";
-        $this->db->query($sql2);
-
-        //merubah status sppb menjadi selesai
-        $sql3 = "
-        UPDATE `tb_mkt_sppb`
-        SET `status_sppb`='Selesai'
-        WHERE `id_mkt_sppb`='$data[id_mkt_sppb]'
-        ";
-        $this->db->query($sql3);
-        return TRUE;
-    }
-
-    public function update_status_sppb($id_mkt_sppb, $status_sppb)
-    {
-        $sql = "
-        UPDATE `tb_mkt_sppb`
-        SET `status_sppb`='$status_sppb'
-        WHERE `id_mkt_sppb`='$id_mkt_sppb';
-        ";
-        return $this->db->query($sql);
-    }
-
-    public function update($data)
-    {
-        $id_user = $this->id_user();
-        $sql = "
-            UPDATE `tb_gudang_barang_keluar` 
-            SET `no_surat_jalan`='$data[no_surat_jalan]',`updated_at`=NOW(),`updated_by`='$id_user' 
-            WHERE `id_barang_keluar`='$data[id_barang_keluar]'
-        ";
-        return $this->db->query($sql);
-    }
-
-    public function delete($data)
-    {
-        $id_user = $this->id_user();
-        $sql = "
-           DELETE FROM `tb_gudang_barang_keluar`
-            WHERE `id_barang_keluar`='$data[id_barang_keluar]'
-        ";
-        return $this->db->query($sql);
-    }
-
-    public function jml_barang_keluar($data){
-        $sql = "
-            SELECT sum(b.jumlah_kirim) qty_out FROM `tb_gudang_barang_keluar` a
-            LEFT JOIN tb_mkt_sppb b ON a.id_mkt_sppb = b.id_mkt_sppb 
-            WHERE a.kode_tf_in='$data[kode_tf_in]' AND a.is_deleted = 0";
-        return $this->db->query($sql);
-    }
-    public function jml_barang_keluar2($data){
-        $sql = "
-            SELECT sum(a.qty) tot_barang_keluar FROM `tb_gudang_barang_keluar` a 
-            LEFT JOIN tb_barang_masuk b ON a.kode_tf_in = b.kode_tf_in 
-            WHERE b.id_customer ='$data[id_customer]' AND a.is_deleted = 0"; 
-        return $this->db->query($sql);
-    }
-    // Di model M_barang_keluar, perbaiki method ambil_surat_jalan:
-public function ambil_surat_jalan($kode_tf_out = null){
-        $sql = "
-            SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_surat_jalan a
-            LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
-            WHERE a.is_deleted = 0 AND a.kode_tf_out = '$kode_tf_out' ORDER BY a.created_at DESC";
-        return $this->db->query($sql);
-    }
-
-    public function ambil_surat_jalan2(){
-        $sql = "
-            SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_surat_jalan a
-            LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
-            WHERE a.is_deleted = 0 ORDER BY a.created_at DESC";
-        return $this->db->query($sql);
-    }
+    // Ambil kode transfer terakhir
+    // public function get_kode_sample_in(){
+    //     $this->db->select_max('kode_sample_in', 'kode_sample_in');
+    //     $q = $this->db->get('tb_sample_masuk');
+    //     return $q->row();
+    // }
 }
