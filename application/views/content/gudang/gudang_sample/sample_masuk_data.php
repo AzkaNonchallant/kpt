@@ -588,8 +588,7 @@
                                         data-nama_customer="<?= $row['nama_customer'] ?? '' ?>"
                                         data-id_barang="<?= $row['id_barang'] ?? '' ?>"
                                         data-jumlah_masuk="<?= $row['jumlah_masuk'] ?? '' ?>"
-                                        data-no_pengiriman="<?= $row['no_pengiriman'] ?? '' ?>"
-                                        data-kurir="<?= $row['kurir'] ?? '' ?>"
+                                        
                                         data-ket_masuk="<?= $row['ket_masuk'] ?? '' ?>"
                                         data-gudang_admin="<?= $row['gudang_admin'] ?? '' ?>"
                                       >
@@ -665,15 +664,7 @@
               <input type="text" class="form-control" id="v-jumlah_masuk" readonly>
             </div>
 
-            <div class="col-md-6 mb-3">
-              <label class="form-label">No Pengiriman</label>
-              <input type="text" class="form-control" id="v-no_pengiriman" readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Kurir</label>
-              <input type="text" class="form-control" id="v-kurir" readonly>
-            </div>
+           
 
             <div class="col-md-6 mb-3">
               <label class="form-label">Gudang Admin</label>
@@ -770,8 +761,7 @@
         var nama_customer = button.getAttribute('data-nama_customer');
         var id_barang = button.getAttribute('data-id_barang');
         var jumlah_masuk = button.getAttribute('data-jumlah_masuk');
-        var no_pengiriman = button.getAttribute('data-no_pengiriman');
-        var kurir = button.getAttribute('data-kurir');
+        
         var ket_masuk = button.getAttribute('data-ket_masuk');
         var gudang_admin = button.getAttribute('data-gudang_admin');
 
@@ -795,8 +785,7 @@
         document.getElementById('v-nama_customer').value = nama_customer || '-';
         document.getElementById('v-id_barang').value = id_barang || '-';
         document.getElementById('v-jumlah_masuk').value = jumlah_masuk || '-';
-        document.getElementById('v-no_pengiriman').value = no_pengiriman || '-';
-        document.getElementById('v-kurir').value = kurir || '-';
+    
         document.getElementById('v-ket_masuk').value = ket_masuk || '-';
         document.getElementById('v-gudang_admin').value = gudang_admin || '-';
       });
