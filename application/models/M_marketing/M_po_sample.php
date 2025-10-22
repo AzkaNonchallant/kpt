@@ -70,11 +70,49 @@ class M_po_sample extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
+<<<<<<< HEAD
         INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
         VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
+=======
+        INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
+        VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
+>>>>>>> 4bd1c728525137d88f102b479bcd4c396db9fe62
         ";
 
-        return $this->db->query($sql);
+        $this->db->query($sql);
+
+        $id_po_sample2 = $this->db->insert_id();
+
+        $this->db->select('kode_sample_out');
+        $this->db->from('tb_sample_keluar');
+        $this->db->like('kode_sample_out', 'SAMPLEOUT-', 'after');
+        $this->db->order_by('id_sample_keluar', 'DESC'); // pakai id biar aman
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $lastKode = $query->row()->kode_sample_out;
+            $lastNumber = (int) str_replace('SAMPLEOUT-', '', $lastKode);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1; // kalau belum ada data
+        }
+
+        $kode_tf = 'SAMPLEOUT-' . $newNumber;
+
+    // ======================
+    // 3. Insert ke tb_gudang_barang_masuk
+    // ======================
+    $data_gudang = [
+        'kode_sample_out' => $kode_tf,
+        'id_mkt_po_sample' => $id_po_sample2,
+        // 'gdg_qty_in' => $data['jumlah_po_pembelian'],
+        'created_at' => date('Y-m-d H:i:s'),
+        'created_by' => $id_user
+        ];
+        $this->db->insert('tb_sample_keluar', $data_gudang);
+        
+        return TRUE;
     }
 
     public function update($data)

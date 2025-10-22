@@ -561,6 +561,7 @@
                                                                     data-jumlah_po_pembelian="<?= $k['jumlah_po_pembelian'] ?>"
                                                                     data-harga_po_pembelian="<?= $k['harga_po_pembelian'] ?>"
                                                                     data-jenis_pembayaran="<?= $k['jenis_pembayaran'] ?>"
+                                                                    data-ket_po="<?=$k['ket_po']?>"
                                                                     data-prc_admin="<?= $k['prc_admin'] ?>">
                                                                     <i class="fas fa-eye"></i> Detail
                                                                 </button>
@@ -583,6 +584,7 @@
                                                                             data-bloom="<?= $k['bloom'] ?>"
                                                                             data-jumlah_po_pembelian="<?= $k['jumlah_po_pembelian'] ?>"
                                                                             data-harga_po_pembelian="<?= $k['harga_po_pembelian'] ?>"
+                                                                            data-ket_po="<?=$k['ket_po']?>"
                                                                             data-jenis_pembayaran="<?= $k['jenis_pembayaran'] ?>"
                                                                             data-prc_admin="<?= $k['prc_admin'] ?>">
                                                                             <i class="fas fa-edit"></i> Edit
@@ -826,6 +828,12 @@
                                 <input type="text" class="form-control" id="v-jenis_pembayaran" readonly>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Keterangan Po</label>
+                                <textarea type="text" class="form-control" id="v-ket_po" readonly></textarea>
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -935,6 +943,13 @@
                                         <option value="Cash">Cash</option>
                                         <option value="Kredit">Kredit</option>
                                     </select>
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Keterangan</label>
+                                    <textarea type="text" class="form-control" id="e-ket_po" name="ket_po" placeholder="Keterangan" required></textarea>
                                 </div>
                             </div>
 
@@ -1132,6 +1147,7 @@
                 var harga_po_pembelian = $(event.relatedTarget).data('harga_po_pembelian');
                 var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran');
                 var prc_admin = $(event.relatedTarget).data('prc_admin');
+                var ket_po = $(event.relatedTarget).data('ket_po');
                 let jumlah_po = unformatRupiah(jumlah_po_pembelian);
                 let zak = jumlah_po / 25;
 
@@ -1146,6 +1162,7 @@
                 $(this).find('#v-jumlah_po_pembelian').val(formatRupiah(jumlah_po_pembelian.toString()));
                 $(this).find('#v-harga_po_pembelian').val(formatRupiah(harga_po_pembelian.toString()));
                 $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran);
+                $(this).find('#v-ket_po').val(ket_po);
                 $(this).find('#v-prc_admin').val(prc_admin);
 
                 let total = parseInt(jumlah_po_pembelian) * parseInt(harga_po_pembelian);
@@ -1179,6 +1196,7 @@
                 var jumlah_po_pembelian = button.data('jumlah_po_pembelian');
                 var harga_po_pembelian = button.data('harga_po_pembelian');
                 var jenis_pembayaran = button.data('jenis_pembayaran');
+                var ket_po = button.data('ket_po');
                 var prc_admin = button.data('prc_admin');
 
                 var modal = $(this);
@@ -1191,6 +1209,7 @@
                 modal.find('#e-bloom').val(bloom);
                 modal.find('#e-jumlah_po_pembelian').val(jumlah_po_pembelian);
                 modal.find('#e-harga_po_pembelian').val(harga_po_pembelian);
+                modal.find('#e-ket_po').val(ket_po);
                 modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
                 modal.find('#e-prc_admin').val(prc_admin);
 

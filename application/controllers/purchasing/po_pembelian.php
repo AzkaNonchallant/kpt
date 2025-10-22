@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
+
 
 class Po_pembelian extends MY_Controller {
 
@@ -38,6 +40,7 @@ class Po_pembelian extends MY_Controller {
         $data['tgl2'] = $tgl2;
         $data['nama_barang'] = $nama_barang;
         $data['nama_supplier'] = $nama_supplier;
+        // echo json_encode($data['result']);
 		$this->template->load('template', 'content/purchasing/po_pembelian',$data);
         // print_r($data);
 
@@ -77,6 +80,7 @@ class Po_pembelian extends MY_Controller {
         $data['harga_po_pembelian'] = $this->input->post('harga_po_pembelian',TRUE);
         $data['harga_po_pembelian'] = str_replace('.', '', $data['harga_po_pembelian']); // Hapus titik pemisah ribuan
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran',TRUE);
+        $data['ket_po'] = $this->input->post('ket_po', TRUE);
         $data['prc_admin'] = $this->input->post('prc_admin',TRUE);
         
         $respon = $this->M_po_pembelian->update($data);
@@ -112,31 +116,60 @@ class Po_pembelian extends MY_Controller {
     }
 
     public function pdf_po_pembelian()
-    {
-    //     $mpdf = new \Mpdf\Mpd();
+{
+    // Load Dompdf
+    // $this->load->library('dompdf_gen'); // pastikan kamu sudah buat autoloader atau helper-nya
+    $options = new \Dompdf\Options();
+        $options->set('isRemoteEnabled', true); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 87);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
 
-    //     $tgl = $this->input->get('date_from');
-    //     $tgl2 = $this->input->get('date_until');
-    //     $nama_barang = $this->input->get('nama_barang');
-    //     $nama_supplier = $this->input->get('nama_supplier');
+    // Ambil input filter
+    $tgl = $this->input->get('date_from');
+    $tgl2 = $this->input->get('date_until');
+    $nama_barang = $this->input->get('nama_barang');
+    $nama_supplier = $this->input->get('nama_supplier');
 
-	// 	$data['result'] = $this->M_po_pembelian->get($tgl, $tgl2, $nama_barang, $nama_supplier);
-    //     $data['res_barang'] = $this->M_master_barang->get()->result_array();
-    //     $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
-    //     $data['res_user'] = $this->M_users->get()->result_array();
+    // Ambil data dari model
+    $data['result'] = $this->M_po_pembelian->get($tgl, $tgl2, $nama_barang, $nama_supplier);
+    $data['res_barang'] = $this->M_master_barang->get()->result_array();
+    $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
+    $data['res_user'] = $this->M_users->get()->result_array();
 
-    //     $data['tgl'] = $tgl;
-    //     $data['tgl2'] = $tgl2;
-    //     $data['nama_barang'] = $nama_barang;
-    //     $data['nama_supplier'] = $nama_supplier;
+    $data['tgl'] = $tgl;
+    $data['tgl2'] = $tgl2;
+    $data['nama_barang'] = $nama_barang;
+    $data['nama_supplier'] = $nama_supplier;
+
+    // Load tampilan ke variabel HTML
+    $html = $this->load->view('content/purchasing/pdf_po_pembelian', $data, TRUE);
 
 
-    //     $d = $this->load->view('content/purchasing/pdf_po_pembelian', $data, TRUE);
-    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-    //     $mpdf->setFooter('Halaman {PAGENO}');
-    //     $mpdf->WriteHTML($d);
-    //     $mpdf->Output();
-    // }
+    // Inisialisasi Dompdf
+    $dompdf = new Dompdf\Dompdf($options);
 
+    // Load HTML ke Dompdf
+    $dompdf->loadHtml($html);
+
+    // Setting ukuran & orientasi kertas
+    $dompdf->setPaper('A4', 'landscape');
+
+    // Render HTML jadi PDF
+    $dompdf->render();
+
+    // Tambahkan footer halaman (opsional)
+    $canvas = $dompdf->getCanvas();
+    $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+    $canvas->page_text(520, 810, "Halaman {PAGE_NUM}", $font, 9, array(0, 0, 0));
+
+    // Output hasil ke browser
+    $dompdf->stream("PO_Pembelian.pdf", array("Attachment" => false));
 }
+
+
 }
