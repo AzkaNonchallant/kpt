@@ -129,7 +129,6 @@
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group " role="group" aria-label="Basic example">
-                                                              <?php if ($level === "0") { ?>
                                                               </div>
                                                              <a target="_blank"
                                                                 class="btn btn-info btn-square text-light btn-sm"
@@ -137,7 +136,6 @@
                                                                 <i class="feather icon-file"></i>Cetak PDF
                                                               </a>
                                     
-                                                              <?php } ?>
                                                             </td>
                                                         </tr>
                                                     	<?php

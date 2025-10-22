@@ -82,26 +82,25 @@ class po_sample extends MY_Controller {
         }
 	}
 
-    // public function add2()
-	// {
-	// 	$data['no_po'] = $this->input->post('no_po',TRUE);
-    //     $data['tgl_po_sample'] = $this->convertDate($this->input->post('tgl_po_sample',TRUE));
-    //     $data['id_customer'] = $this->input->post('id_customer',TRUE);
-    //     $data['id_barang'] = $this->input->post('id_barang',TRUE);
-    //     $data['kode_tf_in'] = $this->input->post('kode_tf_in',TRUE);
-    //     $data['jumlah_po_sample'] = $this->input->post('jumlah_po_sample',TRUE);
-    //     $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']); // Hapus titik pemisah ribuan
-    //     $data['ket_po_sample'] = $this->input->post('ket_po_sample',TRUE);
-    //     $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
+    public function add2()
+	{
+		$data['no_po'] = $this->input->post('no_po',TRUE);
+        $data['tgl_po_sample'] = $this->convertDate($this->input->post('tgl_po_sample',TRUE));
+        $data['id_customer'] = $this->input->post('id_customer',TRUE);
+        $data['id_barang'] = $this->input->post('id_barang',TRUE);
+        $data['jumlah_po_sample'] = $this->input->post('jumlah_po_sample',TRUE);
+        $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']); // Hapus titik pemisah ribuan
+        $data['ket_po_sample'] = $this->input->post('ket_po_sample',TRUE);
+        $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
 
-    //     $respon = $this->M_po_sample->add2($data);
+        $respon = $this->M_po_sample->add2($data);
 
-    //     if($respon){
-    //     	header('location:'.base_url('marketing/po_sample').'?alert=success&msg=Selamat anda berhasil menambah PO Customer');
-    //     }else{
-    //     	header('location:'.base_url('marketing/po_sample').'?alert=danger&msg=Maaf anda gagal menambah PO Customer');
-    //     }
-	// }
+        if($respon){
+        	header('location:'.base_url('marketing/po_sample').'?alert=success&msg=Selamat anda berhasil menambah PO Customer');
+        }else{
+        	header('location:'.base_url('marketing/po_sample').'?alert=danger&msg=Maaf anda gagal menambah PO Customer');
+        }
+	}
 
 	public function update()
 	{

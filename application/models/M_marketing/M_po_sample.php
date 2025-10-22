@@ -43,7 +43,7 @@ class M_po_sample extends CI_Model {
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
-        $lastKode = $query->row()->kode_tf_in;
+        $lastKode = $query->row()->kode_sample_in;
         $lastNumber = (int) str_replace('SAMPLEIN-', '', $lastKode);
         $newNumber = $lastNumber + 1;
     } else {
@@ -70,8 +70,8 @@ class M_po_sample extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-        INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,kode_tf_in,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
-        VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
+        INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
+        VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
         ";
 
         return $this->db->query($sql);
@@ -96,4 +96,6 @@ class M_po_sample extends CI_Model {
 
         return $this->db->query($sql);
     }
+
+     
 }

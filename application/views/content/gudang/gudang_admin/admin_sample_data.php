@@ -499,7 +499,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="<?=base_url()?>gudang/gudang_sample/sample_masuk/proses">
+                <form method="post" action="<?=base_url()?>gudang/gudang_admin/admin_sample/proses">
                     <div class="modal-body">
                         <input type="hidden" id="p-id_mkt_po_sample" name="id_mkt_po_sample">
                         
@@ -559,7 +559,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Kode TF IN</label>
-                                    <input type="text" class="form-control" id="p-kode_tf_in" name="kode_tf_in" readonly>
+                                    <input type="text" class="form-control" id="p-kode_tf_in" name="kode_sample_in" readonly>
                                 </div>
                             </div>
                         </div>
