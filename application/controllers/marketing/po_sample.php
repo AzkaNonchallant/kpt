@@ -34,28 +34,18 @@ class po_sample extends MY_Controller {
 
 		// $data['row'] = $this->customer_m->get();
 		$data['result'] = $this->M_po_sample->get();
-            // for($i=0; $i<count($data['result']);$i++){
-            // $d['id_mkt_po_sample'] = $data['result'][$i]['id_mkt_po_sample'];
-            // $jml_sppb = $this->M_sppb->jml_sppb2($d)->row_array();
-            // // $a=0;
-            // // for($o=0; $o<count($donasi);$o++){
-            // //     $a+=$donasi[$o]['donasi'];
-            // // }
-            // $sisa=$data['result'][$i]['jumlah_po_customer']-$jml_sppb['tot_sppb'];
-            // $data['result'][$i]['tot_sppb']=$jml_sppb['tot_sppb'];
-            // $data['result'][$i]['sisa']=$sisa;
-        // }
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();
         $data['res_sample'] = $this->M_sample_masuk->get4()->result_array();
         $data['res_gud'] = $this->M_sample_masuk->get5()->result_array();
+        $data['res_barang_gud'] = $this->M_sample_masuk->get6()->result_array();
 
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;
         $data['nama_barang'] = $nama_barang;
         $data['nama_customer'] = $nama_customer;
-        // echo json_encode($data['res_sample']);
+        // echo json_encode($data['res_barang_gud']);
 		$this->template->load('template', 'content/marketing/po_sample',$data);
         // print_r($data);
 

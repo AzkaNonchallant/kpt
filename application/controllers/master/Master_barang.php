@@ -80,18 +80,18 @@ class Master_barang extends MY_Controller {
         }
     }
 
-    public function pdf_daftar_barang()
-    {
-        $mpdf = new \Mpdf\Mpdf();
+    // public function pdf_daftar_barang()
+    // {
+    //     $mpdf = new \Mpdf\Mpdf();
 
-        $data['result'] = $this->M_master_barang->get()->result_array();
+    //     $data['result'] = $this->M_master_barang->get()->result_array();
 
-        $d = $this->load->view('content/master/master_barang/pdf_daftar_barang', $data, TRUE);
-        $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-        $mpdf->setFooter('Halaman {PAGENO}');
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/master/master_barang/pdf_daftar_barang', $data, TRUE);
+    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
+    //     $mpdf->setFooter('Halaman {PAGENO}');
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
 
 
 }

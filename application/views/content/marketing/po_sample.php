@@ -750,10 +750,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                <input type="text" class="form-control" id="jumlah_kg" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
-                <div id="validationServer03Feedback" class="invalid-feedback">
-                  Maaf Jumlah Kirim tidak boleh lebih dari Stock.
-                </div>
+                <input type="text" class="form-control" id="jumlah_kg" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
               </div>
             </div>
 
@@ -852,8 +849,9 @@
       const selected = $(this).find(':selected').attr('data-gdg_qty_in');
       // Pastikan nilainya berupa angka dulu
       let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
+      let zak = gdg_qty_in / 25
       // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
-      gdg_qty_in = new Intl.NumberFormat('id-ID').format(gdg_qty_in);
+      gdg_qty_in = new Intl.NumberFormat('id-ID').format(zak);
       // Masukkan hasil format ke input
       $('#gdg_qty_in').val(gdg_qty_in);
     });
@@ -866,14 +864,14 @@
       // Format hasilnya agar rapi (pakai titik ribuan)
       let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
       $('#jumlah_kg').val(formattedKg);
-      $("#jumlah_kg").keyup(function() {
-        var jumlah_po = $("#jumlah_kg").val().replaceAll('.', '');
+      $("#jumlah_zak").keyup(function() {
+        var jumlah_zak = $("#jumlah_zak").val().replaceAll('.', '');
         var gdg_qty_in = $("#gdg_qty_in").val().replaceAll('.', '');
-        if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
-          $("#jumlah_kg").addClass("is-invalid");
+        if (parseInt(jumlah_zak) > parseInt(gdg_qty_in)) {
+          $("#jumlah_zak").addClass("is-invalid");
           $("#simpan").attr("disabled", "disabled");
         } else {
-          $("#jumlah_kg").removeClass("is-invalid");
+          $("#jumlah_zak").removeClass("is-invalid");
           $("#simpan").removeAttr("disabled");
         }
       })
@@ -931,14 +929,14 @@
                 <select class="form-control chosen-select" id="id_barang_customer" name="id_barang" autocomplete="off" required>
                   <option value="">-Pilih Nama Barang -</option>
 
-                <?php
-                  foreach ($res_sample as $rs) { ?>
+                  <?php
+                  foreach ($res_barang_gud as $rs) { ?>
                     <option
                       value="<?= $rs['id_barang'] ?>"
                       data-bloom="<?= $rs['bloom'] ?>"
                       data-mesh="<?= $rs['mesh'] ?>"
                       data-kode_tf_in="<?= $rs['kode_sample_in'] ?>"
-                      data-gdg_qty_in="<?= $rs['gdg_qty_in'] ?>">
+                      data-gdg_qty_in="<?= $rs['jumlah_masuk'] ?>">
                       (<?= $rs['id_barang'] ?>) <?= $rs['nama_barang'] ?>
                     </option>
                   <?php
@@ -975,16 +973,6 @@
                 <input type="text" class="form-control" id="c-gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
               </div>
             </div>
-
-            <!-- <div class="col-md-4">
-              <div class="form-group">
-                <label for="jumlah_zak_customer">Jumlah(Zak)</label>
-                <input type="text" class="form-control" id="jumlah_zak_customer" name="jumlah_Zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03FeedbackCustomer" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
-                  Maaf Jumlah Kirim tidak boleh lebih dari Stock.
-                </div>
-              </div>
-            </div> -->
 
             <div class="col-md-4">
               <div class="form-group">
@@ -1025,109 +1013,76 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#add').on('show.bs.modal', function(event) {});
+    $('#addCustomer').on('show.bs.modal', function(event) {
+      // Fungsi untuk format angka ribuan
+    });
+      function formatRupiah(angka) {
+        let number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split = number_string.split(','),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-    // Fungsi untuk format angka ribuan
-    function formatRupiah(angka) {
-      let number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        if (ribuan) {
+          let separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+        }
 
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return rupiah;
       }
 
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return rupiah;
-    }
+      // Ubah dari rupiah ke integer
+      function unformatRupiah(rupiah) {
+        if (!rupiah) return 0;
+        return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+      }
 
-     // Ubah dari rupiah ke integer
-  function unformatRupiah(rupiah) {
-    if (!rupiah) return 0;
-    return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
-  }
 
-    $("#no_po").keyup(function() {
-      var no_po = $("#no_po").val();
-      jQuery.ajax({
-        url: "<?= base_url() ?>marketing/po_customer/cek_no_po",
-        dataType: 'text',
-        type: "post",
-        data: {
-          no_po: no_po
-        },
-        success: function(response) {
-          if (response == "true") {
-            $("#no_po").addClass("is-invalid");
+      $('#id_barang_customer').change(function() {
+        var selectedOption = $(this).find('option:selected');
+        var mesh = selectedOption.data('mesh');
+        var bloom = selectedOption.data('bloom');
+        var kode = selectedOption.data('kode_tf_in');
+        var gdg = selectedOption.data('gdg_qty_in');
+        $('#c-mesh').val(mesh);
+        $('#c-bloom').val(bloom);
+        $('#c-kode_tf_in').val(kode);
+
+        let formattedGdg = gdg ? new Intl.NumberFormat('id-ID').format(gdg) : 0;
+        $('#c-gdg_qty_in').val(formattedGdg);
+      });
+
+        // Format hasilnya agar rapi (pakai titik ribuan)
+         document.getElementById('jumlah_kg_customer').addEventListener('keyup', function(e) {
+          let value = this.value.replace(/\D/g,'');
+          value = new Intl.NumberFormat('id-ID').format(value);
+          this.value = value;
+          });
+        $("#jumlah_kg_customer").keyup(function() {
+          var jumlah_po = $("#jumlah_kg_customer").val().replaceAll('.', '');
+          var gdg_qty_in = $("#c-gdg_qty_in").val().replaceAll('.', '');
+          if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
+            $("#jumlah_kg_customer").addClass("is-invalid");
             $("#simpan").attr("disabled", "disabled");
           } else {
-            $("#no_po").removeClass("is-invalid");
+            $("#jumlah_kg_customer").removeClass("is-invalid");
             $("#simpan").removeAttr("disabled");
           }
-        }
+        })
+
+
+      modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
+        e.stopPropagation();
       });
-    })
 
-
-    $('#id_barang_customer').change(function() {
-      var selectedOption = $(this).find('option:selected');
-      var mesh = selectedOption.data('mesh');
-      var bloom = selectedOption.data('bloom');
-      var kode = selectedOption.data('kode_tf_in');
-      var gdg = selectedOption.data('gdg_qty_in');
-      $('#c-mesh').val(mesh);
-      $('#c-bloom').val(bloom);
-      $('#c-kode_tf_in').val(kode);
-
-      let formattedGdg = gdg ? new Intl.NumberFormat('id-ID').format(gdg) : 0;
-      $('#c-gdg_qty_in').val(formattedGdg);
-    });
-
-    $('#jumlah_zak').on('input', function() {
-      let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
-      zak = parseFloat(zak) || 0; // ubah ke angka, default 0
-      let kg = zak * 25; // hitung total
-
-      // Format hasilnya agar rapi (pakai titik ribuan)
-      let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      $('#jumlah_kg').val(formattedKg);
-      $("#jumlah_kg").keyup(function() {
-        var jumlah_po = $("#jumlah_kg").val().replaceAll('.', '');
-        var gdg_qty_in = $("#gdg_qty_in").val().replaceAll('.', '');
-        if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
-          $("#jumlah_kg").addClass("is-invalid");
-          $("#simpan").attr("disabled", "disabled");
-        } else {
-          $("#jumlah_kg").removeClass("is-invalid");
-          $("#simpan").removeAttr("disabled");
-        }
-      })
-    });
-
-
-    modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
-      e.stopPropagation();
-    });
-    document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
-      let value = this.value.replace(/\D/g, '');
-      value = new Intl.NumberFormat('id-ID').format(value);
-      this.value = value;
-    });
-
-    $('#addCustomer').on('submit', function(e) {
-    // Ambil nilai aslinya (tanpa format)
-    const jumlah = unformatRupiah($('#jumlah_kg_customer').val());
-
-    // Ubah isi input ke integer agar dikirim bersih ke backend
-    $('#jumlah_kg_customer').val(jumlah);
-    
-    // Setelah ini form dikirim secara normal
-  });
-
-
+      $('#form-c').on('submit', function(e) {
+        // Ambil nilai aslinya (tanpa format)
+        const jumlah = unformatRupiah($('#jumlah_kg_customer').val());
+        // Ubah isi input ke integer agar dikirim bersih ke backend
+        $('#jumlah_kg_customer').val(jumlah);
+        // Setelah ini form dikirim secara normal
+      });
   });
 </script>
 
@@ -1340,95 +1295,3 @@
     });
   });
 </script>
-
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $('#edit').on('show.bs.modal', function (event) {
-
-      function formatRupiah(angka) {
-      let number_string = angka.replace(/[^,\d]/g, '').toString(),
-          split   		= number_string.split(','),
-          sisa     		= split[0].length % 3,
-          rupiah     	= split[0].substr(0, sisa),
-          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return rupiah;
-    }
-
-  var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
-  var no_po = $(event.relatedTarget).data('no_po')
-  var tgl_po = $(event.relatedTarget).data('tgl_po')
-  var id_customer = $(event.relatedTarget).data('id_customer') 
-  var id_barang = $(event.relatedTarget).data('id_barang')
-  var mesh = $(event.relatedTarget).data('mesh') 
-  var bloom = $(event.relatedTarget).data('bloom') 
-  var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
-  var harga_po = $(event.relatedTarget).data('harga_po') 
-  var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
-  var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
-
-  $(this).find('#e-id_mkt_po_customer').val(id_mkt_po_customer)
-  $(this).find('#e-no_po').val(no_po)
-  $(this).find('#e-tgl_po').val(tgl_po)
-  $(this).find('#e-id_customer').val(id_customer)
-  $(this).find('#e-id_customer').trigger("chosen:updated");
-  $(this).find('#e-id_barang').val(id_barang)
-  $(this).find('#e-id_barang').trigger("chosen:updated");
-  $(this).find('#e-mesh').val(mesh)
-  $(this).find('#e-bloom').val(bloom)
-  $(this).find('#e-jumlah_po').val(jumlah_po)
-  $(this).find('#e-harga_po').val(harga_po)
-  $(this).find('#e-jenis_pembayaran').val(jenis_pembayaran)
-  $(this).find('#e-jenis_pembayaran').trigger("chosen:updated");
-  $(this).find('#e-mkt_admin').val(mkt_admin)
-  
-
-
-  $(this).find('#e-tgl_po').datepicker().on('show.bs.modal', function(event) {
-    // prevent datepicker from firing bootstrap modal "show.bs.modal"
-    event.stopPropagation();
-  });
-
-  $("#e-no_po").keyup(function(){
-      var no_po =  $("#e-no_po").val();
-      jQuery.ajax({
-        url: "<?= base_url() ?>marketing/po_customer/cek_no_po",
-        dataType:'text',
-        type: "post",
-        data:{no_po:no_po},
-        success:function(response){
-          if (response =="true") {
-            $("#e-no_po").addClass("is-invalid");
-            $("#simpan").attr("disabled","disabled");
-          }else{
-            $("#e-no_po").removeClass("is-invalid");
-            $("#simpan").removeAttr("disabled");
-          }
-        }            
-      });
-    })
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-mesh')
-      mesh = selected.replaceAll(' ', '')
-      $('#e-mesh').val(mesh)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-bloom')
-      bloom = selected.replaceAll(' ', '')
-      $('#e-bloom').val(bloom)
-    });
-
-})
-
-})
-
-</script> -->

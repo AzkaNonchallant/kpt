@@ -1,337 +1,524 @@
-    <style>
-        :root {
-            --primary: #4361ee;
-            --barang: #436;
-            --upd: #f72585;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --info: #4895ef;
-            --warning: #ae4976ff;
-            --danger: #e63946;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --border-radius: 12px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
+<style>
+    :root {
+        --primary: #4361ee;
+        --barang: #436;
+        --upd: #f72585;
+        --secondary: #3f37c9;
+        --success: #4cc9f0;
+        --info: #4895ef;
+        --warning: #ae4976ff;
+        --danger: #e63946;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+    
+    .barang-container {
+        padding: 15px;
+        background-color: #f5f7fb;
+        min-height: 100vh;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .page-header {
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+    
+    .page-title {
+        font-size: clamp(18px, 4vw, 24px);
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        word-wrap: break-word;
+    }
+    
+    .page-title i {
+        margin-right: 10px;
+        color: var(--primary);
+        flex-shrink: 0;
+    }
+    
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 0;
+        flex-wrap: wrap;
+    }
+    
+    .breadcrumb-item {
+        white-space: nowrap;
+    }
+    
+    .breadcrumb-item a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: clamp(12px, 3vw, 14px);
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: white;
+        border-bottom: 1px solid var(--light-gray);
+        padding: 15px 20px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    
+    .card-header h5 {
+        font-size: clamp(16px, 3vw, 18px);
+        font-weight: 700;
+        color: var(--dark);
+        margin: 0;
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .btn-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 8px 16px;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        font-size: clamp(12px, 2.5vw, 14px);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, var(--success), var(--info));
+        color: white;
+    }
+    
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
+    }
+    
+    .btn-info {
+        background: linear-gradient(135deg, var(--info), #3a86ff);
+        color: white;
+    }
+    
+    .btn-warning {
+        background: linear-gradient(135deg, var(--warning), #b5179e);
+        color: white;
+    }
+    
+    .btn-danger {
+        background: linear-gradient(135deg, var(--danger), #d00000);
+        color: white;
+    }
+    
+    .btn-secondary {
+        background: linear-gradient(135deg, var(--gray), #495057);
+        color: white;
+    }
+    
+    .table-responsive {
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table {
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        min-width: 800px;
+    }
+    
+    .table thead th {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 12px 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: clamp(10px, 2vw, 12px);
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+    }
+    
+    .table tbody td {
+        padding: 12px 8px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--light-gray);
+        white-space: nowrap;
+        font-size: clamp(11px, 2.5vw, 13px);
+    }
+    
+    .table tbody tr {
+        transition: var(--transition);
+    }
+    
+    .table tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+        transform: translateY(-1px);
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: clamp(10px, 2vw, 11px);
+        min-width: 60px;
+        display: inline-block;
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    .badge-success {
+        background-color: rgba(76, 201, 240, 0.15);
+        color: #4cc9f0;
+        border: 1px solid #4cc9f0;
+    }
+    
+    .badge-primary {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+    
+    .badge-warning {
+        background-color: rgba(247, 37, 133, 0.15);
+        color: #f72585;
+        border: 1px solid #f72585;
+    }
+    
+    .modal-content {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        max-width: 95vw;
+        margin: 0 auto;
+    }
+    
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        padding: 20px 25px;
+    }
+
+    .modal-up {
+        background: linear-gradient(135deg, var(--upd), var(--warning));
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        padding: 20px 25px;
+    }
+
+    .modal-barang {
+        background: linear-gradient(135deg, var(--barang), var(--secondary));
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        padding: 20px 25px;
+    }
+    
+    .modal-title {
+        font-weight: 700;
+        font-size: clamp(16px, 3vw, 18px);
+        color: white;
+        word-wrap: break-word;
+    }
+    
+    .close {
+        color: white;
+        opacity: 0.8;
+        font-size: clamp(16px, 3vw, 20px);
+    }
+    
+    .close:hover {
+        color: white;
+        opacity: 1;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-control {
+        border: 1px solid var(--light-gray);
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: var(--transition);
+        font-size: clamp(13px, 2.5vw, 14px);
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: clamp(13px, 2.5vw, 14px);
+    }
+    
+    .form-label i {
+        color: var(--primary);
+        font-size: 14px;
+        width: 16px;
+        flex-shrink: 0;
+    }
+    
+    .invalid-feedback {
+        font-size: clamp(11px, 2vw, 12px);
+        margin-top: 5px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .table .btn-sm {
+        padding: 6px 10px;
+        font-size: clamp(10px, 2vw, 11px);
+        line-height: 1.5;
+        white-space: nowrap;
+    }
+    
+    .table .btn i {
+        font-size: clamp(12px, 2.5vw, 14px);
+        margin-right: 2px;
+    }
+    
+    .text-right {
+        text-align: right;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+
+    /* Mobile First Approach */
+    @media (max-width: 576px) {
         .barang-container {
-            padding: 20px;
-            background-color: #f5f7fb;
-            min-height: 100vh;
-        }
-        
-        .page-header {
-            margin-bottom: 25px;
-        }
-        
-        .page-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-        }
-        
-        .page-title i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-        
-        .breadcrumb {
-            background: transparent;
-            padding: 0;
-            margin-bottom: 0;
-        }
-        
-        .breadcrumb-item a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .card {
-            width: 115%;
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 25px;
+            padding: 10px;
         }
         
         .card-header {
-            background: white;
-            border-bottom: 1px solid var(--light-gray);
-            padding: 15px 20px;
-            border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .card-header h5 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-            margin: 0;
-        }
-        
-        .btn-group {
-            display: flex;
+            padding: 12px 15px;
+            flex-direction: column;
+            align-items: flex-start;
             gap: 10px;
         }
         
-        .btn {
-            border-radius: 8px;
-            font-weight: 600;
-            padding: 8px 16px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border: none;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), var(--info));
-            color: white;
-        }
-        
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
-        }
-        
-        .btn-info {
-            background: linear-gradient(135deg, var(--info), #3a86ff);
-            color: white;
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #b5179e);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #d00000);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--gray), #495057);
-            color: white;
-        }
-        
-        .table-responsive {
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            overflow: hidden;
-        }
-        
-        .table {
-            margin-bottom: 0;
-            border-collapse: separate;
-            border-spacing: 0;
+        .card-header h5 {
+            min-width: auto;
             width: 100%;
         }
         
-        .table thead th {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 12px 10px;
-            font-weight: 600;
-            text-transform: uppercase;
+        .btn-group {
+            width: 100%;
+            justify-content: flex-start;
+        }
+        
+        .btn {
+            padding: 6px 12px;
             font-size: 12px;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+            justify-content: center;
+        }
+        
+        .table-responsive {
+            border-radius: 8px;
+        }
+        
+        .table thead th {
+            padding: 8px 6px;
+            font-size: 10px;
         }
         
         .table tbody td {
-            padding: 12px 10px;
-            vertical-align: middle;
-            border-bottom: 1px solid var(--light-gray);
-            white-space: nowrap;
-            font-size: 13px;
-        }
-        
-        .table tbody tr {
-            transition: var(--transition);
-        }
-        
-        .table tbody tr:hover {
-            background-color: rgba(67, 97, 238, 0.05);
-            transform: translateY(-1px);
-        }
-        
-        .table tbody tr:last-child td {
-            border-bottom: none;
+            padding: 8px 6px;
+            font-size: 11px;
         }
         
         .badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 11px;
-    min-width: 80px;
-}
-        
-        .badge-success {
-    background-color: rgba(76, 201, 240, 0.15);
-    color: #4cc9f0;
-    border: 1px solid #4cc9f0;
-}
-        
-        .badge-primary {
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
-        }
-        
-        .badge-warning {
-    background-color: rgba(247, 37, 133, 0.15);
-    color: #f72585;
-    border: 1px solid #f72585;
-}
-        
-        .modal-content {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            padding: 20px 25px;
-        }
-
-        .modal-up {
-            background: linear-gradient(135deg, var(--upd), var(--warning));
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            padding: 20px 25px;
-        }
-
-        .modal-barang {
-            background: linear-gradient(135deg, var(--barang), var(--secondary));
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            padding: 20px 25px;
-        }
-        
-        .modal-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: white;
-        }
-        
-        .close {
-            color: white;
-            opacity: 0.8;
-        }
-        
-        .close:hover {
-            color: white;
-            opacity: 1;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-control {
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
-            padding: 10px 15px;
-            transition: var(--transition);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .form-label {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .form-label i {
-            color: var(--primary);
-            font-size: 14px;
-            width: 16px;
-        }
-        
-        .invalid-feedback {
-            font-size: 12px;
-            margin-top: 5px;
+            padding: 4px 8px;
+            font-size: 9px;
+            min-width: 50px;
         }
         
         .action-buttons {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-            flex-wrap: nowrap;
+            flex-direction: column;
+            gap: 3px;
         }
         
-        .table .btn-sm {
-            padding: 6px 10px;
-            font-size: 11px;
-            line-height: 1.5;
-            white-space: nowrap;
+        .modal-content {
+            margin: 10px;
+            width: calc(100% - 20px);
         }
         
-        .table .btn i {
-            font-size: 15px;
-            margin-right: 2px;
+        .modal-header,
+        .modal-up,
+        .modal-barang {
+            padding: 15px 20px;
         }
         
-        .text-right {
-            text-align: right;
+        .form-group {
+            margin-bottom: 15px;
         }
         
-        .text-center {
-            text-align: center;
+        .form-control {
+            padding: 8px 12px;
         }
+    }
 
-        @media (max-width: 768px) {
-            .card-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .btn-group {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                gap: 3px;
-            }
-            
-            .table-responsive {
-                font-size: 12px;
-            }
+    @media (min-width: 577px) and (max-width: 768px) {
+        .barang-container {
+            padding: 15px;
         }
-    </style>
+        
+        .card-header {
+            flex-direction: row;
+        }
+        
+        .btn {
+            flex: none;
+        }
+        
+        .table thead th {
+            padding: 10px 8px;
+        }
+        
+        .table tbody td {
+            padding: 10px 8px;
+        }
+        
+        .action-buttons {
+            flex-direction: row;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1200px) {
+        .barang-container {
+            padding: 20px;
+        }
+        
+        .card {
+            margin-bottom: 25px;
+        }
+    }
+
+    @media (min-width: 1201px) {
+        .barang-container {
+            padding: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+    }
+
+    /* Utility classes for better responsiveness */
+    .text-truncate-mobile {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .d-none-mobile {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .text-truncate-mobile {
+            max-width: 120px;
+        }
+        
+        .d-none-mobile {
+            display: none !important;
+        }
+        
+        /* Hide less important columns on mobile */
+        .table td:nth-child(6),
+        .table th:nth-child(6),
+        .table td:nth-child(7),
+        .table th:nth-child(7) {
+            display: none;
+        }
+    }
+
+    /* Ensure modals are properly sized on mobile */
+    @media (max-width: 576px) {
+        .modal-dialog {
+            margin: 10px;
+            max-width: calc(100% - 20px);
+        }
+        
+        .modal-xl {
+            max-width: calc(100% - 20px);
+        }
+    }
+
+    /* Fix for chosen select on mobile */
+    .chosen-container {
+        width: 100% !important;
+    }
+
+    /* Ensure datepicker works on mobile */
+    .datepicker {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+</style>
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -417,7 +604,7 @@
                                                             <td class="text-center"><?=$status_badge?></td> <!-- Kolom Status -->
                                                             <td class="text-center">
                                                                 <div class="action-buttons">
-                                                                    <?php if ($level === "0" && $status != 'processed'): ?>
+                                                                    <?php if ($status != 'processed'): ?>
                                                                     <!-- Tombol Proses hanya muncul jika status bukan 'processed' -->
                                                                     <button type="button" 
                                                                         class="btn btn-warning btn-sm text-light" 
@@ -438,38 +625,6 @@
                                                                         <i class="feather icon-edit-2"></i>Proses
                                                                     </button>
                                                                     <?php endif; ?>
-                                                                    
-                                                                    <!-- Tombol Edit dan Hapus tetap muncul -->
-                                                                    <!-- <button type="button" 
-                                                                        class="btn btn-info btn-sm" 
-                                                                        data-toggle="modal" 
-                                                                        data-target="#edit"
-                                                                        data-id_mkt_po_sample="<?=$k['id_mkt_po_sample']?>"
-                                                                        data-tgl_po_sample="<?=$tgl_po_sample?>"
-                                                                        data-id_customer="<?=$k['id_customer']?>"
-                                                                        data-id_barang="<?=$k['id_barang']?>"
-                                                                        data-mesh="<?=$k['mesh']?>"
-                                                                        data-bloom="<?=$k['bloom']?>"
-                                                                        data-kode_tf_in="<?=$k['kode_sample_out']?>"
-                                                                        data-jumlah_po_sample="<?=number_format($k['jumlah_po_sample'],0,",",".")?>"
-                                                                        data-ket_po_sample="<?=$k['ket_po_sample']?>"
-                                                                       
-                                                                        <i class="feather icon-edit"></i>Edit
-                                                                    </button> -->
-                                                                    
-                                                                   
-                                                                      <!-- <a  href="<?= base_url() ?>gudang/gudang_admin/admin_sample/delete/<?= str_replace('/', '--', $k['id_mkt_po_sample']) ?>"
-                                                                    class="btn btn-danger btn-square text-light btn-sm" 
-                                                                    onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
-                                                                    <i class="feather icon-trash-2"></i>Hapus
-                                                                    </a> -->
-
-                                                                     <a
-                                                                        href="<?= base_url() ?>gudang/gudang_admin/admin_sample/delete/<?= str_replace('/', '--', $k['id_mkt_po_sample']) ?>"
-                                                                        class="btn btn-danger btn-square text-light btn-sm"
-                                                                        onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
-                                                                        <i class="feather icon-trash-2"></i>hapus
-                                                                    </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -558,7 +713,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Kode TF IN</label>
+                                    <label>KODE SAMPLE OUT</label>
                                     <input type="text" class="form-control" id="p-kode_tf_in" name="kode_sample_out" readonly>
                                 </div>
                             </div>
@@ -577,6 +732,9 @@
                                 <div class="form-group">
                                     <label>Jumlah Dikirim (Kg)</label>
                                     <input type="text" class="form-control" id="jumlah_masuk" name="jumlah_masuk" placeholder="Jumlah Dikirim" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                    <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
+                                        Maaf Jumlah tidak boleh lebih dari Jumlah Sample.
+                                    </div>
                                 </div>
                             </div>
 
@@ -742,7 +900,18 @@
                 $(this).find('#p-kode_tf_in').val(kode_tf_in);
                 $(this).find('#p-jumlah_po_sample').val(jumlah_po_sample);
                 
-                // Generate no_po_sample
+                $("#jumlah_masuk").keyup(function() {
+                var jumlah_po = $("#jumlah_masuk").val().replaceAll('.', '');
+                var gdg_qty_in = $("#p-jumlah_po_sample").val().replaceAll('.', '');
+                if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
+                    $("#jumlah_masuk").addClass("is-invalid");
+                    $("#simpan").attr("disabled", "disabled");
+                } else {
+                    $("#jumlah_masuk").removeClass("is-invalid");
+                    $("#simpan").removeAttr("disabled");
+                }
+                })
+
                 var no_po_sample = "PO-SAMPLE-" + id_mkt_po_sample.toString().padStart(3, '0');
                 $(this).find('#p-no_po_sample').val(no_po_sample);
                 

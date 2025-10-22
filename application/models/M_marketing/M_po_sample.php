@@ -70,13 +70,8 @@ class M_po_sample extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-<<<<<<< HEAD
         INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,ket_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
         VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[ket_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
-=======
-        INSERT INTO tb_mkt_po_sample (tgl_po_sample,id_customer,id_barang,jumlah_po_sample,mkt_admin,created_by,created_at,updated_by,updated_at,is_deleted)
-        VALUES ('$data[tgl_po_sample]','$data[id_customer]','$data[id_barang]','$data[jumlah_po_sample]','$data[mkt_admin]','$id_user',NOW(),'$id_user',0,0)
->>>>>>> 4bd1c728525137d88f102b479bcd4c396db9fe62
         ";
 
         $this->db->query($sql);

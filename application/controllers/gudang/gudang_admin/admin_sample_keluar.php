@@ -1,4 +1,4 @@
-<?php
+a<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class admin_sample_keluar extends MY_Controller {
