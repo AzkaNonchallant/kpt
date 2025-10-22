@@ -49,16 +49,17 @@ class admin_sample extends MY_Controller {
 
     public function proses()
     {
-        $data['tgl_po_sample'] = $this->convertDate($this->input->post('tgl_po_sample', TRUE));
+        $data['id_mkt_po_sample'] = $this->input->post('id_mkt_po_sample', TRUE);
+        $data['tgl_masuk_sample'] = $this->convertDate($this->input->post('tgl_masuk_sample', TRUE));
         $data['id_customer'] = $this->input->post('id_customer', TRUE);
         $data['id_barang'] = $this->input->post('id_barang', TRUE);
-        $data['kode_tf_in'] = $this->input->post('kode_tf_in', TRUE);
-        $data['jumlah_po_sample'] = $this->input->post('jumlah_po_sample', TRUE);
-        $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']);
-        $data['ket_po_sample'] = $this->input->post('ket_po_sample', TRUE);
-        $data['mkt_admin'] = $this->input->post('mkt_admin', TRUE);
+        $data['kode_sample_in'] = $this->input->post('kode_sample_in', TRUE);
+        $data['jumlah_masuk'] = $this->input->post('jumlah_masuk', TRUE);
+        $data['jumlah_masuk'] = str_replace('.', '', $data['jumlah_masuk']);
+        $data['ket_masuk'] = $this->input->post('ket_masuk', TRUE);
+        $data['gudang_admin'] = $this->input->post('gudang_admin', TRUE);
 
-        $respon = $this->M_admin_sample->insert($data);
+        $respon = $this->M_admin_sample->proses($data);
 
         if($respon){
             header('location:'.base_url('gudang/gudang_admin/admin_sample').'?alert=success&msg=Selamat anda berhasil menambah PO Sample');

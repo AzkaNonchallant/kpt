@@ -666,7 +666,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?= base_url() ?>marketing/po_sample/add">
+      <form method="post" id="" action="<?= base_url() ?>marketing/po_sample/add">
         <div class="modal-body">
 
           <div class="row">
@@ -757,19 +757,7 @@
               </div>
             </div>
 
-            <!-- <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                      <input type="text" class="form-control" id="harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
-                  </div>
-            </div> -->
-            <!-- 
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="total_harga">Jumlah Harga (Rp)</label>
-                <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga (Rp)" readonly>
-              </div>
-            </div> -->
+
 
             <div class="col-md-4">
               <div class="form-group">
@@ -777,17 +765,6 @@
                 <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
               </div>
             </div>
-
-            <!-- <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jenis Pembayaran</label>
-                  <select class="form-control chosen-select" id="jenis_pembayaran" name="jenis_pembayaran" autocomplete="off">
-                    <option value="">- Pilih Jenis Pembayaran -</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Kredit">Kredit</option>
-                  </select>
-              </div>
-            </div> -->
 
             <div class="col-md-4">
               <div class="form-group">
@@ -922,7 +899,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?= base_url() ?>marketing/po_sample/add">
+      <form method="post" id="form-c" action="<?= base_url() ?>marketing/po_sample/add2">
         <div class="modal-body">
           <div class="row">
             <div class="col-md-4">
@@ -954,17 +931,16 @@
                 <select class="form-control chosen-select" id="id_barang_customer" name="id_barang" autocomplete="off" required>
                   <option value="">-Pilih Nama Barang -</option>
 
-                  <?php
+                <?php
                   foreach ($res_sample as $rs) { ?>
                     <option
                       value="<?= $rs['id_barang'] ?>"
                       data-bloom="<?= $rs['bloom'] ?>"
                       data-mesh="<?= $rs['mesh'] ?>"
-                      data-kode_tf_in="<?= $rs['kode_tf_in'] ?>"
+                      data-kode_tf_in="<?= $rs['kode_sample_in'] ?>"
                       data-gdg_qty_in="<?= $rs['gdg_qty_in'] ?>">
                       (<?= $rs['id_barang'] ?>) <?= $rs['nama_barang'] ?>
                     </option>
-
                   <?php
                   }
                   ?>
@@ -1013,7 +989,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="jumlah_kg_customer">Jumlah(kg)</label>
-                <input type="text" class="form-control" id="jumlah_kg_customer" name="jumlah_customer" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03FeedbackCustomer" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()">
+                <input type="text" class="form-control" id="jumlah_kg_customer" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03FeedbackCustomer" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()">
                 <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
                   Maaf Jumlah Kirim tidak boleh lebih dari Stock.
                 </div>
@@ -1067,6 +1043,12 @@
       rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
       return rupiah;
     }
+
+     // Ubah dari rupiah ke integer
+  function unformatRupiah(rupiah) {
+    if (!rupiah) return 0;
+    return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+  }
 
     $("#no_po").keyup(function() {
       var no_po = $("#no_po").val();
@@ -1134,6 +1116,17 @@
       value = new Intl.NumberFormat('id-ID').format(value);
       this.value = value;
     });
+
+    $('#addCustomer').on('submit', function(e) {
+    // Ambil nilai aslinya (tanpa format)
+    const jumlah = unformatRupiah($('#jumlah_kg_customer').val());
+
+    // Ubah isi input ke integer agar dikirim bersih ke backend
+    $('#jumlah_kg_customer').val(jumlah);
+    
+    // Setelah ini form dikirim secara normal
+  });
+
 
   });
 </script>
