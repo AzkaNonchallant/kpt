@@ -55,8 +55,8 @@ class admin_sample_keluar extends MY_Controller {
         $data['id_customer'] = $this->input->post('id_customer', TRUE);
         $data['id_barang'] = $this->input->post('id_barang', TRUE);
         $data['kode_sample_out'] = $this->input->post('kode_sample_out', TRUE);
-        $data['jumlah_masuk'] = $this->input->post('jumlah_masuk', TRUE);
-        $data['jumlah_masuk'] = str_replace('.', '', $data['jumlah_masuk']);
+        $data['jumlah_keluar'] = $this->input->post('jumlah_keluar', TRUE);
+        $data['jumlah_keluar'] = str_replace('.', '', $data['jumlah_keluar']);
         $data['ket_masuk'] = $this->input->post('ket_masuk', TRUE);
         $data['gudang_admin'] = $this->input->post('gudang_admin', TRUE);
 

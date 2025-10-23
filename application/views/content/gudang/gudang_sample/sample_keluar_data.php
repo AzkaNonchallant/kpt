@@ -567,8 +567,8 @@
                                   <td><?= $row['id_barang'] ?? '-' ?></td>
                                   <td class="text-center">
                                     <?php 
-                                    if (isset($row['jumlah_masuk'])) {
-                                      echo '<span class="badge bg-success">' . number_format($row['jumlah_masuk'], 0, ",", ".") . '</span>';
+                                    if (isset($row['jumlah_keluar'])) {
+                                      echo '<span class="badge bg-success">' . number_format($row['jumlah_keluar'], 0, ",", ".") . '</span>';
                                     } else {
                                       echo '-';
                                     }
@@ -587,7 +587,7 @@
                                         data-nama_barang="<?= $row['nama_barang'] ?? '' ?>"
                                         data-nama_customer="<?= $row['nama_customer'] ?? '' ?>"
                                         data-id_barang="<?= $row['id_barang'] ?? '' ?>"
-                                        data-jumlah_masuk="<?= $row['jumlah_masuk'] ?? '' ?>"
+                                        data-jumlah_keluar="<?= $row['jumlah_keluar'] ?? '' ?>"
                                        
                                         data-ket_masuk="<?= $row['ket_masuk'] ?? '' ?>"
                                         data-gudang_admin="<?= $row['gudang_admin'] ?? '' ?>"
@@ -661,7 +661,7 @@
 
             <div class="col-md-6 mb-3">
               <label class="form-label">Jumlah Masuk</label>
-              <input type="text" class="form-control" id="v-jumlah_masuk" readonly>
+              <input type="text" class="form-control" id="v-jumlah_keluar" readonly>
             </div>
 
 
@@ -759,7 +759,7 @@
         var nama_barang = button.getAttribute('data-nama_barang');
         var nama_customer = button.getAttribute('data-nama_customer');
         var id_barang = button.getAttribute('data-id_barang');
-        var jumlah_masuk = button.getAttribute('data-jumlah_masuk');
+        var jumlah_keluar = button.getAttribute('data-jumlah_keluar');
         var ket_masuk = button.getAttribute('data-ket_masuk');
         var gudang_admin = button.getAttribute('data-gudang_admin');
 
@@ -772,8 +772,8 @@
         }
 
         // Format jumlah masuk
-        if (jumlah_masuk) {
-          jumlah_masuk = Number(jumlah_masuk).toLocaleString('id-ID');
+        if (jumlah_keluar) {
+          jumlah_keluar = Number(jumlah_keluar).toLocaleString('id-ID');
         }
 
         // Set nilai ke modal
@@ -782,7 +782,7 @@
         document.getElementById('v-nama_barang').value = nama_barang || '-';
         document.getElementById('v-nama_customer').value = nama_customer || '-';
         document.getElementById('v-id_barang').value = id_barang || '-';
-        document.getElementById('v-jumlah_masuk').value = jumlah_masuk || '-';
+        document.getElementById('v-jumlah_keluar').value = jumlah_keluar || '-';
         document.getElementById('v-no_pengiriman').value = no_pengiriman || '-';
         
         document.getElementById('v-gudang_admin').value = gudang_admin || '-';

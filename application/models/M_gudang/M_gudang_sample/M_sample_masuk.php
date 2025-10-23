@@ -60,6 +60,7 @@ class M_sample_masuk extends CI_Model
         $sql = "
     SELECT 
         a.id_sample_masuk,
+        a.no_batch,
         a.id_mkt_po_sample,
         a.id_customer,
         a.id_barang,
@@ -107,7 +108,7 @@ class M_sample_masuk extends CI_Model
     public function get6() 
     {
         $sql = "
-        SELECT a.id_barang,a.jumlah_masuk,a.is_deleted,a.id_mkt_po_sample,b.nama_barang,b.mesh,b.bloom,b.satuan,c.kode_sample_in
+        SELECT a.id_barang,a.jumlah_masuk,a.no_batch,a.is_deleted,a.id_mkt_po_sample,b.nama_barang,b.mesh,b.bloom,b.satuan,c.kode_sample_in
         FROM tb_sample_masuk a
         LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
         LEFT JOIN tb_sample_masuk c ON a.id_mkt_po_sample = c.id_mkt_po_sample
@@ -254,4 +255,51 @@ class M_sample_masuk extends CI_Model
     //     $q = $this->db->get('tb_sample_masuk');
     //     return $q->row();
     // }
+
+      // Get unique no_batch
+    public function get_unique_batch()
+    {
+        $this->db->select('no_batch');
+        $this->db->from('tb_sample_masuk');
+        $this->db->where('is_deleted', 0);
+        $this->db->group_by('no_batch');
+        return $this->db->get();
+    }
+
+    // Get total masuk by no_batch
+    public function get_total_masuk_by_batch($no_batch)
+    {
+        $this->db->select('SUM(jumlah_masuk) as total_masuk');
+        $this->db->from('tb_sample_masuk');
+        $this->db->where('no_batch', $no_batch);
+        $this->db->where('is_deleted', 0);
+        $result = $this->db->get()->row_array();
+        return $result['total_masuk'] ?? 0;
+    }
+
+    // Get batch detail
+    public function get_batch_detail($no_batch)
+    {
+        $this->db->select('sm.*, mb.nama_barang, c.nama_customer');
+        $this->db->from('tb_sample_masuk sm');
+        $this->db->join('tb_master_barang mb', 'sm.id_barang = mb.id_barang', 'left');
+        $this->db->join('tb_master_customer c', 'sm.id_customer = c.id_customer', 'left');
+        $this->db->where('sm.no_batch', $no_batch);
+        $this->db->where('sm.is_deleted', 0);
+        $this->db->limit(1);
+        return $this->db->get()->row_array();
+    }
+
+    // Get masuk by batch untuk detail
+    public function get_masuk_by_batch($no_batch)
+    {
+        $this->db->select('sm.*, mb.nama_barang, c.nama_customer');
+        $this->db->from('tb_sample_masuk sm');
+        $this->db->join('tb_master_barang mb', 'sm.id_barang = mb.id_barang', 'left');
+        $this->db->join('tb_master_customer c', 'sm.id_customer = c.id_customer', 'left');
+        $this->db->where('sm.no_batch', $no_batch);
+        $this->db->where('sm.is_deleted', 0);
+        $this->db->order_by('sm.tgl_masuk_sample', 'DESC');
+        return $this->db->get();
+    }
 }

@@ -66,7 +66,7 @@ public function proses($data)
     
     $sql = "
         UPDATE tb_sample_keluar 
-        SET tgl_masuk_sample='$data[tgl_masuk_sample]', id_customer='$data[id_customer]', id_barang='$data[id_barang]',jumlah_masuk='$data[jumlah_masuk]',
+        SET tgl_masuk_sample='$data[tgl_masuk_sample]', id_customer='$data[id_customer]', id_barang='$data[id_barang]',jumlah_keluar='$data[jumlah_keluar]',
         gdg_admin='$id_user', is_deleted='0'
         WHERE kode_sample_out='$data[kode_sample_out]' 
     ";

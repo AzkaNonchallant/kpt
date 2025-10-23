@@ -558,7 +558,7 @@
                                                         <th>Customer</th>
                                                         <th>Nama Barang</th>
                                                         <th>Jumlah KG</th>
-                                                        <th>JUmlah Zak</th>
+                                                        <th>Jumlah Zak</th>
                                                         <th>Kode Sample IN</th>
                                                         <th>Keterangan</th>
 
@@ -597,7 +597,7 @@
                                                             <td><?= $k['nama_customer'] ?></td>
                                                             <td><?= $k['nama_barang'] ?></td>
                                                             <td class="text-right"><?= number_format($k['jumlah_po_sample'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
-                                                            <td><?= $k['jumlah_po_sample'] / 25 ?></td>
+                                                            <td><?= $k['jumlah_po_sample'] / 25 ?>s</td>
                                                             <td><?= $k['kode_sample_in'] ?></td>
                                                             <td><?= $k['ket_po_sample'] ?></td>
 
@@ -707,7 +707,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Jumlah Sample</label>
-                                <input type="text" class="form-control" id="p-jumlah_po_sample" name="jumlah_po_sample" readonly>
+                                <input type="text" class="form-control" id="p-jumlah_po_sample2" name="jumlah_po_sample" readonly>
                             </div>
                         </div>
 
@@ -723,41 +723,22 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Tanggal Keluar Sample</label>
-                                <input type="text" class="form-control datepicker" id="tgl_masuk_sample" name="tgl_masuk_sample" placeholder="Tanggal Keluar Sample" autocomplete="off" required>
+                                <label>Tanggal Masuk Sample</label>
+                                <input type="text" class="form-control datepicker" id="tgl_masuk_sample" name="tgl_masuk_sample" placeholder="Tanggal Masuk Sample" autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Jumlah Dikirim (Kg)</label>
-                                <input type="text" class="form-control" id="jumlah_masuk" name="jumlah_masuk" placeholder="Jumlah Dikirim" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
+                                <input type="text" class="form-control" id="p-jumlah_po_sample" name="jumlah_masuk" placeholder="Jumlah Dikirim" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                                <!-- <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
                                     Maaf Jumlah tidak boleh lebih dari Jumlah Sample.
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>No Pengiriman</label>
-                                <input type="text" class="form-control" id="no_pengiriman" name="no_pengiriman" placeholder="No Pengiriman" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Kurir/Pengirim</label>
-                                <input type="text" class="form-control" id="kurir" name="kurir" placeholder="Kurir/Pengirim" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Keterangan Pengiriman</label>
-                                <textarea class="form-control" id="ket_masuk" name="ket_masuk" rows="2" placeholder="Keterangan Pengiriman"></textarea>
-                            </div>
-                        </div>
+                       
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -899,10 +880,12 @@
             $(this).find('#p-bloom').val(bloom);
             $(this).find('#p-kode_tf_in').val(kode_tf_in);
             $(this).find('#p-jumlah_po_sample').val(jumlah_po_sample);
+            $(this).find('#p-jumlah_po_sample2').val(jumlah_po_sample);
 
             $("#jumlah_masuk").keyup(function() {
                 var jumlah_po = $("#jumlah_masuk").val().replaceAll('.', '');
                 var gdg_qty_in = $("#p-jumlah_po_sample").val().replaceAll('.', '');
+                var gdg_qty_in = $("#p-jumlah_po_sample2").val().replaceAll('.', '');
                 if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
                     $("#jumlah_masuk").addClass("is-invalid");
                     $("#simpan").attr("disabled", "disabled");

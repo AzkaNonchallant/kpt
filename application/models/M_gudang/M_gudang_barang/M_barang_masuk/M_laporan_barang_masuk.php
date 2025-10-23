@@ -29,11 +29,23 @@ class M_laporan_barang_masuk extends CI_Model {
 
         $where = implode(" ", $where);
         $sql = "
-            SELECT a.*,b.nama_supplier,c.* FROM tb_gudang_barang_masuk a
-            LEFT JOIN tb_prc_po_pembelian p ON a.id_prc_po_pembelian = p.id_prc_po_pembelian
-            LEFT JOIN tb_master_barang c ON p.id_barang = c.id_barang
-            LEFT JOIN tb_master_supplier b ON c.id_supplier = b.id_supplier
-            WHERE a.is_deleted = 0 $where ORDER BY a.tgl_msk_gdg ASC";
+       SELECT 
+    MIN(a.id_barang_masuk) AS id_gudang_barang_masuk,
+    c.nama_barang,
+    b.nama_supplier,
+    SUM(a.gdg_qty_in) AS total_qty_in,
+    c.satuan,
+    MAX(a.tgl_msk_gdg) AS tgl_terakhir
+    FROM tb_gudang_barang_masuk a
+    LEFT JOIN tb_prc_po_pembelian p ON a.id_prc_po_pembelian = p.id_prc_po_pembelian
+    LEFT JOIN tb_master_barang c ON p.id_barang = c.id_barang
+    LEFT JOIN tb_master_supplier b ON c.id_supplier = b.id_supplier
+    WHERE a.is_deleted = 0 
+    $where
+    GROUP BY c.nama_barang, b.nama_supplier, c.satuan
+    ORDER BY tgl_terakhir ASC;
+";
+
         return $this->db->query($sql);
 
     }

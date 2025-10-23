@@ -518,7 +518,7 @@
     .datepicker {
         font-size: 16px !important; /* Prevents zoom on iOS */
     }
-</style>
+</style>s
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -707,7 +707,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Jumlah Sample</label>
-                                    <input type="text" class="form-control" id="p-jumlah_po_sample" name="jumlah_po_sample" readonly>
+                                    <input type="text" class="form-control" id="p-jumlah_po_sample2" name="jumlah_po_sample" readonly>
                                 </div>
                             </div>
 
@@ -731,33 +731,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Jumlah Dikirim (Kg)</label>
-                                    <input type="text" class="form-control" id="jumlah_masuk" name="jumlah_masuk" placeholder="Jumlah Dikirim" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                    <input type="text" class="form-control" id="p-jumlah_po_sample" name="jumlah_keluar" placeholder="Jumlah Dikirim" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
                                     <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
                                         Maaf Jumlah tidak boleh lebih dari Jumlah Sample.
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>No Pengiriman</label>
-                                    <input type="text" class="form-control" id="no_pengiriman" name="no_pengiriman" placeholder="No Pengiriman" autocomplete="off" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Kurir/Pengirim</label>
-                                    <input type="text" class="form-control" id="kurir" name="kurir" placeholder="Kurir/Pengirim" autocomplete="off" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Keterangan Pengiriman</label>
-                                    <textarea class="form-control" id="ket_masuk" name="ket_masuk" rows="2" placeholder="Keterangan Pengiriman"></textarea>
-                                </div>
-                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -899,15 +879,17 @@
                 $(this).find('#p-bloom').val(bloom);
                 $(this).find('#p-kode_tf_in').val(kode_tf_in);
                 $(this).find('#p-jumlah_po_sample').val(jumlah_po_sample);
+                $(this).find('#p-jumlah_po_sample2').val(jumlah_po_sample);
                 
-                $("#jumlah_masuk").keyup(function() {
-                var jumlah_po = $("#jumlah_masuk").val().replaceAll('.', '');
+                $("#jumlah_keluar").keyup(function() {
+                var jumlah_po = $("#jumlah_keluar").val().replaceAll('.', '');
                 var gdg_qty_in = $("#p-jumlah_po_sample").val().replaceAll('.', '');
+                var gdg_qty_in = $("#p-jumlah_po_sample2").val().replaceAll('.', '');
                 if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
-                    $("#jumlah_masuk").addClass("is-invalid");
+                    $("#jumlah_keluar").addClass("is-invalid");
                     $("#simpan").attr("disabled", "disabled");
                 } else {
-                    $("#jumlah_masuk").removeClass("is-invalid");
+                    $("#jumlah_keluar").removeClass("is-invalid");
                     $("#simpan").removeAttr("disabled");
                 }
                 })
@@ -920,7 +902,7 @@
                     e.stopPropagation();
                 });
 
-            document.getElementById('jumlah_masuk').addEventListener('keyup', function(e) {
+            document.getElementById('jumlah_keluar').addEventListener('keyup', function(e) {
             let value = this.value.replace(/\D/g,'');
             value = new Intl.NumberFormat('id-ID').format(value);
             this.value = value;

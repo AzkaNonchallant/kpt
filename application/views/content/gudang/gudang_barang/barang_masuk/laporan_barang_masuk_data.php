@@ -13,7 +13,7 @@
                                     </div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="javascript:">Barang Masuk</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Laporan Barang Masuk</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -57,28 +57,34 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Tanggal masuk</th>
-                                                            <th>No Batch</th>
                                                             <th>Nama Barang</th>
                                                             <th>Nama Supplier</th>
-                                                            <th>Status</th>
-                                                            <th class="text-right">Qty IN</th>
+                                                            <th class="text-center">Stok</th>
+                                                            <th class="text-center">Rincian</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     	<?php 
                                                     	$no=1;
                                                     	foreach($result as $k){ 
-                                                        // $tgl =  explode('-', $k['tgl'])[2]."/".explode('-', $k['tgl'])[1]."/".explode('-', $k['tgl'])[0];
                                                     	?>
                                                     	<tr>
-                                                            <th scope="row"><?=$no++?></th>
-                                                            <td><?=$tgl?></td>
-                                                            <td><?=$k['no_batch']?></td>
-                                                            <td><?=$k['nama_barang']?></td>
-                                                            <td><?=$k['nama_supplier']?></td>
-                                                            <td><?=isset($k['status']) ? $k['status'] : '-'?></td>
-                                                           <td style="text-align: right;"><?=isset($k['qty']) ? number_format($k['qty'],0,",",".") : 0?><?=$k['satuan']?></td>
+                                                          <th scope="row"><?=$no++?></th>
+                                                          <td><?=$k['nama_barang']?></td>
+                                                          <td><?=$k['nama_supplier']?></td>
+                                                          <td style="text-align: center;"><?=isset($k['total_qty_in']) ? number_format($k['total_qty_in'],0,",",".") : 0?><?=$k['satuan']?></td>
+                                                          <td>
+                                                            <div class="text-center">
+                                                              <div class="btn-group " role="group" aria-label="Basic example">
+                                                                <button type="button" 
+                                                                  class="btn btn-info btn-square btn-sm btn-rincian"
+                                                                  data-nama-barang="<?= $k['nama_barang'] ?>"
+                                                                  data-toggle="modal" 
+                                                                  data-target="#detail">
+                                                                  <i class="feather icon-eye"></i> Rincian
+                                                                </button>
+                                                            </div>
+                                                          </td>
                                                         </tr>
                                                     	<?php
                                                     	}
@@ -150,4 +156,88 @@
       }
     })
   })
+</script>
+
+<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailLabel">Rincian Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>No PO</th>
+              <th>Tanggal Masuk</th>
+              <th>Kode Tf In</th>
+              <th>Nama Barang</th>
+              <th>No Batch</th>
+              <th>Tanggal Expired</th>
+              <th>Jenis transaksi Gudang</th>
+              <th>Jumlah IN</th>
+              <th>Satuan</th>
+            </tr>
+          </thead>
+          <tbody id="detail-body">
+            <tr><td colspan="5" class="text-center">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+  $('.btn-rincian').on('click', function() {
+    let nama_barang = $(this).data('nama-barang');
+    $('#detailLabel').text('Rincian Barang: ' + nama_barang);
+    $('#detail-body').html('<tr><td colspan="5" class="text-center">Memuat data...</td></tr>');
+
+    $.ajax({
+      url: "<?= base_url('gudang/gudang_barang/barang_masuk/barang_masuk/get_rincian_barang') ?>",
+      type: "POST",
+      data: { nama_barang: nama_barang },
+      dataType: "json",
+      success: function(res) {
+        if (res.length > 0) {
+          let rows = '';
+          $.each(res, function(i, item) {
+            rows += `
+              <tr>
+                <td>${i+1}</td>
+                <td>${item.no_po_pembelian}</td>
+                <td>${item.tgl_msk_gdg}</td>
+                <td>${item.kode_tf_in}</td>
+                <td>${item.nama_barang}</td>
+                <td>${item.no_batch}</td>
+                <td>${item.tgl_exp}</td>
+                <td>${item.jenis_transaksi_gudang}</td>
+                <td>${Number(item.gdg_qty_in).toLocaleString('id-ID')}</td>
+                <td>${item.satuan}</td>
+              </tr>`;
+          });
+          $('#detail-body').html(rows);
+        } else {
+          $('#detail-body').html('<tr><td colspan="5" class="text-center">Tidak ada data</td></tr>');
+        }
+      },
+      error: function() {
+        $('#detail-body').html('<tr><td colspan="5" class="text-center text-danger">Gagal memuat data</td></tr>');
+      }
+    });
+  });
+
+});
+
 </script>

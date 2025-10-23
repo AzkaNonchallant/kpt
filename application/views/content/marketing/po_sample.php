@@ -702,13 +702,14 @@
                   foreach ($res_barang as $b) {
 
                   ?>
-                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" value="<?= $b['id_barang'] ?>">(<?= $b['kode_barang'] ?>) <?= $b['nama_barang'] ?></option>
+                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" data-no_batch="<?=$b['no_batch']?>" value="<?= $b['id_barang'] ?>"><?= $b['nama_barang'] ?> (<?= $b['no_batch'] ?>) </option>
                   <?php
                   }
                   ?>
                 </select>
               </div>
             </div>
+                  <input type="hidden" id="no_batch" name="no_batch">
 
             <div class="col-md-4">
               <div class="form-group">
@@ -733,7 +734,7 @@
 
             <div class="col-md-4">
               <div class="form-group">
-                <label for="exampleFormControlInput1">Stock</label>
+                <label for="exampleFormControlInput1">Stock ZAK</label>
                 <input type="text" class="form-control" id="gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
               </div>
             </div>
@@ -831,6 +832,12 @@
       const selected = $(this).find(':selected').attr('data-kode_tf_in')
       kode_tf_in = selected.replaceAll(' ', ' ')
       $('#kode_tf_in').val(kode_tf_in)
+    });
+
+    $("select").on('change', function() {
+      const selected = $(this).find(':selected').attr('data-no_batch')
+      no_batch = selected.replaceAll(' ', ' ')
+      $('#no_batch').val(no_batch)
     });
 
     $("select").on('change', function() {
@@ -936,8 +943,9 @@
                       data-bloom="<?= $rs['bloom'] ?>"
                       data-mesh="<?= $rs['mesh'] ?>"
                       data-kode_tf_in="<?= $rs['kode_sample_in'] ?>"
-                      data-gdg_qty_in="<?= $rs['jumlah_masuk'] ?>">
-                      (<?= $rs['id_barang'] ?>) <?= $rs['nama_barang'] ?>
+                      data-gdg_qty_in="<?= $rs['jumlah_masuk'] ?>"
+                      data-no_batch="<?=$rs['no_batch']?>">
+                       <?= $rs['nama_barang'] ?> (<?= $rs['no_batch'] ?>)
                     </option>
                   <?php
                   }
@@ -945,6 +953,7 @@
                 </select>
               </div>
             </div>
+
 
             <div class="col-md-4">
               <div class="form-group">
@@ -1044,6 +1053,7 @@
         var mesh = selectedOption.data('mesh');
         var bloom = selectedOption.data('bloom');
         var kode = selectedOption.data('kode_tf_in');
+        var no_batch = selectedOption.data('no_batch');
         var gdg = selectedOption.data('gdg_qty_in');
         $('#c-mesh').val(mesh);
         $('#c-bloom').val(bloom);
@@ -1101,17 +1111,6 @@
           <input type="hidden" id="e-id_mkt_po_sample" name="id_mkt_po_sample">
 
           <div class="row">
-
-            <!-- <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">No PO</label>
-                  <input type="text" class="form-control" id="e-no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                    <div id="validationServer03Feedback" class="invalid-feedback">
-                      Maaf No PO sudah ada.
-                    </div>
-              </div>
-            </div> -->
-
             <div class="col-md-6">
               <div class="form-group">
                 <label for="tgl_po">Tanggal PO</label>

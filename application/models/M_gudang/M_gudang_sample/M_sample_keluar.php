@@ -178,50 +178,45 @@ public function get5(){
 
     // Hitung total sample masuk (misal per barang)
     public function jml_sample_keluar($id_barang){
-        $this->db->select_sum('jumlah_masuk', 'total_masuk');
+        $this->db->select_sum('jumlah_keluar', 'total_masuk');
         $this->db->where('id_barang', $id_barang);
         $this->db->where('is_deleted', 0);
         $q = $this->db->get('tb_sample_keluar');
         return $q->row();
     }
 
+     public function jml_po_sample_keluar($data){
+    $sql = "
+        SELECT SUM(k.jumlah_keluar) AS tot_sample_keluar
+        FROM tb_sample_keluar k
+        LEFT JOIN tb_sample_masuk m ON k.id_mkt_po_sample = m.id_mkt_po_sample
+        WHERE m.id_sample_masuk = '$data[id_sample_masuk]'
+        AND k.is_deleted = 0
+    ";
+    return $this->db->query($sql);
+}
 
-//     public function jml_po_sample($id_mkt_po_sample){
-//     $this->db->select_sum('jumlah_order', 'total_order'); // ganti kolom sesuai tabel kamu
-//     $this->db->where('id_mkt_po_sample', $id_mkt_po_sample);
-//     $this->db->where('is_deleted', 0);
-//     $q = $this->db->get('tb_mkt_po_sample');
-//     return $q->row();
-// }
+    public function get_total_keluar_by_batch($no_batch)
+    {
+        $this->db->select('SUM(jumlah_keluar) as total_keluar');
+        $this->db->from('tb_sample_keluar');
+        $this->db->where('no_batch', $no_batch);
+        $this->db->where('is_deleted', 0);
+        $result = $this->db->get()->row_array();
+        return $result['total_keluar'] ?? 0;
+    }
 
+    // Get keluar by batch untuk detail
+    public function get_keluar_by_batch($no_batch)
+    {
+        $this->db->select('sk.*, mb.nama_barang, c.nama_customer');
+        $this->db->from('tb_sample_keluar sk');
+        $this->db->join('master_barang mb', 'sk.id_barang = mb.id_barang', 'left');
+        $this->db->join('customer c', 'sk.id_customer = c.id_customer', 'left');
+        $this->db->where('sk.no_batch', $no_batch);
+        $this->db->where('sk.is_deleted', 0);
+        $this->db->order_by('sk.tgl_keluar_sample', 'DESC');
+        return $this->db->get();
+    }
 
-     public function jml_po_sample($data){
-        $sql = "
-            SELECT sum(jumlah_masuk) tot_sample_keluar FROM `tb_sample_keluar` 
-            WHERE id_sample_keluar ='$data[id_sample_keluar]' AND is_deleted = 0"; 
-        return $this->db->query($sql);
-        }
-
-    // public function jml_sample2_masuk($id_barang){
-    //     $sql = "
-    // SELECT SUM(jumlah_sample) AS total_sample 
-    // FROM tb_mkt_po_sample
-    // WHERE id_mkt_po_sample = '$id_mkt_po_sample'
-    // AND is_deleted = 0
-    // ";
-    // return $this->db->query($sql);
-
-    // }
-
-    //  $sql = "
-    //         SELECT sum(gdg_qty_in) tot_barang_masuk FROM `tb_gudang_barang_masuk` 
-    //         WHERE id_barang_masuk ='$data[id_barang_masuk]' AND is_deleted = 0"; 
-    //     return $this->db->query($sql);
-
-    // Ambil kode transfer terakhir
-    // public function get_kode_sample_in(){
-    //     $this->db->select_max('kode_sample_in', 'kode_sample_in');
-    //     $q = $this->db->get('tb_sample_masuk');
-    //     return $q->row();
-    // }
 }

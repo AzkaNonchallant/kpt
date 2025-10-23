@@ -1,63 +1,96 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class sample_stock extends MY_Controller {
+class Sample_stock extends MY_Controller {
 
-	function __construct()
+    function __construct()
     {
         parent::__construct();
-        // check_not_login();
-        $this->load->model('M_master/M_master_barang');
         $this->load->model('M_gudang/M_gudang_sample/M_sample_masuk');
-        $this->load->model('M_gudang/M_gudang_barang/M_barang_keluar/M_barang_keluar');
-
+        $this->load->model('M_gudang/M_gudang_sample/M_sample_keluar');
     }
 
-	public function index()
-	{
-		// $data['row'] = $this->customer_m->get();
-		$data['result'] = $this->M_sample_masuk->get3()->result_array();
-        for($i=0; $i<count($data['result']);$i++){
-            $d['id_sample_masuk'] = $data['result'][$i]['id_sample_masuk'];
+    public function index()
+    {
 
-            $jml_po_sample = $this->M_sample_masuk->jml_po_sample($d)->row_array();
-            // $jml_barang_keluar = $this->M_barang_keluar->jml_barang_keluar2($d)->row_array();
-            // $a=0;
-            // for($o=0; $o<count($donasi);$o++){
-            //     $a+=$donasi[$o]['donasi'];
-            // }
+        $data['result'] = $this->get_stock_by_batch();
+        
+       
+         $this->template->load('template', 'content/gudang/gudang_sample/stock_sample_data', $data);
+    }
 
-           $data['result'][$i]['masuk'] = $jml_po_sample['tot_sample_masuk'];
-            // $data['result'][$i]['keluar']=$jml_barang_keluar['tot_barang_keluar'];
-            // $data['result'][$i]['stok']=$jml_barang_masuk['tot_barang_masuk']-$jml_barang_keluar['tot_barang_keluar'];
+    private function get_stock_by_batch()
+    {
+        
+        $batch_list = $this->M_sample_masuk->get_unique_batch()->result_array();
+        
+        $stock_data = array();
+        
+        foreach ($batch_list as $i => $batch) {
+            $no_batch = $batch['no_batch'];
 
-            // $stok=$data['result'][$i]['qty']-$jml_barang_keluar['tot_barang_keluar'];
-            // $data['result'][$i]['tot_barang_keluar']=$jml_barang_keluar['tot_barang_keluar'];
-            // $data['result'][$i]['stok']=$stok;
+            $total_masuk = $this->M_sample_masuk->get_total_masuk_by_batch($no_batch);
+            
+            
+            $total_keluar = $this->M_sample_keluar->get_total_keluar_by_batch($no_batch);
+            
+           
+            $stok_akhir = $total_masuk - $total_keluar;
+            
+           
+            $batch_detail = $this->M_sample_masuk->get_batch_detail($no_batch);
+            
+            if ($batch_detail) {
+                $stock_data[] = array(
+                    'no' => $i + 1,
+                    'no_batch' => $no_batch,
+                    'id_barang' => $batch_detail['id_barang'],
+                    'nama_barang' => $batch_detail['nama_barang'] ?? '-',
+                    'kode_sample_in' => $batch_detail['kode_sample_in'] ?? '-',
+                    'id_customer' => $batch_detail['id_customer'],
+                    'nama_customer' => $batch_detail['nama_customer'] ?? '-',
+                    'tgl_masuk_sample' => $batch_detail['tgl_masuk_sample'],
+                    'jumlah_masuk' => $total_masuk,
+                    'jumlah_keluar' => $total_keluar,
+                    'stok' => $stok_akhir,
+                    'gudang_admin' => $batch_detail['gudang_admin'] ?? '-'
+                );
+            }
         }
+        
+        return $stock_data;
+    }
 
-
-
-        $this->template->load('template', 'content/gudang/gudang_sample/stock_sample_data',$data);
-        // print_r($data);
-
-	}
-
-	// public function update()
-	// {
-	// 	$data['id_barang'] = $this->input->post('id_barang',TRUE);
-	// 	$data['kode'] = $this->input->post('kode',TRUE);
-    //     $data['nama'] = $this->input->post('nama',TRUE);
-    //     $data['mesh'] = $this->input->post('mesh',TRUE);
-    //     $data['bloom'] = $this->input->post('bloom',TRUE);
-    //     $data['satuan'] = $this->input->post('satuan',TRUE);
-    //     $respon = $this->M_barang->update($data);
-	// 	// echo $respon;
-    //     if($respon){
-    //     	header('location:'.base_url('barang').'?alert=success&msg=Selamat anda berhasil meng-update customer');
-    //     }else{
-    //     	header('location:'.base_url('barang').'?alert=success&msg=Maaf anda gagal meng-update customer');
-    //     }
-	// }
-
+   
+    public function get_detail_batch()
+    {
+        $no_batch = $this->input->get('no_batch');
+        
+        if (!$no_batch) {
+            echo json_encode(['error' => 'No batch tidak ditemukan']);
+            return;
+        }
+        
+        
+        $masuk_list = $this->M_sample_masuk->get_masuk_by_batch($no_batch)->result_array();
+        
+       
+        $keluar_list = $this->M_sample_keluar->get_keluar_by_batch($no_batch)->result_array();
+        
+       
+        $total_masuk = $this->M_sample_masuk->get_total_masuk_by_batch($no_batch);
+        $total_keluar = $this->M_sample_keluar->get_total_keluar_by_batch($no_batch);
+        $stok_akhir = $total_masuk - $total_keluar;
+        
+        $data = [
+            'no_batch' => $no_batch,
+            'masuk_list' => $masuk_list,
+            'keluar_list' => $keluar_list,
+            'total_masuk' => $total_masuk,
+            'total_keluar' => $total_keluar,
+            'stok_akhir' => $stok_akhir
+        ];
+        
+        echo json_encode($data);
+    }
 }
