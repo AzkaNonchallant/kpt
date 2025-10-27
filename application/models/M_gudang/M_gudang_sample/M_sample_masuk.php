@@ -302,4 +302,28 @@ class M_sample_masuk extends CI_Model
         $this->db->order_by('sm.tgl_masuk_sample', 'DESC');
         return $this->db->get();
     }
+
+    public function data_barang_keluar2(){
+        $sql = "
+            SELECT 
+    a.*, 
+    b.nama_barang, b.satuan, b.mesh, b.bloom,
+    c.nama_customer
+    FROM tb_sample_masuk a
+    LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
+    LEFT JOIN tb_master_customer c ON a.id_customer = c.id_customer
+    WHERE 
+    b.is_deleted = 0
+    ORDER BY a.kode_sample_in ASC;
+    ";
+            return $this->db->query($sql);
+    }
+
+     public function ambil_surat_jalan2(){
+        $sql = "
+            SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_sample_masuk a
+            LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
+            WHERE a.is_deleted = 0 ORDER BY a.created_at DESC";
+        return $this->db->query($sql);
+    }
 }

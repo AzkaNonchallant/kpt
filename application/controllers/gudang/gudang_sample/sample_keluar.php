@@ -1,6 +1,6 @@
 <!-- <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require_once FCPATH . 'vendor/autoload.php';
 class sample_keluar extends MY_Controller {
 
     function __construct()
@@ -166,4 +166,48 @@ class sample_keluar extends MY_Controller {
         $data = $this->M_admin_sample_keluar->get_po_sample_by_id($id_mkt_po_sample);
         echo json_encode($data);
     }
+
+        public function pdf_surat()
+{   
+
+    if (ob_get_length()) ob_end_clean();
+
+
+    try {
+        // === ⿡ Setting optimal Dompdf ===
+        $options = new \Dompdf\Options();
+        $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 180);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+
+        // === ⿢ Ambil data dari model ===
+        $data['row'] = $this->M_sample_keluar->ambil_surat_jalan2()->row_array();
+        $data['detail'] = $this->M_sample_keluar->data_barang_keluar2()->result_array();
+        // echo json_encode($data['detail']);
+        // === ⿣ Load HTML View ===
+        $html = $this->load->view('laporan/sample_masuk/page_sample_keluar', $data, TRUE);
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'landscape');
+    // if (file_exists($cache)) {
+    //     readfile($cache);
+    //     exit;
+    // }
+    $dompdf->render();
+    // file_put_contents($cache, $dompdf->output());
+    $dompdf->stream("laporan_barang.pdf", ["Attachment" => false]);
+    } 
+    catch (Exception $e) {
+        // Tangani semua error (bukan cuma MpdfException)
+        log_message('error', 'PDF Surat Jalan gagal dibuat: ' . $e->getMessage());
+        echo 'Terjadi kesalahan saat membuat PDF. Coba lagi nanti.';
+}
+}
 } 

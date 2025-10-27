@@ -504,12 +504,8 @@
                             <button class="btn btn-secondary" id="lihat" type="button">
                               <i class="fas fa-eye me-1"></i> Lihat
                             </button>
-                            <button class="btn btn-primary" id="export" type="button">
-                              <i class="fas fa-print me-1"></i> Cetak
-                            </button>
-                            <a href="<?=base_url()?>gudang/sample_masuk" class="btn btn-warning" id="refresh" type="button">
-                              <i class="fas fa-refresh"></i>
-                            </a>
+                          <button class="btn btn-primary" id="export" type="button">Cetak</button>
+                          <a href="<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                           </div>
                         </div>
                       </div>
@@ -531,7 +527,7 @@
                               <th>Kode Sample</th>
                               <th>Nama Barang</th>
                               <th>Nama Customer</th>
-                              <th>ID Barang</th>
+                              <th>No Batch</th>
                               <th class="text-center">Jumlah</th>
                               <th class="text-center">Aksi</th>
                             </tr>
@@ -564,7 +560,7 @@
                                   </td>
                                   <td><?= $row['nama_barang'] ?? '-' ?></td>
                                   <td><?= $row['nama_customer'] ?? '-' ?></td>
-                                  <td><?= $row['id_barang'] ?? '-' ?></td>
+                                  <td><?= $row['no_batch'] ?? '-' ?></td>
                                   <td class="text-center">
                                     <?php 
                                     if (isset($row['jumlah_keluar'])) {
@@ -621,6 +617,51 @@
       </div>
     </div>
   </section>
+
+   <script type="text/javascript">
+  $(document).ready(function() {
+    $('#export').click(function() {
+      var filter_tgl = $('#filter_tgl').val();
+      if (filter_tgl == '') {
+        window.location = "<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat";
+      } else {
+        var url = "<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat" + filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
+        window.open(url, 'gudang/gudang_sample/sample_keluark/', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+      }
+    })
+
+  })
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#lihat').click(function () {
+
+      var filter_sppb = $('#filter_sppb').find(':selected').val();
+      var filter_customer = $('#filter_customer').find(':selected').val();
+      var filter_tgl = $('#filter_tgl').val();
+      var filter_tgl2 = $('#filter_tgl2').val();
+
+      var newFilterTgl = filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
+      var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
+      
+      if (filter_tgl =='' && filter_tgl2 !='') {
+        window.location = "<?=base_url()?>gudang/gudang_sample/sample_masuk?alert=warning&msg=dari tanggal belum diisi";
+      }else if (filter_tgl !='' && filter_tgl2=='') {
+        window.location = "<?=base_url()?>gudang/gudang_sample/sample_masuk?alert=warning&msg=sampai tanggal belum diisi";
+      }else{
+        const query = new URLSearchParams({
+                    nama_customer: filter_customer,
+                    no_sppb: filter_sppb,
+                    date_from: filter_tgl,
+                    date_until: filter_tgl2
+                })
+
+        window.location = "<?=base_url() ?>gudang/gudang_sample/sample_masuk/index?"+ query.toString()
+        
+      }
+    })
+  })
+</script>
 
   <!-- Modal Detail Sample Masuk -->
   <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
