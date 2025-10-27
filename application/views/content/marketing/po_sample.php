@@ -954,6 +954,8 @@
               </div>
             </div>
 
+                  <input type="hidden" id="c-no_batch" name="no_batch">
+
 
             <div class="col-md-4">
               <div class="form-group">
@@ -1055,9 +1057,11 @@
         var kode = selectedOption.data('kode_tf_in');
         var no_batch = selectedOption.data('no_batch');
         var gdg = selectedOption.data('gdg_qty_in');
+        var batch = selectedOption.data('no_batch')
         $('#c-mesh').val(mesh);
         $('#c-bloom').val(bloom);
         $('#c-kode_tf_in').val(kode);
+        $('#c-no_batch').val(batch);
 
         let formattedGdg = gdg ? new Intl.NumberFormat('id-ID').format(gdg) : 0;
         $('#c-gdg_qty_in').val(formattedGdg);

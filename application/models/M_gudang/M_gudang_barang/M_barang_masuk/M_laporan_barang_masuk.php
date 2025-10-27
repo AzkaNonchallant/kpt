@@ -8,23 +8,11 @@ class M_laporan_barang_masuk extends CI_Model {
     function id_user(){
         return $this->session->userdata("id_user");
     }
-    public function get($tgl = null,$tgl2 = null, $batch = null){
-        if ($tgl != null && $tgl2 != null) {
-            $tgl = explode("/", $tgl);
-            $tgl = "$tgl[2]-$tgl[1]-$tgl[0]";
-            $tgl2 = explode("/", $tgl2);
-            $tgl2 = "$tgl2[2]-$tgl2[1]-$tgl2[0]";
-            $where[] = "AND a.tgl >= '$tgl' AND  a.tgl <= '$tgl2'";
-        } else if ($tgl ==null && $tgl2 ==null) {
-                $where[] = "";
-        } else {
-            return array();
-        }
-
-        if ($batch == null) {
+    public function get($id_barang = null){
+        if ($id_barang == null) {
             $where[] = "";
         }  else {
-            $where[] = "AND a.no_batch = '$batch'";
+            $where[] = "AND c.id_barang = '$id_barang'";
         }
 
         $where = implode(" ", $where);

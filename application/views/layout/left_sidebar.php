@@ -229,19 +229,14 @@ $level = $this->session->userdata('level');
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_stok'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_stok/laporan_barang_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stok Barang</span></a>
-                    </li>
-                    <?php endif; ?>
-                    <?php if ($departemen == 'Gudang' || $level == 0) : ?>
-                    <li class="nav-item  <?=$uri == 'laporan_barang_stok'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_stok/laporan_kartu_stok')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Kartu Stok</span></a>
                     </li>
                     <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
-                    <li class="nav-item  <?=$uri == 'laporan_barang_masuk'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_barang/barang_masuk/laporan_barang_masuk')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Barang Masuk</span></a>
+                    <li class="nav-item  <?= $uri == 'laporan_barang_stok' ? 'active' : '' ?>">
+                        <a href="<?= base_url('gudang/gudang_barang/barang_stok/laporan_barang_stok') ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stok Barang</span></a>
                     </li>
-                    <?php endif; ?>
+                <?php endif; ?>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'laporan_barang_keluar'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_barang/barang_keluar/laporan_barang_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Barang Keluar</span></a>

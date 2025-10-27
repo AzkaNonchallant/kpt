@@ -103,7 +103,7 @@ class M_po_sample extends CI_Model {
     $data_gudang = [
         'kode_sample_out' => $kode_tf,
         'id_mkt_po_sample' => $id_po_sample2,
-        // 'gdg_qty_in' => $data['jumlah_po_pembelian'],
+        'no_batch' => $data['no_batch'],
         'created_at' => date('Y-m-d H:i:s'),
         'created_by' => $id_user
         ];

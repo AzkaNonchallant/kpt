@@ -82,6 +82,7 @@ class po_sample extends MY_Controller {
         $data['jumlah_po_sample'] = str_replace('.', '', $data['jumlah_po_sample']); // Hapus titik pemisah ribuan
         $data['ket_po_sample'] = $this->input->post('ket_po_sample',TRUE);
         $data['mkt_admin'] = $this->input->post('mkt_admin',TRUE);
+        $data['no_batch'] = $this->input->post('no_batch', TRUE);
 
         $respon = $this->M_po_sample->add2($data);
 
