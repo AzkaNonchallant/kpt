@@ -703,6 +703,7 @@ $(document).ready(function() {
           <td>` + data[i].pic_supplier + `</td>
           
           <td>` + data[i].jumlah + `</td>
+          
           <td>` + data[i].harga_perunit + `</td>
           
           
