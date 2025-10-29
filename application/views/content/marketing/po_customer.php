@@ -542,6 +542,7 @@
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
                                                                   data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                  data-tgl_tempo="<?=$k['tgl_batas_waktu']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
                                                                   <i class="feather icon-eye"></i>Detail
@@ -569,6 +570,7 @@
                                                                   data-harga_po="<?=$k['harga_po_customer']?>"
                                                                   data-keterangan="<?=$k['keterangan_po_customer']?>"
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                  data-tgl_batas_waktu="<?=$k['tgl_batas_waktu']?>"
                                                                   data-mkt_admin="<?=$k['mkt_admin']?>"
                                                                 >
                                                                   <i class="feather icon-edit-2"></i>Edit
@@ -691,7 +693,7 @@
                     <label for="tgl_po">Tanggal PO</label>
                         <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" required>
                 </div>
-          </div>
+            </div>
 
           <div class="col-md-4">
                   <div class="form-group">
@@ -795,6 +797,14 @@
                   </select>
               </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="tgl_po">Tanggal Jatuh Tempo</label>
+                        <input type="text" class="form-control datepicker" id="tgl_tempo" name="tgl_batas_waktu"  placeholder="Tanggal Jatuh Tempo" autocomplete="off" required>
+                </div>
+            </div>
+
 
             <div class="col-md-4">
                   <div class="form-group">
@@ -1020,6 +1030,15 @@
                       <input type="text" class="form-control" id="v-jenis_pembayaran" name="jenis_pembayaran" autocomplete="off" readonly>
                   </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tgl_po">Tanggal Jatuh Tempo</label>
+                        <input type="text" class="form-control datepicker" id="v-tgl_tempo" name="tgl_po"  placeholder="Tanggal PO" autocomplete="off" readonly>
+                </div>
+            </div>
+
+
             <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Marketing Admin</label>
@@ -1070,7 +1089,9 @@ $(document).ready(function() {
   var harga_po = $(event.relatedTarget).data('harga_po') 
   var keterangan = $(event.relatedTarget).data('keterangan')
   var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
+  var tgl_batas_waktu = $(event.relatedTarget).data('tgl_tempo')
   var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
+
   
   
   $(this).find('#v-mkt_po_customer').val(id_mkt_po_customer)
@@ -1086,6 +1107,7 @@ $(document).ready(function() {
   $(this).find('#v-harga_po').val(formatRupiah(harga_po.toString()))
   $(this).find('#v-keterangan').val(keterangan)
   $(this).find('#v-jenis_pembayaran').val(jenis_pembayaran)
+  $(this).find('#v-tgl_tempo').val(tgl_batas_waktu)
   $(this).find('#v-jenis_pembayaran').trigger("chosen:updated");
   $(this).find('#v-mkt_admin').val(mkt_admin)
   let total = parseInt(jumlah_po) * parseInt(harga_po);
@@ -1110,7 +1132,7 @@ $(document).ready(function() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="<?=base_url()?>marketing/po_customer/update">
+      <form method="post" id="form-e" action="<?=base_url()?>marketing/po_customer/update">
       <div class="modal-body">
       <input type="hidden" id="e-id_mkt_po_customer" name="id_mkt_po_customer">
         
@@ -1218,6 +1240,13 @@ $(document).ready(function() {
               </div>
             </div>
 
+             <div class="col-md-6">
+              <div class="form-group">
+                <label for="tgl_batas_waktu">Tanggal Jatuh Tempo</label>
+                  <input type="text" class="form-control datepicker" id="e-tgl_batas_waktu" name="tgl_batas_waktu"  placeholder="Tanggal Jatuh Tempo" autocomplete="off" required>
+              </div>
+            </div>
+
              
 
             <div class="col-md-6">
@@ -1256,10 +1285,15 @@ $(document).ready(function() {
     }
     return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
   }
+  function unformatRupiah(rupiah) {
+      if (!rupiah) return 0;
+      return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+    }
 
   // Saat modal EDIT ditampilkan
   $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
+
 
     // Ambil data dari tombol trigger
     var id_mkt_po_customer = button.data('id_mkt_po_customer');
@@ -1273,6 +1307,7 @@ $(document).ready(function() {
     var harga_po = button.data('harga_po');
     var keterangan = button.data('keterangan');
     var jenis_pembayaran = button.data('jenis_pembayaran');
+    var tgl_batas_waktu = button.data('tgl_batas_waktu')
     var mkt_admin = button.data('mkt_admin');
 
     // Isi data ke form edit
@@ -1287,6 +1322,7 @@ $(document).ready(function() {
     modal.find('#e-jumlah_po').val(formatRupiah(jumlah_po.toString()));
     modal.find('#e-harga_po').val(formatRupiah(harga_po.toString()));
     modal.find('#e-keterangan').val(keterangan);
+    modal.find('#e-tgl_batas_waktu').val(tgl_batas_waktu);
     modal.find('#e-jenis_pembayaran').val(jenis_pembayaran).trigger("chosen:updated");
     modal.find('#e-mkt_admin').val(mkt_admin);
 
@@ -1295,8 +1331,12 @@ $(document).ready(function() {
     modal.find('#e-total_harga').val(formatRupiah(total));
 
     // Jalankan datepicker aman
-    modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
-      e.stopPropagation();
+    modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(event) {
+      event.stopPropagation();
+    });
+
+    modal.find('#e-tgl_batas_waktu').datepicker().on('show.bs.modal', function(event) {
+      event.stopPropagation();
     });
 
     // Cek No PO agar tidak duplikat
@@ -1343,6 +1383,16 @@ $(document).ready(function() {
       $("#e-total_harga").val(formatRupiah(total));
     });
   });
+
+  $('#form-e').on('submit', function(e) {
+        // Ambil nilai aslinya (tanpa format)
+        const jumlah_po = unformatRupiah($('#e-jumlah_po').val());
+        const harga_po = unformatRupiah($('#e-harga_po').val());
+        // Ubah isi input ke integer agar dikirim bersih ke backend
+        $('#e-jumlah_po').val(jumlah_po);
+        $('#e-harga_po').val(harga_po);
+        // Setelah ini form dikirim secara normal
+      });
 });
 </script>
 

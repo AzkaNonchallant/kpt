@@ -59,10 +59,51 @@ class M_po_customer extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-        INSERT INTO tb_mkt_po_customer(no_po_customer, tgl_po_customer, id_customer, id_barang,kode_tf_in, jumlah_po_customer, harga_po_customer, jenis_pembayaran_customer, keterangan_po_customer ,invoice,mkt_admin,created_at, created_by, updated_at, updated_by, is_deleted) 
-        VALUES ('$data[no_po]','$data[tgl_po]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po]','$data[harga_po]','$data[jenis_pembayaran]','$data[keterangan]' ,'Belum','$data[mkt_admin]', NOW(),'$id_user','0000-00-00 00:00:00','','0')
+        INSERT INTO tb_mkt_po_customer(no_po_customer, tgl_po_customer, id_customer, id_barang,kode_tf_in, jumlah_po_customer, harga_po_customer, jenis_pembayaran_customer,tgl_batas_waktu ,keterangan_po_customer ,invoice,mkt_admin,created_at, created_by, updated_at, updated_by, is_deleted) 
+        VALUES ('$data[no_po]','$data[tgl_po]','$data[id_customer]','$data[id_barang]','$data[kode_tf_in]','$data[jumlah_po]','$data[harga_po]','$data[jenis_pembayaran]','$data[tgl_batas_waktu]','$data[keterangan]' ,'Belum','$data[mkt_admin]', NOW(),'$id_user','0000-00-00 00:00:00','','0')
         ";
+
+
         return $this->db->query($sql);
+
+
+    //      // ambil last insert id dari PO Pembelian
+    // $id_po_customer = $this->db->insert_id();
+
+    // // ======================
+    // // 2. Generate kode TFIN berurutan
+    // // ======================
+    // $this->db->select('no_sppb');
+    // $this->db->from('tb_mkt_sppb');
+    // $this->db->like('no_sppb', 'SPPB-', 'after');
+    // $this->db->order_by('id_mkt_sppb', 'DESC'); // pakai id biar aman
+    // $this->db->limit(1);
+    // $query = $this->db->get();
+
+    // if ($query->num_rows() > 0) {
+    //     $lastKode = $query->row()->kode_tf_in;
+    //     $lastNumber = (int) str_replace('SPPB-', '', $lastKode);
+    //     $newNumber = $lastNumber + 1;
+    // } else {
+    //     $newNumber = 1; // kalau belum ada data
+    // }
+
+    // $kode_tf = 'SPPB-' . $newNumber;
+
+    // // ======================
+    // // 3. Insert ke tb_gudang_barang_masuk
+    // // ======================
+    // $data_gudang = [
+    //     'no_sppb' => $kode_tf,
+    //     'id_mkt_po_customer' => $id_po_customer,
+    //     // 'gdg_qty_in' => $data['jumlah_po_pembelian'],
+    //     'created_at' => date('Y-m-d H:i:s'),
+    //     'created_by' => $id_user
+    // ];
+
+    // $this->db->insert('tb_mkt_sppb', $data_gudang);
+
+    // return true;
     }
     
     public function update($data)
@@ -70,7 +111,7 @@ class M_po_customer extends CI_Model {
         $id_user = $this->id_user();
         $sql = "
             UPDATE tb_mkt_po_customer 
-            SET no_po_customer='$data[no_po]',tgl_po_customer='$data[tgl_po]',id_customer='$data[id_customer]',id_barang='$data[id_barang]',jumlah_po_customer='$data[jumlah_po]',harga_po_customer='$data[harga_po]',keterangan_po_customer='$data[keterangan]',jenis_pembayaran_customer='$data[jenis_pembayaran]',mkt_admin='$data[mkt_admin]',updated_at=NOW(),updated_by='$id_user' 
+            SET no_po_customer='$data[no_po]',tgl_po_customer='$data[tgl_po]',id_customer='$data[id_customer]',id_barang='$data[id_barang]',jumlah_po_customer='$data[jumlah_po]',harga_po_customer='$data[harga_po]',keterangan_po_customer='$data[keterangan]',jenis_pembayaran_customer='$data[jenis_pembayaran]',tgl_batas_waktu='$data[tgl_batas_waktu]',mkt_admin='$data[mkt_admin]',updated_at=NOW(),updated_by='$id_user' 
             WHERE id_mkt_po_customer='$data[id_mkt_po_customer]'
         ";
         return $this->db->query($sql);

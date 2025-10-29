@@ -147,10 +147,9 @@
 
     .image {
       position: absolute;
-      bottom: 0;
+      bottom: -50px;
       left: 0;
       width: 100%;
-      height: auto;
       z-index: -100;
       /* opacity: 0.5; */
     }
@@ -298,7 +297,7 @@
     <br>
     <br>
     <br>
-    <p style="font-size:12px; margin-top:10px; text-align:center; ">
+    <p style="font-size:12px; margin-top:5px; text-align:center; ">
       <i>Pengembalian dan penukaran barang maksimum 7 hari setelah barang diterima</i>
     </p>
   </div>

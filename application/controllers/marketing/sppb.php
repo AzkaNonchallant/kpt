@@ -115,17 +115,17 @@ class sppb extends MY_Controller {
         }
     }
 
-    public function pdf_sppb_gudang($no_sppb = null)
-    {
-        $no_sppb = str_replace("--", "/", $no_sppb);
-        $mpdf = new \Mpdf\Mpdf();
+    // public function pdf_sppb_gudang($no_sppb = null)
+    // {
+    //     $no_sppb = str_replace("--", "/", $no_sppb);
+    //     $mpdf = new \Mpdf\Mpdf();
 
-        $data['detail'] = $this->M_sppb->ambil_detail($no_sppb)->result_array();
+    //     $data['detail'] = $this->M_sppb->ambil_detail($no_sppb)->result_array();
 
-        $d = $this->load->view('content/marketing/pdf/pdf_sppb_gudang', $data, TRUE);
-        $mpdf->AddPage("P", "", "", "", "", "15", "15", "5", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/marketing/pdf/pdf_sppb_gudang', $data, TRUE);
+    //     $mpdf->AddPage("P", "", "", "", "", "15", "15", "5", "15", "", "", "", "", "", "", "", "", "", "", "", "A4");
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
 
 }
