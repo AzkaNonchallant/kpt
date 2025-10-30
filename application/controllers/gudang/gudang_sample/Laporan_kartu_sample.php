@@ -4,14 +4,14 @@ use Dompdf\Dompdf;
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once FCPATH . 'vendor/autoload.php'; 
-class Laporan_kartu_stok extends MY_Controller {
+class Laporan_kartu_sample extends MY_Controller {
 
 	function __construct()
     {
         parent::__construct();
         // check_not_login();
         $this->load->model('M_master/M_master_barang');
-        $this->load->model('M_gudang/M_gudang_barang/M_barang_stok/M_laporan_kartu_stok');
+        $this->load->model('M_gudang/M_gudang_sample/M_laporan_kartu_sample');
 
     }
 
@@ -27,27 +27,29 @@ class Laporan_kartu_stok extends MY_Controller {
         for($i=0; $i<count($data['result']);$i++){
             $d['id_barang'] = $data['result'][$i]['id_barang'];
             $d['tgl'] = $tgl_sebelum;
-            $jml_barang_masuk = $this->M_laporan_kartu_stok->jml_barang_masuk($d)->row_array();
-            $jml_barang_keluar = $this->M_laporan_kartu_stok->jml_barang_keluar2($d)->row_array();
+            $jml_barang_masuk = $this->M_laporan_kartu_sample->jml_sample_masuk($d)->row_array();
+            $jml_barang_keluar = $this->M_laporan_kartu_sample->jml_sample_keluar2($d)->row_array();
+
 
             // $data['result'][$i]['masuk']=$jml_barang_masuk['tot_barang_masuk'];
             // $data['result'][$i]['keluar']=$jml_barang_keluar['tot_barang_keluar'];
-            $data['result'][$i]['stok']=$jml_barang_masuk['tot_barang_masuk']-$jml_barang_keluar['tot_barang_keluar'];
+            $data['result'][$i]['stok']=$jml_barang_masuk['tot_sample_masuk']-$jml_barang_keluar['tot_sample_keluar'];
 
             $d['tgl1'] = $tgl;
             $d['tgl2'] = $tgl2;
-            $jml_barang_masuk_setelah = $this->M_laporan_kartu_stok->jml_barang_masuk_setelah($d)->row_array();
-            $jml_barang_keluar_setelah = $this->M_laporan_kartu_stok->jml_barang_keluar_setelah($d)->row_array();
+            $jml_barang_masuk_setelah = $this->M_laporan_kartu_sample->jml_sample_masuk_setelah($d)->row_array();
+            $jml_barang_keluar_setelah = $this->M_laporan_kartu_sample->jml_sample_keluar_setelah($d)->row_array();
+
 
             // print_r($jml_barang_masuk_setelah);
-            $data['result'][$i]['masuk']=$jml_barang_masuk_setelah['tot_barang_masuk'];
-            $data['result'][$i]['keluar']=$jml_barang_keluar_setelah['tot_barang_keluar'];
+            $data['result'][$i]['masuk']=$jml_barang_masuk_setelah['tot_sample_masuk'];
+            $data['result'][$i]['keluar']=$jml_barang_keluar_setelah['tot_sample_keluar'];
 
         }
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;
         
-		$this->template->load('template', 'content/gudang/gudang_barang/barang_stok/laporan_kartu_stok',$data);
+		$this->template->load('template', 'content/gudang/gudang_sample/laporan_kartu_sample_data',$data);
         // print_r($data);
 
 	}
@@ -76,16 +78,16 @@ public function pdf_laporan_kartu_stok($tgl = null, $tgl2 = null)
         $d['id_barang'] = $data['result'][$i]['id_barang'];
         $d['tgl'] = $tgl_sebelum;
 
-        $jml_barang_masuk = $this->M_laporan_kartu_stok->jml_barang_masuk($d)->row_array();
-        $jml_barang_keluar = $this->M_laporan_kartu_stok->jml_barang_keluar2($d)->row_array();
+        $jml_barang_masuk = $this->M_laporan_kartu_sample->jml_barang_masuk($d)->row_array();
+        $jml_barang_keluar = $this->M_laporan_kartu_sample->jml_barang_keluar2($d)->row_array();
 
         $data['result'][$i]['stok'] = $jml_barang_masuk['tot_barang_masuk'] - $jml_barang_keluar['tot_barang_keluar'];
 
         $d['tgl1'] = $tgl;
         $d['tgl2'] = $tgl2;
 
-        $jml_barang_masuk_setelah = $this->M_laporan_kartu_stok->jml_barang_masuk_setelah($d)->row_array();
-        $jml_barang_keluar_setelah = $this->M_laporan_kartu_stok->jml_barang_keluar_setelah($d)->row_array();
+        $jml_barang_masuk_setelah = $this->M_laporan_kartu_sample->jml_barang_masuk_setelah($d)->row_array();
+        $jml_barang_keluar_setelah = $this->M_laporan_kartu_sample->jml_barang_keluar_setelah($d)->row_array();
 
         $data['result'][$i]['masuk'] = $jml_barang_masuk_setelah['tot_barang_masuk'];
         $data['result'][$i]['keluar'] = $jml_barang_keluar_setelah['tot_barang_keluar'];

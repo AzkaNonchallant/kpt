@@ -1,5 +1,9 @@
 <?php
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once FCPATH . 'vendor/autoload.php';
 
 class Sample_stock extends MY_Controller {
 
@@ -93,4 +97,33 @@ class Sample_stock extends MY_Controller {
         
         echo json_encode($data);
     }
+
+public function pdf_stock_sample()
+{
+    // --- Inisialisasi Dompdf ---
+    require_once FCPATH . 'vendor/autoload.php'; 
+
+    $options = new Options();
+    $options->set('isRemoteEnabled', true);
+    $dompdf = new Dompdf($options);
+
+    // --- Ambil data stok ---
+    $data['result'] = $this->get_stock_by_batch();
+
+    // --- Load view HTML untuk PDF ---
+    $html = $this->load->view('laporan/sample_stock/page_stock_sample_pdf', $data, TRUE);
+
+    // --- Generate PDF ---
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape'); // landscape biar tabel muat lebar
+    $dompdf->render();
+
+    // --- Tambah footer halaman ---
+    $canvas = $dompdf->getCanvas();
+    $canvas->page_text(770, 570, "Halaman {PAGE_NUM}", null, 8, array(0,0,0));
+
+    // --- Output ke browser ---
+    $dompdf->stream("laporan_stock_sample.pdf", array("Attachment" => false));
+}
+
 }

@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
+
 
 class Master_customer extends MY_Controller {
 
@@ -78,17 +80,59 @@ class Master_customer extends MY_Controller {
         }
     }
 
-    public function pdf_customer_list()
-    {
-        $mpdf = new \Mpdf\Mpdf();
+    // public function pdf_customer_list()
+    // {
+    //     $mpdf = new \Mpdf\Mpdf();
 
-        $data['result'] = $this->M_master_customer->get()->result_array();
+    //     $data['result'] = $this->M_master_customer->get()->result_array();
 
-        $d = $this->load->view('content/master/master_customer/pdf_customer_list', $data, TRUE);
-        $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-        $mpdf->setFooter('Halaman {PAGENO}');
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/master/master_customer/pdf_customer_list', $data, TRUE);
+    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
+    //     $mpdf->setFooter('Halaman {PAGENO}');
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
+
+
+public function pdf_customer_list()
+{
+    // 1️⃣ Inisialisasi Dompdf
+    $options = new Dompdf\Options();
+    $options->set('isHtml5ParserEnabled', true);
+    // $options->set('isRemoteEnabled', true); // biar bisa load gambar/logo
+    $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 99);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+        $dompdf = new Dompdf\Dompdf($options);
+
+    // 2️⃣ Ambil data dari model
+    $data['result'] = $this->M_master_customer->get()->result_array();
+
+    // 3️⃣ Render view ke HTML string
+    $html = $this->load->view('content/master/master_customer/pdf_customer_list', $data, TRUE);
+
+    // 4️⃣ Set ukuran halaman (A4 potrait)
+    $dompdf->setPaper('A4', 'landscape');
+
+    // 5️⃣ Load HTML ke Dompdf
+    $dompdf->loadHtml($html);
+
+    // 6️⃣ Render HTML jadi PDF
+    $dompdf->render();
+
+    // // 7️⃣ Tambahkan nomor halaman di footer
+    // $canvas = $dompdf->getCanvas();
+    // $font = $dompdf->getFontMetrics()->get_font("helvetica", "normal");
+    // $canvas->page_text(520, 820, "Halaman {PAGE_NUM} dari {PAGE_COUNT}", $font, 9, [0, 0, 0]);
+
+    // 8️⃣ Output ke browser
+    $dompdf->stream("Customer_List.pdf", ["Attachment" => false]);
+}
+
 
 }

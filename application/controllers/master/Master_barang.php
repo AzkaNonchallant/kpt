@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+    require_once FCPATH . 'vendor/autoload.php';
+
 
 class Master_barang extends MY_Controller {
 
@@ -92,6 +94,50 @@ class Master_barang extends MY_Controller {
     //     $mpdf->WriteHTML($d);
     //     $mpdf->Output();
     // }
+
+
+public function pdf_daftar_barang()
+{
+    // 1️⃣ Load library Dompdf
+    
+    // 2️⃣ Konfigurasi dasar Dompdf
+    $options = new Dompdf\Options();
+    $options->set('isHtml5ParserEnabled', true);
+    // $options->set('isRemoteEnabled', true); // biar bisa load gambar/logo
+    $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 99);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+    $dompdf = new Dompdf\Dompdf($options);
+
+    // 3️⃣ Ambil data dari model
+    $data['result'] = $this->M_master_barang->get()->result_array();
+
+    // 4️⃣ Render tampilan HTML ke string
+    $html = $this->load->view('content/master/master_barang/pdf_daftar_barang', $data, TRUE);
+
+    // 5️⃣ Load HTML ke Dompdf
+    $dompdf->loadHtml($html);
+
+    // 6️⃣ Set ukuran dan orientasi halaman (P = Portrait)
+    $dompdf->setPaper('A4', 'landscape');
+
+    // 7️⃣ Render ke PDF
+    $dompdf->render();
+
+    // 8️⃣ Tambah nomor halaman (footer seperti mPDF)
+    // $canvas = $dompdf->getCanvas();
+    // $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+    // $canvas->page_text(520, 820, "Halaman {PAGE_NUM}", $font, 9, array(0, 0, 0));
+
+    // 9️⃣ Output PDF ke browser
+    $dompdf->stream("daftar_barang.pdf", array("Attachment" => false));
+}
+
 
 
 }

@@ -66,6 +66,7 @@ class M_sppb extends CI_Model {
         $data_gudang = [
             'kode_tf_out' => $kode_tf_out,
             'id_mkt_sppb' => $id_mkt_sppb,
+            'gdg_qty_out' => $data['jumlah_kirim']
         ];
         $this->db->insert('tb_gudang_barang_keluar', $data_gudang);
         return TRUE;

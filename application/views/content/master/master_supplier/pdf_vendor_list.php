@@ -1,101 +1,178 @@
 <html>
 
 <head>
-
-  <title>Export Laporan Stok Barang</title>
+  <title>Vendor List</title>
   <style type="text/css">
-  body{
-    font-family: sans-serif;
-  }
-  table{
-    width: 100%;
-    margin: 20px auto;
-    border-collapse: collapse;
-  }
-  table th,
-  table td{
-    border: 1px solid #3c3c3c;
-    padding: 3px 8px;
-  }
-  table td{
-    vertical-align: top;
-  }
-  a{
-    background: blue;
-    color: #fff;
-    padding: 8px 10px;
-    text-decoration: none;
-    border-radius: 2px;
-  }
-  .hh tr td{
-    border: 0;
-    padding: 0
-  }
-  .hh{
-    margin-bottom: 2px;
-  }
+    @page {
+      margin: 40px 25px;
+    }
+
+    body {
+      font-family: "DejaVu Sans", Arial, sans-serif;
+      font-size: 12px;
+      color: #333;
+    }
+
+    /* Header perusahaan (pakai tabel biar stabil di PDF) */
+    .header-table {
+      width: 100%;
+      border-bottom: 2px solid #000;
+      margin-bottom: 20px;
+    }
+
+    .header-table td {
+      vertical-align: middle;
+      text-align: center;
+      border: none;
+    }
+
+    .header-table .logo-left img,
+    .header-table .logo-right img {
+      width: 85px;
+      height: auto;
+    }
+
+    .header-table .company-info {
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .company-info h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .company-info h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+    .company-info p {
+      margin: 2px 0;
+      font-size: 11px;
+      color: #444;
+    }
+
+    /* Judul laporan */
+    .judul {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .judul h3 {
+      display: inline-block;
+      border-bottom: 2px solid #000;
+      padding-bottom: 3px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tabel utama */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table th {
+      background: #1d3b74;
+      color: #fff;
+      padding: 8px;
+      border: 1px solid #000;
+      font-weight: bold;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    table td {
+      border: 1px solid #555;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-left {
+      text-align: left;
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10px;
+      color: #555;
+    }
   </style>
 </head>
-<body>
-    <table class="hh">
-      <tr>
-        <td>
-          
-        </td>
-        <td style="text-align: center;padding-center: -20px;">
-          <?php $src = base_url('assets/images/icon.png'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 60px;height: 100px;" src="<?=$src?>">
-        </td>
-        <td style="width: 460px;">
-    <h2 style="line-height: 0.01; font-size: 30px;">PT KAPSULINDO NUSANTARA</h2>
-    <h3 style="line-height: 0.01; font-size: 23px;">Pedagang Besar Bahan Baku Farmasi</h3>
-    <p style="line-height: 0.01;font-size: 12px;">Jl. Pancasila 1 Cicadas Gunung Putrri - Kab. Bogor 16964, Indonesia</p>
-    <p style="line-height: 0.01;font-size: 12px;">Tlp:(021) 8671165. Fax:(021) 8671168,86861734. Email: pbbbf@kapsulindo.co.id</p>
-        </td>
-        <td style="padding-center:-10px; ">
-          <?php $src = base_url('assets/images/pom.jpeg'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 120px;height: 100px;" src="<?=$src?>">
-        </td>
 
-      </tr>
-    </table>
-  
-    <hr style="line-height: 0.01;">
-  <div style="text-align: center;padding-top: 5px;">
-    <h3 style="float: center;line-height: 0.2;">Vendor List</h3>
+<body>
+
+  <!-- HEADER (pakai tabel supaya stabil di PDF) -->
+  <table class="header-table">
+    <tr>
+      <td class="logo-left" style="width: 100px;">
+        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" alt="Logo Kapsulindo">
+      </td>
+      <td class="company-info">
+        <h2>PT KAPSULINDO NUSANTARA</h2>
+        <h3>Pedagang Besar Bahan Baku Farmasi</h3>
+        <p>Jl. Pancasila 1, Cicadas Gunung Putri - Kab. Bogor 16964, Indonesia</p>
+        <p>Telp: (021) 8671165 | Fax: (021) 8671168, 86861734 | Email: pbbbf@kapsulindo.co.id</p>
+      </td>
+      <td class="logo-right" style="width: 100px;">
+        <img src="<?= FCPATH . 'assets/images/pom.jpeg' ?>" alt="Logo BPOM">
+      </td>
+    </tr>
+  </table>
+
+  <!-- JUDUL -->
+  <div class="judul">
+    <h3>Vendor List</h3>
   </div>
 
-    
-    
-  
+  <!-- TABEL -->
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%;">#</th>
+        <th style="width:20%;">Kode Supplier</th>
+        <th style="width:30%;">Nama Supplier</th>
+        <th style="width:45%;">Alamat Supplier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $no = 1;
+      foreach ($result as $k) { ?>
+        <tr>
+          <td class="text-center"><?= $no++ ?></td>
+          <td class="text-center"><?= $k['kode_supplier'] ?></td>
+          <td class="text-left"><?= strtoupper($k['nama_supplier']) ?></td>
+          <td class="text-left"><?= ucfirst($k['alamat_supplier']) ?></td>
+        </tr>
+      <?php } ?>
+    </tbody>
+  </table>
 
-                                                <table style="width: 1000px;font-size: 18px;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Kode Supplier</th>
-                                                            <th>Nama Supplier</th>
-                                                            <th class="text-right">Alamat Supplier</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <?php 
-                                                      $no=1;
-                                                      foreach($result as $k){ 
-                                                      ?>
-                                                      <tr>
-                                                            <th scope="row"><?=$no++?></th>
-                                                            <td><?=$k['kode_supplier']?></td>
-                                                            <td><?=$k['nama_supplier']?></td>
-                                                            <td><?=$k['alamat_supplier']?></td>
-                                                        </tr>
-                                                      <?php
-                                                      }
-                                                      ?>
-                                                    </tbody>
-                                                </table>
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Dicetak otomatis oleh sistem | <?= date('d/m/Y H:i:s') ?></p>
+  </div>
 
-  </body>
+</body>
+
 </html>

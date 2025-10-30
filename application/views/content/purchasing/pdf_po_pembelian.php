@@ -4,185 +4,220 @@
   <meta charset="UTF-8">
   <title>Laporan PO Pembelian</title>
   <style>
+    @page {
+      margin: 35px 25px;
+    }
+
     * {
       font-family: "DejaVu Sans", sans-serif;
       box-sizing: border-box;
     }
+
     body {
       font-size: 11pt;
-      margin: 15px;
+      margin: 0;
       color: #000;
     }
 
-    /* HEADER */
+    /* === HEADER === */
     .header-table {
       width: 100%;
+      border-bottom: 2px solid #000;
+      margin-bottom: 15px;
       border-collapse: collapse;
-      margin-bottom: 10px;
     }
+
     .header-table td {
       border: none;
       vertical-align: middle;
+      text-align: center;
       padding: 0;
     }
+
+    .header-table img {
+      width: 85px;
+      height: auto;
+    }
+
     .company-info h2 {
       font-size: 18pt;
       margin: 0;
-      padding: 0;
       line-height: 1.2;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
+
     .company-info h3 {
-      font-size: 13pt;
+      font-size: 12pt;
       margin: 0;
-      padding: 0;
+      font-weight: normal;
       line-height: 1.2;
     }
+
     .company-info p {
       font-size: 9pt;
-      margin: 0;
-      line-height: 1.3;
+      margin: 2px 0;
+      line-height: 1.4;
     }
 
     hr {
       border: 1px solid #000;
-      margin: 5px 0 15px 0;
+      margin: 0 0 15px 0;
     }
 
-    /* TITLE */
+    /* === TITLE === */
     .title {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
+
     .title h3 {
       font-size: 14pt;
-      margin-bottom: 2px;
+      margin: 0;
+      text-transform: uppercase;
+      border-bottom: 2px solid #000;
+      display: inline-block;
+      padding-bottom: 3px;
+      letter-spacing: 0.5px;
     }
+
     .title p {
       font-size: 10pt;
-      margin: 0;
+      margin: 3px 0;
     }
 
-    /* FILTER INFO */
-    .filter-table {
-      margin: 0 auto 10px auto;
-      width: 60%;
-      border: none;
+    /* === FILTER INFO === */
+    .filter p {
+      text-align: center;
       font-size: 10pt;
-    }
-    .filter-table td {
-      border: none;
-      text-align: left;
-      padding: 2px 5px;
+      margin: 2px 0;
     }
 
-    /* MAIN TABLE */
+    /* === MAIN TABLE === */
     table.main {
       width: 100%;
       border-collapse: collapse;
       font-size: 10pt;
       margin-top: 10px;
     }
+
     table.main th {
-      background: #f2f2f2;
-      border: 1px solid #555;
+      background: #1d3b74;
+      color: #fff;
+      border: 1px solid #000;
       text-align: center;
       padding: 6px;
       font-weight: bold;
     }
+
     table.main td {
       border: 1px solid #555;
-      padding: 6px;
+      padding: 6px 8px;
       vertical-align: top;
     }
 
-    /* FOOTER */
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-left { text-align: left; }
+
+    /* === FOOTER === */
     footer {
       position: fixed;
-      bottom: 0;
+      bottom: 10px;
       left: 0;
       right: 0;
-      text-align: right;
+      text-align: center;
       font-size: 9pt;
+      color: #444;
       border-top: 1px solid #aaa;
       padding-top: 3px;
     }
   </style>
 </head>
+
 <body>
 
   <!-- HEADER -->
   <table class="header-table">
     <tr>
-      <td style="width: 15%;">
-        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg'?>" style="width: 70px; height: 90px;">
+      <td style="width: 100px; text-align: left;">
+        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" alt="Logo Kapsulindo">
       </td>
-      <td class="company-info" style="width: 70%; text-align: center;">
+      <td class="company-info" style="width: auto;">
         <h2>PT KAPSULINDO NUSANTARA</h2>
         <h3>Pedagang Besar Bahan Baku Farmasi</h3>
-        <p>Jl. Pancasila 1 Cicadas Gunung Putri - Kab. Bogor 16964, Indonesia</p>
-        <p>Tlp:(021) 8671165 | Fax:(021) 8671168 | Email: pbbbf@kapsulindo.co.id</p>
+        <p>Jl. Pancasila 1, Cicadas Gunung Putri - Kab. Bogor 16964, Indonesia</p>
+        <p>Telp: (021) 8671165 | Fax: (021) 8671168 | Email: pbbbf@kapsulindo.co.id</p>
       </td>
-      <td style="width: 15%; text-align: right;">
-        <img src="<?= FCPATH . 'assets/images/pom.jpeg'?>" style="width: 100px; height: 90px;">
+      <td style="width: 100px; text-align: right;">
+        <img src="<?= FCPATH . 'assets/images/pom.jpeg' ?>" alt="Logo BPOM">
       </td>
     </tr>
   </table>
 
-  <hr>
-
   <!-- TITLE -->
   <div class="title">
     <h3>PO PEMBELIAN</h3>
-    <br>
+  </div>
+
+  <!-- FILTER INFO -->
+  <div class="filter">
     <?php if(!empty($tgl) && !empty($tgl2)) : ?>
       <p>Periode : <?= $tgl ?> - <?= $tgl2 ?></p>
     <?php endif; ?>
-    
+
     <?php if(!empty($nama_barang)) : ?>
       <p>Barang : <?= $nama_barang ?></p>
-      <?php endif; ?>
-      
-      <?php if(!empty($nama_supplier)) : ?>
-        <p>Supplier : <?= $nama_supplier ?></p>
-        <?php endif; ?>
+    <?php endif; ?>
 
-
+    <?php if(!empty($nama_supplier)) : ?>
+      <p>Supplier : <?= $nama_supplier ?></p>
+    <?php endif; ?>
   </div>
 
   <!-- MAIN TABLE -->
-   
+   <?php  if(!empty($result)) : ?>
   <table class="main">
     <thead>
       <tr>
-        <th style="width: 30px;">#</th>
-        <th>No PO</th>
-        <th>Nama Barang</th>
-        <th>Mesh</th>
-        <th>Bloom</th>
-        <th>Supplier</th>
-        <th>Jumlah</th>
-        <th>Harga</th>
+        <th style="width:4%;">#</th>
+        <th style="width:12%;">No PO</th>
+        <th style="width:26%;">Nama Barang</th>
+        <th style="width:8%;">Mesh</th>
+        <th style="width:8%;">Bloom</th>
+        <th style="width:20%;">Supplier</th>
+        <th style="width:10%;">Jumlah</th>
+        <th style="width:12%;">Harga</th>
       </tr>
     </thead>
     <tbody>
       <?php $no = 1; foreach($result as $k): ?>
         <tr>
-          <td style="text-align:center;"><?= $no++ ?></td>
-          <td><?= $k['no_po_pembelian'] ?></td>
-          <td><?= $k['nama_barang'] ?></td>
-          <td style="text-align:center;"><?= $k['mesh'] ?></td>
-          <td style="text-align:center;"><?= $k['bloom'] ?></td>
-          <td><?= $k['nama_supplier'] ?></td>
-          <td style="text-align:right;"><?= number_format($k['jumlah_po_pembelian'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
-          <td style="text-align:right;">Rp <?= number_format($k['harga_po_pembelian'], 0, ",", ".") ?></td>
+          <td class="text-center"><?= $no++ ?></td>
+          <td class="text-left"><?= $k['no_po_pembelian'] ?></td>
+          <td class="text-left"><?= strtoupper($k['nama_barang']) ?></td>
+          <td class="text-center"><?= $k['mesh'] ?></td>
+          <td class="text-center"><?= $k['bloom'] ?></td>
+          <td class="text-left"><?= strtoupper($k['nama_supplier']) ?></td>
+          <td class="text-right"><?= number_format($k['jumlah_po_pembelian'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
+          <td class="text-right">Rp <?= number_format($k['harga_po_pembelian'], 0, ",", ".") ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
 
+  <?php endif; ?>
+  <?php if(empty($result)) : ?>
+
+    <center><h2>Data Kosong</h2></center>
+    <?php endif; ?>
   <!-- FOOTER -->
   <footer>
-    <!-- Halaman {PAGE_NUM} dari {PAGE_COUNT} -->
+    Dicetak otomatis oleh sistem | <?= date('d/m/Y H:i:s') ?>
   </footer>
 
 </body>

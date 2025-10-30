@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
+
 
 class Master_supplier extends MY_Controller {
 
@@ -76,17 +78,64 @@ class Master_supplier extends MY_Controller {
         }
     }
 
-    public function pdf_vendor_list()
-    {
-        $mpdf = new \Mpdf\Mpdf();
+    // public function pdf_vendor_list()
+    // {
+    //     $mpdf = new \Mpdf\Mpdf();
 
-        $data['result'] = $this->M_master_supplier->get()->result_array();
+    //     $data['result'] = $this->M_master_supplier->get()->result_array();
 
-        $d = $this->load->view('content/master/master_supplier/pdf_vendor_list', $data, TRUE);
-        $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-        $mpdf->setFooter('Halaman {PAGENO}');
-        $mpdf->WriteHTML($d);
-        $mpdf->Output();
-    }
+    //     $d = $this->load->view('content/master/master_supplier/pdf_vendor_list', $data, TRUE);
+    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
+    //     $mpdf->setFooter('Halaman {PAGENO}');
+    //     $mpdf->WriteHTML($d);
+    //     $mpdf->Output();
+    // }
+
+
+public function pdf_vendor_list()
+{
+    // --- Konfigurasi Dompdf ---
+    $options = new Dompdf\Options();
+    // $options->set('isRemoteEnabled', true);
+    $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 97);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+    $dompdf = new Dompdf\Dompdf($options);
+
+    // --- Ambil data sama seperti versi mPDF ---
+    $data['result'] = $this->M_master_supplier->get()->result_array();
+
+    // --- Load view ke variabel $html ---
+    $html = $this->load->view('content/master/master_supplier/pdf_vendor_list', $data, TRUE);
+
+    // --- Set ukuran dan orientasi halaman (A4 portrait) ---
+    $dompdf->setPaper('A4', 'landscape');
+
+    // --- Tulis HTML ke Dompdf ---
+    $dompdf->loadHtml($html);
+
+    // --- Render PDF ---
+    $dompdf->render();
+
+    // // --- Tambahkan footer halaman seperti mPDF ---
+    // $canvas = $dompdf->getCanvas();
+    // $canvas->page_script('
+    //     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+    //     $size = 9;
+    //     $pageText = "Halaman " . $PAGE_NUM;
+    //     $y = 820; 
+    //     $x = 500;
+    //     $canvas->text($x, $y, $pageText, $font, $size);
+    // ');
+
+    // --- Tampilkan hasil PDF di browser ---
+    $dompdf->stream('vendor_list.pdf', array('Attachment' => 0));
+}
+
 
 }
