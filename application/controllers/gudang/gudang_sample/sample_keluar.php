@@ -47,7 +47,7 @@ class sample_keluar extends MY_Controller {
         $data['tgl2'] = $tgl2;
         $data['nama_barang'] = $nama_barang;
         $data['nama_customer'] = $nama_customer;
-        echo json_encode($data);
+        // echo json_encode($data);
         
        $this->template->load('template', 'content/gudang/gudang_sample/sample_keluar_data', $data);
     }

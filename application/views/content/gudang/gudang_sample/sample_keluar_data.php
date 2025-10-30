@@ -505,7 +505,7 @@
                               <i class="fas fa-eye me-1"></i> Lihat
                             </button>
                           <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                          <a href="<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                          <a href="<?= base_url() ?>gudang/gudang_sample/sample_keluar/" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                           </div>
                         </div>
                       </div>
@@ -636,7 +636,7 @@
   $(document).ready(function() {
     $('#lihat').click(function () {
 
-      var filter_sppb = $('#filter_sppb').find(':selected').val();
+      var filter_barang = $('#filter_barang').find(':selected').val();
       var filter_customer = $('#filter_customer').find(':selected').val();
       var filter_tgl = $('#filter_tgl').val();
       var filter_tgl2 = $('#filter_tgl2').val();
@@ -651,12 +651,12 @@
       }else{
         const query = new URLSearchParams({
                     nama_customer: filter_customer,
-                    no_sppb: filter_sppb,
+                    nama_barang: filter_barang,
                     date_from: filter_tgl,
                     date_until: filter_tgl2
                 })
 
-        window.location = "<?=base_url() ?>gudang/gudang_sample/sample_masuk/index?"+ query.toString()
+        window.location = "<?=base_url() ?>gudang/gudang_sample/sample_keluar/index?"+ query.toString()
         
       }
     })
@@ -742,28 +742,7 @@
         todayHighlight: true
       });
 
-      // Filter Lihat
-      $('#lihat').click(function () {
-        var filter_barang = $('#filter_barang').find(':selected').val();
-        var filter_customer = $('#filter_customer').find(':selected').val();
-        var filter_tgl = $('#filter_tgl').val();
-        var filter_tgl2 = $('#filter_tgl2').val();
-
-        if (filter_tgl == '' && filter_tgl2 != '') {
-          window.location = "<?=base_url()?>gudang/sample_masuk?alert=warning&msg=dari tanggal belum diisi";
-        } else if (filter_tgl != '' && filter_tgl2 == '') {
-          window.location = "<?=base_url()?>gudang/sample_masuk?alert=warning&msg=sampai tanggal belum diisi";
-        } else {
-          const query = new URLSearchParams({
-            nama_barang: filter_barang,
-            nama_customer: filter_customer,
-            date_from: filter_tgl,
-            date_until: filter_tgl2
-          })
-
-          window.location = "<?=base_url() ?>gudang/sample_masuk?" + query.toString()
-        }
-      });
+      
 
       // Export PDF
       $('#export').click(function () {

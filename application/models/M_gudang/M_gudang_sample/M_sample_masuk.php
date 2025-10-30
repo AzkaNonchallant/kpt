@@ -14,7 +14,7 @@ class M_sample_masuk extends CI_Model
     }
 
     // Ambil data dengan filter tanggal, nama barang, atau kode_tf_in
-    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $kode_sample_in = null)
+    public function get($tgl = null, $tgl2 = null, $nama_barang = null, $nama_customer = null)
     {
         $this->db->select('a.*, b.nama_barang, c.nama_customer');
         $this->db->from('tb_sample_masuk a');
@@ -38,8 +38,8 @@ class M_sample_masuk extends CI_Model
             $this->db->where('b.nama_barang', $nama_barang);
         }
 
-        if ($kode_sample_in != null) {
-            $this->db->where('a.kode_sample_in', $kode_sample_in);
+        if ($nama_customer != null) {
+            $this->db->where('c.nama_customer', $nama_customer);
         }
 
         $this->db->order_by('a.id_sample_masuk', 'DESC');

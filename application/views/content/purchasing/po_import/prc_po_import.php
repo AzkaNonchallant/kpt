@@ -1,4 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Customer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --cust: #436;
+            --upd: #f72585;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --info: #4895ef;
+            --warning: #ae4976ff;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        .customer-container {
+            padding: 20px;
+            background-color: #f5f7fb;
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            margin-bottom: 25px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .card {
+            position: center;
+            width: 100%;
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+        }
+        
+        .card-header {
+            background: white;
+            border-bottom: 1px solid var(--light-gray);
+            padding: 15px 20px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-header h5 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 8px 16px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: none;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), var(--info));
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, var(--info), #3a86ff);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #b5179e);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #d00000);
+            color: white;
+        }
+        
+        .table-responsive {
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.2px;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
 
+        
+        .table tbody td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--light-gray);
+            white-space: nowrap;
+        }
+        
+        .table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+            transform: translateY(-1px);
+        }
+        
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table thead th:nth-child(1),
+        .table tbody td:nth-child(1) {
+            width: 50px;
+            text-align: center;
+        }
+        
+        .table thead th:nth-child(2),
+        .table tbody td:nth-child(2) {
+            width: 120px;
+        }
+        
+        .table thead th:nth-child(3),
+        .table tbody td:nth-child(3) {
+            width: 150px;
+            
+        }
+        
+        .table thead th:nth-child(4),
+        .table tbody td:nth-child(4) {
+            width: 100px;
+           
+        }
+        
+        .table thead th:nth-child(5),
+        .table tbody td:nth-child(5) {
+            width: 200px;
+            text-align: center;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .badge-success {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+        
+        .badge-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+        
+        .modal-content {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            padding: 15px 20px;
+        }
+
+        .modal-up {
+            background: linear-gradient(135deg, var(--upd), var(--warning));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            padding: 15px 20px;
+        }
+
+        .modal-cust {
+            background: linear-gradient(135deg, var(--cust), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            padding: 15px 20px;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .close {
+            color: white;
+            opacity: 0.8;
+        }
+        
+        .close:hover {
+            color: white;
+            opacity: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .invalid-feedback {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 5px;
+        }
+        
+        .table .btn-sm {
+            padding: 4px 8px;
+            font-size: 11px;
+            line-height: 1.2;
+            white-space: nowrap;
+            min-height: 28px;
+        }
+
+        .table .btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .table .btn i {
+            font-size: 11px;
+            margin-right: 3px;
+        }
+        
+        .btn-detail {
+           min-width: 70px; 
+        }
+        
+        .btn-action {
+            min-width: 60px;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .stats-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stats-card .label {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .btn-group {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
 
 <!-- [ Main Content ] start -->
 <section class="pcoded-main-container">
@@ -64,38 +443,34 @@
                               <td class="text-center"><?= $tgl_po_import?></td>
                               <td class="text-center"><?= $k['no_po_import'] ?></td>
                               <td class="text-center">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                  <button type="button" class="btn btn-info btn-square btn-sm" data-toggle="modal" data-target="#detail" 
+                                <div class="action-buttons">
+                                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail" 
                                   data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf']?>" 
                                   data-no_po_import="<?= $k['no_po_import']?>"
                                   data-tgl_po_import="<?= $tgl_po_import?>"
                                   data-metode="<?= $k['metode']?>" 
                                   data-shipment="<?= $k['shipment']?>" 
                                   data-pic1="<?= $k['pic1']?>" 
-                                  data-pic2="<?= $k['pic2']?>"       
-                                   >
+                                  data-pic2="<?= $k['pic2']?>">
                                     <i class="feather icon-eye"></i>Details
                                   </button>
                                 </div>
                               </td>
                               <td class="text-center">
                                 <?php if ($level === "0")  { ?>
-                                  <div class="btn-group" role="group" aria-label="Basic example">
-                                  <button type="button" class="btn btn-primary btn-square btn-sm" data-toggle="modal" data-target="#edit" 
-                                  data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf']?>" 
-                                  data-prc_admin="<?= $k['prc_admin']?>"
-                                  data-no_po_import="<?= $k['no_po_import']?>" 
-                                  data-tgl_po_import="<?= $tgl_po_import?>" 
-                                  data-metode="<?= $k['metode']?>" 
-                                  data-shipment="<?= $k['shipment']?>" 
-                                  data-pic1="<?= $k['pic1']?>" 
-                                  data-pic2="<?= $k['pic2']?>"
-                                   >
-                                      <i class="feather icon-edit-2"></i>Edit
+                                  <div class="action-buttons">
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit" 
+                                    data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf']?>" 
+                                    data-prc_admin="<?= $k['prc_admin']?>"
+                                    data-no_po_import="<?= $k['no_po_import']?>" 
+                                    data-tgl_po_import="<?= $tgl_po_import?>" 
+                                    data-metode="<?= $k['metode']?>" 
+                                    data-shipment="<?= $k['shipment']?>" 
+                                    data-pic1="<?= $k['pic1']?>" 
+                                    data-pic2="<?= $k['pic2']?>">
+                                        <i class="feather icon-edit-2"></i>Edit
                                     </button>
-                                  </div>
-                                  <div class="btn-group" role="group">
-                                    <a href="<?= base_url() ?>purchasing/po_import/delete/<?= $k['no_po_import'] ?>" class="btn btn-danger btn-square text-light btn-sm" onclick="if (! confirm('Apakah Anda Yakin?')) { false; }">
+                                    <a href="<?= base_url() ?>purchasing/po_import/delete/<?= $k['no_po_import'] ?>" class="btn btn-danger btn-sm" onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
                                       <i class="feather icon-trash-2"></i>Hapus
                                     </a>
                                   </div>
