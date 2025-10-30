@@ -450,7 +450,7 @@
                     <div class="float-right">
                       <div class="input-group">
                         <select class="form-control chosen-select" id="filter_customer" name="filter_customer">
-                          <option value="" disabled selected hidden>- Nama Gudang -</option>
+                          <option value="" disabled selected hidden>- Nama Customer -</option>
                           <?php
                           foreach ($res_customer as $rc) { ?>
                             <option <?= $nama_customer === $rc['nama_customer'] ? 'selected' : '' ?> value="<?= $rc['nama_customer'] ?>"><?= $rc['nama_customer'] ?></option>
@@ -459,7 +459,7 @@
                         <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
                           <option value="" disabled selected hidden>- Nama Barang -</option>
                           <?php
-                          foreach ($res_barang as $rb) { ?>
+                          foreach ($res_barang_2 as $rb) { ?>
                             <option <?= $nama_barang === $rb['nama_barang'] ? 'selected' : '' ?> value="<?= $rb['nama_barang'] ?>"><?= $rb['nama_barang'] ?> - Mesh <?= $rb['mesh'] ?></option>
                           <?php } ?>
                         </select>
@@ -468,7 +468,7 @@
                         <div class="input-group-append">
                           <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                           <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                          <a href="<?= base_url() ?>marketing/po_customer" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                          <a href="<?= base_url() ?>marketing/po_sample" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                         </div>
                       </div>
                     </div>
@@ -612,9 +612,9 @@
       var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
 
       if (filter_tgl == '' && filter_tgl2 != '') {
-        window.location = "<?= base_url() ?>marketing/po_customer?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=dari tanggal belum diisi";
       } else if (filter_tgl != '' && filter_tgl2 == '') {
-        window.location = "<?= base_url() ?>marketing/po_customer?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=sampai tanggal belum diisi";
       } else {
         const query = new URLSearchParams({
           nama_customer: filter_customer,
@@ -623,7 +623,7 @@
           date_until: filter_tgl2
         })
 
-        window.location = "<?= base_url() ?>marketing/po_customer/index?" + query.toString()
+        window.location = "<?= base_url() ?>marketing/po_sample/index?" + query.toString()
 
       }
     })
@@ -638,10 +638,10 @@
       var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
 
       if (filter_tgl == '' && filter_tgl2 != '') {
-        window.location = "<?= base_url() ?>marketing/po_customer?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=dari tanggal belum diisi";
         alert("dari tanggal belum diisi")
       } else if (filter_tgl != '' && filter_tgl2 == '') {
-        window.location = "<?= base_url() ?>marketing/po_customer?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=sampai tanggal belum diisi";
       } else {
         const query = new URLSearchParams({
           nama_customer: filter_customer,
@@ -649,7 +649,7 @@
           date_from: filter_tgl,
           date_until: filter_tgl2
         })
-        var url = "<?= base_url() ?>marketing/po_customer/pdf_po_customer?" + query.toString();
+        var url = "<?= base_url() ?>marketing/po_sample/pdf_po_sample?" + query.toString();
         window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
       }
     })

@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once FCPATH . 'vendor/autoload.php'; // pastikan ini ditambahkan di awal file
+
 
 class Barang_masuk extends MY_Controller {
 
@@ -90,5 +92,59 @@ class Barang_masuk extends MY_Controller {
     //     $mpdf->WriteHTML($d);
     //     $mpdf->Output();
     // }
+
+
+public function pdf_barang_masuk()
+{
+    // Konfigurasi Dompdf
+    $options = new Dompdf\Options();
+     $options->set('isRemoteEnabled', false); // ⚡ Pakai file lokal biar cepat
+        $options->set('isFontSubsettingEnabled', false);
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 90);
+        $options->set('chroot', FCPATH);
+        $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
+        $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
+    $dompdf = new Dompdf\Dompdf($options);
+
+    // Ambil filter dari request
+    $tgl = $this->input->get('date_from');
+    $tgl2 = $this->input->get('date_until');
+    $nama_barang = $this->input->get('nama_barang');
+    $no_batch = $this->input->get('no_batch');
+
+    // Ambil data dari model
+    $data['result'] = $this->M_barang_masuk->get($tgl, $tgl2, $nama_barang, $no_batch);
+    $data['res_barang'] = $this->M_master_barang->get()->result_array();
+    $data['res_supplier'] = $this->M_master_supplier->get()->result_array();
+
+    // Simpan variabel untuk digunakan di view
+    $data['tgl'] = $tgl;
+    $data['tgl2'] = $tgl2;
+    $data['nama_barang'] = $nama_barang;
+    $data['no_batch'] = $no_batch;
+
+    // Render tampilan ke HTML
+    $html = $this->load->view('content/gudang/gudang_barang/barang_masuk/pdf_barang_masuk', $data, TRUE);
+
+    // Load HTML ke Dompdf
+    $dompdf->loadHtml($html);
+
+    // Setting ukuran dan orientasi halaman (A4 Portrait)
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render PDF
+    $dompdf->render();
+
+    // Tambahkan nomor halaman di footer
+    $canvas = $dompdf->getCanvas();
+    $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+    $canvas->page_text(520, 820, "Halaman {PAGE_NUM} dari {PAGE_COUNT}", $font, 9, [0, 0, 0]);
+
+    // Output hasil PDF ke browser
+    $dompdf->stream("laporan_barang_masuk.pdf", array("Attachment" => false));
+}
+
 
 }

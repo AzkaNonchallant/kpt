@@ -2,20 +2,24 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Laporan Kartu Stok</title>
+  <title>Laporan PO Pembelian</title>
   <style>
     @page {
       margin: 35px 25px;
     }
 
-    body {
+    * {
       font-family: "DejaVu Sans", sans-serif;
-      font-size: 11pt;
-      color: #000;
-      margin: 0;
+      box-sizing: border-box;
     }
 
-    /* HEADER */
+    body {
+      font-size: 11pt;
+      margin: 0;
+      color: #000;
+    }
+
+    /* === HEADER === */
     .header-table {
       width: 100%;
       border-bottom: 2px solid #000;
@@ -47,7 +51,7 @@
       font-size: 12pt;
       margin: 0;
       font-weight: normal;
-      line-height: 1.3;
+      line-height: 1.2;
     }
 
     .company-info p {
@@ -56,10 +60,15 @@
       line-height: 1.4;
     }
 
-    /* TITLE */
+    hr {
+      border: 1px solid #000;
+      margin: 0 0 15px 0;
+    }
+
+    /* === TITLE === */
     .title {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     .title h3 {
@@ -77,7 +86,14 @@
       margin: 3px 0;
     }
 
-    /* TABLE */
+    /* === FILTER INFO === */
+    .filter p {
+      text-align: center;
+      font-size: 10pt;
+      margin: 2px 0;
+    }
+
+    /* === MAIN TABLE === */
     table.main {
       width: 100%;
       border-collapse: collapse;
@@ -97,18 +113,18 @@
     table.main td {
       border: 1px solid #555;
       padding: 6px 8px;
-      vertical-align: middle;
+      vertical-align: top;
     }
 
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
 
-    .text-right { text-align: right; }
     .text-center { text-align: center; }
+    .text-right { text-align: right; }
     .text-left { text-align: left; }
 
-    /* FOOTER */
+    /* === FOOTER === */
     footer {
       position: fixed;
       bottom: 10px;
@@ -116,7 +132,7 @@
       right: 0;
       text-align: center;
       font-size: 9pt;
-      color: #555;
+      color: #444;
       border-top: 1px solid #aaa;
       padding-top: 3px;
     }
@@ -124,11 +140,6 @@
 </head>
 
 <body>
-
-  <?php
-    $periode1 =  explode('-', $tgl)[2] . "/" . explode('-', $tgl)[1] . "/" . explode('-', $tgl)[0];
-    $periode2 =  explode('-', $tgl2)[2] . "/" . explode('-', $tgl2)[1] . "/" . explode('-', $tgl2)[0];
-  ?>
 
   <!-- HEADER -->
   <table class="header-table">
@@ -150,45 +161,66 @@
 
   <!-- TITLE -->
   <div class="title">
-    <h3>Laporan Kartu Stok</h3>
-    <p>Periode: <?= $periode1 ?> - <?= $periode2 ?></p>
+    <h3>PO Sample</h3>
   </div>
 
-  <!-- TABLE -->
+  <!-- FILTER INFO -->
+  <div class="filter">
+    <?php if(!empty($tgl) && !empty($tgl2)) : ?>
+      <p>Periode : <?= $tgl ?> - <?= $tgl2 ?></p>
+    <?php endif; ?>
+
+    <?php if(!empty($nama_barang)) : ?>
+      <p>Barang : <?= $nama_barang ?></p>
+    <?php endif; ?>
+  </div>
+
+  <!-- MAIN TABLE -->
+   <?php  if(!empty($result)) : ?>
   <table class="main">
     <thead>
       <tr>
-        <th rowspan="2" style="width:4%;">#</th>
-        <th rowspan="2" style="width:12%;">Kode Barang</th>
-        <th rowspan="2" style="width:25%;">Nama Barang</th>
-        <th rowspan="2" style="width:15%;">Stok Sebelum <?= $periode1 ?></th>
-        <th colspan="3" style="width:45%;">Periode <?= $periode1 ?> - <?= $periode2 ?></th>
-      </tr>
-      <tr>
-        <th class="text-center" style="width:10%;">Masuk</th>
-        <th class="text-center" style="width:10%;">Keluar</th>
-        <th class="text-center" style="width:10%;">Stok Aktual</th>
+        <th style="width:4%;">#</th>
+        <th style="width:12%;">Tanggal Po</th>
+        <th style="width:26%;">Customer</th>
+        <th style="width:8%;">Nama Barang</th>
+        <th style="width:8%;">Mesh</th>
+        <th style="width:20%;">Bloom</th>
+        <th style="width:10%;">QTY (Kg)</th>
       </tr>
     </thead>
     <tbody>
-      <?php
-        $no = 1;
-        foreach ($result as $k) {
-          $aktual = $k['stok'] + $k['masuk'] - $k['keluar'];
-      ?>
+      <?php $no = 1; $jml= 0;  foreach($result as $k):
+          $tgl_po =  explode('-', $k['tgl_po_sample'])[2]."/".explode('-', $k['tgl_po_sample'])[1]."/".explode('-', $k['tgl_po_sample'])[0];   
+          $jml += $k['jumlah_po_sample']; 
+
+        
+        ?>
         <tr>
           <td class="text-center"><?= $no++ ?></td>
-          <td class="text-center"><?= $k['kode_barang'] ?></td>
-          <td class="text-left"><?= strtoupper($k['nama_barang']) ?></td>
-          <td class="text-right"><?= number_format($k['stok'] ?? 0, 0, ",", ".") ?>&nbsp;<?= $k['satuan'] ?></td>
-          <td class="text-right"><?= number_format($k['masuk'] ?? 0, 0, ",", ".") ?>&nbsp;<?= $k['satuan'] ?></td>
-          <td class="text-right"><?= number_format($k['keluar'] ?? 0, 0, ",", ".") ?>&nbsp;<?= $k['satuan'] ?></td>
-          <td class="text-right"><?= number_format($aktual ?? 0, 0, ",", ".") ?>&nbsp;<?= $k['satuan'] ?></td>
+          <td class="text-left"><?=  $tgl_po ?></td>
+          <td class="text-left"><?= strtoupper($k['nama_customer']) ?></td>
+          <td class="text-center"><?= $k['nama_barang'] ?></td>
+          <td class="text-center"><?= $k['mesh'] ?></td>
+          <td class="text-left"><?= strtoupper($k['bloom']) ?></td>
+          <td class="text-right"><?= number_format($k['jumlah_po_sample'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
         </tr>
-      <?php } ?>
+      <?php endforeach; ?>
     </tbody>
+    tfoot>
+        <tr>
+          <th colspan="6" class="center">Jumlah (Kg)</th>
+          <th style="text-align: right;"><?=number_format($jml,0,",",".")?>&nbsp;<?=$k['satuan']?></th>
+        </tr>
+      </tfoot>
+
   </table>
 
+  <?php endif; ?>
+  <?php if(empty($result)) : ?>
+
+    <center><h2>Data Kosong</h2></center>
+    <?php endif; ?>
   <!-- FOOTER -->
   <footer>
     Dicetak otomatis oleh sistem | <?= date('d/m/Y H:i:s') ?>

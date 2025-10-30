@@ -456,7 +456,7 @@
                         <div class="input-group-append">
                           <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                           <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                          <a href="<?= base_url() ?>gudang/gudang_barang/barang_keluar/barang_keluar/pdf_surat_jalan" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                          <a href="<?= base_url() ?>gudang/gudang_barang/barang_keluar/barang_keluar/" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                         </div>
                       </div>
                       <!-- Button trigger modal -->

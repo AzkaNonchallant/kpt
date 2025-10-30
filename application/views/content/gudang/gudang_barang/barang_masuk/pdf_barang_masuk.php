@@ -1,167 +1,194 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <title>Laporan Barang Masuk</title>
+  <style>
+    * {
+      font-family: "DejaVu Sans", sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      font-size: 11pt;
+      margin: 15px;
+      color: #000;
+    }
 
-  <title>Export Laporan Stok Barang</title>
-  <style type="text/css">
-  body{
-    font-family: sans-serif;
-  }
-  table{
-    width: 100%;
-    margin: 20px auto;
-    border-collapse: collapse;
-  }
-  table th,
-  table td{
-    border: 1px solid #3c3c3c;
-    padding: 3px 8px;
-  }
-  table td{
-    vertical-align: top;
-  }
-  a{
-    background: blue;
-    color: #fff;
-    padding: 8px 10px;
-    text-decoration: none;
-    border-radius: 2px;
-  }
-  .hh tr td{
-    border: 0;
-    padding: 0
-  }
-  .hh{
-    margin-bottom: 2px;
-  }
+    /* HEADER */
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    .header-table td {
+      border: none;
+      vertical-align: middle;
+      padding: 0;
+    }
+    .company-info {
+      text-align: center;
+    }
+    .company-info h2 {
+      font-size: 18pt;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .company-info h3 {
+      font-size: 12pt;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .company-info p {
+      font-size: 9pt;
+      margin: 1px 0;
+    }
+
+    hr {
+      border: 1px solid #000;
+      margin: 5px 0 10px 0;
+    }
+
+    /* TITLE */
+    .title {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .title h3 {
+      font-size: 14pt;
+      text-transform: uppercase;
+      margin: 0;
+      padding-bottom: 3px;
+    }
+    .filter-info {
+      font-size: 10pt;
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+
+    /* TABLE */
+    table.main {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+      margin-top: 10px;
+    }
+    table.main th {
+      background: #1d3b74;
+      color: #fff;
+      text-align: center;
+      border: 1px solid #555;
+      padding: 6px;
+    }
+    table.main td {
+      border: 1px solid #555;
+      padding: 6px;
+      vertical-align: middle;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-left { text-align: left; }
+
+    /* FOOTER */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: right;
+      font-size: 9pt;
+      border-top: 1px solid #aaa;
+      padding-top: 3px;
+    }
   </style>
 </head>
+
 <body>
 
-<?php
-$per = "";
-
-if (empty($nama_barang) && empty($no_batch) && (empty($tgl) || empty($tgl2))) {
-    // semua kosong → tidak tampil apa-apa
-    $per = "";
-} else {
-    $per  = '<table cellspacing="0" cellpadding="2" width="100%" 
-             style="border-collapse:collapse; text-align:center; line-height:1.2; font-size:10pt;">';
-
-    // hanya nama barang
-    if (!empty($nama_barang) && empty($no_batch) && (empty($tgl) || empty($tgl2))) {
-        $per .= '<tr><td style="border:0; padding:2px;">Nama Barang : '.$nama_barang.'</td></tr>';
-    }
-
-    // hanya no batch
-    else if (empty($nama_barang) && !empty($no_batch) && (empty($tgl) || empty($tgl2))) {
-        $per .= '<tr><td style="border:0; padding:2px;">No Batch : '.$no_batch.'</td></tr>';
-    }
-
-    // hanya periode
-    else if (empty($nama_barang) && empty($no_batch) && !empty($tgl) && !empty($tgl2)) {
-        $per .= '<tr><td style="border:0; padding:2px;">Periode : '.$tgl.' - '.$tgl2.'</td></tr>';
-    }
-
-    // nama barang + no batch
-    else if (!empty($nama_barang) && !empty($no_batch) && (empty($tgl) || empty($tgl2))) {
-        $per .= '<tr><td style="border:0; padding:2px;">Nama Barang : '.$nama_barang.'</td></tr>';
-        $per .= '<tr><td style="border:0; padding:2px;">No Batch : '.$no_batch.'</td></tr>';
-    }
-
-    // nama barang + periode
-    else if (!empty($nama_barang) && empty($no_batch) && !empty($tgl) && !empty($tgl2)) {
-        $per .= '<tr><td style="border:0; padding:2px;">Nama Barang : '.$nama_barang.'</td></tr>';
-        $per .= '<tr><td style="border:0; padding:2px;">Periode : '.$tgl.' - '.$tgl2.'</td></tr>';
-    }
-
-    // no batch + periode
-    else if (empty($nama_barang) && !empty($no_batch) && !empty($tgl) && !empty($tgl2)) {
-        $per .= '<tr><td style="border:0; padding:2px;">No Batch : '.$no_batch.'</td></tr>';
-        $per .= '<tr><td style="border:0; padding:2px;">Periode : '.$tgl.' - '.$tgl2.'</td></tr>';
-    }
-
-    // semua terisi
-    else {
-        $per .= '<tr><td style="border:0; padding:2px;">Nama Barang : '.$nama_barang.'</td></tr>';
-        $per .= '<tr><td style="border:0; padding:2px;">No Batch : '.$no_batch.'</td></tr>';
-        $per .= '<tr><td style="border:0; padding:2px;">Periode : '.$tgl.' - '.$tgl2.'</td></tr>';
-    }
-
-    $per .= '</table>';
-}
-?>
-
-    <table class="hh">
-      <tr>
-        <td>
-          
-        </td>
-        <td style="text-align: center;padding-center: -20px;">
-          <?php $src = base_url('assets/images/icon.png'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 60px;height: 100px;" src="<?=$src?>">
-        </td>
-        <td style="width: 460px;">
-    <h2 style="line-height: 0.01; font-size: 30px;">PT KAPSULINDO NUSANTARA</h2>
-    <h3 style="line-height: 0.01; font-size: 23px;">Pedagang Besar Bahan Baku Farmasi</h3>
-    <p style="line-height: 0.01;font-size: 12px;">Jl. Pancasila 1 Cicadas Gunung Putrri - Kab. Bogor 16964, Indonesia</p>
-    <p style="line-height: 0.01;font-size: 12px;">Tlp:(021) 8671165. Fax:(021) 8671168,86861734. Email: pbbbf@kapsulindo.co.id</p>
-        </td>
-        <td style="padding-center:-10px; ">
-          <?php $src = base_url('assets/images/pom.jpeg'); ?>
-          <!-- <?=$src?> -->
-          <img style="width: 120px;height: 100px;" src="<?=$src?>">
-        </td>
-
-      </tr>
-    </table>
+  <!-- HEADER -->
+  <table class="header-table">
+    <tr>
+      <td style="width: 15%;">
+        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" style="width: 70px; height: 90px;">
+      </td>
+      <td class="company-info" style="width: 70%;">
+        <h2>PT KAPSULINDO NUSANTARA</h2>
+        <h3>Pedagang Besar Bahan Baku Farmasi</h3>
+        <p>Jl. Pancasila 1, Cicadas Gunung Putri - Kab. Bogor 16964, Indonesia</p>
+        <p>Telp:(021) 8671165 | Fax:(021) 8671168 | Email: pbbbf@kapsulindo.co.id</p>
+      </td>
+      <td style="width: 15%; text-align: right;">
+        <img src="<?= FCPATH . 'assets/images/pom.jpeg' ?>" style="width: 100px; height: 90px;">
+      </td>
+    </tr>
+  </table>
   
-    <hr style="line-height: 0.01;">
-    <div style="text-align: center;padding-top: 5px;">
-    <h3 style="float: center;line-height: 0.2;">GUDANG BARANG MASUK</h3>
-    <p style="line-height: 0.1;font-size: 12px;"><?=$per?></p>
+  <hr>
+  
+  <!-- TITLE -->
+  <div class="title">
+    <h3>Gudang Barang Masuk</h3>
+    <div class="filter-info">
+      <?php if(!empty($nama_barang)) : ?>
+        <p>Nama Barang : <?= $nama_barang ?></p>
+        <?php endif; ?>
+        
+      <?php if(!empty($no_batch)) : ?>
+        <p>No Batch : <?= $no_batch ?></p>
+        <?php endif; ?>
+
+      <?php if(!empty($tgl) && !empty($tgl2)) : ?>
+        <p>Periode : <?= $tgl ?> - <?= $tgl2 ?></p>
+      <?php endif; ?>
+    </div>
   </div>
-
-    
-    
   
+  <?php if(!empty($result)) : ?>
+  <!-- TABEL UTAMA -->
+  <table class="main">
+    <thead>
+      <tr>
+        <th style="width: 4%;">#</th>
+        <th style="width: 10%;">Tanggal Masuk</th>
+        <th style="width: 10%;">No Batch</th>
+        <th style="width: 20%;">Nama Barang</th>
+        <th style="width: 8%;">Mesh</th>
+        <th style="width: 8%;">Bloom</th>
+        <th style="width: 20%;">Supplier</th>
+        <th style="width: 12%;">Jumlah</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $no = 1; foreach($result as $k): ?>
+        <?php 
+          $tgl_msk_gdg = date('d/m/Y', strtotime($k['tgl_msk_gdg']));
+        ?>
+        <tr>
+          <td class="text-center"><?= $no++ ?></td>
+          <td class="text-center"><?= $tgl_msk_gdg ?></td>
+          <td class="text-center"><?= $k['no_batch'] ?></td>
+          <td class="text-left"><?= strtoupper($k['nama_barang']) ?></td>
+          <td class="text-center"><?= $k['mesh'] ?></td>
+          <td class="text-center"><?= $k['bloom'] ?></td>
+          <td class="text-left"><?= ucfirst($k['nama_supplier']) ?></td>
+          <td class="text-right"><?= number_format($k['gdg_qty_in'],0,",",".") ?> <?= $k['satuan'] ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
 
-                                                <table style="width: 1000px;font-size: 18px;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Tanggal Masuk</th>
-                                                            <th>No Batch</th>
-                                                            <th>Nama Barang</th>
-                                                            <th>Mesh</th>
-                                                            <th>Bloom</th>
-                                                            <th>Supplier</th>
-                                                            <th>Jumlah</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <?php 
-                                                      $no=1;
-                                                      foreach($result as $k){
-                                                        $tgl_msk_gdg =  explode('-', $k['tgl_msk_gdg'])[2]."/".explode('-', $k['tgl_msk_gdg'])[1]."/".explode('-', $k['tgl_msk_gdg'])[0];
-                                                      ?>
-                                                      <tr>
-                                                            <th scope="row"><?=$no++?></th>
-                                                            <td style="text-align: center;"><?=$tgl_msk_gdg?></td>
-                                                            <td style="text-align: center;"><?=$k['no_batch']?></td>
-                                                            <td style="text-align: center;"><?=$k['nama_barang']?></td>
-                                                            <td style="text-align: center;"><?=$k['mesh']?></td>
-                                                            <td style="text-align: center;"><?=$k['bloom']?></td>
-                                                            <td style="text-align: center;"><?=$k['nama_supplier']?></td>
-                                                            <td style="text-align: center;"><?=number_format($k['gdg_qty_in'],0,",",".")?> <?=$k['satuan']?></td>
-                                                    
-                                                        </tr>
-                                                      <?php
-                                                      }
-                                                      ?>
-                                                    </tbody>
-                                                </table>
+  <?php endif; ?>
 
-  </body>
+  <?php if(empty($result)) : ?>
+    <center><h4>Data Kosong</h4></center>
+    <?php endif; ?>
+
+  <!-- FOOTER -->
+  <footer>
+    <center>Dicetak otomatis oleh sistem | <?= date('d/m/Y H:i:s') ?></center>
+  </footer>
+
+</body>
 </html>

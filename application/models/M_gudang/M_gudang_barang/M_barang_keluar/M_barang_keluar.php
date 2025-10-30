@@ -16,7 +16,7 @@ class M_barang_keluar extends CI_Model {
             $tgl = "$tgl[2]-$tgl[1]-$tgl[0]";
             $tgl2 = explode("/", $tgl2);
             $tgl2 = "$tgl2[2]-$tgl2[1]-$tgl2[0]";
-            $where[] = "AND a.tgl_msk_gdg >= '$tgl' AND  a.tgl_msk_gdg <= '$tgl2'";
+            $where[] = "AND b.tgl_kirim >= '$tgl' AND  b.tgl_kirim <= '$tgl2'";
         } else if ($tgl ==null && $tgl2 ==null) {
                 $where[] = "";
         } else {
@@ -43,7 +43,7 @@ class M_barang_keluar extends CI_Model {
             LEFT JOIN tb_mkt_po_customer c ON b.id_mkt_po_customer = c.id_mkt_po_customer
             LEFT JOIN tb_master_customer d ON c.id_customer = d.id_customer
             LEFT JOIN tb_master_barang e ON c.id_barang = e.id_barang
-            WHERE a.is_deleted = 0 ORDER BY a.id_barang_keluar DESC";
+            WHERE a.is_deleted = 0 $where ORDER BY a.id_barang_keluar DESC";
         return $this->db->query($sql);
     }
     // File: application/models/M_barang_keluar.php
