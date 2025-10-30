@@ -134,5 +134,30 @@ class M_sppb extends CI_Model {
             return $this->db->query($sql);
     }
 
+        public function generate_no_sppb()
+    {
+        // ambil SPPB terakhir
+        $this->db->select('no_sppb');
+        $this->db->from('tb_mkt_sppb');
+        $this->db->like('no_sppb', 'SPPB-', 'after');
+        $this->db->order_by('id_mkt_sppb', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $last_no = $query->row()->no_sppb;
+            // ambil angka terakhir dari format SPPB-XX
+            $last_number = (int) str_replace('SPPB-', '', $last_no);
+            $new_number = $last_number + 1;
+        } else {
+            $new_number = 1;
+        }
+
+        // hasilkan format baru
+        $new_no = 'SPPB-' . str_pad($new_number, 2, '0', STR_PAD_LEFT);
+        return $new_no;
+    }
+
+
 
 }

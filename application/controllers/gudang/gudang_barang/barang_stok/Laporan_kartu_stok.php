@@ -8,7 +8,7 @@ class Laporan_kartu_stok extends MY_Controller {
         parent::__construct();
         // check_not_login();
         $this->load->model('M_master/M_master_barang');
-        $this->load->model('M_laporan_kartu_stok');
+        $this->load->model('M_gudang/M_gudang_barang/M_barang_stok/M_laporan_kartu_stok');
 
     }
 
@@ -16,8 +16,11 @@ class Laporan_kartu_stok extends MY_Controller {
 	{
 		// $data['row'] = $this->customer_m->get();
 
-        $tgl_sebelum = date('Y-m-d', strtotime('-1 days', strtotime( $tgl )));
-		$data['result'] = $this->M_barang->get()->result_array();
+        $tgl_sebelum = !empty($tgl)
+        ? date('Y-m-d', strtotime('-1 day', strtotime($tgl)))
+        : date('Y-m-d', strtotime('-1 day'));
+
+		$data['result'] = $this->M_master_barang->get()->result_array();
         for($i=0; $i<count($data['result']);$i++){
             $d['id_barang'] = $data['result'][$i]['id_barang'];
             $d['tgl'] = $tgl_sebelum;
@@ -41,7 +44,7 @@ class Laporan_kartu_stok extends MY_Controller {
         $data['tgl'] = $tgl;
         $data['tgl2'] = $tgl2;
         
-		$this->template->load('template', 'content/barang/laporan_kartu_stok',$data);
+		$this->template->load('template', 'content/gudang/gudang_barang/barang_stok/laporan_kartu_stok',$data);
         // print_r($data);
 
 	}

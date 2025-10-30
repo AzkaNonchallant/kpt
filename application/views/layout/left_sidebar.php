@@ -208,7 +208,7 @@ $level = $this->session->userdata('level');
 
                      <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'barang_keluar'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_sample/sample_stock')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stock Sample</span></a>
+                        <a href="<?=base_url('gudang/gudang_sample/Laporan_sample_stock')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-chevrons-right"></i></span><span class="pcoded-mtext">Laporan Stock Sample</span></a>
                     </li>
                     <?php endif; ?>`
                 

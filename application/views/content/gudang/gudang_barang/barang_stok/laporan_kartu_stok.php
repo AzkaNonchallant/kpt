@@ -85,8 +85,13 @@
                                                             <td><?=$k['kode_barang']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['stok'],0,",",".")?><?=$k['satuan']?></td>
-                                                            <td class="text-right"><?=number_format($k['masuk'],0,",",".")?><?=$k['satuan']?></td>
-                                                            <td class="text-right"><?=number_format($k['keluar'],0,",",".")?><?=$k['satuan']?></td>
+                                                            <td class="text-right">
+                                                              <?= number_format($k['masuk'] ?? 0, 0, ",", ".") ?> <?= $k['satuan'] ?>
+                                                            </td>
+                                                            <td class="text-right">
+                                                              <?= number_format($k['keluar'] ?? 0, 0, ",", ".") ?> <?= $k['satuan'] ?>
+                                                            </td>
+
                                                             <td class="text-right"><?=number_format($aktual,0,",",".")?><?=$k['satuan']?></td>
                                                             
                                                         </tr>
@@ -117,32 +122,32 @@
       var filter_tgl = $('#filter_tgl').val();
       var filter_tgl2 = $('#filter_tgl2').val();
       if (filter_tgl =='' && filter_tgl2 !='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=dari tanggal belum diisi";
       alert("dari tanggal belum diisi")
       }else if (filter_tgl !='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=sampai tanggal belum diisi";
       }else if (filter_tgl =='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=form periode harus diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=form periode harus diisi";
       }else{
         var newFilterTgl = filter_tgl.split("/")[2]+"-"+filter_tgl.split("/")[1]+"-"+filter_tgl.split("/")[0];
         var newFilterTgl2 = filter_tgl2.split("/")[2]+"-"+filter_tgl2.split("/")[1]+"-"+filter_tgl2.split("/")[0];
 
-        window.location = "<?=base_url()?>laporan_kartu_stok/index/"+newFilterTgl+"/"+newFilterTgl2;
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok/index/"+newFilterTgl+"/"+newFilterTgl2;
       }
     })
     $('#export').click(function () {
       var filter_tgl = $('#filter_tgl').val();
       var filter_tgl2 = $('#filter_tgl2').val();
      if (filter_tgl =='' && filter_tgl2 !='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=dari tanggal belum diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=dari tanggal belum diisi";
       alert("dari tanggal belum diisi")
       }else if (filter_tgl !='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=sampai tanggal belum diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=sampai tanggal belum diisi";
       }else if (filter_tgl =='' && filter_tgl2=='') {
-        window.location = "<?=base_url()?>laporan_kartu_stok?alert=warning&msg=form periode harus diisi";
+        window.location = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok?alert=warning&msg=form periode harus diisi";
       }else{
-        var url = "<?=base_url()?>laporan_kartu_stok/pdf_laporan_kartu_stok/"+filter_tgl.split("/")[2]+"-"+filter_tgl.split("/")[1]+"-"+filter_tgl.split("/")[0]+"/"+filter_tgl2.split("/")[2]+"-"+filter_tgl2.split("/")[1]+"-"+filter_tgl2.split("/")[0];
-        window.open(url, 'pdf_laporan_kartu_stok', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+        var url = "<?=base_url()?>gudang/gudang_barang/barang_stok/laporan_kartu_stok/pdf_laporan_kartu_stok/"+filter_tgl.split("/")[2]+"-"+filter_tgl.split("/")[1]+"-"+filter_tgl.split("/")[0]+"/"+filter_tgl2.split("/")[2]+"-"+filter_tgl2.split("/")[1]+"-"+filter_tgl2.split("/")[0];
+        window.open(url, 'gudang/gudang_barang/barang_stok/laporan_kartu_stok/pdf_laporan_kartu_stok', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
       }
     })
     

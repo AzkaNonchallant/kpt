@@ -133,9 +133,24 @@
   <!-- TITLE -->
   <div class="title">
     <h3>PO PEMBELIAN</h3>
+    <br>
+    <?php if(!empty($tgl) && !empty($tgl2)) : ?>
+      <p>Periode : <?= $tgl ?> - <?= $tgl2 ?></p>
+    <?php endif; ?>
+    
+    <?php if(!empty($nama_barang)) : ?>
+      <p>Barang : <?= $nama_barang ?></p>
+      <?php endif; ?>
+      
+      <?php if(!empty($nama_supplier)) : ?>
+        <p>Supplier : <?= $nama_supplier ?></p>
+        <?php endif; ?>
+
+
   </div>
 
   <!-- MAIN TABLE -->
+   
   <table class="main">
     <thead>
       <tr>
