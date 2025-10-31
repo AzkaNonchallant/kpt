@@ -618,20 +618,7 @@
     </div>
   </section>
 
-   <script type="text/javascript">
-  $(document).ready(function() {
-    $('#export').click(function() {
-      var filter_tgl = $('#filter_tgl').val();
-      if (filter_tgl == '') {
-        window.location = "<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat";
-      } else {
-        var url = "<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat" + filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
-        window.open(url, 'gudang/gudang_sample/sample_keluark/', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-      }
-    })
-
-  })
-</script>
+  
 <script type="text/javascript">
   $(document).ready(function() {
     $('#lihat').click(function () {
@@ -658,6 +645,33 @@
 
         window.location = "<?=base_url() ?>gudang/gudang_sample/sample_keluar/index?"+ query.toString()
         
+      }
+    })
+
+    $('#export').click(function () {
+      
+      var filter_barang = $('#filter_barang').find(':selected').val();
+      var filter_customer = $('#filter_customer').find(':selected').val();
+      var filter_tgl = $('#filter_tgl').val();
+      var filter_tgl2 = $('#filter_tgl2').val();
+
+      var newFilterTgl = filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
+      var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
+
+      if (filter_tgl == '' && filter_tgl2 != '') {
+        window.location = "<?= base_url() ?>gudang/gudang_sample/sample_keluar?alert=warning&msg=dari tanggal belum diisi";
+        alert("dari tanggal belum diisi")
+      } else if (filter_tgl != '' && filter_tgl2 == '') {
+        window.location = "<?= base_url() ?>gudang/gudang_sample/sample_keluar?alert=warning&msg=sampai tanggal belum diisi";
+      } else {
+        const query = new URLSearchParams({
+                nama_customer: filter_customer,
+                nama_barang: filter_barang,
+                date_from: filter_tgl,
+                date_until: filter_tgl2
+        })
+        var url = "<?= base_url() ?>gudang/gudang_sample/sample_keluar/pdf_surat?" + query.toString();
+        window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
       }
     })
   })
@@ -744,29 +758,7 @@
 
       
 
-      // Export PDF
-      $('#export').click(function () {
-        var filter_barang = $('#filter_barang').find(':selected').val();
-        var filter_customer = $('#filter_customer').find(':selected').val();
-        var filter_tgl = $('#filter_tgl').val();
-        var filter_tgl2 = $('#filter_tgl2').val();
-
-        if (filter_tgl == '' && filter_tgl2 != '') {
-          alert("Dari tanggal belum diisi");
-        } else if (filter_tgl != '' && filter_tgl2 == '') {
-          alert("Sampai tanggal belum diisi");
-        } else {
-          const query = new URLSearchParams({
-            nama_barang: filter_barang,
-            nama_customer: filter_customer,
-            date_from: filter_tgl,
-            date_until: filter_tgl2
-          })
-          
-          var url = "<?= base_url() ?>gudang/sample_masuk/pdf_sample_masuk?" + query.toString();
-          window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-        }
-      });
+     
 
       // Modal Detail
       var detailModal = document.getElementById('detailModal');

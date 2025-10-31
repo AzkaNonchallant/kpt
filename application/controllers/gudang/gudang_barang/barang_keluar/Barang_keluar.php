@@ -180,7 +180,7 @@ public function landscape_surat_jalan()
         $options->set('isFontSubsettingEnabled', false);
         $options->set('defaultFont', 'Helvetica');
         $options->set('enable_font_subsetting', true);
-        $options->set('dpi', 180);
+        $options->set('dpi', 100);
         $options->set('chroot', FCPATH);
         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
@@ -189,7 +189,6 @@ public function landscape_surat_jalan()
 
 
         // === ⿢ Ambil data dari model ===
-        $data['row'] = $this->M_barang_keluar->ambil_surat_jalan2()->row_array();
         $data['detail'] = $this->M_barang_keluar->data_barang_keluar2()->result_array();
         // echo json_encode($data['detail']);
         // === ⿣ Load HTML View ===

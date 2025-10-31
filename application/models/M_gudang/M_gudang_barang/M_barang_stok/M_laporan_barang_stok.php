@@ -26,7 +26,7 @@ class M_laporan_barang_stok extends CI_Model {
             $where = "AND c.tgl<='$data[tgl]'";
         }
         $sql = "
-            SELECT sum(a.qty) tot_barang_keluar FROM `tb_gudang_barang_keluar` a 
+            SELECT sum(a.gdg_gty_out) tot_barang_keluar FROM `tb_gudang_barang_keluar` a 
             LEFT JOIN tb_surat_jalan c ON c.kode_tf_out = a.kode_tf_out
             LEFT JOIN tb_gudang_barang_masuk b ON a.kode_tf_in = b.kode_tf_in 
             WHERE b.id_barang ='$data[id_barang]' AND a.is_deleted = 0 $where"; 

@@ -78,19 +78,19 @@ public function pdf_laporan_kartu_stok($tgl = null, $tgl2 = null)
         $d['id_barang'] = $data['result'][$i]['id_barang'];
         $d['tgl'] = $tgl_sebelum;
 
-        $jml_barang_masuk = $this->M_laporan_kartu_sample->jml_barang_masuk($d)->row_array();
-        $jml_barang_keluar = $this->M_laporan_kartu_sample->jml_barang_keluar2($d)->row_array();
+        $jml_barang_masuk = $this->M_laporan_kartu_sample->jml_sample_masuk($d)->row_array();
+        $jml_barang_keluar = $this->M_laporan_kartu_sample->jml_sample_keluar2($d)->row_array();
 
-        $data['result'][$i]['stok'] = $jml_barang_masuk['tot_barang_masuk'] - $jml_barang_keluar['tot_barang_keluar'];
+        $data['result'][$i]['stok'] = $jml_barang_masuk['tot_sample_masuk'] - $jml_barang_keluar['tot_sample_keluar'];
 
         $d['tgl1'] = $tgl;
         $d['tgl2'] = $tgl2;
 
-        $jml_barang_masuk_setelah = $this->M_laporan_kartu_sample->jml_barang_masuk_setelah($d)->row_array();
-        $jml_barang_keluar_setelah = $this->M_laporan_kartu_sample->jml_barang_keluar_setelah($d)->row_array();
+        $jml_barang_masuk_setelah = $this->M_laporan_kartu_sample->jml_sample_masuk_setelah($d)->row_array();
+        $jml_barang_keluar_setelah = $this->M_laporan_kartu_sample->jml_sample_keluar_setelah($d)->row_array();
 
-        $data['result'][$i]['masuk'] = $jml_barang_masuk_setelah['tot_barang_masuk'];
-        $data['result'][$i]['keluar'] = $jml_barang_keluar_setelah['tot_barang_keluar'];
+        $data['result'][$i]['masuk'] = $jml_barang_masuk_setelah['tot_sample_masuk'];
+        $data['result'][$i]['keluar'] = $jml_barang_keluar_setelah['tot_sample_keluar'];
     }
 
     $data['tgl'] = $tgl;

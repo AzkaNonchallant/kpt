@@ -26,6 +26,9 @@ class Laporan_barang_stok extends MY_Controller
         $result = $this->M_laporan_barang_masuk->get($id_barang);
         $data['result'] = is_array($result) ? $result : $result->result_array();
 
+        
+
+
         $res_batch = $this->M_barang_masuk->get();
         $data['res_batch'] = is_array($res_batch) ? $res_batch : $res_batch->result_array();
 
@@ -79,6 +82,63 @@ class Laporan_barang_stok extends MY_Controller
     //     $mpdf->WriteHTML($d);
     //     $mpdf->Output();
     // }
+
+    public function get_rincian_barang()
+{
+    $nama_barang = $this->input->post('nama_barang');
+
+    // Ambil data barang masuk
+    $barang_masuk = $this->db->select('
+            a.id_barang_masuk,
+            p.no_po_pembelian,
+            a.kode_tf_in,
+            a.no_batch,
+            a.tgl_msk_gdg,
+            a.tgl_exp,
+            a.jenis_transaksi_gudang,
+            a.gdg_qty_in,
+            c.nama_barang,
+            c.satuan
+        ')
+        ->from('tb_gudang_barang_masuk a')
+        ->join('tb_prc_po_pembelian p', 'a.id_prc_po_pembelian = p.id_prc_po_pembelian', 'left')
+        ->join('tb_master_barang c', 'p.id_barang = c.id_barang', 'left')
+        ->where('a.is_deleted', 0)
+        ->where('c.nama_barang', $nama_barang)
+        ->order_by('a.tgl_msk_gdg', 'ASC')
+        ->get()
+        ->result_array();
+
+    $hasil = [];
+
+    foreach ($barang_masuk as $row) {
+        // Cari total keluar berdasarkan kode_tf_in
+        $barang_keluar = $this->db->select('SUM(gdg_qty_out) as total_keluar')
+            ->from('tb_gudang_barang_keluar')
+            ->where('kode_tf_in', $row['kode_tf_in'])
+            ->where('is_deleted', 0)
+            ->get()
+            ->row_array();
+
+        $total_keluar = $barang_keluar['total_keluar'] ?? 0;
+        $stok_akhir = ($row['gdg_qty_in'] ?? 0) - $total_keluar;
+
+        $hasil[] = [
+            'no_po'         => $row['no_po_pembelian'],
+            'tgl_masuk'     => $row['tgl_msk_gdg'],
+            'kode_tf_in'    => $row['kode_tf_in'],
+            'nama_barang'   => $row['nama_barang'],
+            'no_batch'      => $row['no_batch'],
+            'tgl_exp'       => $row['tgl_exp'],
+            'jumlah_out'    => $row['jenis_transaksi_gudang'],
+            'stok_akhir'    => $stok_akhir,
+            'satuan'        => $row['satuan'],
+        ];
+    }
+
+    echo json_encode($hasil);
+}
+
 
     // Fungsi add, update, delete tetap sama
     public function delete($id_barang_keluar)

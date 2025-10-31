@@ -21,17 +21,17 @@ class Barang_stok extends MY_Controller {
             $d['id_barang_masuk'] = $data['result'][$i]['id_barang_masuk'];
 
             $jml_barang_masuk = $this->M_barang_masuk->jml_barang_masuk($d)->row_array();
-            // $jml_barang_keluar = $this->M_barang_keluar->jml_barang_keluar2($d)->row_array();
+            $jml_barang_keluar = $this->M_barang_keluar->jml_barang_keluar2($d)->row_array();
             // $a=0;
             // for($o=0; $o<count($donasi);$o++){
             //     $a+=$donasi[$o]['donasi'];
             // }
 
-            $data['result'][$i]['masuk']=$jml_barang_masuk['tot_barang_masuk'];
-            // $data['result'][$i]['keluar']=$jml_barang_keluar['tot_barang_keluar'];
-            // $data['result'][$i]['stok']=$jml_barang_masuk['tot_barang_masuk']-$jml_barang_keluar['tot_barang_keluar'];
+            $data['result'][$i]['masuk']= $jml_barang_masuk['tot_barang_masuk'];
+            $data['result'][$i]['keluar']= $jml_barang_keluar['tot_barang_keluar'];
+            $data['result'][$i]['stok']= $jml_barang_masuk['tot_barang_masuk']  -$jml_barang_keluar['tot_barang_keluar'];
 
-            // $stok=$data['result'][$i]['qty']-$jml_barang_keluar['tot_barang_keluar'];
+            // $stok=$data['result'][$i]['gdg_qty_in'] - $jml_barang_keluar['tot_barang_keluar'];
             // $data['result'][$i]['tot_barang_keluar']=$jml_barang_keluar['tot_barang_keluar'];
             // $data['result'][$i]['stok']=$stok;
         }

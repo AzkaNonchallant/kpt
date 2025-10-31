@@ -189,9 +189,9 @@ ORDER BY a.kode_tf_out ASC;
     }
     public function jml_barang_keluar2($data){
         $sql = "
-            SELECT sum(a.qty) tot_barang_keluar FROM `tb_gudang_barang_keluar` a 
-            LEFT JOIN tb_barang_masuk b ON a.kode_tf_in = b.kode_tf_in 
-            WHERE b.id_customer ='$data[id_customer]' AND a.is_deleted = 0"; 
+            SELECT sum(a.gdg_qty_out) tot_barang_keluar FROM `tb_gudang_barang_keluar` a 
+            LEFT JOIN tb_gudang_barang_masuk b ON a.kode_tf_in = b.kode_tf_in 
+            WHERE b.id_barang_masuk ='$data[id_barang_masuk]' AND a.is_deleted = 0"; 
         return $this->db->query($sql);
     }
     // Di model M_barang_keluar, perbaiki method ambil_surat_jalan:

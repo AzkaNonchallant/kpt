@@ -179,17 +179,27 @@ class sample_masuk extends MY_Controller {
         $options->set('isFontSubsettingEnabled', false);
         $options->set('defaultFont', 'Helvetica');
         $options->set('enable_font_subsetting', true);
-        $options->set('dpi', 200);
+        $options->set('dpi', 100);
         $options->set('chroot', FCPATH);
         $options->set('fontCache', FCPATH . 'application/cache/dompdf/');
         $options->set('tempDir', FCPATH . 'application/cache/dompdf/');
 
         $dompdf = new \Dompdf\Dompdf($options);
 
+        $tgl = $this->input->get('date_from');
+        $tgl2 = $this->input->get('date_until');
+        $nama_barang = $this->input->get('nama_barang');
+        $nama_customer = $this->input->get('nama_customer');
+
+
+        $data['tgl'] = $tgl;
+        $data['tgl2'] = $tgl2;
+        $data['nama_barang'] = $nama_barang;
+        $data['nama_customer'] = $nama_customer;
+
 
         // === ⿢ Ambil data dari model ===
-        $data['row'] = $this->M_sample_masuk->ambil_surat_jalan2()->row_array();
-        $data['detail'] = $this->M_sample_masuk->data_barang_keluar2()->result_array();
+        $data['detail'] = $this->M_sample_masuk->data_laporan_sample_masuk($tgl, $tgl2, $nama_barang, $nama_customer)->result_array();
         // echo json_encode($data['detail']);
         // === ⿣ Load HTML View ===
         $html = $this->load->view('laporan/sample_masuk/page_sample_masuk', $data, TRUE);

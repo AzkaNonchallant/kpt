@@ -3,202 +3,164 @@
 <head>
   <meta charset="utf-8">
   <title>Surat Jalan</title>
-  <style>
+  <style type="text/css">
     @page {
-      size: A4 landscape;
-      margin: 15mm 10mm;
+      margin: 40px 25px;
     }
 
     body {
-      font-family: "DejaVu Sans", sans-serif;
-      font-size: 11pt;
-      margin: 0;
-      padding: 0;
-      color: #000;
+      font-family: "DejaVu Sans", Arial, sans-serif;
+      font-size: 12px;
+      color: #333;
     }
 
-    /* HEADER */
+    /* Header perusahaan (pakai tabel biar stabil di PDF) */
     .header-table {
       width: 100%;
-      border-collapse: collapse;
+      border-bottom: 2px solid #000;
+      margin-bottom: 20px;
     }
 
     .header-table td {
-      border: none;
-      vertical-align: top;
-      padding: 2px;
-    }
-
-    .header-left img {
-      width: 80px;
-      height: 80px;
-    }
-
-    .header-center {
+      vertical-align: middle;
       text-align: center;
+      border: none;
     }
 
-    .header-center h2 {
-      font-size: 16pt;
+    .header-table .logo-left img,
+    .header-table .logo-right img {
+      width: 85px;
+      height: auto;
+    }
+
+    .header-table .company-info {
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .company-info h2 {
       margin: 0;
-    }
-
-    .header-center p {
-      font-size: 9pt;
-      margin: 2px 0;
-    }
-
-    .header-right table {
-      font-size: 9pt;
-    }
-
-    .header-right td {
-      padding: 1px 3px;
-      border: none;
-    }
-
-    hr {
-      border: 1px solid #000;
-      margin: 5px 0 10px 0;
-    }
-
-    /* TITLE */
-    .title {
-      text-align: center;
-      margin: 0 0 10px 0;
-    }
-
-    .title h3 {
-      font-size: 14pt;
-      margin-bottom: 5px;
+      font-size: 22px;
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    /* INFORMASI */
-    .info-table {
-      width: 100%;
-      border: none;
-      font-size: 10pt;
-      margin-bottom: 8px;
+    .company-info h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: normal;
     }
 
-    .info-table td {
-      padding: 2px 5px;
-      border: none;
-      vertical-align: top;
+    .company-info p {
+      margin: 2px 0;
+      font-size: 11px;
+      color: #444;
     }
 
-    /* TABEL BARANG */
-    table.main {
+    /* Judul laporan */
+    .judul {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .judul h3 {
+      display: inline-block;
+      border-bottom: 2px solid #000;
+      padding-bottom: 3px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tabel utama */
+    table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 5px;
-      font-size: 10pt;
+      margin-top: 15px;
     }
 
-    table.main th {
-      background-color: #1d3b74;
-      color: white;
+    table th {
+      background: #1d3b74;
+      color: #fff;
+      padding: 8px;
+      border: 1px solid #000;
+      font-weight: bold;
       text-align: center;
-      padding: 6px;
-      border: 1px solid #000;
+      font-size: 12px;
     }
 
-    table.main td {
-      border: 1px solid #000;
-      padding: 6px;
+    table td {
+      border: 1px solid #555;
+      padding: 6px 8px;
+      font-size: 12px;
       vertical-align: top;
     }
 
     tr:nth-child(even) {
-      background-color: #f8f8f8;
+      background-color: #f9f9f9;
     }
 
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .text-left { text-align: left; }
-
-    /* FOOTER */
-    .footer {
-      margin-top: 30px;
-      font-size: 10pt;
-    }
-
-    .footer table {
-      width: 100%;
-      border: none;
-    }
-
-    .footer td {
-      border: none;
-      vertical-align: top;
-      padding: 5px;
-    }
-
-    .signature-space {
-      height: 50px;
-    }
-
-    .note {
-      font-style: italic;
-      font-size: 9pt;
+    .text-center {
       text-align: center;
-      border: 1px solid #000;
-      margin-top: 10px;
-      padding: 4px;
+    }
+
+    .text-left {
+      text-align: left;
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10px;
+      color: #555;
     }
   </style>
 </head>
 
 <body>
-  <!-- HEADER -->
+<!-- HEADER (pakai tabel supaya stabil di PDF) -->
   <table class="header-table">
     <tr>
-      <td class="header-left" style="width:15%;">
-        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" alt="Logo Kiri">
+      <td class="logo-left" style="width: 100px;">
+        <img src="<?= FCPATH . 'assets/images/Logo_baru.jpg' ?>" alt="Logo Kapsulindo">
       </td>
-      <td class="header-center" style="width:70%;">
-        <h2>PT KAPSULINDO PUTRA TRADING</h2>
-        <p>Pedagang Besar Farmasi</p>
-        <p>Jl. Pancasila I Cicadas, Gunung Putri - Bogor</p>
+      <td class="company-info">
+        <h2>PT KAPSULINDO NUSANTARA</h2>
+        <h3>Pedagang Besar Bahan Baku Farmasi</h3>
+        <p>Jl. Pancasila 1, Cicadas Gunung Putri - Kab. Bogor 16964, Indonesia</p>
+        <p>Telp: (021) 8671165 | Fax: (021) 8671168, 86861734 | Email: pbbbf@kapsulindo.co.id</p>
       </td>
-      <td class="header-right" style="width:15%;">
-        <table>
-          <tr><td><b>NPWP</b></td><td>:</td></tr>
-          <tr><td><b>PBF No.</b></td><td>:</td></tr>
-          <tr><td><b>CDOB No.</b></td><td>:</td></tr>
-        </table>
+      <td class="logo-right" style="width: 100px;">
+        <img src="<?= FCPATH . 'assets/images/pom.jpeg' ?>" alt="Logo BPOM">
       </td>
     </tr>
   </table>
 
-  <hr>
 
   <!-- TITLE -->
   <div class="title">
-    <h3>Surat Jalan</h3>
+    <center><h2>Barang Keluar</h2></center>
   </div>
 
-  <!-- DETAIL SURAT -->
-  <table class="info-table">
-    <tr>
-      <td style="width:15%;"><b>No. SPPB</b></td>
-      <td style="width:2%;">:</td>
-      <td style="width:33%;"><?= $row['no_sppb'] ?></td>
-      <td style="width:15%;"><b>Tanggal</b></td>
-      <td style="width:2%;">:</td>
-      <td><?= date('d-M-Y', strtotime($row['tgl'])) ?></td>
-    </tr>
-  </table>
+  <!-- FILTER INFO -->
+  <div class="filter">
+    <?php if(!empty($tgl) && !empty($tgl2)) : ?>
+      <p>Periode : <?= $tgl ?> - <?= $tgl2 ?></p>
+    <?php endif; ?>
 
-  <!-- PEMBELI -->
-  <p style="margin: 5px 0; font-weight: bold;">Pembeli</p>
-  <table class="info-table">
-    <tr><td style="width:15%;">Nama</td><td style="width:2%;">:</td><td><?= $row['nama_customer'] ?></td></tr>
-    <tr><td>No. PO</td><td>:</td><td><?= $row['no_po'] ?></td></tr>
-    <tr><td>Alamat</td><td>:</td><td><?= $row['alamat_customer'] ?></td></tr>
-    <tr><td>Alamat Kirim</td><td>:</td><td><?= $row['alamat_customer'] ?></td></tr>
-  </table>
+    <?php if(!empty($nama_barang)) : ?>
+      <p>Barang : <?= $nama_barang ?></p>
+    <?php endif; ?>
+
+    <?php if(!empty($nama_customer)) : ?>
+      <p>Supplier : <?= $nama_customer ?></p>
+    <?php endif; ?>
+  </div>
+
 
   <!-- TABEL BARANG -->
   <table class="main">
@@ -224,7 +186,7 @@
       <tr>
         <td class="text-center"><?= $no++ ?></td>
         <td><?= $nama_barang_formatted ?></td>
-        <td class="text-center"><?= number_format($d['jumlah_kirim'], 3) ?> <?= $d['satuan'] ?></td>
+        <td class="text-center"><?= number_format($d['jumlah_kirim']) ?> <?= $d['satuan'] ?></td>
         <td class="text-center"><?= $d['no_batch'] ?></td>
         <td class="text-center"><?= $d['no_surat_jalan'] ?></td>
         <td class="text-center"><?= !empty($d['tgl_exp']) ? date('d/m/Y', strtotime($d['tgl_exp'])) : '-' ?></td>
@@ -234,7 +196,7 @@
       <?php if(count($detail) > 1): ?>
       <tr style="font-weight:bold;">
         <td colspan="2" class="text-right">Total</td>
-        <td class="text-center"><?= number_format($total, 3) ?> <?= $d['satuan'] ?></td>
+        <td class="text-center"><?= number_format($total) ?> <?= $d['satuan'] ?></td>
         <td colspan="4"></td>
       </tr>
       <?php endif; ?>
@@ -243,26 +205,7 @@
 
   <!-- FOOTER -->
   <div class="footer">
-    <table>
-      <tr>
-        <td width="50%">
-          <p>Penanggung Jawab PBF</p>
-          <p>Bogor, <?= date('d-m-Y', strtotime($row['tgl'])) ?></p>
-          <div class="signature-space"></div>
-          <p><u>apt. Ahmad Farhan, S.Farm</u></p>
-          <p style="font-size:9pt;">SIPA: 500.16.7.2/251/SIPA-1/00233/DPMPTSP/2025</p>
-        </td>
-        <td width="50%" class="text-right">
-          <p>Barang diterima dalam kondisi baik</p>
-          <p>Tanggal ................................ oleh :</p>
-          <div class="signature-space"></div>
-          <p>( ................................................ )</p>
-          <p>Nama & Stempel Perusahaan</p>
-        </td>
-      </tr>
-    </table>
-
-    <p class="note"><i>Pengembalian dan penukaran barang maksimum 7 hari setelah barang diterima</i></p>
+    <p>Dicetak otomatis oleh sistem | <?= date('d/m/Y H:i:s') ?></p>
   </div>
 
 </body>

@@ -105,7 +105,7 @@ class M_sample_masuk extends CI_Model
         return $this->db->query($sql);
     }
 
-    public function get6() 
+    public function get6()
     {
         $sql = "
         SELECT a.id_barang,a.jumlah_masuk,a.no_batch,a.is_deleted,a.id_mkt_po_sample,b.nama_barang,b.mesh,b.bloom,b.satuan,c.kode_sample_in
@@ -216,14 +216,6 @@ class M_sample_masuk extends CI_Model
     }
 
 
-    //     public function jml_po_sample($id_mkt_po_sample){
-    //     $this->db->select_sum('jumlah_order', 'total_order'); // ganti kolom sesuai tabel kamu
-    //     $this->db->where('id_mkt_po_sample', $id_mkt_po_sample);
-    //     $this->db->where('is_deleted', 0);
-    //     $q = $this->db->get('tb_mkt_po_sample');
-    //     return $q->row();
-    // }
-
 
     public function jml_po_sample($data)
     {
@@ -233,30 +225,7 @@ class M_sample_masuk extends CI_Model
         return $this->db->query($sql);
     }
 
-    // public function jml_sample2_masuk($id_barang){
-    //     $sql = "
-    // SELECT SUM(jumlah_sample) AS total_sample 
-    // FROM tb_mkt_po_sample
-    // WHERE id_mkt_po_sample = '$id_mkt_po_sample'
-    // AND is_deleted = 0
-    // ";
-    // return $this->db->query($sql);
-
-    // }
-
-    //  $sql = "
-    //         SELECT sum(gdg_qty_in) tot_barang_masuk FROM `tb_gudang_barang_masuk` 
-    //         WHERE id_barang_masuk ='$data[id_barang_masuk]' AND is_deleted = 0"; 
-    //     return $this->db->query($sql);
-
-    // Ambil kode transfer terakhir
-    // public function get_kode_sample_in(){
-    //     $this->db->select_max('kode_sample_in', 'kode_sample_in');
-    //     $q = $this->db->get('tb_sample_masuk');
-    //     return $q->row();
-    // }
-
-      // Get unique no_batch
+    // Get unique no_batch
     public function get_unique_batch()
     {
         $this->db->select('no_batch');
@@ -303,7 +272,34 @@ class M_sample_masuk extends CI_Model
         return $this->db->get();
     }
 
-    public function data_barang_keluar2(){
+    public function data_laporan_sample_masuk($tgl = null, $tgl2 = null, $nama_barang = null, $nama_customer = null)
+    {
+
+        if ($tgl != null && $tgl2 != null) {
+            $tgl = explode("/", $tgl);
+            $tgl = "$tgl[2]-$tgl[1]-$tgl[0]";
+            $tgl2 = explode("/", $tgl2);
+            $tgl2 = "$tgl2[2]-$tgl2[1]-$tgl2[0]";
+            $where[] = "AND a.tgl_masuk_sample >= '$tgl' AND  a.tgl_masuk_sample <= '$tgl2'";
+        } else if ($tgl == null && $tgl2 == null) {
+            $where[] = "";
+        } else {
+            return array();
+        }
+
+        if ($nama_barang == null) {
+            $where[] = "";
+        } else {
+            $where[] = "AND b.nama_barang = '$nama_barang'";
+        }
+
+        if ($nama_customer == null) {
+            $where[] = "";
+        } else {
+            $where[] = "AND c.nama_customer = '$nama_customer'";
+        }
+
+        $where = implode(" ", $where);
         $sql = "
             SELECT 
     a.*, 
@@ -314,12 +310,14 @@ class M_sample_masuk extends CI_Model
     LEFT JOIN tb_master_customer c ON a.id_customer = c.id_customer
     WHERE 
     b.is_deleted = 0
+    $where
     ORDER BY a.kode_sample_in ASC;
     ";
-            return $this->db->query($sql);
+        return $this->db->query($sql);
     }
 
-     public function ambil_surat_jalan2(){
+    public function ambil_surat_jalan2()
+    {
         $sql = "
             SELECT a.*,b.nama_customer,b.alamat_customer FROM tb_sample_masuk a
             LEFT JOIN tb_master_customer b ON a.id_customer = b.id_customer
