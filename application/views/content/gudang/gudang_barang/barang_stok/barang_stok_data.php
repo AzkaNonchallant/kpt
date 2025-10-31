@@ -496,7 +496,7 @@
                                                             <th>Nama Barang</th>
                                                             <th class="text-right">IN</th>
                                                             <th class="text-right">OUT</th>
-                                                            <th class="text-right">STOK</th>
+                                                            <th class="text-right">STOCK</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
