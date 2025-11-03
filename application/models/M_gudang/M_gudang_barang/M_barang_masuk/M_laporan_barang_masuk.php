@@ -56,6 +56,64 @@ public function get($id_barang = null)
     return $this->db->query($sql);
 }
 
+public function data_export($id_barang=null)
+{
+    if ($id_barang == null) {
+            $where[] = "";
+        }  else {
+            $where[] = "AND c.id_barang='$id_barang'";
+        }
+
+
+        $where = implode(" ", $where);
+
+    // Query utama
+    $sql = "
+        SELECT 
+            c.nama_barang,
+            a.no_batch,
+            a.kode_tf_in,
+            a.tgl_exp,
+            p.no_po_pembelian,
+            a.jenis_transaksi_gudang,
+            MAX(a.tgl_msk_gdg) AS tgl_masuk,
+            c.satuan,
+
+            -- total masuk per batch
+            COALESCE(SUM(a.gdg_qty_in), 0) AS total_masuk,
+
+            -- total keluar per batch (relasi pakai kode_tf_in)
+            COALESCE((
+                SELECT SUM(gdg_qty_out)
+                FROM tb_gudang_barang_keluar x
+                WHERE x.kode_tf_in = a.kode_tf_in
+                AND x.is_deleted = 0
+            ), 0) AS total_keluar,
+
+            -- stok akhir = masuk - keluar
+            (COALESCE(SUM(a.gdg_qty_in), 0) - 
+             COALESCE((
+                SELECT SUM(gdg_qty_out)
+                FROM tb_gudang_barang_keluar x
+                WHERE x.kode_tf_in = a.kode_tf_in
+                AND x.is_deleted = 0
+            ), 0)) AS stok_akhir
+
+        FROM tb_gudang_barang_masuk a
+        LEFT JOIN tb_prc_po_pembelian p ON a.id_prc_po_pembelian = p.id_prc_po_pembelian
+        LEFT JOIN tb_master_barang c ON p.id_barang = c.id_barang
+        WHERE a.is_deleted = 0
+        $where
+        GROUP BY a.no_batch, a.kode_tf_in, c.nama_barang, c.satuan
+        ORDER BY a.tgl_msk_gdg ASC
+    ";
+
+    // Jalankan query
+    return $this->db->query($sql);
+
+    
+}
+
 
 
 }

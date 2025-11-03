@@ -577,7 +577,7 @@
                             rows += `
                             <tr>
                             <td>${i+1}</td>
-                            <td>${item.tgl_masuk_sample || '-'}</td>
+                            <td>${ item.tgl_masuk_sample ? new Date(item.tgl_masuk_sample).toLocaleDateString('id-ID') : '-'}</td>
                             <td>${item.kode_sample_in || '-'}</td>
                             <td>${item.nama_barang || '-'}</td>
                             <td>${item.no_batch || '-'}</td>

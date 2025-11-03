@@ -32,6 +32,8 @@
                     <div class="float-right">
                       <div class="input-group">
                         <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
+                          <option value="" disabled selected hidden>- Nama Barang -</option>
+
                           <?php
                           foreach ($res_barang as $rb) { ?>
                             <option <?= $id_barang === $rb['id_barang'] ? 'selected' : '' ?> value="<?= $rb['id_barang'] ?>">
@@ -119,27 +121,13 @@
     })
     $('#export').click(function() {
 
-      var filter_batch = $('#filter_batch').find(':selected').val();
-      var filter_tgl = $('#filter_tgl').val();
-      var filter_tgl2 = $('#filter_tgl2').val();
+      var filter_barang = $('#filter_barang').find(':selected').val();
 
-      var newFilterTgl = filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
-      var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
+      const query = new URLSearchParams({
+        id_barang: filter_barang,
+      })
 
-      if (filter_tgl == '' && filter_tgl2 != '') {
-        window.location = "<?= base_url() ?>Laporan_barang_masuk?alert=warning&msg=dari tanggal belum diisi";
-        alert("dari tanggal belum diisi")
-      } else if (filter_tgl != '' && filter_tgl2 == '') {
-        window.location = "<?= base_url() ?>Laporan_barang_masuk?alert=warning&msg=sampai tanggal belum diisi";
-      } else {
-        const query = new URLSearchParams({
-          batch: filter_batch,
-          date_from: filter_tgl,
-          date_until: filter_tgl2
-        })
-        var url = "<?= base_url() ?>Laporan_barang_masuk/pdf_laporan_barang_masuk?" + query.toString();
-        window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-      }
+      window.location = "<?= base_url() ?>gudang/gudang_barang/barang_stok/laporan_barang_stok/export_laporan_stock_barang?" + query.toString()
     })
   })
 </script>
@@ -207,11 +195,11 @@
               <tr>
           <td>${i+1}</td>
           <td>${item.no_po || '-'}</td>
-          <td>${item.tgl_masuk || '-'}</td>
+          <td>${ item.tgl_masuk ? new Date(item.tgl_masuk).toLocaleDateString('id-ID') : '-'}</td>
           <td>${item.kode_tf_in || '-'}</td>
           <td>${item.nama_barang || '-'}</td>
           <td>${item.no_batch || '-'}</td>
-          <td>${item.tgl_exp || '-'}</td>
+          <td>${ item.tgl_exp ? new Date(item.tgl_exp).toLocaleDateString('id-ID') : '-'}</td>
           <td>${item.jumlah_out || '-'}</td>
           <td>${Number(item.stok_akhir || 0).toLocaleString('id-ID')}</td>
           <td>${item.satuan || '-'}</td>
