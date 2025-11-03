@@ -161,7 +161,7 @@
 
   <!-- TITLE -->
   <div class="title">
-    <h3>PO PEMBELIAN</h3>
+    <h3>PO PEMBELIANN</h3>
   </div>
 
   <!-- FILTER INFO -->
