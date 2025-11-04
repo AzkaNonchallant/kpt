@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PO Sample</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
   <style>
     :root {
       --primary: #4361ee;
@@ -239,7 +242,6 @@
     .modal-title {
       font-weight: 700;
       font-size: 18px;
-      left: 100%;
       color: white;
     }
 
@@ -406,627 +408,603 @@
   </style>
 </head>
 
-
-<!-- [ Main Content ] start -->
-<section class="pcoded-main-container">
-  <div class="pcoded-wrapper">
-    <div class="pcoded-content">
-      <div class="pcoded-inner-content">
-        <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-          <div class="page-block">
-            <div class="row align-items-center">
-              <div class="col-md-12">
-                <div class="page-header-title">
-                  <!-- <h5 class="m-b-10">Data Barang Masuk</h5> -->
+<body>
+  <!-- [ Main Content ] start -->
+  <section class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <!-- [ breadcrumb ] start -->
+          <div class="page-header">
+            <div class="page-block">
+              <div class="row align-items-center">
+                <div class="col-md-12">
+                  <div class="page-header-title">
+                    <!-- <h5 class="m-b-10">Data Barang Masuk</h5> -->
+                  </div>
+                  <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>"><i class="feather icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="javascript:">PO Sample</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:"></a></li>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
+                      <i class="feather icon-plus"></i>Tambah Gudang
+                    </button>
+                    <button type="button" class="btn btn-success float-right btn-sm" data-toggle="modal" data-target="#addCustomer">
+                      <i class="feather icon-plus"></i>Tambah Customer
+                    </button>
+                  </ul>
                 </div>
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="<?= base_url() ?>"><i class="feather icon-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="javascript:">PO Sample</a></li>
-                  <li class="breadcrumb-item"><a href="javascript:"></a></li>
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#add">
-                    <i class="feather icon-plus"></i>Tambah Gudang
-                  </button>
-                  <button type="button" class="btn btn-success float-right btn-sm" data-toggle="modal" data-target="#addCustomer">
-                    <i class="feather icon-plus"></i>Tambah Customer
-                  </button>
-                </ul>
               </div>
             </div>
           </div>
-        </div>
-        <!-- [ breadcrumb ] end -->
-        <div class="main-body">
-          <div class="page-wrapper">
-            <!-- [ Main Content ] start -->
-            <div class="row">
-              <!-- [ basic-table ] start -->
-              <div class="col-xl-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h5>Data PO Sample</h5>
+          <!-- [ breadcrumb ] end -->
+          <div class="main-body">
+            <div class="page-wrapper">
+              <!-- [ Main Content ] start -->
+              <div class="row">
+                <!-- [ basic-table ] start -->
+                <div class="col-xl-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Data PO Sample</h5>
 
-                    <div class="float-right">
-                      <div class="input-group">
-                        <select class="form-control chosen-select" id="filter_customer" name="filter_customer">
-                          <option value="" disabled selected hidden>- Nama Customer -</option>
-                          <?php
-                          foreach ($res_customer as $rc) { ?>
-                            <option <?= $nama_customer === $rc['nama_customer'] ? 'selected' : '' ?> value="<?= $rc['nama_customer'] ?>"><?= $rc['nama_customer'] ?></option>
-                          <?php } ?>
-                        </select>
-                        <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
-                          <option value="" disabled selected hidden>- Nama Barang -</option>
-                          <?php
-                          foreach ($res_barang_2 as $rb) { ?>
-                            <option <?= $nama_barang === $rb['nama_barang'] ? 'selected' : '' ?> value="<?= $rb['nama_barang'] ?>"><?= $rb['nama_barang'] ?> - Mesh <?= $rb['mesh'] ?></option>
-                          <?php } ?>
-                        </select>
-                        <input type="text" id="filter_tgl" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
-                        <input type="text" id="filter_tgl2" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
-                        <div class="input-group-append">
-                          <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
-                          <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                          <a href="<?= base_url() ?>marketing/po_sample" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                      <div class="float-right">
+                        <div class="input-group">
+                          <select class="form-control chosen-select" id="filter_customer" name="filter_customer">
+                            <option value="" disabled selected hidden>- Nama Customer -</option>
+                            <?php
+                            foreach ($res_customer as $rc) { ?>
+                              <option <?= $nama_customer === $rc['nama_customer'] ? 'selected' : '' ?> value="<?= $rc['nama_customer'] ?>"><?= $rc['nama_customer'] ?></option>
+                            <?php } ?>
+                          </select>
+                          <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
+                            <option value="" disabled selected hidden>- Nama Barang -</option>
+                            <?php
+                            foreach ($res_barang_2 as $rb) { ?>
+                              <option <?= $nama_barang === $rb['nama_barang'] ? 'selected' : '' ?> value="<?= $rb['nama_barang'] ?>"><?= $rb['nama_barang'] ?> - Mesh <?= $rb['mesh'] ?></option>
+                            <?php } ?>
+                          </select>
+                          <input type="text" id="filter_tgl" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
+                          <input type="text" id="filter_tgl2" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
+                          <div class="input-group-append">
+                            <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
+                            <button class="btn btn-primary" id="export" type="button">Cetak</button>
+                            <a href="<?= base_url() ?>marketing/po_sample" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-block table-border-style">
+                    <div class="card-block table-border-style">
 
-                    <?php
-                    // print_r($result);
-                    ?>
-                    <div class="table-responsive">
-                      <table class="table datatable table-hover table-striped table-sm">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Tgl PO</th>
-                            <!-- <th>No PO</th> -->
-                            <th>Customer</th>
-                            <th>Nama Barang</th>
-                            <th>Jumlah PO</th>
-                            <!-- <th>Harga PO</th> -->
-                            <!-- <th>Outstanding</th> -->
-                            <!-- <th>Status</th> -->
-                            <th>Detail</th>
-                            <th class="text-center">Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php
-                          $level = $this->session->userdata('level');
-                          $no = 1;
-                          foreach ($result as $k) {
-                            $tgl_po =  explode('-', $k['tgl_po_sample'])[2] . "/" . explode('-', $k['tgl_po_sample'])[1] . "/" . explode('-', $k['tgl_po_sample'])[0];
-                            //   if ($k['tot_sppb']==0) {
-                            //     $ds="";
-                            //   }else{
-                            //     $ds="d-none";
-                            //   }
-
-                            //   if ($k['tot_sppb']==0) {
-                            //     $status="Draft";
-                            //   }else if ($k['tot_sppb']<>0 & $k['sisa'] <>0){
-                            //     $status="Proses";
-                            //   }else if ($k['tot_sppb']<>0 & $k['sisa'] ==0){
-                            //     $status="Selesai";
-                            //   }
-                          ?>
-
+                      <?php
+                      // print_r($result);
+                      ?>
+                      <div class="table-responsive">
+                        <table class="table datatable table-hover table-striped table-sm">
+                          <thead>
                             <tr>
-                              <th scope="row"><?= $no++ ?></th>
-                              <td><?= $tgl_po ?></td>
-                              <!-- <td><?= $k['no_po_customer'] ?></td> -->
-                              <td><?= $k['nama_customer'] ?></td>
-                              <td><?= $k['nama_barang'] ?></td>
-                              <td class="text-right"><?= number_format($k['jumlah_po_sample'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
-                              <!-- <td class="text-right"><?= number_format($k['sisa'], 0, ",", ".") ?> <?= $k['satuan'] ?></td> -->
-                              <!-- <td><?= $status ?></td> -->
-                              <td class="text-center">
-                                <div class="btn-group " role="group" aria-label="Basic example">
-                                  <button type="button"
-                                    class="btn btn-info btn-square btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#detail"
-                                    data-id_mkt_po_sample="<?= $k['id_mkt_po_sample'] ?>"
-                                    data-tgl_po_sample="<?= $tgl_po ?>"
-                                    data-id_customer="<?= $k['id_customer'] ?>"
-                                    data-nama_customer="<?= $k['nama_customer'] ?>"
-                                    data-id_barang="<?= $k['id_barang'] ?>"
-                                    data-nama_barang="<?= $k['nama_barang'] ?>"
-                                    data-mesh="<?= $k['mesh'] ?>"
-                                    data-bloom="<?= $k['bloom'] ?>"
-                                    data-jumlah_po_sample="<?= $k['jumlah_po_sample'] ?>"
-                                    data-keterangan="<?= $k['ket_po_sample'] ?>"
-                                    data-mkt_admin="<?= $k['mkt_admin'] ?>">
-                                    <i class="feather icon-eye"></i>Detail
-                                  </button>
-                                </div>
-                              </td>
-                              <td class="text-center">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                  <?php if ($level === "0" && $k['status'] != 'processed') { ?>
-                                    <button type="button"
-                                      class="btn btn-warning btn-square btn-sm"
-                                      data-toggle="modal"
-                                      data-target="#edit"
-                                      data-id_mkt_po_sample="<?= $k['id_mkt_po_sample'] ?>"
-                                      data-tgl_po_sample="<?= $tgl_po ?>"
-                                      data-id_customer="<?= $k['id_customer'] ?>"
-                                      data-nama_customer="<?= $k['nama_customer'] ?>"
-                                      data-id_barang="<?= $k['id_barang'] ?>"
-                                      data-nama_barang="<?= $k['nama_barang'] ?>"
-                                      data-mesh="<?= $k['mesh'] ?>"
-                                      data-bloom="<?= $k['bloom'] ?>"
-                                      data-jumlah_po_sample="<?= $k['jumlah_po_sample'] ?>"
-                                      data-keterangan_sample="<?= $k['ket_po_sample'] ?>"
-                                      data-mkt_admin="<?= $k['mkt_admin'] ?>"
-                                      <?php foreach ($res_barang as $b) : ?>
-                                      data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>"
-                                      <?php endforeach; ?>>
-                                      <i class="feather icon-edit-2"></i>Edit
-                                    </button>
-                                    <a
-                                      href="<?= base_url() ?>marketing/po_sample/delete/<?= $k['id_mkt_po_sample'] ?>"
-                                      class="btn btn-danger btn-square text-light btn-sm"
-                                      onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
-                                      <i class="feather icon-trash-2"></i>hapus
-                                    </a>
-                                </div>
-                              <?php } ?>
-                              </td>
+                              <th>#</th>
+                              <th>Tgl PO</th>
+                              <!-- <th>No PO</th> -->
+                              <th>Customer</th>
+                              <th>Nama Barang</th>
+                              <th>Jumlah PO</th>
+                              <!-- <th>Harga PO</th> -->
+                              <!-- <th>Outstanding</th> -->
+                              <!-- <th>Status</th> -->
+                              <th>Detail</th>
+                              <th class="text-center">Aksi</th>
                             </tr>
-                          <?php
-                          }
-                          ?>
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            <?php
+                            $level = $this->session->userdata('level');
+                            $no = 1;
+                            foreach ($result as $k) {
+                              $tgl_po =  explode('-', $k['tgl_po_sample'])[2] . "/" . explode('-', $k['tgl_po_sample'])[1] . "/" . explode('-', $k['tgl_po_sample'])[0];
+                              //   if ($k['tot_sppb']==0) {
+                              //     $ds="";
+                              //   }else{
+                              //     $ds="d-none";
+                              //   }
+
+                              //   if ($k['tot_sppb']==0) {
+                              //     $status="Draft";
+                              //   }else if ($k['tot_sppb']<>0 & $k['sisa'] <>0){
+                              //     $status="Proses";
+                              //   }else if ($k['tot_sppb']<>0 & $k['sisa'] ==0){
+                              //     $status="Selesai";
+                              //   }
+                            ?>
+
+                              <tr>
+                                <th scope="row"><?= $no++ ?></th>
+                                <td><?= $tgl_po ?></td>
+                                <!-- <td><?= $k['no_po_customer'] ?></td> -->
+                                <td><?= $k['nama_customer'] ?></td>
+                                <td><?= $k['nama_barang'] ?></td>
+                                <td class="text-right"><?= number_format($k['jumlah_po_sample'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
+                                <!-- <td class="text-right"><?= number_format($k['sisa'], 0, ",", ".") ?> <?= $k['satuan'] ?></td> -->
+                                <!-- <td><?= $status ?></td> -->
+                                <td class="text-center">
+                                  <div class="btn-group " role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-info btn-square btn-sm" data-toggle="modal" data-target="#detail" data-id_mkt_po_sample="<?= $k['id_mkt_po_sample'] ?>" data-tgl_po_sample="<?= $tgl_po ?>" data-id_customer="<?= $k['id_customer'] ?>" data-nama_customer="<?= $k['nama_customer'] ?>" data-id_barang="<?= $k['id_barang'] ?>" data-nama_barang="<?= $k['nama_barang'] ?>" data-mesh="<?= $k['mesh'] ?>" data-bloom="<?= $k['bloom'] ?>" data-jumlah_po_sample="<?= $k['jumlah_po_sample'] ?>" data-keterangan="<?= $k['ket_po_sample'] ?>" data-mkt_admin="<?= $k['mkt_admin'] ?>">
+                                      <i class="feather icon-eye"></i>Detail
+                                    </button>
+                                  </div>
+                                </td>
+                                <td class="text-center">
+                                  <div class="btn-group" role="group" aria-label="Basic example">
+                                    <?php if ($level === "0" && $k['status'] != 'processed') { ?>
+                                      <button type="button" class="btn btn-warning btn-square btn-sm" data-toggle="modal" data-target="#edit" data-id_mkt_po_sample="<?= $k['id_mkt_po_sample'] ?>" data-tgl_po_sample="<?= $tgl_po ?>" data-id_customer="<?= $k['id_customer'] ?>" data-nama_customer="<?= $k['nama_customer'] ?>" data-id_barang="<?= $k['id_barang'] ?>" data-nama_barang="<?= $k['nama_barang'] ?>" data-mesh="<?= $k['mesh'] ?>" data-bloom="<?= $k['bloom'] ?>" data-jumlah_po_sample="<?= $k['jumlah_po_sample'] ?>" data-keterangan_sample="<?= $k['ket_po_sample'] ?>" data-mkt_admin="<?= $k['mkt_admin'] ?>" <?php foreach ($res_barang as $b) : ?> data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" <?php endforeach; ?>>
+                                        <i class="feather icon-edit-2"></i>Edit
+                                      </button>
+                                      <a href="<?= base_url() ?>marketing/po_sample/delete/<?= $k['id_mkt_po_sample'] ?>" class="btn btn-danger btn-square text-light btn-sm" onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
+                                        <i class="feather icon-trash-2"></i>hapus
+                                      </a>
+                                  </div>
+                                <?php } ?>
+                                </td>
+                              </tr>
+                            <?php
+                            }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <!-- [ basic-table ] end -->
+                <!-- [ basic-table ] end -->
 
+              </div>
+              <!-- [ Main Content ] end -->
             </div>
-            <!-- [ Main Content ] end -->
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#lihat').click(function() {
-
-      var filter_barang = $('#filter_barang').find(':selected').val();
-      var filter_customer = $('#filter_customer').find(':selected').val();
-      var filter_tgl = $('#filter_tgl').val();
-      var filter_tgl2 = $('#filter_tgl2').val();
-
-      var newFilterTgl = filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
-      var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
-
-      if (filter_tgl == '' && filter_tgl2 != '') {
-        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=dari tanggal belum diisi";
-      } else if (filter_tgl != '' && filter_tgl2 == '') {
-        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=sampai tanggal belum diisi";
-      } else {
-        const query = new URLSearchParams({
-          nama_customer: filter_customer,
-          nama_barang: filter_barang,
-          date_from: filter_tgl,
-          date_until: filter_tgl2
-        })
-
-        window.location = "<?= base_url() ?>marketing/po_sample/index?" + query.toString()
-
-      }
-    })
-    $('#export').click(function() {
-
-      var filter_barang = $('#filter_barang').find(':selected').val();
-      var filter_customer = $('#filter_customer').find(':selected').val();
-      var filter_tgl = $('#filter_tgl').val();
-      var filter_tgl2 = $('#filter_tgl2').val();
-
-      var newFilterTgl = filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
-      var newFilterTgl2 = filter_tgl2.split("/")[2] + "-" + filter_tgl2.split("/")[1] + "-" + filter_tgl2.split("/")[0];
-
-      if (filter_tgl == '' && filter_tgl2 != '') {
-        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=dari tanggal belum diisi";
-        alert("dari tanggal belum diisi")
-      } else if (filter_tgl != '' && filter_tgl2 == '') {
-        window.location = "<?= base_url() ?>marketing/po_sample?alert=warning&msg=sampai tanggal belum diisi";
-      } else {
-        const query = new URLSearchParams({
-          nama_customer: filter_customer,
-          nama_barang: filter_barang,
-          date_from: filter_tgl,
-          date_until: filter_tgl2
-        })
-        var url = "<?= base_url() ?>marketing/po_sample/pdf_po_sample?" + query.toString();
-        window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-      }
-    })
-  })
-</script>
-
-<!-- Modal ADD-->
-<div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Gudang</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" id="" action="<?= base_url() ?>marketing/po_sample/add">
-        <div class="modal-body">
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="tgl_po">Tanggal PO Sample</label>
-                <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample" placeholder="Tanggal PO Sample" autocomplete="off" required>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="id_customer">Nama Gudang</label>
-                <select class="form-control chosen-select" id="id_customer" name="id_customer" autocomplete="off" required>
-                  <option value="">-Pilih Nama Gudang -</option>
-                  <?php
-                  foreach ($res_customer as $c) {
-                  ?>
-                    <option value="<?= $c['id_customer'] ?>">(<?= $c['kode_customer'] ?>) <?= $c['nama_customer'] ?></option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="id_barang">Nama Barang</label>
-                <select class="form-control chosen-select" id="id_barang" name="id_barang" autocomplete="off" required>
-                  <option value="">-Pilih Nama Barang -</option>
-                  <?php
-                  foreach ($res_barang as $b) {
-
-                  ?>
-                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" data-no_batch="<?=$b['no_batch']?>" value="<?= $b['id_barang'] ?>"><?= $b['nama_barang'] ?> (<?= $b['no_batch'] ?>) </option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-                  <input type="hidden" id="no_batch" name="no_batch">
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Kode TF IN</label>
-                <input class="form-control" id="kode_tf_in" name="kode_tf_in" placeholder="Kode TF IN" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Mesh</label>
-                <input class="form-control" id="mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Bloom</label>
-                <input type="text" class="form-control" id="bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Stock ZAK</label>
-                <input type="text" class="form-control" id="gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jumlah(Zak)</label>
-                <input type="text" class="form-control" id="jumlah_zak" name="jumlah_Zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                <div id="validationServer03Feedback" class="invalid-feedback">
-                  Maaf Jumlah Kirim tidak boleh lebih dari Stock.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                <input type="text" class="form-control" id="jumlah_kg" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
-              </div>
-            </div>
-
-
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="note_gudang">Keterangan Po Sample</label>
-                <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Marketing Admin</label>
-                <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="simpan" class="btn btn-primary"
-            onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#add').on('show.bs.modal', function(event) {});
-
-    // Fungsi untuk format angka ribuan
-    function formatRupiah(angka) {
-      let number_string = angka.replace(/[^,\d]/g, '').toString(),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return rupiah;
-    }
-
-    $("#no_po").keyup(function() {
-      var no_po = $("#no_po").val();
-      jQuery.ajax({
-        url: "<?= base_url() ?>marketing/po_customer/cek_no_po",
-        dataType: 'text',
-        type: "post",
-        data: {
-          no_po: no_po
-        },
-        success: function(response) {
-          if (response == "true") {
-            $("#no_po").addClass("is-invalid");
-            $("#simpan").attr("disabled", "disabled");
-          } else {
-            $("#no_po").removeClass("is-invalid");
-            $("#simpan").removeAttr("disabled");
-          }
-        }
-      });
-    })
-
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-kode_tf_in')
-      kode_tf_in = selected.replaceAll(' ', ' ')
-      $('#kode_tf_in').val(kode_tf_in)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-no_batch')
-      no_batch = selected.replaceAll(' ', ' ')
-      $('#no_batch').val(no_batch)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-mesh')
-      mesh = selected.replaceAll(' ', ' ')
-      $('#mesh').val(mesh)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-bloom')
-      bloom = selected.replaceAll(' ', ' ')
-      $('#bloom').val(bloom)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-gdg_qty_in');
-      // Pastikan nilainya berupa angka dulu
-      let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
-      let zak = gdg_qty_in / 25
-      // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
-      gdg_qty_in = new Intl.NumberFormat('id-ID').format(zak);
-      // Masukkan hasil format ke input
-      $('#gdg_qty_in').val(gdg_qty_in);
-    });
-
-    $('#jumlah_zak').on('input', function() {
-      let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
-      zak = parseFloat(zak) || 0; // ubah ke angka, default 0
-      let kg = zak * 25; // hitung total
-
-      // Format hasilnya agar rapi (pakai titik ribuan)
-      let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      $('#jumlah_kg').val(formattedKg);
-      $("#jumlah_zak").keyup(function() {
-        var jumlah_zak = $("#jumlah_zak").val().replaceAll('.', '');
-        var gdg_qty_in = $("#gdg_qty_in").val().replaceAll('.', '');
-        if (parseInt(jumlah_zak) > parseInt(gdg_qty_in)) {
-          $("#jumlah_zak").addClass("is-invalid");
-          $("#simpan").attr("disabled", "disabled");
-        } else {
-          $("#jumlah_zak").removeClass("is-invalid");
-          $("#simpan").removeAttr("disabled");
-        }
-      })
-    });
-
-    document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
-      let value = this.value.replace(/\D/g, '');
-      value = new Intl.NumberFormat('id-ID').format(value);
-      this.value = value;
-    });
-
-  });
-</script>
-
-
-<!-- Modal ADD CUSTOMER -->
-<div class="modal fade" id="addCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Customer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" id="form-c" action="<?= base_url() ?>marketing/po_sample/add2">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="tgl_po">Tanggal PO Sample</label>
-                <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample" placeholder="Tanggal PO Sample" autocomplete="off" required>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="id_customer_customer">Nama Gudang</label>
-                <select class="form-control chosen-select" id="id_customer_customer" name="id_customer" autocomplete="off" required>
-                  <option value="">-Pilih Nama Gudang -</option>
-                  <?php
-                  foreach ($res_gud as $c) {
-                  ?>
-                    <option value="<?= $c['id_customer'] ?>">(<?= $c['id_customer'] ?>) <?= $c['nama_customer'] ?></option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="id_barang_customer">Nama Sample</label>
-                <select class="form-control chosen-select" id="id_barang_customer" name="id_barang" autocomplete="off" required>
-                  <option value="">-Pilih Nama Barang -</option>
-
-                  <?php
-                  foreach ($res_barang_gud as $rs) { ?>
-                    <option
-                      value="<?= $rs['id_barang'] ?>"
-                      data-bloom="<?= $rs['bloom'] ?>"
-                      data-mesh="<?= $rs['mesh'] ?>"
-                      data-kode_tf_in="<?= $rs['kode_sample_in'] ?>"
-                      data-gdg_qty_in="<?= $rs['jumlah_masuk'] ?>"
-                      data-no_batch="<?=$rs['no_batch']?>">
-                       <?= $rs['nama_barang'] ?> (<?= $rs['no_batch'] ?>)
-                    </option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
-                  <input type="hidden" id="c-no_batch" name="no_batch">
-
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Kode TF IN</label>
-                <input class="form-control" id="c-kode_tf_in" name="kode_tf_in" placeholder="Kode TF IN" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Mesh</label>
-                <input class="form-control" id="c-mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Bloom</label>
-                <input type="text" class="form-control" id="c-bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Stock</label>
-                <input type="text" class="form-control" id="c-gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="jumlah_kg_customer">Jumlah(kg)</label>
-                <input type="text" class="form-control" id="jumlah_kg_customer" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03FeedbackCustomer" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()">
-                <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
-                  Maaf Jumlah Kirim tidak boleh lebih dari Stock.
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="note_gudang">Keterangan Po Sample</label>
-                <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="mkt_admin_customer">Marketing Admin</label>
-                <input type="text" class="form-control" id="mkt_admin_customer" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="simpanCustomer" class="btn btn-primary"
-            onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Customer Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">
-            Simpan Customer
+  <!-- Modal Detail -->
+  <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailModalLabel">Detail PO Sample</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
-      </form>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-tgl_po">Tanggal PO Sample</label>
+                <input type="text" class="form-control" id="d-tgl_po" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-nama_customer">Nama Gudang</label>
+                <input type="text" class="form-control" id="d-nama_customer" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-nama_barang">Nama Barang</label>
+                <input type="text" class="form-control" id="d-nama_barang" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-mesh">Mesh</label>
+                <input type="text" class="form-control" id="d-mesh" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-bloom">Bloom</label>
+                <input type="text" class="form-control" id="d-bloom" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-jumlah_po">Jumlah PO</label>
+                <input type="text" class="form-control" id="d-jumlah_po" readonly>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="d-keterangan">Keterangan</label>
+                <textarea class="form-control" id="d-keterangan" rows="3" readonly></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="d-mkt_admin">Marketing Admin</label>
+                <input type="text" class="form-control" id="d-mkt_admin" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#addCustomer').on('show.bs.modal', function(event) {
+  <!-- Modal ADD-->
+  <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Gudang</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" id="" action="<?= base_url() ?>marketing/po_sample/add">
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tgl_po">Tanggal PO Sample</label>
+                  <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample" placeholder="Tanggal PO Sample" autocomplete="off" required>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="id_customer">Nama Gudang</label>
+                  <select class="form-control chosen-select" id="id_customer" name="id_customer" autocomplete="off" required>
+                    <option value="">-Pilih Nama Gudang -</option>
+                    <?php
+                    foreach ($res_customer as $c) {
+                    ?>
+                      <option value="<?= $c['id_customer'] ?>">(<?= $c['kode_customer'] ?>) <?= $c['nama_customer'] ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="id_barang">Nama Barang</label>
+                  <select class="form-control chosen-select" id="id_barang" name="id_barang" autocomplete="off" required>
+                    <option value="">-Pilih Nama Barang -</option>
+                    <?php
+                    foreach ($res_barang as $b) {
+
+                    ?>
+                      <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" data-no_batch="<?= $b['no_batch'] ?>" value="<?= $b['id_barang'] ?>"><?= $b['nama_barang'] ?> (<?= $b['no_batch'] ?>) </option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <input type="hidden" id="no_batch" name="no_batch">
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Kode TF IN</label>
+                  <input class="form-control" id="kode_tf_in" name="kode_tf_in" placeholder="Kode TF IN" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Mesh</label>
+                  <input class="form-control" id="mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Bloom</label>
+                  <input type="text" class="form-control" id="bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Stock ZAK</label>
+                  <input type="text" class="form-control" id="gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                  <input type="text" class="form-control" id="jumlah_zak" name="jumlah_Zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                  <div id="validationServer03Feedback" class="invalid-feedback">
+                    Maaf Jumlah Kirim tidak boleh lebih dari Stock.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Jumlah(kg)</label>
+                  <input type="text" class="form-control" id="jumlah_kg" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" readonly>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="note_gudang">Keterangan Po Sample</label>
+                  <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Marketing Admin</label>
+                  <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal ADD CUSTOMER -->
+  <div class="modal fade" id="addCustomer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" id="form-c" action="<?= base_url() ?>marketing/po_sample/add2">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tgl_po">Tanggal PO Sample</label>
+                  <input type="text" class="form-control datepicker" id="tgl_po" name="tgl_po_sample" placeholder="Tanggal PO Sample" autocomplete="off" required>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="id_customer_customer">Nama Gudang</label>
+                  <select class="form-control chosen-select" id="id_customer_customer" name="id_customer" autocomplete="off" required>
+                    <option value="">-Pilih Nama Gudang -</option>
+                    <?php
+                    foreach ($res_gud as $c) {
+                    ?>
+                      <option value="<?= $c['id_customer'] ?>">(<?= $c['id_customer'] ?>) <?= $c['nama_customer'] ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="id_barang_customer">Nama Sample</label>
+                  <select class="form-control chosen-select" id="id_barang_customer" name="id_barang" autocomplete="off" required>
+                    <option value="">-Pilih Nama Barang -</option>
+
+                    <?php
+                    foreach ($res_barang_gud as $rs) { ?>
+                      <option value="<?= $rs['id_barang'] ?>" data-bloom="<?= $rs['bloom'] ?>" data-mesh="<?= $rs['mesh'] ?>" data-kode_tf_in="<?= $rs['kode_sample_in'] ?>" data-gdg_qty_in="<?= $rs['jumlah_masuk'] ?>" data-no_batch="<?= $rs['no_batch'] ?>">
+                        <?= $rs['nama_barang'] ?> (<?= $rs['no_batch'] ?>)
+                      </option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <input type="hidden" id="c-no_batch" name="no_batch">
+
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Kode TF IN</label>
+                  <input class="form-control" id="c-kode_tf_in" name="kode_tf_in" placeholder="Kode TF IN" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Mesh</label>
+                  <input class="form-control" id="c-mesh" name="mesh" placeholder="Mesh" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Bloom</label>
+                  <input type="text" class="form-control" id="c-bloom" name="bloom" placeholder="Bloom" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Stock</label>
+                  <input type="text" class="form-control" id="c-gdg_qty_in" name="gdg_qty_in" placeholder="Stock" autocomplete="off" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="jumlah_kg_customer">Jumlah(kg)</label>
+                  <input type="text" class="form-control" id="jumlah_kg_customer" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03FeedbackCustomer" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()">
+                  <div id="validationServer03FeedbackCustomer" class="invalid-feedback">
+                    Maaf Jumlah Kirim tidak boleh lebih dari Stock.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="note_gudang">Keterangan Po Sample</label>
+                  <textarea class="form-control" id="note_gudang" name="ket_po_sample" rows="3" placeholder="Keterangan Po" autocomplete="off"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="mkt_admin_customer">Marketing Admin</label>
+                  <input type="text" class="form-control" id="mkt_admin_customer" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="simpanCustomer" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Customer Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">
+              Simpan Customer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal EDIT-->
+  <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit PO Sample</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" action="<?= base_url() ?>marketing/po_sample/update">
+          <div class="modal-body">
+            <input type="hidden" id="e-id_mkt_po_sample" name="id_mkt_po_sample">
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tgl_po">Tanggal PO</label>
+                  <input type="text" class="form-control datepicker" id="e-tgl_po" name="tgl_po_sample" placeholder="Tanggal PO" autocomplete="off" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="id_customer">Nama Gudang</label>
+                  <select class="form-control chosen-select" id="e-id_customer" name="id_customer" autocomplete="off" required>
+                    <option value="">-Pilih Nama Gudang -</option>
+                    <?php
+                    foreach ($res_customer as $c) {
+                    ?>
+                      <option value="<?= $c['id_customer'] ?>">(<?= $c['kode_customer'] ?>) <?= $c['nama_customer'] ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="id_barang">Nama Barang</label>
+                  <select class="form-control chosen-select" id="e-id_barang" name="id_barang" autocomplete="off" required>
+                    <option value="">-Pilih Nama Barang -</option>
+                    <?php
+                    foreach ($res_barang as $b) :
+                    ?>
+                      <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" value="<?= $b['id_barang'] ?>">(<?= $b['kode_barang'] ?>) <?= $b['nama_barang'] ?></option>
+                    <?php
+                    endforeach;
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Mesh</label>
+                  <input class="form-control" id="e-mesh" name="mesh" placeholder="Mesh" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Bloom</label>
+                  <input type="text" class="form-control" id="e-bloom" name="bloom" placeholder="Bloom" readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Stock</label>
+                  <input type="text" class="form-control" id="e-stock" name="stock" placeholder="Stock" readonly>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Jumlah(Zak)</label>
+                  <input type="text" class="form-control" id="e-jumlah_zak" name="jumlah_zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Jumlah(kg)</label>
+                  <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="note_gudang">Keterangan Po</label>
+                  <textarea class="form-control" id="e-keterangan" name="ket_po_sample" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Marketing Admin</label>
+                  <input type="text" class="form-control" id="e-mkt_admin" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // Inisialisasi datepicker
+      $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+      });
+
       // Fungsi untuk format angka ribuan
-    });
       function formatRupiah(angka) {
         let number_string = angka.replace(/[^,\d]/g, '').toString(),
           split = number_string.split(','),
@@ -1043,13 +1021,163 @@
         return rupiah;
       }
 
-      // Ubah dari rupiah ke integer
+      // Fungsi untuk unformat angka
       function unformatRupiah(rupiah) {
         if (!rupiah) return 0;
         return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
       }
 
+      // Handler untuk modal detail
+      $('#detail').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        
+        // Ambil data dari tombol trigger
+        var tgl_po = button.data('tgl_po_sample');
+        var nama_customer = button.data('nama_customer');
+        var nama_barang = button.data('nama_barang');
+        var mesh = button.data('mesh');
+        var bloom = button.data('bloom');
+        var jumlah_po = button.data('jumlah_po_sample');
+        var keterangan = button.data('keterangan');
+        var mkt_admin = button.data('mkt_admin');
 
+        // Format jumlah PO
+        var formattedJumlah = formatRupiah(jumlah_po.toString());
+
+        // Isi data ke form detail
+        var modal = $(this);
+        modal.find('#d-tgl_po').val(tgl_po);
+        modal.find('#d-nama_customer').val(nama_customer);
+        modal.find('#d-nama_barang').val(nama_barang);
+        modal.find('#d-mesh').val(mesh);
+        modal.find('#d-bloom').val(bloom);
+        modal.find('#d-jumlah_po').val(formattedJumlah);
+        modal.find('#d-keterangan').val(keterangan);
+        modal.find('#d-mkt_admin').val(mkt_admin);
+      });
+
+      // Handler untuk filter lihat
+      $('#lihat').click(function() {
+        var filter_barang = $('#filter_barang').find(':selected').val();
+        var filter_customer = $('#filter_customer').find(':selected').val();
+        var filter_tgl = $('#filter_tgl').val();
+        var filter_tgl2 = $('#filter_tgl2').val();
+
+        if (filter_tgl == '' && filter_tgl2 != '') {
+          alert("Dari tanggal belum diisi");
+          return;
+        } else if (filter_tgl != '' && filter_tgl2 == '') {
+          alert("Sampai tanggal belum diisi");
+          return;
+        } else {
+          const query = new URLSearchParams({
+            nama_customer: filter_customer,
+            nama_barang: filter_barang,
+            date_from: filter_tgl,
+            date_until: filter_tgl2
+          })
+
+          window.location = "<?= base_url() ?>marketing/po_sample/index?" + query.toString()
+        }
+      });
+
+      // Handler untuk export
+      $('#export').click(function() {
+        var filter_barang = $('#filter_barang').find(':selected').val();
+        var filter_customer = $('#filter_customer').find(':selected').val();
+        var filter_tgl = $('#filter_tgl').val();
+        var filter_tgl2 = $('#filter_tgl2').val();
+
+        if (filter_tgl == '' && filter_tgl2 != '') {
+          alert("Dari tanggal belum diisi");
+          return;
+        } else if (filter_tgl != '' && filter_tgl2 == '') {
+          alert("Sampai tanggal belum diisi");
+          return;
+        } else {
+          const query = new URLSearchParams({
+            nama_customer: filter_customer,
+            nama_barang: filter_barang,
+            date_from: filter_tgl,
+            date_until: filter_tgl2
+          })
+          var url = "<?= base_url() ?>marketing/po_sample/pdf_po_sample?" + query.toString();
+          window.open(url, 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+        }
+      });
+
+      // Handler untuk validasi no_po
+      $("#no_po").keyup(function() {
+        var no_po = $("#no_po").val();
+        jQuery.ajax({
+          url: "<?= base_url() ?>marketing/po_customer/cek_no_po",
+          dataType: 'text',
+          type: "post",
+          data: {
+            no_po: no_po
+          },
+          success: function(response) {
+            if (response == "true") {
+              $("#no_po").addClass("is-invalid");
+              $("#simpan").attr("disabled", "disabled");
+            } else {
+              $("#no_po").removeClass("is-invalid");
+              $("#simpan").removeAttr("disabled");
+            }
+          }
+        });
+      });
+
+      // Handler untuk select barang di modal add
+      $("#id_barang").change(function() {
+        const selected = $(this).find(':selected');
+        const kode_tf_in = selected.data('kode_tf_in') || '';
+        const no_batch = selected.data('no_batch') || '';
+        const mesh = selected.data('mesh') || '';
+        const bloom = selected.data('bloom') || '';
+        const gdg_qty_in = selected.data('gdg_qty_in') || 0;
+
+        $('#kode_tf_in').val(kode_tf_in);
+        $('#no_batch').val(no_batch);
+        $('#mesh').val(mesh);
+        $('#bloom').val(bloom);
+        
+        // Format stock
+        let zak = gdg_qty_in / 25;
+        let formattedStock = new Intl.NumberFormat('id-ID').format(zak);
+        $('#gdg_qty_in').val(formattedStock);
+      });
+
+      // Handler untuk jumlah zak di modal add
+      $('#jumlah_zak').on('input', function() {
+        let zak = $(this).val().replace(/\./g, '');
+        zak = parseFloat(zak) || 0;
+        let kg = zak * 25;
+
+        // Format hasilnya agar rapi (pakai titik ribuan)
+        let formattedKg = kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        $('#jumlah_kg').val(formattedKg);
+        
+        // Validasi stock
+        var jumlah_zak = $(this).val().replaceAll('.', '');
+        var gdg_qty_in = $("#gdg_qty_in").val().replaceAll('.', '');
+        if (parseInt(jumlah_zak) > parseInt(gdg_qty_in)) {
+          $("#jumlah_zak").addClass("is-invalid");
+          $("#simpan").attr("disabled", "disabled");
+        } else {
+          $("#jumlah_zak").removeClass("is-invalid");
+          $("#simpan").removeAttr("disabled");
+        }
+      });
+
+      // Format input jumlah_zak
+      document.getElementById('jumlah_zak').addEventListener('keyup', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        value = new Intl.NumberFormat('id-ID').format(value);
+        this.value = value;
+      });
+
+      // Handler untuk modal addCustomer
       $('#id_barang_customer').change(function() {
         var selectedOption = $(this).find('option:selected');
         var mesh = selectedOption.data('mesh');
@@ -1057,244 +1185,102 @@
         var kode = selectedOption.data('kode_tf_in');
         var no_batch = selectedOption.data('no_batch');
         var gdg = selectedOption.data('gdg_qty_in');
-        var batch = selectedOption.data('no_batch')
+        
         $('#c-mesh').val(mesh);
         $('#c-bloom').val(bloom);
         $('#c-kode_tf_in').val(kode);
-        $('#c-no_batch').val(batch);
+        $('#c-no_batch').val(no_batch);
 
         let formattedGdg = gdg ? new Intl.NumberFormat('id-ID').format(gdg) : 0;
         $('#c-gdg_qty_in').val(formattedGdg);
       });
 
-        // Format hasilnya agar rapi (pakai titik ribuan)
-         document.getElementById('jumlah_kg_customer').addEventListener('keyup', function(e) {
-          let value = this.value.replace(/\D/g,'');
+      // Format input jumlah_kg_customer
+      document.getElementById('jumlah_kg_customer').addEventListener('keyup', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        value = new Intl.NumberFormat('id-ID').format(value);
+        this.value = value;
+        
+        // Validasi stock
+        var jumlah_po = $(this).val().replaceAll('.', '');
+        var gdg_qty_in = $("#c-gdg_qty_in").val().replaceAll('.', '');
+        if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
+          $("#jumlah_kg_customer").addClass("is-invalid");
+          $("#simpanCustomer").attr("disabled", "disabled");
+        } else {
+          $("#jumlah_kg_customer").removeClass("is-invalid");
+          $("#simpanCustomer").removeAttr("disabled");
+        }
+      });
+
+      // Handler untuk modal edit
+      $('#edit').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+
+        // Ambil data dari tombol trigger
+        var id_mkt_po_customer = button.data('id_mkt_po_sample');
+        var tgl_po = button.data('tgl_po_sample');
+        var id_customer = button.data('id_customer');
+        var id_barang = button.data('id_barang');
+        var mesh = button.data('mesh');
+        var bloom = button.data('bloom');
+        var jumlah_po = button.data('jumlah_po_sample');
+        var keterangan = button.data('keterangan_sample');
+        var gdg_qty_in = button.data('gdg_qty_in');
+        var mkt_admin = button.data('mkt_admin');
+        
+        let zak = jumlah_po / 25;
+        let formattedZak = zak.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        // Isi data ke form edit
+        var modal = $(this);
+        modal.find('#e-id_mkt_po_sample').val(id_mkt_po_customer);
+        modal.find('#e-jumlah_zak').val(formattedZak);
+        modal.find('#e-tgl_po').val(tgl_po);
+        modal.find('#e-id_customer').val(id_customer);
+        modal.find('#e-id_barang').val(id_barang);
+        modal.find('#e-mesh').val(mesh);
+        modal.find('#e-bloom').val(bloom);
+        modal.find('#e-jumlah_po').val(formatRupiah(jumlah_po.toString()));
+        modal.find('#e-keterangan').val(keterangan);
+        modal.find('#e-stock').val(formatRupiah(gdg_qty_in.toString()));
+        modal.find('#e-mkt_admin').val(mkt_admin);
+
+        // Handler untuk perubahan barang di modal edit
+        $("#e-id_barang").on('change', function() {
+          let opt = $(this).find(':selected');
+          modal.find('#e-mesh').val(opt.data('mesh') || '');
+          modal.find('#e-bloom').val(opt.data('bloom') || '');
+          modal.find('#e-stock').val(formatRupiah(opt.data('gdg_qty_in')) || '');
+        });
+
+        // Handler untuk jumlah zak di modal edit
+        $('#e-jumlah_zak').on('input', function() {
+          let zak = $(this).val().replace(/\./g, '');
+          zak = parseFloat(zak) || 0;
+          let kg = zak * 25;
+
+          // Format hasilnya agar rapi (pakai titik ribuan)
+          let formattedKg = kg;
+          $('#e-jumlah_po').val(formattedKg);
+        });
+
+        // Format input jumlah_po di modal edit
+        document.getElementById('e-jumlah_po').addEventListener('keyup', function(e) {
+          let value = this.value.replace(/\D/g, '');
           value = new Intl.NumberFormat('id-ID').format(value);
           this.value = value;
-          });
-        $("#jumlah_kg_customer").keyup(function() {
-          var jumlah_po = $("#jumlah_kg_customer").val().replaceAll('.', '');
-          var gdg_qty_in = $("#c-gdg_qty_in").val().replaceAll('.', '');
-          if (parseInt(jumlah_po) > parseInt(gdg_qty_in)) {
-            $("#jumlah_kg_customer").addClass("is-invalid");
-            $("#simpan").attr("disabled", "disabled");
-          } else {
-            $("#jumlah_kg_customer").removeClass("is-invalid");
-            $("#simpan").removeAttr("disabled");
-          }
-        })
+        });
 
-
-      modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
-        e.stopPropagation();
+        // Format input jumlah_zak di modal edit
+        document.getElementById('e-jumlah_zak').addEventListener('keyup', function(e) {
+          let value = this.value.replace(/\D/g, '');
+          value = new Intl.NumberFormat('id-ID').format(value);
+          this.value = value;
+        });
       });
-
-      $('#form-c').on('submit', function(e) {
-        // Ambil nilai aslinya (tanpa format)
-        const jumlah = unformatRupiah($('#jumlah_kg_customer').val());
-        // Ubah isi input ke integer agar dikirim bersih ke backend
-        $('#jumlah_kg_customer').val(jumlah);
-        // Setelah ini form dikirim secara normal
-      });
-  });
-</script>
-
-<!-- Modal EDIT-->
-<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit PO Sample</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" action="<?= base_url() ?>marketing/po_sample/update">
-        <div class="modal-body">
-          <input type="hidden" id="e-id_mkt_po_sample" name="id_mkt_po_sample">
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="tgl_po">Tanggal PO</label>
-                <input type="text" class="form-control datepicker" id="e-tgl_po" name="tgl_po_sample" placeholder="Tanggal PO" autocomplete="off" required>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="id_customer">Nama Gudang</label>
-                <select class="form-control chosen-select" id="e-id_customer" name="id_customer" autocomplete="off" required>
-                  <option value="">-Pilih Nama Gudang -</option>
-                  <?php
-                  foreach ($res_customer as $c) {
-                  ?>
-                    <option value="<?= $c['id_customer'] ?>">(<?= $c['kode_customer'] ?>) <?= $c['nama_customer'] ?></option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="id_barang">Nama Barang</label>
-                <select class="form-control chosen-select" id="e-id_barang" name="id_barang" autocomplete="off" required>
-                  <option value="">-Pilih Nama Barang -</option>
-                  <?php
-                  foreach ($res_barang as $b) :
-                  ?>
-                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" value="<?= $b['id_barang'] ?>">(<?= $b['kode_barang'] ?>) <?= $b['nama_barang'] ?></option>
-                  <?php
-                  endforeach;
-                  ?>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Mesh</label>
-                <input class="form-control" id="e-mesh" name="mesh" placeholder="Mesh" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Bloom</label>
-                <input type="text" class="form-control" id="e-bloom" name="bloom" placeholder="Bloom" readonly>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Stock</label>
-                <input type="text" class="form-control" id="e-stock" name="stock" placeholder="Stock" readonly>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jumlah(Zak)</label>
-                <input type="text" class="form-control" id="e-jumlah_zak" name="jumlah_zak" placeholder="Jumlah(Zak)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Jumlah(kg)</label>
-                <input type="text" class="form-control" id="e-jumlah_po" name="jumlah_po_sample" placeholder="Jumlah(Kg)" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
-              </div>
-            </div>
-
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="note_gudang">Keterangan Po</label>
-                <textarea class="form-control" id="e-keterangan" name="ket_po_sample" rows="3" placeholder="Note Untuk Gudang" autocomplete="off"></textarea>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Marketing Admin</label>
-                <input type="text" class="form-control" id="e-mkt_admin" name="mkt_admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" readonly>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="simpan" class="btn btn-primary"
-            onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    // Fungsi format angka ke rupiah
-    function formatRupiah(angka) {
-      if (!angka) return '';
-      let number_string = angka.toString().replace(/[^,\d]/g, ''),
-        split = number_string.split(','),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-      return split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-    }
-
-    // Saat modal EDIT ditampilkan
-    $('#edit').on('show.bs.modal', function(event) {
-      var button = $(event.relatedTarget);
-
-      // Ambil data dari tombol trigger
-      var id_mkt_po_customer = button.data('id_mkt_po_sample');
-      var tgl_po = button.data('tgl_po_sample');
-      var id_customer = button.data('id_customer');
-      var id_barang = button.data('id_barang');
-      var mesh = button.data('mesh');
-      var bloom = button.data('bloom');
-      var jumlah_po = button.data('jumlah_po_sample');
-      var keterangan = button.data('keterangan_sample');
-      var gdg_qty_in = button.data('gdg_qty_in');
-      var mkt_admin = button.data('mkt_admin');
-      let zak = jumlah_po / 25;
-      let formattedZak = zak.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-      // Isi data ke form edit
-      var modal = $(this);
-      modal.find('#e-id_mkt_po_sample').val(id_mkt_po_customer);
-      modal.find('#e-jumlah_zak').val(formattedZak);
-      modal.find('#e-tgl_po').val(tgl_po);
-      modal.find('#e-id_customer').val(id_customer).trigger("chosen:updated");
-      modal.find('#e-id_barang').val(id_barang).trigger("chosen:updated");
-      modal.find('#e-mesh').val(mesh);
-      modal.find('#e-bloom').val(bloom);
-      modal.find('#e-jumlah_po').val(formatRupiah(jumlah_po.toString()));
-      modal.find('#e-keterangan').val(keterangan);
-      modal.find('#e-stock').val(formatRupiah(gdg_qty_in.toString()));
-      modal.find('#e-mkt_admin').val(mkt_admin);
-      $("#e-id_barang").on('change', function() {
-        let opt = $(this).find(':selected');
-        modal.find('#e-mesh').val(opt.data('mesh') || '');
-        modal.find('#e-bloom').val(opt.data('bloom') || '');
-        modal.find('#e-stock').val(formatRupiah(opt.data('gdg_qty_in')) || '');
-      });
-
-      $('#e-jumlah_zak').on('input', function() {
-        let zak = $(this).val().replace(/\./g, ''); // hapus titik pemisah jika ada
-        zak = parseFloat(zak) || 0; // ubah ke angka, default 0
-        let kg = zak * 25; // hitung total
-
-        // Format hasilnya agar rapi (pakai titik ribuan)
-        let formattedKg = kg;
-        $('#e-jumlah_po').val(formattedKg);
-      });
-      // Jalankan datepicker aman
-      modal.find('#e-tgl_po').datepicker().on('show.bs.modal', function(e) {
-        e.stopPropagation();
-      });
-      document.getElementById('e-jumlah_po').addEventListener('keyup', function(e) {
-        let value = this.value.replace(/\D/g, '');
-        value = new Intl.NumberFormat('id-ID').format(value);
-        this.value = value;
-      });
-      document.getElementById('e-jumlah_zak').addEventListener('keyup', function(e) {
-        let value = this.value.replace(/\D/g, '');
-        value = new Intl.NumberFormat('id-ID').format(value);
-        this.value = value;
-      });
-
-      // === Perhitungan otomatis total harga ===
     });
-  });
-</script>
+  </script>
+</body>
+
+</html>

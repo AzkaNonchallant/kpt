@@ -550,7 +550,7 @@
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group <?=$ds?>" role="group" aria-label="Basic example">
-                                                              <?php if ( !$k['is_invoice_exist']) { ?>
+                                                              <?php if ( $k['invoice'] == 'Belum') { ?>
                                                                  <button type="button" 
                                                                   class="btn btn-success btn-square btn-sm" 
                                                                   data-toggle="modal" 

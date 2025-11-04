@@ -118,8 +118,8 @@ $level = $this->session->userdata('level');
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                     <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_sample'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_admin/admin_sample')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample Masuk
-                            <?php if ($cek_spbm != 0) { ?>
-                                <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
+                            <?php if ($cek_sm != 0) { ?>
+                                <span class="badge badge-pill badge-warning"><?= $cek_sm ?></span>
                             <?php } ?>
                             </span>
                         </a>
@@ -129,8 +129,8 @@ $level = $this->session->userdata('level');
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
                      <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_sample'?'active':''?>">
                         <a href="<?=base_url('gudang/gudang_admin/admin_sample_keluar')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">Sample Keluar
-                            <?php if ($cek_spbm != 0) { ?>
-                                <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
+                            <?php if ($cek_sk != 0) { ?>
+                                <span class="badge badge-pill badge-warning"><?= $cek_sk ?></span>
                             <?php } ?>
                             </span>
                         </a>
