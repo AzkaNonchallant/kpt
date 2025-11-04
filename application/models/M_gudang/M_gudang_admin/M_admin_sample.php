@@ -164,19 +164,19 @@ public function proses($data)
     }
 
 
-    public function cek_sample()
+    public function cek_sm_masuk()
     {
         $sql = "
-            SELECT COUNT(id_mkt_po_sample) as tot_sample 
-            FROM tb_mkt_po_sample 
-            WHERE is_deleted = 0";
-        return $this->db->query($sql)->row()->tot_sample;
+            SELECT COUNT(id_sample_masuk) as tot_sample_masuk
+            FROM tb_sample_masuk
+            WHERE is_deleted IS NULL";
+        return $this->db->query($sql);
     }
     
-    public function cek_spbm()
+    public function cek_sm_keluar()
     {
         $sql = "
-            SELECT COUNT(status_po_pembelian) as tot_status_spbm FROM tb_prc_po_pembelian WHERE status_po_pembelian = 'Proses' AND is_deleted = 0";
+            SELECT COUNT(id_sample_keluar) as tot_sample_keluar FROM tb_sample_keluar WHERE is_deleted IS NULL";
         return $this->db->query($sql);
     }
 

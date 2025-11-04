@@ -548,7 +548,7 @@
                               </td>
                               <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                  <?php if ($level === "0") { ?>
+                                  <?php if ($level === "0" && $k['status'] != 'processed') { ?>
                                     <button type="button"
                                       class="btn btn-warning btn-square btn-sm"
                                       data-toggle="modal"
