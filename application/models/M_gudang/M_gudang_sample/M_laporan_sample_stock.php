@@ -116,7 +116,7 @@ class M_laporan_sample_stock extends CI_Model {
         $where = "WHERE b.is_deleted = 0";
         
         if (!empty($filter['id_barang'])) {
-            $where .= " AND a.id_barang = '{$filter['id_barang']}'";
+            $where .= " AND b.id_barang = '{$filter['id_barang']}'";
         }
         
         if (!empty($filter['id_customer'])) {
@@ -134,15 +134,30 @@ class M_laporan_sample_stock extends CI_Model {
         }
 
         $sql = "
+           SELECT 
+            sm.id_sample_masuk,
+            sm.kode_sample_in,
+            sm.no_batch,
+            sm.tgl_masuk_sample,
+            sm.jumlah_masuk,
+            sk.jumlah_keluar,
+            COALESCE(sm.jumlah_masuk, 0) - COALESCE(sk.jumlah_keluar, 0) AS stok_akhir,
+            sm.id_barang,
+            b.nama_barang,
+            b.satuan
+        FROM tb_sample_masuk sm
+        LEFT JOIN tb_master_barang b ON sm.id_barang = b.id_barang
+        LEFT JOIN (
             SELECT 
-                a.*, 
-                b.nama_barang, b.satuan, b.mesh, b.bloom,
-                c.nama_customer
-            FROM tb_sample_masuk a
-            LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
-            LEFT JOIN tb_master_customer c ON a.id_customer = c.id_customer
-            $where
-            ORDER BY a.kode_sample_in ASC";
+                no_batch,
+                SUM(jumlah_keluar) AS jumlah_keluar
+            FROM tb_sample_keluar
+            WHERE is_deleted = 0
+            GROUP BY no_batch
+        ) sk ON sk.no_batch = sm.no_batch
+        $where
+        ORDER BY sm.tgl_masuk_sample ASC
+    ";
             
         return $this->db->query($sql);
     }

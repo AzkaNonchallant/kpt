@@ -9,8 +9,6 @@
     <style>
         :root {
             --primary: #4361ee;
-            --barang: #436;
-            --upd: #f72585;
             --secondary: #3f37c9;
             --success: #4cc9f0;
             --info: #4895ef;
@@ -71,7 +69,7 @@
         .card-header {
             background: white;
             border-bottom: 1px solid var(--light-gray);
-            padding: 15px 15px;
+            padding: 15px 20px;
             border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
             display: flex;
             align-items: center;
@@ -83,11 +81,6 @@
             font-weight: 700;
             color: var(--dark);
             margin: 0;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
         }
 
         .btn {
@@ -111,19 +104,14 @@
             box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), var(--info));
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--gray), #495057);
             color: white;
         }
 
-        .btn-success:hover {
+        .btn-secondary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, var(--info), #3a86ff);
-            color: white;
+            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
         }
 
         .btn-warning {
@@ -131,14 +119,19 @@
             color: white;
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #d00000);
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(174, 73, 118, 0.3);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, var(--info), #3a86ff);
             color: white;
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--gray), #495057);
-            color: white;
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(72, 149, 239, 0.3);
         }
 
         .table-responsive {
@@ -167,7 +160,7 @@
         }
 
         .table tbody td {
-            padding: 10px 8px;
+            padding: 12px 10px;
             vertical-align: middle;
             border-bottom: 1px solid var(--light-gray);
             white-space: nowrap;
@@ -188,7 +181,7 @@
         }
 
         .badge {
-            padding: 6px 8px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 11px;
@@ -197,21 +190,19 @@
         .badge-success {
             background-color: rgba(76, 201, 240, 0.1);
             color: var(--success);
-        }
-
-        .badge-primary {
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
+            border: 1px solid rgba(76, 201, 240, 0.2);
         }
 
         .badge-warning {
             background-color: rgba(247, 37, 133, 0.1);
             color: var(--warning);
+            border: 1px solid rgba(247, 37, 133, 0.2);
         }
 
         .badge-danger {
             background-color: rgba(230, 57, 70, 0.1);
             color: var(--danger);
+            border: 1px solid rgba(230, 57, 70, 0.2);
         }
 
         .modal-content {
@@ -261,7 +252,7 @@
 
         .filter-group {
             flex: 1;
-            min-width: 180px;
+            min-width: 250px;
             margin-bottom: 0;
         }
 
@@ -278,27 +269,6 @@
             justify-content: center;
             gap: 6px;
             white-space: nowrap;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #6c757d;
-        }
-
-        .stock-positive {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .stock-negative {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        .stock-zero {
-            color: #6c757d;
-            font-weight: bold;
         }
 
         .form-label {
@@ -322,16 +292,26 @@
             box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
         }
 
+        .stock-positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .stock-warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .stock-negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .card-header {
                 flex-direction: column;
                 gap: 15px;
                 align-items: flex-start;
-            }
-
-            .btn-group {
-                width: 100%;
-                justify-content: flex-start;
             }
 
             .filter-row {
@@ -369,11 +349,13 @@
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <div class="page-header-title">
-                                    <!-- <h5 class="m-b-10">Data Sample Stok</h5> -->
+                                    <h5 class="m-b-10 page-title">
+                                        <i class="fas fa-vial"></i>Laporan Sample Stock
+                                    </h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="<?= base_url() ?>"><i class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:">Laporan Sample Stok</a></li>
+                                    <li class="breadcrumb-item"><a href="<?= base_url() ?>"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:">Laporan Sample Stock</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -386,30 +368,46 @@
                         <div class="row">
                             <!-- [ basic-table ] start -->
                             <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5>Data Sample Stok</h5>
-                                        <div class="float-right">
-                                            <div class="input-group">
-                                                <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
-                                                    <option value="">-- Semua Barang --</option>
-                                                    <?php foreach ($res_barang as $rb) { ?>
-                                                        <option <?= $id_barang == $rb['id_barang'] ? 'selected' : '' ?> value="<?= $rb['id_barang'] ?>">
-                                                            <?= $rb['nama_barang'] ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
-                                            <button type="button" class="btn btn-primary" id="btn-cetak-semua">
-                                                <i class="fas fa-file-pdf"></i> Cetak Semua
+                                
+                                <!-- Filter Section -->
+                                <div class="filter-section">
+                                    <div class="filter-row">
+                                        <div class="filter-group">
+                                            <label class="form-label">
+                                                <i class="fas fa-filter"></i>Filter Barang Sample
+                                            </label>
+                                            <select class="form-control" id="filter_barang" name="filter_barang">
+                                                <option value="">-- Semua Barang Sample --</option>
+                                                <?php foreach ($res_barang as $rb) { ?>
+                                                    <option <?= $id_barang == $rb['id_barang'] ? 'selected' : '' ?> value="<?= $rb['id_barang'] ?>">
+                                                        <?= $rb['nama_barang'] ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="filter-actions">
+                                            <button class="btn btn-secondary" id="lihat" type="button">
+                                                <i class="fas fa-eye mr-1"></i> Lihat
                                             </button>
-                                                    <a href="<?= base_url() ?>gudang/gudang_sample/Laporan_sample_stock/" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
-                                                </div>
-                                            </div>
+                                            <button type="button" class="btn btn-primary" id="btn-cetak-semua">
+                                                <i class="fas fa-file-pdf mr-1"></i> Cetak PDF
+                                            </button>
+                                            <a href="<?= base_url() ?>gudang/gudang_sample/Laporan_sample_stock/" class="btn btn-warning" type="button">
+                                                <i class="fas fa-sync-alt mr-1"></i> Reset
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="card-block table-border-style">
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5><i class="fas fa-table mr-2"></i>Data Sample Stock</h5>
+                                        <div class="total-records">
+                                           
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table datatable table-hover table-striped table-sm">
                                                 <thead>
@@ -418,7 +416,7 @@
                                                         <th>Nama Barang</th>
                                                         <th>Mesh</th>
                                                         <th class="text-center">Stok</th>
-                                                        <th class="text-center">Rincian</th>
+                                                        <th class="text-center">Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -426,33 +424,40 @@
                                                     $no = 1;
                                                     if (!empty($result)) {
                                                         foreach ($result as $k) {
+                                                            $stok = $k['stok_akhir'] ?? 0;
+                                                            $badge_class = $stok > 20 ? 'badge-success' : ($stok > 0 ? 'badge-warning' : 'badge-danger');
+                                                            
                                                     ?>
                                                             <tr>
-                                                                <th scope="row"><?= $no++ ?></th>
-                                                                <td><?= htmlspecialchars($k['nama_barang']) ?></td>
+                                                                <td><?= $no++ ?></td>
+                                                                <td class="font-weight-medium"><?= htmlspecialchars($k['nama_barang']) ?></td>
                                                                 <td><?= htmlspecialchars($k['mesh']) ?></td>
-                                                                <!-- <td class="text-center"><?= number_format($k['total_masuk'], 0, ",", ".") ?></td>  -->
-                                                                <!-- <td class="text-center"><?= number_format($k['total_keluar'], 0, ",", ".") ?></td>  -->
-                                                                <td class="text-center"><?= number_format($k['stok_akhir'], 0, ",", ".") ?> Kg</td>
-                                                                <!-- <td class="text-center"><?= htmlspecialchars($k['satuan']) ?></td> -->
                                                                 <td class="text-center">
-                                                                    <div class="btn-group" role="group">
-                                                                        <button type="button"
-                                                                            class="btn btn-info btn-square btn-sm btn-rincian"
-                                                                            data-id-barang="<?= $k['id_barang'] ?>"
-                                                                            data-nama-barang="<?= htmlspecialchars($k['nama_barang']) ?>"
-                                                                            data-toggle="modal"
-                                                                            data-target="#detail">
-                                                                            <i class="feather icon-eye"></i> Rincian
-                                                                        </button>
-                                                                    </div>
+                                                                    <span class="font-weight-bold <?= $stok > 20 ? 'stock-positive' : ($stok > 0 ? 'stock-warning' : 'stock-negative') ?>">
+                                                                        <?= number_format($k['stok_akhir'], 0, ",", ".") ?> Kg
+                                                                    </span>
+                                                                </td>
+                                                               
+                                                                <td class="text-center">
+                                                                    <button type="button"
+                                                                        class="btn btn-info btn-sm btn-rincian"
+                                                                        data-id-barang="<?= $k['id_barang'] ?>"
+                                                                        data-nama-barang="<?= htmlspecialchars($k['nama_barang']) ?>"
+                                                                        data-toggle="modal"
+                                                                        data-target="#detail">
+                                                                        <i class="fas fa-eye mr-1"></i> Detail
+                                                                    </button>
                                                                 </td>
                                                             </tr>
                                                         <?php
                                                         }
                                                     } else { ?>
                                                         <tr>
-                                                            <td colspan="8" class="text-center">Tidak ada data sample</td>
+                                                            <td colspan="6" class="text-center py-4">
+                                                                <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
+                                                                <br>
+                                                                <span class="text-muted">Tidak ada data sample</span>
+                                                            </td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -471,23 +476,9 @@
     </div>
 </section>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#export').click(function() {
-            var filter_tgl = $('#filter_tgl').val();
-            if (filter_tgl == '') {
-                window.location = "<?= base_url() ?>gudang/gudang_sample/Laporan_sample_stock/pdf_laporan_surat";
-            } else {
-                var url = "<?= base_url() ?>gudang/gudang_sample/Laporan_sample_stock/pdf_laporan_surat" + filter_tgl.split("/")[2] + "-" + filter_tgl.split("/")[1] + "-" + filter_tgl.split("/")[0];
-                window.open(url, 'gudang/gudang_sample/Laporan_sample_stock/', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-            }
-        })
-
-    })
-</script>
-
+<!-- Modal Detail -->
 <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailLabel">Rincian Sample Masuk</h5>
@@ -495,71 +486,73 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Kode Sample In</th>
-                            <th>Nama Barang</th>
-                            <th>No Batch</th>
-                            <th>Jumlah Stok</th>
-                            <th>Satuan</th>
-
-                        </tr>
-                    </thead>
-                    <tbody id="detail-body">
-                        <tr>
-                            <td colspan="9" class="text-center">Pilih barang untuk melihat rincian...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="modal-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm mb-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="5%">#</th>
+                                <th width="15%">Tanggal Masuk</th>
+                                <th width="15%">Kode Sample In</th>
+                                <th width="20%">Nama Barang</th>
+                                <th width="15%">No Batch</th>
+                                <th width="15%">Jumlah Stok</th>
+                                <th width="10%">Satuan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-body">
+                            <tr>
+                                <td colspan="7" class="text-center py-3">Pilih sample untuk melihat rincian...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times mr-1"></i> Tutup
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- [ HTML structure tetap sama ... ] -->
-
-
-
 <script type="text/javascript">
     $(document).ready(function() {
-        // Cetak semua data
-        $('#btn-cetak-semua').click(function() {
-            window.open('<?= base_url('gudang/gudang_sample/laporan_sample_stock/pdf_laporan_surat') ?>', '_blank');
-        });
-        // ... kode lainnya ...
-
-        // Cetak sesuai filter
-        $('#btn-cetak-filter').click(function() {
+        // Fungsi untuk lihat data dengan filter
+        $('#lihat').click(function() {
             var id_barang = $('#filter_barang').val();
-            var id_customer = $('#filter_customer').val();
-            var tgl_mulai = $('#filter_tgl_mulai').val();
-            var tgl_selesai = $('#filter_tgl_selesai').val();
-
-            var url = '<?= base_url('gudang/gudang_sample/laporan_sample_stock/export_pdf') ?>' + 
-                      '?id_barang=' + id_barang + 
-                      '&id_customer=' + id_customer + 
-                      '&tgl_mulai=' + tgl_mulai + 
-                      '&tgl_selesai=' + tgl_selesai;
-
-            window.open(url, '_blank');
+            var url = '<?= base_url('gudang/gudang_sample/laporan_sample_stock') ?>';
+            
+            if (id_barang) {
+                url += '?id_barang=' + id_barang;
+            }
+            
+            window.location.href = url;
         });
 
+        // Fungsi untuk cetak PDF berdasarkan filter
+        $('#btn-cetak-semua').click(function() {
+            var id_barang = $('#filter_barang').val();
+            
+            // Jika tidak ada filter barang, cetak semua
+            if (!id_barang) {
+                window.open('<?= base_url('gudang/gudang_sample/laporan_sample_stock/pdf_laporan_surat') ?>', '_blank');
+            } else {
+                // Jika ada filter barang, cetak sesuai filter
+                var url = '<?= base_url('gudang/gudang_sample/laporan_sample_stock/export_pdf') ?>' + 
+                          '?id_barang=' + id_barang;
+                window.open(url, '_blank');
+            }
+        });
+
+        // Modal detail
         $('.btn-rincian').on('click', function() {
             let id_barang = $(this).data('id-barang');
             let nama_barang = $(this).data('nama-barang');
 
-            console.log('ID Barang:', id_barang); // Debug di console
-            console.log('Nama Barang:', nama_barang); // Debug di console
-
             $('#detailLabel').text('Rincian Sample: ' + nama_barang);
-            $('#detail-body').html('<tr><td colspan="9" class="text-center">Memuat data...</td></tr>');
+            $('#detail-body').html('<tr><td colspan="7" class="text-center py-3">Memuat data...</td></tr>');
 
             $.ajax({
                 url: "<?= base_url('gudang/gudang_sample/laporan_sample_stock/get_rincian_sample') ?>",
@@ -569,36 +562,32 @@
                 },
                 dataType: "json",
                 success: function(res) {
-                    console.log('Response:', res); // Debug di console
-
                     if (res.length > 0) {
                         let rows = '';
                         $.each(res, function(i, item) {
                             rows += `
                             <tr>
-                            <td>${i+1}</td>
-                            <td>${ item.tgl_masuk_sample ? new Date(item.tgl_masuk_sample).toLocaleDateString('id-ID') : '-'}</td>
-                            <td>${item.kode_sample_in || '-'}</td>
-                            <td>${item.nama_barang || '-'}</td>
-                            <td>${item.no_batch || '-'}</td>
-                            <td class="text-right">${Number(item.stok_akhir || 0).toLocaleString('id-ID')}</td>
-                            <td>${item.satuan || '-'}</td>
+                                <td>${i+1}</td>
+                                <td>${ item.tgl_masuk_sample ? new Date(item.tgl_masuk_sample).toLocaleDateString('id-ID') : '-'}</td>
+                                <td>${item.kode_sample_in || '-'}</td>
+                                <td>${item.nama_barang || '-'}</td>
+                                <td>${item.no_batch || '-'}</td>
+                                <td class="text-right">${Number(item.stok_akhir || 0).toLocaleString('id-ID')}</td>
+                                <td>${item.satuan || '-'}</td>
                             </tr>`;
                         });
 
                         $('#detail-body').html(rows);
                     } else {
-                        $('#detail-body').html('<tr><td colspan="9" class="text-center">Tidak ada data sample masuk</td></tr>');
+                        $('#detail-body').html('<tr><td colspan="7" class="text-center py-3">Tidak ada data sample masuk</td></tr>');
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJAX Error:', error); // Debug di console
-                    console.log('Status:', status); // Debug di console
-                    console.log('Response:', xhr.responseText); // Debug di console
-
-                    $('#detail-body').html('<tr><td colspan="9" class="text-center text-danger">Gagal memuat data. Error: ' + error + '</td></tr>');
+                    $('#detail-body').html('<tr><td colspan="7" class="text-center py-3 text-danger">Gagal memuat data. Error: ' + error + '</td></tr>');
                 }
             });
         });
     });
 </script>
+</body>
+</html>

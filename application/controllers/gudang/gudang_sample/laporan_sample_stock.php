@@ -114,10 +114,8 @@ class Laporan_sample_stock extends MY_Controller
 
             // Ambil data dengan filter
             $data['filter'] = $filter;
-            $data['row'] = $this->M_laporan_sample_stock->ambil_surat_jalan2($filter)->row_array();
             $data['detail'] = $this->M_laporan_sample_stock->data_barang_keluar2($filter)->result_array();
-            
-            // Ambil data summary untuk header
+        //     // Ambil data summary untuk header
             $summary = $this->M_laporan_sample_stock->get_sample_stock_grouped(
                 $filter['id_barang'] ?? null, 
                 $filter['id_customer'] ?? null, 
@@ -145,7 +143,7 @@ class Laporan_sample_stock extends MY_Controller
         }
     }
 
-    // Export PDF dengan parameter filter
+    // // Export PDF dengan parameter filter
     public function export_pdf()
     {
         $id_barang = $this->input->get('id_barang');
@@ -163,5 +161,6 @@ class Laporan_sample_stock extends MY_Controller
 
         redirect('gudang/gudang_sample/laporan_sample_stock/pdf_laporan_surat');
     }
-}
+
     
+}

@@ -186,13 +186,13 @@
             <tr>
                 <th width="4%">No</th>
                 <th width="12%">Tanggal Masuk</th>
-                <th width="12%">Kode Sample</th>
                 <th width="20%">Nama Barang</th>
-                <th width="8%">Mesh</th>
-                <th width="10%">Jumlah Masuk</th>
-                <th width="8%">Satuan</th>
-                <th width="15%">Customer</th>
+                <th width="11%">Kode Sample In</th>
                 <th width="11%">No Batch</th>
+                <!-- <th width="8%">IN</th> -->
+                <!-- <th width="10%">OUT</th> -->
+                <th width="8%">Stock</th>
+                <th width="8%">Satuan</th>
             </tr>
         </thead>
         <tbody>
@@ -202,24 +202,24 @@
                     <tr>
                         <td class="text-center"><?= $no++ ?></td>
                         <td class="text-center"><?= date('d/m/Y', strtotime($d['tgl_masuk_sample'])) ?></td>
-                        <td class="text-center"><?= htmlspecialchars($d['kode_sample_in']) ?></td>
                         <td><?= htmlspecialchars($d['nama_barang']) ?></td>
-                        <td class="text-center"><?= htmlspecialchars($d['mesh']) ?></td>
-                        <td class="text-right"><?= number_format($d['jumlah_masuk'], 0, ",", ".") ?></td>
-                        <td class="text-center"><?= htmlspecialchars($d['satuan']) ?></td>
-                        <td><?= htmlspecialchars($d['nama_customer']) ?></td>
+                        <td class="text-center"><?= htmlspecialchars($d['kode_sample_in']) ?></td>
                         <td class="text-center"><?= htmlspecialchars($d['no_batch']) ?></td>
+                        <!-- <td class="text-right"><?= !empty($d['jumlah_masuk']) ? number_format($d['jumlah_masuk'], 0, ',', '.') : '0' ?></td> -->
+                        <!-- <td class="text-right"><?= !empty($d['jumlah_keluar']) ? number_format($d['jumlah_keluar'], 0, ',', '.') : '0'?></td> -->
+                        <td class="text-right"><?= !empty($d['stok_akhir']) ? number_format($d['stok_akhir'], 0, ',', '.') : '0'?></td>
+                        <td class="text-center"><?= htmlspecialchars($d['satuan']) ?></td>
                     </tr>
-                    <?php $total += $d['jumlah_masuk']; ?>
+                    <?php $total += $d['stok_akhir']; ?>
                 <?php endforeach; ?>
                 <tr style="font-weight:bold;">
                     <td colspan="5" class="text-right">Total</td>
                     <td class="text-right"><?= number_format($total, 0, ",", ".") ?></td>
-                    <td colspan="3"></td>
+                    <td colspan="1" class="text-center"><?=$d['satuan']?></td>
                 </tr>
             <?php else : ?>
                 <tr>
-                    <td colspan="9" class="text-center">Tidak ada data sample masuk.</td>
+                    <td colspan="7" class="text-center">Tidak ada data sample masuk.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
