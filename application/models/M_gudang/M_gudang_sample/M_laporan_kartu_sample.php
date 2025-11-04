@@ -12,10 +12,10 @@ class M_laporan_kartu_sample extends CI_Model {
 
     // === SAMPLE MASUK ===
     public function jml_sample_masuk($data) {
-        if (empty($data['tgl1']) || empty($data['tgl2'])) {
+        if ($data['tgl'] ==null) {
             $where = "";
-        } else {
-            $where = "AND a.tgl_masuk_sample >= '$data[tgl1]' AND a.tgl_masuk_sample <= '$data[tgl2]'";
+        }else{
+            $where = "AND a.tgl_masuk_sample<='$data[tgl]'";
         }
 
         $sql = "
@@ -34,10 +34,10 @@ class M_laporan_kartu_sample extends CI_Model {
 
     // === SAMPLE KELUAR ===
     public function jml_sample_keluar2($data) {
-        if (empty($data['tgl1']) || empty($data['tgl2'])) {
+        if ($data['tgl'] ==null) {
             $where = "";
-        } else {
-            $where = "AND a.tgl_masuk_sample >= '$data[tgl1]' AND a.tgl_masuk_sample <= '$data[tgl2]'";
+        }else{
+            $where = "AND a.tgl_masuk_sample<='$data[tgl]'";
         }
 
         $sql = "
