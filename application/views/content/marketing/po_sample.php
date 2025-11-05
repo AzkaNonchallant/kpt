@@ -821,8 +821,8 @@
 
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Kode TF IN</label>
-                  <input class="form-control" id="c-kode_tf_in" name="kode_tf_in" placeholder="Kode TF IN" autocomplete="off" readonly>
+                  <label for="exampleFormControlTextarea1">Kode SAMPLE IN</label>
+                  <input class="form-control" id="c-kode_tf_in" name="kode_tf_in" placeholder="Kode SAMPLE IN" autocomplete="off" readonly>
                 </div>
               </div>
 

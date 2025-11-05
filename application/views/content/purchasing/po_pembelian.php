@@ -515,7 +515,6 @@
                                                         <th>Nama Barang</th>
                                                         <th>Jumlah PO</th>
                                                         <th>Status</th>
-                                                        <th class="text-center">Detail</th>
                                                         <th class="text-center">Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -530,23 +529,9 @@
                                                             <th scope="row"><?= $no++ ?></th>
                                                             <td><?= $tgl_po_pembelian ?></td>
                                                             <td>
-                                                                <span class="badge badge-primary"><?= $k['no_po_pembelian'] ?></span>
-                                                            </td>
-                                                            <td><?= $k['nama_supplier'] ?></td>
-                                                            <td><?= $k['nama_barang'] ?></td>
-                                                            <td class="text-right"><?= number_format($k['jumlah_po_pembelian'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
-                                                            <td>
-                                                                <?php if ($k['status_po_pembelian'] == 'Proses'): ?>
-                                                                    <span class="badge badge-warning"><?= $k['status_po_pembelian'] ?></span>
-                                                                <?php elseif ($k['status_po_pembelian'] == 'Selesai'): ?>
-                                                                    <span class="badge badge-success"><?= $k['status_po_pembelian'] ?></span>
-                                                                <?php else: ?>
-                                                                    <span class="badge badge-primary"><?= $k['status_po_pembelian'] ?></span>
-                                                                <?php endif; ?>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <button type="button"
-                                                                    class="btn btn-info btn-sm btn-detail"
+                                                                <span 
+                                                                    style="cursor: pointer;"
+                                                                    class="badge badge-primary"
                                                                     data-toggle="modal"
                                                                     data-target="#detail"
                                                                     data-id_prc_po_pembelian="<?= $k['id_prc_po_pembelian'] ?>"
@@ -563,8 +548,20 @@
                                                                     data-jenis_pembayaran="<?= $k['jenis_pembayaran'] ?>"
                                                                     data-ket_po="<?=$k['ket_po']?>"
                                                                     data-prc_admin="<?= $k['prc_admin'] ?>">
-                                                                    <i class="fas fa-eye"></i> Detail
-                                                                </button>
+                                                                    <?= $k['no_po_pembelian'] ?>
+                                                                </span>
+                                                            </td>
+                                                            <td><?= $k['nama_supplier'] ?></td>
+                                                            <td><?= $k['nama_barang'] ?></td>
+                                                            <td class="text-right"><?= number_format($k['jumlah_po_pembelian'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
+                                                            <td>
+                                                                <?php if ($k['status_po_pembelian'] == 'Proses'): ?>
+                                                                    <span class="badge badge-warning"><?= $k['status_po_pembelian'] ?></span>
+                                                                <?php elseif ($k['status_po_pembelian'] == 'Selesai'): ?>
+                                                                    <span class="badge badge-success"><?= $k['status_po_pembelian'] ?></span>
+                                                                <?php else: ?>
+                                                                    <span class="badge badge-primary"><?= $k['status_po_pembelian'] ?></span>
+                                                                <?php endif; ?>
                                                             </td>
                                                             <td class="text-center">
                                                                 <div class="action-buttons">

@@ -434,7 +434,7 @@
                                                                 <th>Kode Customer</th>
                                                                 <th>Nama Customer</th>
                                                                 <th>Kegiatan Usaha</th>
-                                                                <th class="text-center">Detail</th>
+                                                            
                                                                 <th class="text-center">Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -446,15 +446,7 @@
                                                             <tr>
                                                                 <th scope="row"><?=$no++?></th>
                                                                 <td>
-                                                                    <span class="badge badge-primary"><?=$k['kode_customer']?></span>
-                                                                </td>
-                                                                <td>
-                                                                    <strong><?=$k['nama_customer']?></strong>
-                                                                </td>
-                                                                <td><?=$k['kegiatan_usaha']?></td>
-                                                                <td class="text-center">
-                                                                    <button type="button" 
-                                                                        class="btn btn-info btn-sm  btn-detail" 
+                                                                     <span type="button" 
                                                                         data-toggle="modal" 
                                                                         data-target="#detail" 
                                                                         data-id_customer="<?=$k['id_customer']?>"
@@ -465,9 +457,15 @@
                                                                         data-provinsi="<?=$k['provinsi']?>"
                                                                         data-kota_kab="<?=$k['kota_kab']?>"
                                                                         data-nib="<?=$k['nib']?>">
-                                                                        <i class="fas fa-eye"></i> Detail
-                                                                    </button>
+                                                                        <span class="badge badge-primary"><?=$k['kode_customer']?></span>
+                                                            </span>
+                                                                    
                                                                 </td>
+                                                                <td>
+                                                                    <strong><?=$k['nama_customer']?></strong>
+                                                                </td>
+                                                                <td><?=$k['kegiatan_usaha']?></td>
+                                                                
                                                                 <td class="text-center">
                                                                     <div class="action-buttons">
                                                                         <button type="button" 

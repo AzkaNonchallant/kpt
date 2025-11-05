@@ -483,7 +483,6 @@
                               <th>Jumlah Kirim</th>
                               <th>Tanggal Kirim</th>
                               <th>Status</th>
-                              <th>Detail</th>
                               <th>Print</th>
                               <th>Aksi</th>
                             </tr>
@@ -507,39 +506,39 @@
                               <tr>
                                 <th scope="row"><?= $no++ ?></th>
                                 <td><?= $tgl_sppb ?></td>
-                                <td><?= $k['no_sppb'] ?></td>
+                                <td>
+                                  <span
+                                  style="cursor: pointer;"
+                                  class="badge badge-primary"
+                                  data-toggle="modal"
+                                  data-target="#detail"
+                                  data-id_mkt_sppb="<?= $k['id_mkt_sppb'] ?>"
+                                  data-no_sppb="<?= $k['no_sppb'] ?>"
+                                  data-tgl_sppb="<?= $tgl_sppb ?>"
+                                  data-id_mkt_po_customer="<?= $k['id_mkt_po_customer'] ?>"
+                                  data-no_po="<?= $k['no_po_customer'] ?>"
+                                  data-nama_customer="<?= $k['nama_customer'] ?>"
+                                  data-nama_barang="<?= $k['nama_barang'] ?>"
+                                  data-kode_tf_in="<?= $k['kode_tf_in'] ?>"
+                                  data-jumlah_po="<?= $k['jumlah_po_customer'] ?>"
+                                  data-mesh="<?= $k['mesh'] ?>"
+                                  data-bloom="<?= $k['bloom'] ?>"
+                                  data-tgl_kirim="<?= $tgl_kirim ?>"
+                                  data-jumlah_kirim="<?= $k['jumlah_kirim'] ?>"
+                                  data-note_gudang="<?= $k['note_gudang'] ?>"
+                                  data-harga_kirim="<?= $k['harga_kirim'] ?>"
+                                  data-note_pembayaran="<?= $k['note_pembayaran'] ?>"
+                                  data-mkt_admin="<?= $k['mkt_admin'] ?>">
+                                  <?= $k['no_sppb'] ?>
+                                </span>
+                                </td>
                                 <td><?= $k['nama_customer'] ?></td>
                                 <td class="text-left"><?= number_format($k['jumlah_kirim'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
                                 <td><?= $tgl_kirim ?></td>
-                                <td><?= $k['status_sppb'] ?></td>
-                                <td class="text-center">
-                                  <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button"
-                                      class="btn btn-info btn-square btn-sm"
-                                      data-toggle="modal"
-                                      data-target="#detail"
-                                      data-id_mkt_sppb="<?= $k['id_mkt_sppb'] ?>"
-                                      data-no_sppb="<?= $k['no_sppb'] ?>"
-                                      data-tgl_sppb="<?= $tgl_sppb ?>"
-
-                                      data-id_mkt_po_customer="<?= $k['id_mkt_po_customer'] ?>"
-                                      data-no_po="<?= $k['no_po_customer'] ?>"
-                                      data-nama_customer="<?= $k['nama_customer'] ?>"
-                                      data-nama_barang="<?= $k['nama_barang'] ?>"
-                                      data-kode_tf_in="<?= $k['kode_tf_in'] ?>"
-                                      data-jumlah_po="<?= $k['jumlah_po_customer'] ?>"
-                                      data-mesh="<?= $k['mesh'] ?>"
-                                      data-bloom="<?= $k['bloom'] ?>"
-
-                                      data-tgl_kirim="<?= $tgl_kirim ?>"
-                                      data-jumlah_kirim="<?= $k['jumlah_kirim'] ?>"
-                                      data-note_gudang="<?= $k['note_gudang'] ?>"
-                                      data-harga_kirim="<?= $k['harga_kirim'] ?>"
-                                      data-note_pembayaran="<?= $k['note_pembayaran'] ?>"
-                                      data-mkt_admin="<?= $k['mkt_admin'] ?>">
-                                      <i class="feather icon-eye"></i>Detail
-                                    </button>
-                                  </div>
+                                <td>
+                                  <span class="badge badge-primary">
+                                    <?= $k['status_sppb'] ?>
+                                  </span>
                                 </td>
                                 <td class="text-center">
                                   <div class="btn-group" role="group" aria-label="Basic example">

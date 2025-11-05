@@ -43,9 +43,9 @@ class po_customer extends MY_Controller {
             // hanya tampilkan jika masih ada sisa
             if ($sisa > 0) {
                 $filtered[] = $data['result'][$i];
+                $data['result'] = $filtered;
             }
         }
-        $data['result'] = $filtered;
         $data['res_barang'] = $this->M_barang_masuk->get3()->result_array();
         $data['res_customer'] = $this->M_master_customer->get()->result_array();
         $data['res_user'] = $this->M_users->get()->result_array();

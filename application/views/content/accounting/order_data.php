@@ -483,9 +483,7 @@
                                                             <th>Nama Barang</th>
                                                             <th>Jumlah PO</th>
                                                             <th>Harga PO</th>
-                                                            <!-- <th>Outstanding</th> -->
                                                             <th>Status</th>
-                                                            <th>Detail</th>
                                                             <th class="text-center">Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -513,40 +511,39 @@
                                                     	<tr>
                                                             <th scope="row"><?=$no++?></th>
                                                             <td><?=$tgl_po?></td>
-                                                            <td><?=$k['no_po_customer']?></td>
+                                                            <td>
+                                                              <span
+                                                                style="cursor: pointer;"
+                                                                class="badge badge-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#detail" 
+                                                                data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
+                                                                data-no_po="<?=$k['no_po_customer']?>"
+                                                                data-tgl_po="<?=$tgl_po?>"
+                                                                data-id_customer="<?=$k['id_customer']?>"
+                                                                data-nama_customer="<?=$k['nama_customer']?>"
+                                                                data-id_barang="<?=$k['id_barang']?>"
+                                                                data-nama_barang="<?=$k['nama_barang']?>"
+                                                                data-mesh="<?=$k['mesh']?>"
+                                                                data-bloom="<?=$k['bloom']?>"
+                                                                data-jumlah_po="<?=$k['jumlah_po_customer']?>"
+                                                                data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                data-keterangan="<?=$k['keterangan_po_customer']?>"
+                                                                data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                data-invoice="<?= $k['invoice']?>"
+                                                                data-mkt_admin="<?=$k['mkt_admin']?>">
+                                                                <?= $k['no_po_customer'] ?>
+                                                              </span>
+                                                            </td>
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <td class="text-right"><?=number_format($k['harga_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <!-- <td class="text-right"><?=number_format($k['sisa'],0,",",".")?> <?=$k['satuan']?></td> -->
-                                                            <td><?=$k['invoice']?></td>
-                                                            <td class="text-center">
-                                                              <div class="btn-group " role="group" aria-label="Basic example">
-                                                                <button type="button" 
-                                                                  class="btn btn-info btn-square btn-sm" 
-                                                                  data-toggle="modal" 
-                                                                  data-target="#detail" 
-
-                                                                  data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
-                                                                  data-no_po="<?=$k['no_po_customer']?>"
-                                                                  data-tgl_po="<?=$tgl_po?>"
-                                                                  
-                                                                  data-id_customer="<?=$k['id_customer']?>"
-                                                                  data-nama_customer="<?=$k['nama_customer']?>"
-                                                                  data-id_barang="<?=$k['id_barang']?>"
-                                                                  data-nama_barang="<?=$k['nama_barang']?>"
-                                                                  data-mesh="<?=$k['mesh']?>"
-                                                                  data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po="<?=$k['jumlah_po_customer']?>"
-                                                                  data-harga_po="<?=$k['harga_po_customer']?>"
-                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
-                                                                  data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
-                                                                  data-invoice="<?= $k['invoice']?>"
-                                                                  data-mkt_admin="<?=$k['mkt_admin']?>"
-                                                                >
-                                                                  <i class="feather icon-eye"></i>Detail
-                                                                </button>
-                                                              </div>
+                                                            <td>
+                                                              <span class="badge badge-primary">
+                                                                <?=$k['invoice']?>
+                                                              </span>
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group <?=$ds?>" role="group" aria-label="Basic example">

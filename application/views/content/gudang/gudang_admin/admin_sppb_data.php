@@ -435,32 +435,6 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Data Gudang SPPB</h5>
-
-                                            <!-- <div class="float-right">
-                                              <div class="input-group">
-                                              <select class="form-control chosen-select" id="filter_customer" name="filter_customer">
-                                                  <option value="" disabled selected hidden>- Nama Customer -</option>
-                                                    <?php
-                                                      foreach ($res_customer as $rc) { ?>
-                                                        <option <?= $nama_customer === $rc['nama_customer'] ? 'selected' : '' ?> value="<?= $rc['nama_customer'] ?>"><?= $rc['nama_customer'] ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                                <select class="form-control chosen-select" id="filter_barang" name="filter_barang">
-                                                  <option value="" disabled selected hidden>- Nama Barang -</option>
-                                                    <?php
-                                                      foreach ($res_barang as $rb) { ?>
-                                                        <option <?= $nama_barang === $rb['nama_barang'] ? 'selected' : '' ?> value="<?= $rb['nama_barang'] ?>"><?= $rb['nama_barang'] ?> - Mesh <?= $rb['mesh'] ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                                        <input type="text" id="filter_tgl" value="<?= $tgl == null ? '' : $tgl ?>" class="form-control datepicker" placeholder="Dari Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
-                                                        <input type="text" id="filter_tgl2" value="<?= $tgl2 == null ? '' : $tgl2 ?>" class="form-control datepicker" placeholder="Sampai Tanggal" aria-label="Recipient's username" aria-describedby="basic-addon2" autocomplete="off">
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
-                                                            <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                                                            <a href="<?=base_url()?>marketing/po_customer" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
-                                                        </div>
-                                                    </div>
-                                              </div> -->
                                         </div>
                                         <div class="card-block table-border-style">
 
@@ -478,7 +452,6 @@
                                                             <th>Jumlah Kirim</th>
                                                             <th>Tanggal Kirim</th>
                                                             <th>Status</th>
-                                                            <th>Detail</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -493,41 +466,40 @@
                                                     	<tr>
                                                             <th scope="row"><?=$no++?></th>
                                                             <td><?=$tgl_sppb?></td>
-                                                            <td><?=$k['no_sppb']?></td>
+                                                            <td>
+                                                              <span
+                                                                style="cursor: pointer;"
+                                                                class="badge badge-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#detail"
+                                                                data-id_mkt_sppb="<?=$k['id_mkt_sppb']?>"
+                                                                data-no_sppb="<?=$k['no_sppb']?>"
+                                                                data-tgl_sppb="<?=$tgl_sppb?>"
+                                                                data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
+                                                                data-no_po="<?=$k['no_po_customer']?>"
+                                                                data-nama_customer="<?=$k['nama_customer']?>"
+                                                                data-id_customer="<?=$k['id_customer']?>"
+                                                                data-nama_barang="<?=$k['nama_barang']?>"
+                                                                data-kode_tf_in="<?=$k['kode_tf_in']?>"
+                                                                data-jumlah_po="<?=$k['jumlah_po_customer']?>"
+                                                                data-mesh="<?=$k['mesh']?>"
+                                                                data-bloom="<?=$k['bloom']?>"
+                                                                data-tgl_kirim="<?=$tgl_kirim?>"
+                                                                data-jumlah_kirim="<?=$k['jumlah_kirim']?>"
+                                                                data-note_gudang="<?=$k['note_gudang']?>"
+                                                                data-harga_kirim="<?=$k['harga_kirim']?>"
+                                                                data-note_pembayaran="<?=$k['note_pembayaran']?>"
+                                                                data-mkt_admin="<?=$k['mkt_admin']?>">
+                                                                <?= $k['no_sppb'] ?>
+                                                              </span>
+                                                            </td>
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td class="text-left"><?=number_format($k['jumlah_kirim'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <td><?=$tgl_kirim?></td>
-                                                            <td><?=$k['status_sppb']?></td>
-                                                            <td class="text-center">
-                                                              <div class="btn-group" role="group" aria-label="Basic example">
-                                                                <button type="button" 
-                                                                  class="btn btn-info btn-square btn-sm" 
-                                                                  data-toggle="modal"
-                                                                  data-target="#detail"
-                                                                  data-id_mkt_sppb="<?=$k['id_mkt_sppb']?>"
-                                                                  data-no_sppb="<?=$k['no_sppb']?>"
-                                                                  data-tgl_sppb="<?=$tgl_sppb?>"
-                                                                  
-                                                                  data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
-                                                                  data-no_po="<?=$k['no_po_customer']?>"
-                                                                  data-nama_customer="<?=$k['nama_customer']?>"
-                                                                  data-id_customer="<?=$k['id_customer']?>"
-                                                                  data-nama_barang="<?=$k['nama_barang']?>"
-                                                                  data-kode_tf_in="<?=$k['kode_tf_in']?>"
-                                                                  data-jumlah_po="<?=$k['jumlah_po_customer']?>"
-                                                                  data-mesh="<?=$k['mesh']?>"
-                                                                  data-bloom="<?=$k['bloom']?>"
-
-                                                                  data-tgl_kirim="<?=$tgl_kirim?>"
-                                                                  data-jumlah_kirim="<?=$k['jumlah_kirim']?>"
-                                                                  data-note_gudang="<?=$k['note_gudang']?>"
-                                                                  data-harga_kirim="<?=$k['harga_kirim']?>"
-                                                                  data-note_pembayaran="<?=$k['note_pembayaran']?>"
-                                                                  data-mkt_admin="<?=$k['mkt_admin']?>"
-                                                                >
-                                                                  <i class="feather icon-eye"></i>Detail
-                                                                </button>
-                                                              </div>
+                                                            <td>
+                                                              <span class="badge badge-primary">
+                                                                <?=$k['status_sppb']?>
+                                                              </span>
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group" role="group" aria-label="Basic example">
@@ -761,8 +733,6 @@
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="simpan" class="btn btn-primary"
-        onclick = "if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
       </div>
       </form>
     </div>

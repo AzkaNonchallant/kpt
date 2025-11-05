@@ -464,7 +464,7 @@
                                                         <div class="input-group-append">
                                                             <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                                                             <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                                                            <a href="<?=base_url()?>marketing/po_customer" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                                                            <a href="<?=base_url()?>accounting/invoice" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                                                         </div>
                                                     </div>
                                               </div>
@@ -486,7 +486,6 @@
                                                             <th>Jumlah PO</th>
                                                             <th>Harga PO</th>
                                                             <th>Status</th>
-                                                            <th>Detail</th>
                                                             <th class="text-center">Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -501,39 +500,38 @@
                                                     	<tr>
                                                             <th scope="row"><?=$no++?></th>
                                                             <td><?=$tgl_invoice?></td>
-                                                            <td><?=$k['no_invoice']?></td>
+                                                            <td>
+                                                              <span
+                                                                style="cursor: pointer;"
+                                                                class="badge badge-primary"
+                                                                data-toggle="modal" 
+                                                                data-target="#detail" 
+                                                                data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
+                                                                data-no_po="<?=$k['no_po_customer']?>"
+                                                                data-tgl_po="<?=$tgl_invoice?>"
+                                                                data-id_customer="<?=$k['id_customer']?>"
+                                                                data-nama_customer="<?=$k['nama_customer']?>"
+                                                                data-id_barang="<?=$k['id_barang']?>"
+                                                                data-nama_barang="<?=$k['nama_barang']?>"
+                                                                data-mesh="<?=$k['mesh']?>"
+                                                                data-bloom="<?=$k['bloom']?>"
+                                                                data-jumlah_po="<?=$k['jumlah_po_customer']?>"
+                                                                data-harga_po="<?=$k['harga_po_customer']?>"
+                                                                data-keterangan="<?=$k['keterangan_po_customer']?>"
+                                                                data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
+                                                                data-status_invoice="<?= $k['status_invoice']?>"
+                                                                data-mkt_admin="<?=$k['mkt_admin']?>">
+                                                                <?=$k['no_invoice']?>
+                                                              </span>
+                                                            </td>
                                                             <td><?=$k['nama_customer']?></td>
                                                             <td><?=$k['nama_barang']?></td>
                                                             <td class="text-right"><?=number_format($k['jumlah_po_customer'],0,",",".")?> <?=$k['satuan']?></td>
                                                             <td class="text-right">Rp. <?=number_format($k['harga_po_customer'],0,",",".")?></td>
-                                                            <td><?=$k['status_invoice']?></td>
-                                                            <td class="text-center">
-                                                              <div class="btn-group " role="group" aria-label="Basic example">
-                                                                <button type="button" 
-                                                                  class="btn btn-info btn-square btn-sm" 
-                                                                  data-toggle="modal" 
-                                                                  data-target="#detail" 
-
-                                                                  data-id_mkt_po_customer="<?=$k['id_mkt_po_customer']?>"
-                                                                  data-no_po="<?=$k['no_po_customer']?>"
-                                                                  data-tgl_po="<?=$tgl_invoice?>"
-                                                                  
-                                                                  data-id_customer="<?=$k['id_customer']?>"
-                                                                  data-nama_customer="<?=$k['nama_customer']?>"
-                                                                  data-id_barang="<?=$k['id_barang']?>"
-                                                                  data-nama_barang="<?=$k['nama_barang']?>"
-                                                                  data-mesh="<?=$k['mesh']?>"
-                                                                  data-bloom="<?=$k['bloom']?>"
-                                                                  data-jumlah_po="<?=$k['jumlah_po_customer']?>"
-                                                                  data-harga_po="<?=$k['harga_po_customer']?>"
-                                                                  data-keterangan="<?=$k['keterangan_po_customer']?>"
-                                                                  data-jenis_pembayaran="<?=$k['jenis_pembayaran_customer']?>"
-                                                                  data-status_invoice="<?= $k['status_invoice']?>"
-                                                                  data-mkt_admin="<?=$k['mkt_admin']?>"
-                                                                >
-                                                                  <i class="feather icon-eye"></i>Detail
-                                                                </button>
-                                                              </div>
+                                                            <td>
+                                                              <span class="badge badge-primary">
+                                                                <?=$k['status_invoice']?>
+                                                              </span>
                                                             </td>
                                                             <td class="text-center">
                                                               <div class="btn-group " role="group" aria-label="Basic example">

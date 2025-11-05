@@ -448,7 +448,7 @@
                                                                 <th>Mesh</th>
                                                                 <th>Satuan</th>
                                                                 <th>Bloom</th>
-                                                                <th class="text-center">Detail</th>
+                                                                
                                                                 <th class="text-center">Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -460,17 +460,8 @@
                                                             <tr>
                                                                 <th scope="row"><?=$no++?></th>
                                                                 <td>
-                                                                    <span class="badge badge-primary"><?=$k['kode_barang']?></span>
-                                                                </td>
-                                                                <td>
-                                                                    <strong><?=$k['nama_barang']?></strong>
-                                                                </td>
-                                                                <td class="text-center"><?=$k['mesh']?></td>
-                                                                <td class="text-center"><?=$k['satuan']?></td>
-                                                                <td class="text-center"><?=$k['bloom']?></td>
-                                                                <td class="text-center">
-                                                                    <button type="button" 
-                                                                        class="btn btn-info btn-sm btn-detail" 
+                                                                     <span type="button" 
+                                                                        
                                                                         data-toggle="modal" 
                                                                         data-target="#detail" 
                                                                         data-id_barang="<?=$k['id_barang']?>"
@@ -482,9 +473,17 @@
                                                                         data-satuan="<?=$k['satuan']?>"
                                                                         data-id_supplier="<?=$k['id_supplier']?>"
                                                                         data-nama_supplier="<?=$k['nama_supplier']?>">
-                                                                        <i class="fas fa-eye"></i> Detail
-                                                                    </button>
+                                                                        <span class="badge badge-primary"><?=$k['kode_barang']?></span>
+                                                            </span>
+                                                                    
                                                                 </td>
+                                                                <td>
+                                                                    <strong><?=$k['nama_barang']?></strong>
+                                                                </td>
+                                                                <td class="text-center"><?=$k['mesh']?></td>
+                                                                <td class="text-center"><?=$k['satuan']?></td>
+                                                                <td class="text-center"><?=$k['bloom']?></td>
+                                                                
                                                                 <td class="text-center">
                                                                     <div class="action-buttons">
                                                                         <button type="button" 

@@ -477,7 +477,7 @@
                                                             <th>Nama Barang</th>
                                                             <th>Jumlah PO</th>
                                                             <th>Status</th>
-                                                            <th>Detail</th>
+                                                            
                                                             <th class="text-center">Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -491,15 +491,8 @@
                                                     	<tr>
                                                             <th scope="row"><?=$no++?></th>
                                                             <td><?=$tgl_po_pembelian?></td>
-                                                            <td><?=$k['no_po_pembelian']?></td>
-                                                            <td><?=$k['nama_supplier']?></td>
-                                                            <td><?=$k['nama_barang']?></td>
-                                                            <td class="text-left"><?=number_format($k['jumlah_po_pembelian'],0,",",".")?> <?=$k['satuan']?></td>
-                                                            <td><?=$k['status_po_pembelian']?></td>
-                                                            <td class="text-center">
-                                                              <div class="btn-group" role="group" aria-label="Basic example">
-                                                                <button type="button" 
-                                                                  class="btn btn-info btn-square btn-sm" 
+                                                            <td><span type="button" 
+                                                                 class="btn btn-warning btn-square btn-sm text-light" 
                                                                   data-toggle="modal" 
                                                                   data-target="#detail" 
 
@@ -518,10 +511,14 @@
                                                                   data-jenis_pembayaran="<?=$k['jenis_pembayaran']?>"
                                                                   data-prc_admin="<?=$k['prc_admin']?>"
                                                                 >
-                                                                  <i class="feather icon-eye"></i>Detail
-                                                                </button>
-                                                              </div>
-                                                            </td>
+                                                                  <i "></i><?=$k['no_po_pembelian']?>
+                                                      </span>
+                                                              </td>
+                                                            <td><?=$k['nama_supplier']?></td>
+                                                            <td><?=$k['nama_barang']?></td>
+                                                            <td class="text-left"><?=number_format($k['jumlah_po_pembelian'],0,",",".")?> <?=$k['satuan']?></td>
+                                                            <td><?=$k['status_po_pembelian']?></td>
+                                                            
                                                             <td class="text-center">
                                                               <div class="btn-group" role="group" aria-label="Basic example">
                                                               <?php if ($level === "0") { ?>

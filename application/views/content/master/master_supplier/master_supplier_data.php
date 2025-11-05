@@ -122,6 +122,7 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+            
         }
         
         .btn-success {
@@ -132,6 +133,7 @@
         .btn-success:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
+             border: none;
         }
         
         .btn-info {
@@ -310,6 +312,8 @@
             color: var(--gray);
             font-weight: 600;
         }
+
+        
         
         @media (max-width: 768px) {
             .card-header {
@@ -380,7 +384,6 @@
                                                                 <th>Kode Supplier</th>
                                                                 <th>Nama Supplier</th>
                                                                 <th>PIC Supplier</th>
-                                                                <th class="text-center">Detail</th>
                                                                 <th class="text-center">Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -392,15 +395,9 @@
                                                             <tr>
                                                                 <th scope="row"><?=$no++?></th>
                                                                 <td>
-                                                                    <span class="badge badge-primary"><?=$k['kode_supplier']?></span>
-                                                                </td>
-                                                                <td>
-                                                                    <strong><?=$k['nama_supplier']?></strong>
-                                                                </td>
-                                                                <td><?=$k['pic_supplier']?></td>
-                                                                <td class="text-center">
-                                                                    <button type="button" 
-                                                                        class="btn btn-info btn-sm" 
+                                                                    
+                                                                    <span class="badge badge-primary"
+                                                                    style="cursor: pointer;" 
                                                                         data-toggle="modal" 
                                                                         data-target="#detail" 
                                                                         data-id_supplier="<?=$k['id_supplier']?>"
@@ -410,9 +407,15 @@
                                                                         data-negara_asal="<?=$k['negara_asal']?>"
                                                                         data-pic_supplier="<?=$k['pic_supplier']?>"
                                                                         data-no_sertif_halal="<?=$k['no_sertif_halal']?>">
-                                                                        <i class="fas fa-eye"></i> Detail
-                                                                    </button>
+                                                                        <span ><?=$k['kode_supplier']?></span>
+                                                              </span>
                                                                 </td>
+                                                                <td>
+                                                                    <strong><?=$k['nama_supplier']?></strong>
+                                                                </td>
+                                                                <td><?=$k['pic_supplier']?></td>
+                                                               
+                                                                
                                                                 <td class="text-center">
                                                                     <div class="action-buttons">
                                                                         <button type="button" 
