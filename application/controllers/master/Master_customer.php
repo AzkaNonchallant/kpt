@@ -10,14 +10,15 @@ class Master_customer extends MY_Controller {
         parent::__construct();
         // check_not_login();
         $this->load->model('M_master/M_master_customer');
+        $this->load->model('M_master/M_master_barang');
 
     }
 
 	public function index()
 	{
 		// $data['row'] = $this->customer_m->get();
-		$result = 
 		$data['result'] = $this->M_master_customer->get()->result_array();
+        $data['res_barang'] = $this->M_master_barang->get()->result_array();
 		$this->template->load('template', 'content/master/master_customer/master_customer_data',$data);
 
 	}
@@ -80,18 +81,19 @@ class Master_customer extends MY_Controller {
         }
     }
 
-    // public function pdf_customer_list()
-    // {
-    //     $mpdf = new \Mpdf\Mpdf();
+    public function add_harga() {
+        $data['id_customer'] = $this->input->post('id_customer',TRUE);
+        $data['id_barang']  = $this->input->post('id_barang',TRUE);
+        $data['harga']  = $this->input->post('harga',TRUE);
+        $data['mkt_admin'] =  $this->input->post('mkt_admin',TRUE);
 
-    //     $data['result'] = $this->M_master_customer->get()->result_array();
-
-    //     $d = $this->load->view('content/master/master_customer/pdf_customer_list', $data, TRUE);
-    //     $mpdf->AddPage("P","","","","","15","15","5","15","","","","","","","","","","","","A4");
-    //     $mpdf->setFooter('Halaman {PAGENO}');
-    //     $mpdf->WriteHTML($d);
-    //     $mpdf->Output();
-    // }
+        $respon = $this->M_master_customer->add_harga($data);
+        if($respon){
+        	header('location:'.base_url('master/master_customer').'?alert=success&msg=Selamat anda berhasil menambah harga Customer');
+        }else{
+        	header('location:'.base_url('master/master_customer').'?alert=success&msg=Maaf anda gagal menambah Harga customer');
+        }
+    }
 
 
 public function pdf_customer_list()

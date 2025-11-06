@@ -468,6 +468,17 @@
                                                                 
                                                                 <td class="text-center">
                                                                     <div class="action-buttons">
+                                                                    <button
+                                                                    type="button"
+                                                                    class="btn btn-success"
+                                                                    data-toggle="modal"
+                                                                    data-target="#harga"
+                                                                    data-id_customer="<?=$k['id_customer']?>"
+                                                                    data-kode_customer="<?=$k['kode_customer']?>"
+                                                                    data-nama_customer="<?=$k['nama_customer']?>"
+                                                                    >
+                                                                        +
+                                                                    </button>
                                                                         <button type="button" 
                                                                             class="btn btn-warning btn-sm btn-action" 
                                                                             data-toggle="modal" 
@@ -828,6 +839,115 @@
                 window.open(url, 'pdf_laporan_customer_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
             });
         });
+    </script>
+
+
+  <div class="modal fade" id="harga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-cust">
+                    <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Harga</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" id="harga" action="<?=base_url()?>master/master_customer/add_harga">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Kode Customer</label>
+                                    <input type="text" class="form-control" id="h-kode_customer" name="kode_customer" placeholder="Kode Customer" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        Maaf Kode Customer sudah ada.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="h-id_customer" name="id_customer">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Customer</label>
+                                    <input type="text" class="form-control" id="h-nama_customer" name="nama_customer" placeholder="Nama Customer" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Barang</label>
+                                    <select class="form-control chosen-select" id="h-id_barang" name="id_barang" autocomplete="off">
+                                        <option value="">- Pilih Barang -</option>
+                                        <?php
+                                            foreach ($res_barang as $c) {
+                                            ?>
+                                                <option value="<?= $c['id_barang'] ?>">(<?= $c['kode_barang'] ?>) <?= $c['nama_barang'] ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                    </select>
+                                </div>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Harga</label>
+                                    <input type="text" class="form-control" id="h-harga" name="harga" placeholder="Harga" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Marketing Admin</label>
+                                    <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" placeholder="Mkt admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" id="simpan" class="btn btn-primary" onclick = "if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            
+            $('#harga').on('show.bs.modal', function (event) {
+                function unformatRupiah(rupiah) {
+                if (!rupiah) return 0;
+                return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+                }
+                var id_customer = $(event.relatedTarget).data('id_customer') 
+                var kode_customer = $(event.relatedTarget).data('kode_customer') 
+                var nama_customer = $(event.relatedTarget).data('nama_customer') 
+
+                $(this).find('#h-kode_customer').val(kode_customer)
+                $(this).find('#h-nama_customer').val(nama_customer)
+                $(this).find('#h-id_customer').val(id_customer)
+
+
+                document.getElementById('h-harga').addEventListener('keyup', function(e) {
+                let value = this.value.replace(/\D/g, '');
+                value = new Intl.NumberFormat('id-ID').format(value);
+                this.value = value;
+                });
+                $('#harga').on('submit', function(e) {
+                // Ambil nilai aslinya (tanpa format)
+                const harga_po = unformatRupiah($('#h-harga').val());
+                // Ubah isi input ke integer agar dikirim bersih ke backend
+                $('#h-harga').val(harga_po);
+                // Setelah ini form dikirim secara normal
+                });
+            });
+        })
     </script>
 </body>
 </html>

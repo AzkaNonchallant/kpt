@@ -67,4 +67,15 @@ class M_master_customer extends CI_Model {
         return $this->db->query($sql);
     }
 
+    public function add_harga($data) {
+        $id_user = $this->id_user();
+
+        $sql = "
+        INSERT INTO `tb_master_harga` (`id_customer`,`id_barang`,`harga`,`mkt_admin`,`created_at`,`created_by`,`updated_at`,`updated_by`,`is_deleted`) VALUES
+        ('$data[id_customer]','$data[id_barang]','$data[harga]','$data[mkt_admin]',NOW(),$id_user, '0', '0', '0')
+        ";
+
+        return $this->db->query($sql);
+    }
+
 }
