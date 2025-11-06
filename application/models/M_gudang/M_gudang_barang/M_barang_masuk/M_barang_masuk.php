@@ -70,6 +70,7 @@ class M_barang_masuk extends CI_Model {
     $sql = "
         SELECT 
             a.kode_tf_in,
+            a.no_batch,
             b.id_barang,
             c.kode_barang,
             c.nama_barang,
@@ -85,6 +86,7 @@ class M_barang_masuk extends CI_Model {
         LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
         LEFT JOIN tb_master_harga h ON h.id_barang = c.id_barang
         WHERE a.is_deleted = 0
+        AND h.is_deleted = 0
         AND h.id_customer = ?
         ORDER BY c.nama_barang ASC
     ";

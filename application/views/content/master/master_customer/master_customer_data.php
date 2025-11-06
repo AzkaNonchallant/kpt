@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,17 +24,17 @@
             --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
         }
-        
+
         .customer-container {
             padding: 20px;
             background-color: #f5f7fb;
             min-height: 100vh;
         }
-        
+
         .page-header {
             margin-bottom: 25px;
         }
-        
+
         .page-title {
             font-size: 24px;
             font-weight: 700;
@@ -42,23 +43,23 @@
             display: flex;
             align-items: center;
         }
-        
+
         .page-title i {
             margin-right: 10px;
             color: var(--primary);
         }
-        
+
         .breadcrumb {
             background: transparent;
             padding: 0;
             margin-bottom: 0;
         }
-        
+
         .breadcrumb-item a {
             color: var(--primary);
             text-decoration: none;
         }
-        
+
         .card {
             width: 135%;
             border: none;
@@ -66,7 +67,7 @@
             box-shadow: var(--box-shadow);
             margin-bottom: 25px;
         }
-        
+
         .card-header {
             background: white;
             border-bottom: 1px solid var(--light-gray);
@@ -76,19 +77,19 @@
             align-items: center;
             justify-content: space-between;
         }
-        
+
         .card-header h5 {
             font-size: 18px;
             font-weight: 700;
             color: var(--dark);
             margin: 0;
         }
-        
+
         .btn-group {
             display: flex;
             gap: 10px;
         }
-        
+
         .btn {
             border-radius: 8px;
             font-weight: 600;
@@ -99,59 +100,59 @@
             gap: 5px;
             border: none;
         }
-        
+
         .btn-sm {
             padding: 6px 6px;
             font-size: 14px;
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
         }
-        
+
         .btn-success {
             background: linear-gradient(135deg, var(--success), var(--info));
             color: white;
         }
-        
+
         .btn-success:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
         }
-        
+
         .btn-info {
             background: linear-gradient(135deg, var(--info), #3a86ff);
             color: white;
         }
-        
+
         .btn-warning {
             background: linear-gradient(135deg, var(--warning), #b5179e);
             color: white;
         }
-        
+
         .btn-danger {
             background: linear-gradient(135deg, var(--danger), #d00000);
             color: white;
         }
-        
+
         .table-responsive {
             border-radius: 0 0 var(--border-radius) var(--border-radius);
             overflow: hidden;
         }
-        
+
         .table {
             margin-bottom: 0;
             border-collapse: separate;
             border-spacing: 0;
             width: 100%;
         }
-        
+
         .table thead th {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -165,85 +166,85 @@
             white-space: nowrap;
         }
 
-        
+
         .table tbody td {
             padding: 12px;
             vertical-align: middle;
             border-bottom: 1px solid var(--light-gray);
             white-space: nowrap;
         }
-        
+
         .table tbody tr {
             transition: var(--transition);
         }
-        
+
         .table tbody tr:hover {
             background-color: rgba(67, 97, 238, 0.05);
             transform: translateY(-1px);
         }
-        
+
         .table tbody tr:last-child td {
             border-bottom: none;
         }
-        
+
         .table thead th:nth-child(1),
         .table tbody td:nth-child(1) {
             width: 30px;
             text-align: center;
         }
-        
+
         .table thead th:nth-child(2),
         .table tbody td:nth-child(2) {
             width: 30px;
         }
-        
+
         .table thead th:nth-child(3),
         .table tbody td:nth-child(3) {
             width: 30px;
-            
+
         }
-        
+
         .table thead th:nth-child(4),
         .table tbody td:nth-child(4) {
             width: 30px;
-           
+
         }
-        
+
         .table thead th:nth-child(5),
         .table tbody td:nth-child(5) {
             width: 30px;
             text-align: center;
         }
-        
+
         .table thead th:nth-child(6),
         .table tbody td:nth-child(6) {
             width: 30px;
             text-align: center;
         }
-        
+
         .badge {
             padding: 6px 12px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 12px;
         }
-        
+
         .badge-success {
             background-color: rgba(76, 201, 240, 0.1);
             color: var(--success);
         }
-        
+
         .badge-primary {
             background-color: rgba(67, 97, 238, 0.1);
             color: var(--primary);
         }
-        
+
         .modal-content {
             border: none;
             border-radius: var(--border-radius);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
-        
+
         .modal-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -264,79 +265,79 @@
             border-radius: var(--border-radius) var(--border-radius) 0 0;
             padding: 20px 25px;
         }
-        
+
         .modal-title {
             font-weight: 700;
             font-size: 18px;
             color: white;
         }
-        
+
         .close {
             color: white;
             opacity: 0.8;
         }
-        
+
         .close:hover {
             color: white;
             opacity: 1;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-control {
             border: 1px solid var(--light-gray);
             border-radius: 8px;
             padding: 10px 15px;
             transition: var(--transition);
         }
-        
+
         .form-control:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
         }
-        
+
         .form-label {
             font-weight: 600;
             color: var(--dark);
             margin-bottom: 8px;
         }
-        
+
         .invalid-feedback {
             font-size: 12px;
             margin-top: 5px;
         }
-        
+
         .action-buttons {
             display: flex;
             justify-content: center;
             flex-wrap: nowrap;
         }
-        
+
         .table .btn-sm {
             padding: 4px 8px;
             font-size: 11px;
             line-height: 3.0;
             white-space: nowrap;
-            
+
         }
 
-        
-        
+
+
         .table .btn i {
             font-size: 11px;
             margin-right: 3px;
         }
-        
+
         .btn-detail {
-           min-width: 30px; 
+            min-width: 30px;
         }
-        
+
         .btn-action {
             min-width: 50px;
         }
-        
+
         .stats-card {
             background: white;
             border-radius: var(--border-radius);
@@ -345,46 +346,47 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        
+
         .stats-card .number {
             font-size: 32px;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 5px;
         }
-        
+
         .stats-card .label {
             font-size: 14px;
             color: var(--gray);
             font-weight: 600;
         }
-        
+
         @media (max-width: 768px) {
             .card-header {
                 flex-direction: column;
                 gap: 15px;
                 align-items: flex-start;
             }
-            
+
             .btn-group {
                 width: 100%;
                 justify-content: flex-start;
             }
-            
+
             .action-buttons {
                 flex-direction: column;
                 gap: 3px;
             }
-            
+
             /* .table .btn-sm {
                 padding: 20px 20px;
                 font-size: 20px;
             } */
-            
-        
+
+
         }
     </style>
 </head>
+
 <body>
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
@@ -400,7 +402,7 @@
                                         <!-- <h5 class="m-b-10">Data Customer</h5> -->
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="<?=base_url()?>"><i class="fas fa-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="<?= base_url() ?>"><i class="fas fa-home"></i></a></li>
                                         <li class="breadcrumb-item"><a href="javascript:">Master Customer</a></li>
                                     </ul>
                                 </div>
@@ -411,113 +413,113 @@
                     <div class="main-body">
                         <div class="page-wrapper">
                             <!-- [ Main Content ] start -->
-                        
-                                    <div class="col-md-9">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5><i class="fas fa-list"></i> Daftar Customer</h5>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-success btn-sm" id="export" type="button">
-                                                        <i class="fas fa-print"></i> Cetak List Customer
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
-                                                        <i class="fas fa-plus-circle"></i> Tambah Customer
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="card-block table-border-style">
-                                                <div class="table-responsive">
-                                                    <table class="table datatable table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Kode Customer</th>
-                                                                <th>Nama Customer</th>
-                                                                <th>Kegiatan Usaha</th>
-                                                            
-                                                                <th class="text-center">Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php 
-                                                            $no=1;
-                                                            foreach($result as $k){ 
-                                                            ?>
-                                                            <tr>
-                                                                <th scope="row"><?=$no++?></th>
-                                                                <td>
-                                                                     <span type="button" 
-                                                                        data-toggle="modal" 
-                                                                        data-target="#detail" 
-                                                                        data-id_customer="<?=$k['id_customer']?>"
-                                                                        data-kode_customer="<?=$k['kode_customer']?>"
-                                                                        data-nama_customer="<?=$k['nama_customer']?>"
-                                                                        data-kegiatan_usaha="<?=$k['kegiatan_usaha']?>"
-                                                                        data-alamat_customer="<?=$k['alamat_customer']?>"
-                                                                        data-provinsi="<?=$k['provinsi']?>"
-                                                                        data-kota_kab="<?=$k['kota_kab']?>"
-                                                                        data-nib="<?=$k['nib']?>">
-                                                                        <span class="badge badge-primary"><?=$k['kode_customer']?></span>
-                                                            </span>
-                                                                    
-                                                                </td>
-                                                                <td>
-                                                                    <strong><?=$k['nama_customer']?></strong>
-                                                                </td>
-                                                                <td><?=$k['kegiatan_usaha']?></td>
-                                                                
-                                                                <td class="text-center">
-                                                                    <div class="action-buttons">
-                                                                    <button
-                                                                    type="button"
-                                                                    class="btn btn-success"
+
+                            <div class="col-md-9">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5><i class="fas fa-list"></i> Daftar Customer</h5>
+                                        <div class="btn-group">
+                                            <button class="btn btn-success btn-sm" id="export" type="button">
+                                                <i class="fas fa-print"></i> Cetak List Customer
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+                                                <i class="fas fa-plus-circle"></i> Tambah Customer
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-block table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table datatable table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Kode Customer</th>
+                                                        <th>Nama Customer</th>
+                                                        <th>Kegiatan Usaha</th>
+
+                                                        <th class="text-center">Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $no = 1;
+                                                    foreach ($result as $k) {
+                                                    ?>
+                                                        <tr>
+                                                            <th scope="row"><?= $no++ ?></th>
+                                                            <td>
+                                                                <span type="button"
+                                                                    class="btn-detail"
                                                                     data-toggle="modal"
-                                                                    data-target="#harga"
-                                                                    data-id_customer="<?=$k['id_customer']?>"
-                                                                    data-kode_customer="<?=$k['kode_customer']?>"
-                                                                    data-nama_customer="<?=$k['nama_customer']?>"
-                                                                    >
+                                                                    data-target="#detail"
+                                                                    data-id_customer="<?= $k['id_customer'] ?>"
+                                                                    data-kode_customer="<?= $k['kode_customer'] ?>"
+                                                                    data-nama_customer="<?= $k['nama_customer'] ?>"
+                                                                    data-kegiatan_usaha="<?= $k['kegiatan_usaha'] ?>"
+                                                                    data-alamat_customer="<?= $k['alamat_customer'] ?>"
+                                                                    data-provinsi="<?= $k['provinsi'] ?>"
+                                                                    data-kota_kab="<?= $k['kota_kab'] ?>"
+                                                                    data-nib="<?= $k['nib'] ?>">
+                                                                    <span class="badge badge-primary"><?= $k['kode_customer'] ?></span>
+                                                                </span>
+
+                                                            </td>
+                                                            <td>
+                                                                <strong><?= $k['nama_customer'] ?></strong>
+                                                            </td>
+                                                            <td><?= $k['kegiatan_usaha'] ?></td>
+
+                                                            <td class="text-center">
+                                                                <div class="action-buttons">
+                                                                    <button
+                                                                        type="button"
+                                                                        class="btn btn-success"
+                                                                        data-toggle="modal"
+                                                                        data-target="#harga"
+                                                                        data-id_customer="<?= $k['id_customer'] ?>"
+                                                                        data-kode_customer="<?= $k['kode_customer'] ?>"
+                                                                        data-nama_customer="<?= $k['nama_customer'] ?>">
                                                                         +
                                                                     </button>
-                                                                        <button type="button" 
-                                                                            class="btn btn-warning btn-sm btn-action" 
-                                                                            data-toggle="modal" 
-                                                                            data-target="#edit"
-                                                                            data-id_customer="<?=$k['id_customer']?>"
-                                                                            data-kode_customer="<?=$k['kode_customer']?>"
-                                                                            data-nama_customer="<?=$k['nama_customer']?>"
-                                                                            data-kegiatan_usaha="<?=$k['kegiatan_usaha']?>"
-                                                                            data-alamat_customer="<?=$k['alamat_customer']?>"
-                                                                            data-provinsi="<?=$k['provinsi']?>"
-                                                                            data-kota_kab="<?=$k['kota_kab']?>"
-                                                                            data-nib="<?=$k['nib']?>">
-                                                                            <i class="fas fa-edit"></i> Edit
-                                                                        </button>
-                                                                        <a  
-                                                                            href="<?=base_url()?>master/master_customer/delete/<?=$k['id_customer']?>" 
-                                                                            class="btn btn-danger btn-sm btn-action" 
-                                                                            onclick = "if (! confirm('Apakah Anda Yakin?')) { return false; }">
-                                                                            <i class="fas fa-trash"></i> Hapus
-                                                                        </a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                                                    <button type="button"
+                                                                        class="btn btn-warning btn-sm btn-action"
+                                                                        data-toggle="modal"
+                                                                        data-target="#edit"
+                                                                        data-id_customer="<?= $k['id_customer'] ?>"
+                                                                        data-kode_customer="<?= $k['kode_customer'] ?>"
+                                                                        data-nama_customer="<?= $k['nama_customer'] ?>"
+                                                                        data-kegiatan_usaha="<?= $k['kegiatan_usaha'] ?>"
+                                                                        data-alamat_customer="<?= $k['alamat_customer'] ?>"
+                                                                        data-provinsi="<?= $k['provinsi'] ?>"
+                                                                        data-kota_kab="<?= $k['kota_kab'] ?>"
+                                                                        data-nib="<?= $k['nib'] ?>">
+                                                                        <i class="fas fa-edit"></i> Edit
+                                                                    </button>
+                                                                    <a
+                                                                        href="<?= base_url() ?>master/master_customer/delete/<?= $k['id_customer'] ?>"
+                                                                        class="btn btn-danger btn-sm btn-action"
+                                                                        onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
+                                                                        <i class="fas fa-trash"></i> Hapus
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- [ Main Content ] end -->
                         </div>
                     </div>
+                    <!-- [ Main Content ] end -->
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -531,7 +533,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="<?=base_url()?>master/master_customer/add">
+                <form method="post" action="<?= base_url() ?>master/master_customer/add">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -568,7 +570,7 @@
                                     <textarea class="form-control" id="alamat_customer" name="alamat_customer" rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
                                 </div>
                             </div>
-                    
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Provinsi</label>
@@ -593,7 +595,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick = "if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
+                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
                             <i class="fas fa-save"></i> Simpan
                         </button>
                     </div>
@@ -604,7 +606,7 @@
 
     <!-- Modal Detail -->
     <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="fas fa-eye"></i> Detail Customer</h5>
@@ -641,7 +643,7 @@
                                 <textarea class="form-control" id="v_alamat_customer" name="alamat_customer" rows="3" readonly></textarea>
                             </div>
                         </div>
-                
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">Provinsi</label>
@@ -663,6 +665,28 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr>
+
+                    <h6><i class="fas fa-box"></i> Daftar Barang & Harga</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm" id="tblHargaCustomer">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="color: white;" width="5%">No</th>
+                                    <th style="color: white;">Kode Barang</th>
+                                    <th style="color: white;">Nama Barang</th>
+                                    <th style="color: white;">Harga</th>
+                                    <th style="color: white;" width="15%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -670,6 +694,87 @@
             </div>
         </div>
     </div>
+
+    <!-- === MODAL EDIT HARGA -->
+
+    <div class="modal fade" id="modalEditHarga" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title"><i class="fas fa-edit"></i> Edit Harga</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit_id_harga">
+                    <div class="form-group">
+                        <label>Harga</label>
+                        <input type="number" id="edit_harga" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary btn-sm" id="btnSaveEditHarga">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).on('click', '.btn-delete', function() {
+            let id = $(this).data('id');
+            if (confirm('Yakin ingin menghapus data harga ini?')) {
+                $.ajax({
+                    url: "<?= base_url('master/master_customer/delete_harga'); ?>",
+                    type: "POST",
+                    data: {
+                        id_master_harga: id
+                    },
+                    success: function(res) {
+                        alert('Data berhasil dihapus');
+                        // reload tabel harga (panggil ulang tombol detail)
+                        $('.btn-detail[data-id_customer="' + $('#v_kode_customer').val() + '"]').click();
+                    },
+                    error: function() {
+                        alert('Gagal menghapus data.');
+                    }
+                });
+            }
+        });
+
+        // tampilkan modal edit
+        $(document).on('click', '.btn-edit', function() {
+            let id = $(this).data('id');
+            let harga = $(this).data('harga');
+            $('#edit_id_harga').val(id);
+            $('#edit_harga').val(harga);
+            $('#modalEditHarga').modal('show');
+        });
+
+        // simpan edit harga
+        $('#btnSaveEditHarga').on('click', function() {
+            let id = $('#edit_id_harga').val();
+            let harga = $('#edit_harga').val();
+
+            $.ajax({
+                url: "<?= base_url('master/master_customer/update_harga'); ?>",
+                type: "POST",
+                data: {
+                    id_master_harga: id,
+                    harga: harga
+                },
+                success: function() {
+                    $('#modalEditHarga').modal('hide');
+                    alert('Harga berhasil diperbarui');
+                    // reload tabel harga
+                    $('.btn-detail[data-id_customer="' + $('#v_kode_customer').val() + '"]').click();
+                },
+                error: function() {
+                    alert('Gagal menyimpan perubahan.');
+                }
+            });
+        });
+    </script>
 
     <!-- Modal Edit -->
     <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -681,7 +786,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="<?=base_url()?>master/master_customer/update">
+                <form method="post" action="<?= base_url() ?>master/master_customer/update">
                     <input type="hidden" id="e_id_customer" name="id_customer">
                     <div class="modal-body">
                         <div class="row">
@@ -719,7 +824,7 @@
                                     <textarea class="form-control" id="e_alamat_customer" name="alamat_customer" rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
                                 </div>
                             </div>
-                    
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Provinsi</label>
@@ -744,7 +849,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick = "if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
+                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
                             <i class="fas fa-save"></i> Update
                         </button>
                     </div>
@@ -756,53 +861,95 @@
     <!-- JavaScript -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#kode_customer").keyup(function(){
-                var kode_customer =  $("#kode_customer").val();
+            $("#kode_customer").keyup(function() {
+                var kode_customer = $("#kode_customer").val();
                 jQuery.ajax({
-                    url: "<?=base_url()?>master/master_customer/cek_kode_customer",
-                    dataType:'text',
+                    url: "<?= base_url() ?>master/master_customer/cek_kode_customer",
+                    dataType: 'text',
                     type: "post",
-                    data:{kode_customer:kode_customer},
-                    success:function(response){
-                        if (response =="true") {
+                    data: {
+                        kode_customer: kode_customer
+                    },
+                    success: function(response) {
+                        if (response == "true") {
                             $("#kode_customer").addClass("is-invalid");
-                            $("#simpan").attr("disabled","disabled");
-                        }else{
+                            $("#simpan").attr("disabled", "disabled");
+                        } else {
                             $("#kode_customer").removeClass("is-invalid");
                             $("#simpan").removeAttr("disabled");
                         }
-                    }            
+                    }
                 });
             });
 
-            $('#detail').on('show.bs.modal', function (event) {
-                var id_customer = $(event.relatedTarget).data('id_customer') 
-                var kode_customer = $(event.relatedTarget).data('kode_customer') 
-                var nama_customer = $(event.relatedTarget).data('nama_customer') 
-                var kegiatan_usaha = $(event.relatedTarget).data('kegiatan_usaha') 
-                var alamat_customer = $(event.relatedTarget).data('alamat_customer')
-                var provinsi = $(event.relatedTarget).data('provinsi') 
-                var kota_kab = $(event.relatedTarget).data('kota_kab') 
-                var nib = $(event.relatedTarget).data('nib')  
+            // ketika klik tombol detail
+            $('.btn-detail').on('click', function() {
+                var id_customer = $(this).data('id_customer');
 
-                $(this).find('#v_kode_customer').val(kode_customer)
-                $(this).find('#v_nama_customer').val(nama_customer)
-                $(this).find('#v_kegiatan_usaha').val(kegiatan_usaha)
-                $(this).find('#v_alamat_customer').val(alamat_customer)
-                $(this).find('#v_provinsi').val(provinsi)
-                $(this).find('#v_kota_kab').val(kota_kab)
-                $(this).find('#v_nib').val(nib)
+                $.ajax({
+                    url: "<?= base_url('master/master_customer/get_detail_customer'); ?>",
+                    type: "POST",
+                    data: {
+                        id_customer: id_customer
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.customer) {
+                            let c = response.customer;
+                            $('#v_kode_customer').val(c.kode_customer);
+                            $('#v_nama_customer').val(c.nama_customer);
+                            $('#v_kegiatan_usaha').val(c.kegiatan_usaha);
+                            $('#v_alamat_customer').val(c.alamat_customer);
+                            $('#v_provinsi').val(c.provinsi);
+                            $('#v_kota_kab').val(c.kota_kab);
+                            $('#v_nib').val(c.nib);
+                        }
+
+                        // isi tabel harga
+                        let tbody = $('#tblHargaCustomer tbody');
+                        tbody.empty();
+
+                        if (response.harga.length > 0) {
+                            $.each(response.harga, function(i, item) {
+                                tbody.append(`
+                            <tr>
+                                <td>${i+1}</td>
+                                <td>${item.kode_barang}</td>
+                                <td>${item.nama_barang}</td>
+                                <td>${new Intl.NumberFormat('id-ID').format(item.harga)}</td>
+                                <td class="center">
+                                    <div style="display: flex;">
+                                        <button class="btn btn-warning btn-sm btn-edit" data-id="${item.id_master_harga}" data-harga="${item.harga}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm btn-delete" data-id="${item.id_master_harga}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        `);
+                            });
+                        } else {
+                            tbody.append(`<tr><td colspan="6" class="text-center text-muted">Belum ada harga untuk customer ini.</td></tr>`);
+                        }
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan mengambil data.');
+                    }
+                });
             });
 
-            $('#edit').on('show.bs.modal', function (event) {
-                var id_customer = $(event.relatedTarget).data('id_customer') 
-                var kode_customer = $(event.relatedTarget).data('kode_customer') 
-                var nama_customer = $(event.relatedTarget).data('nama_customer') 
-                var kegiatan_usaha = $(event.relatedTarget).data('kegiatan_usaha') 
+            $('#edit').on('show.bs.modal', function(event) {
+                var id_customer = $(event.relatedTarget).data('id_customer')
+                var kode_customer = $(event.relatedTarget).data('kode_customer')
+                var nama_customer = $(event.relatedTarget).data('nama_customer')
+                var kegiatan_usaha = $(event.relatedTarget).data('kegiatan_usaha')
                 var alamat_customer = $(event.relatedTarget).data('alamat_customer')
-                var provinsi = $(event.relatedTarget).data('provinsi') 
-                var kota_kab = $(event.relatedTarget).data('kota_kab') 
-                var nib = $(event.relatedTarget).data('nib')  
+                var provinsi = $(event.relatedTarget).data('provinsi')
+                var kota_kab = $(event.relatedTarget).data('kota_kab')
+                var nib = $(event.relatedTarget).data('nib')
 
                 $(this).find('#e_id_customer').val(id_customer)
                 $(this).find('#e_kode_customer').val(kode_customer)
@@ -815,34 +962,36 @@
                 $(this).find('#e_nib').val(nib)
             });
 
-            $("#e_kode_customer").keyup(function(){
-                var kode_customer =  $("#e_kode_customer").val();
+            $("#e_kode_customer").keyup(function() {
+                var kode_customer = $("#e_kode_customer").val();
                 jQuery.ajax({
-                    url: "<?=base_url()?>master/master_customer/cek_kode_customer",
-                    dataType:'text',
+                    url: "<?= base_url() ?>master/master_customer/cek_kode_customer",
+                    dataType: 'text',
                     type: "post",
-                    data:{kode_customer:kode_customer},
-                    success:function(response){
-                        if (response =="true") {
+                    data: {
+                        kode_customer: kode_customer
+                    },
+                    success: function(response) {
+                        if (response == "true") {
                             $("#e_kode_customer").addClass("is-invalid");
-                            $("#simpan").attr("disabled","disabled");
-                        }else{
+                            $("#simpan").attr("disabled", "disabled");
+                        } else {
                             $("#e_kode_customer").removeClass("is-invalid");
                             $("#simpan").removeAttr("disabled");
                         }
-                    }            
+                    }
                 });
             });
 
-            $('#export').click(function () {
-                var url = "<?=base_url()?>master/master_customer/pdf_customer_list/";
+            $('#export').click(function() {
+                var url = "<?= base_url() ?>master/master_customer/pdf_customer_list/";
                 window.open(url, 'pdf_laporan_customer_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
             });
         });
     </script>
 
 
-  <div class="modal fade" id="harga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="harga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-cust">
@@ -851,7 +1000,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" id="harga" action="<?=base_url()?>master/master_customer/add_harga">
+                <form method="post" id="harga" action="<?= base_url() ?>master/master_customer/add_harga">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -879,16 +1028,16 @@
                                     <select class="form-control chosen-select" id="h-id_barang" name="id_barang" autocomplete="off">
                                         <option value="">- Pilih Barang -</option>
                                         <?php
-                                            foreach ($res_barang as $c) {
-                                            ?>
-                                                <option value="<?= $c['id_barang'] ?>">(<?= $c['kode_barang'] ?>) <?= $c['nama_barang'] ?></option>
-                                            <?php
-                                            }
-                                            ?>
+                                        foreach ($res_barang as $c) {
+                                        ?>
+                                            <option value="<?= $c['id_barang'] ?>">(<?= $c['kode_barang'] ?>) <?= $c['nama_barang'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
-                    
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Harga</label>
@@ -906,7 +1055,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick = "if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
+                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
                             <i class="fas fa-save"></i> Simpan
                         </button>
                     </div>
@@ -917,37 +1066,62 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
 
-            
-            $('#harga').on('show.bs.modal', function (event) {
+            $('#harga').on('show.bs.modal', function(event) {
                 function unformatRupiah(rupiah) {
-                if (!rupiah) return 0;
-                return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+                    if (!rupiah) return 0;
+                    return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
                 }
-                var id_customer = $(event.relatedTarget).data('id_customer') 
-                var kode_customer = $(event.relatedTarget).data('kode_customer') 
-                var nama_customer = $(event.relatedTarget).data('nama_customer') 
 
-                $(this).find('#h-kode_customer').val(kode_customer)
-                $(this).find('#h-nama_customer').val(nama_customer)
-                $(this).find('#h-id_customer').val(id_customer)
+                var id_customer = $(event.relatedTarget).data('id_customer');
+                var kode_customer = $(event.relatedTarget).data('kode_customer');
+                var nama_customer = $(event.relatedTarget).data('nama_customer');
 
+                $('#h-kode_customer').val(kode_customer);
+                $('#h-nama_customer').val(nama_customer);
+                $('#h-id_customer').val(id_customer);
 
-                document.getElementById('h-harga').addEventListener('keyup', function(e) {
-                let value = this.value.replace(/\D/g, '');
-                value = new Intl.NumberFormat('id-ID').format(value);
-                this.value = value;
+                // 🔹 Panggil AJAX untuk ambil barang customer ini
+                $.ajax({
+                    url: "<?= base_url('master/master_customer/get_barang_customer') ?>",
+                    type: "POST",
+                    data: {
+                        id_customer: id_customer
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        let dropdown = $('#h-id_barang');
+                        dropdown.empty(); // kosongkan dulu
+                        dropdown.append('<option value="">- Pilih Barang -</option>');
+                        if (data.length > 0) {
+                            $.each(data, function(i, item) {
+                                dropdown.append('<option value="' + item.id_barang + '">(' + item.kode_barang + ') ' + item.nama_barang + '</option>');
+                            });
+                        } else {
+                            dropdown.append('<option value="" disabled>(Tidak ada barang tersedia untuk diberi harga)</option>');
+                        }
+                        dropdown.trigger("chosen:updated"); // refresh plugin chosen jika dipakai
+                    }
                 });
+
+                // Format input harga
+                document.getElementById('h-harga').addEventListener('keyup', function(e) {
+                    let value = this.value.replace(/\D/g, '');
+                    value = new Intl.NumberFormat('id-ID').format(value);
+                    this.value = value;
+                });
+
+                // Ubah format harga sebelum submit
                 $('#harga').on('submit', function(e) {
-                // Ambil nilai aslinya (tanpa format)
-                const harga_po = unformatRupiah($('#h-harga').val());
-                // Ubah isi input ke integer agar dikirim bersih ke backend
-                $('#h-harga').val(harga_po);
-                // Setelah ini form dikirim secara normal
+                    const harga_po = unformatRupiah($('#h-harga').val());
+                    $('#h-harga').val(harga_po);
                 });
             });
-        })
+
+        });
     </script>
+
 </body>
+
 </html>

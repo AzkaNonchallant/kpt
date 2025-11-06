@@ -875,7 +875,7 @@
               data-bloom="${item.bloom || ''}" 
               data-gdg_qty_in="${item.gdg_qty_in || 0}"
               >
-              (${item.kode_barang}) ${item.nama_barang}
+              (${item.no_batch}) ${item.nama_barang}
             </option>`;
             });
             $('#id_barang').html(options).trigger("chosen:updated");
