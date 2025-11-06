@@ -708,14 +708,6 @@
                 <label for="id_barang">Nama Barang</label>
                 <select class="form-control chosen-select" id="id_barang" name="id_barang" autocomplete="off" required>
                   <option value="">-Pilih Nama Barang -</option>
-                  <?php
-                  foreach ($res_barang as $b) {
-
-                  ?>
-                    <option data-kode_tf_in="<?= $b['kode_tf_in'] ?>" data-mesh="<?= $b['mesh'] ?>" data-bloom="<?= $b['bloom'] ?>" data-gdg_qty_in="<?= $b['gdg_qty_in'] ?>" value="<?= $b['id_barang'] ?>">(<?= $b['kode_barang'] ?>) <?= $b['nama_barang'] ?></option>
-                  <?php
-                  }
-                  ?>
                 </select>
               </div>
             </div>
@@ -761,7 +753,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Harga(Rp/Kg)</label>
-                <input type="text" class="form-control" id="harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" required>
+                <input type="text" class="form-control" id="harga_po" name="harga_po" placeholder="Harga(Rp/Kg)" autocomplete="off" readonly>
               </div>
             </div>
 
@@ -859,6 +851,47 @@
       });
     })
 
+    // Saat dropdown Customer berubah
+    $('#id_customer').on('change', function() {
+      let id_customer = $(this).val();
+
+      if (id_customer) {
+        $.ajax({
+          url: "<?= base_url('marketing/po_customer/get_barang_by_customer') ?>",
+          type: "POST",
+          data: {
+            id_customer: id_customer
+          },
+          dataType: "json",
+          success: function(res) {
+            let options = '<option value="">-Pilih Nama Barang -</option>';
+            $.each(res, function(i, item) {
+              options += `
+            <option 
+              value="${item.id_barang}" 
+              data-harga="${item.harga_customer || 0}"
+              data-kode_tf_in="${item.kode_tf_in || ''}" 
+              data-mesh="${item.mesh || ''}" 
+              data-bloom="${item.bloom || ''}" 
+              data-gdg_qty_in="${item.gdg_qty_in || 0}"
+              >
+              (${item.kode_barang}) ${item.nama_barang}
+            </option>`;
+            });
+            $('#id_barang').html(options).trigger("chosen:updated");
+          },
+          error: function(xhr, status, error) {
+            alert('Gagal memuat data barang: ' + error);
+            $('#id_barang').html('<option value="">-Pilih Nama Barang -</option>').trigger("chosen:updated");
+          }
+        });
+      } else {
+        $('#id_barang').html('<option value="">-Pilih Nama Barang -</option>').trigger("chosen:updated");
+      }
+    });
+
+
+
     // === START: OTOMATIS HITUNG TOTAL HARGA ===
     $('#jumlah_po, #harga_po').on('keyup change', function() {
       // ambil nilai dan bersihkan dari titik
@@ -887,32 +920,43 @@
       }
     })
 
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-kode_tf_in')
-      kode_tf_in = selected.replaceAll(' ', ' ')
-      $('#kode_tf_in').val(kode_tf_in)
-    });
+    // $("select").on('change', function() {
+    //   const selected = $(this).find(':selected').attr('data-kode_tf_in')
+    //   kode_tf_in = selected.replaceAll(' ', ' ')
+    //   $('#kode_tf_in').val(kode_tf_in)
+    // });
 
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-mesh')
-      mesh = selected.replaceAll(' ', ' ')
-      $('#mesh').val(mesh)
-    });
+    // $("select").on('change', function() {
+    //   const selected = $(this).find(':selected').attr('data-mesh')
+    //   mesh = selected.replaceAll(' ', ' ')
+    //   $('#mesh').val(mesh)
+    // });
 
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-bloom')
-      bloom = selected.replaceAll(' ', ' ')
-      $('#bloom').val(bloom)
-    });
+    // $("select").on('change', function() {
+    //   const selected = $(this).find(':selected').attr('data-bloom')
+    //   bloom = selected.replaceAll(' ', ' ')
+    //   $('#bloom').val(bloom)
+    // });
 
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-gdg_qty_in');
-      // Pastikan nilainya berupa angka dulu
-      let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
-      // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
-      gdg_qty_in = new Intl.NumberFormat('id-ID').format(gdg_qty_in);
-      // Masukkan hasil format ke input
-      $('#gdg_qty_in').val(gdg_qty_in);
+    // $("select").on('change', function() {
+    //   const selected = $(this).find(':selected').attr('data-gdg_qty_in');
+    //   // Pastikan nilainya berupa angka dulu
+    //   let gdg_qty_in = selected ? selected.replace(/\D/g, '') : 0;
+    //   // Format ke rupiah (tanpa "Rp", hanya angka dengan titik)
+    //   gdg_qty_in = new Intl.NumberFormat('id-ID').format(gdg_qty_in);
+    //   // Masukkan hasil format ke input
+    //   $('#gdg_qty_in').val(gdg_qty_in);
+    // });
+
+        // Saat barang dipilih, otomatis isi field terkait
+    $('#id_barang').on('change', function() {
+      let selected = $(this).find(':selected');
+
+      $('#kode_tf_in').val(selected.data('kode_tf_in') || '');
+      $('#mesh').val(selected.data('mesh') || '');
+      $('#bloom').val(selected.data('bloom') || '');
+      $('#gdg_qty_in').val(new Intl.NumberFormat('id-ID').format(selected.data('gdg_qty_in') || 0));
+      $('#harga_po').val(new Intl.NumberFormat('id-ID').format(selected.data('harga') || 0));
     });
 
 
@@ -1390,95 +1434,3 @@
     });
   });
 </script>
-
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $('#edit').on('show.bs.modal', function (event) {
-
-      function formatRupiah(angka) {
-      let number_string = angka.replace(/[^,\d]/g, '').toString(),
-          split   		= number_string.split(','),
-          sisa     		= split[0].length % 3,
-          rupiah     	= split[0].substr(0, sisa),
-          ribuan     	= split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-      return rupiah;
-    }
-
-  var id_mkt_po_customer = $(event.relatedTarget).data('id_mkt_po_customer') 
-  var no_po = $(event.relatedTarget).data('no_po')
-  var tgl_po = $(event.relatedTarget).data('tgl_po')
-  var id_customer = $(event.relatedTarget).data('id_customer') 
-  var id_barang = $(event.relatedTarget).data('id_barang')
-  var mesh = $(event.relatedTarget).data('mesh') 
-  var bloom = $(event.relatedTarget).data('bloom') 
-  var jumlah_po = $(event.relatedTarget).data('jumlah_po') 
-  var harga_po = $(event.relatedTarget).data('harga_po') 
-  var jenis_pembayaran = $(event.relatedTarget).data('jenis_pembayaran')
-  var mkt_admin = $(event.relatedTarget).data('mkt_admin') 
-
-  $(this).find('#e-id_mkt_po_customer').val(id_mkt_po_customer)
-  $(this).find('#e-no_po').val(no_po)
-  $(this).find('#e-tgl_po').val(tgl_po)
-  $(this).find('#e-id_customer').val(id_customer)
-  $(this).find('#e-id_customer').trigger("chosen:updated");
-  $(this).find('#e-id_barang').val(id_barang)
-  $(this).find('#e-id_barang').trigger("chosen:updated");
-  $(this).find('#e-mesh').val(mesh)
-  $(this).find('#e-bloom').val(bloom)
-  $(this).find('#e-jumlah_po').val(jumlah_po)
-  $(this).find('#e-harga_po').val(harga_po)
-  $(this).find('#e-jenis_pembayaran').val(jenis_pembayaran)
-  $(this).find('#e-jenis_pembayaran').trigger("chosen:updated");
-  $(this).find('#e-mkt_admin').val(mkt_admin)
-  
-
-
-  $(this).find('#e-tgl_po').datepicker().on('show.bs.modal', function(event) {
-    // prevent datepicker from firing bootstrap modal "show.bs.modal"
-    event.stopPropagation();
-  });
-
-  $("#e-no_po").keyup(function(){
-      var no_po =  $("#e-no_po").val();
-      jQuery.ajax({
-        url: "<?= base_url() ?>marketing/po_customer/cek_no_po",
-        dataType:'text',
-        type: "post",
-        data:{no_po:no_po},
-        success:function(response){
-          if (response =="true") {
-            $("#e-no_po").addClass("is-invalid");
-            $("#simpan").attr("disabled","disabled");
-          }else{
-            $("#e-no_po").removeClass("is-invalid");
-            $("#simpan").removeAttr("disabled");
-          }
-        }            
-      });
-    })
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-mesh')
-      mesh = selected.replaceAll(' ', '')
-      $('#e-mesh').val(mesh)
-    });
-
-    $("select").on('change', function() {
-      const selected = $(this).find(':selected').attr('data-bloom')
-      bloom = selected.replaceAll(' ', '')
-      $('#e-bloom').val(bloom)
-    });
-
-})
-
-})
-
-</script> -->
