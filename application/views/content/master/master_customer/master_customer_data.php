@@ -704,44 +704,25 @@
                     <h6 class="modal-title"><i class="fas fa-edit"></i> Edit Harga</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body">
-                    <input type="hidden" id="edit_id_harga">
-                    <div class="form-group">
-                        <label>Harga</label>
-                        <input type="number" id="edit_harga" class="form-control">
+                <form action="<?= base_url() ?>master/master_customer/update_harga" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_id_harga" name="id_master_harga">
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <input type="number" id="edit_harga" name="harga" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
-                    <button class="btn btn-primary btn-sm" id="btnSaveEditHarga">Simpan</button>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary btn-sm" id="btnSaveEditHarga">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
 
     <script type="text/javascript">
-        $(document).on('click', '.btn-delete', function() {
-            let id = $(this).data('id');
-            if (confirm('Yakin ingin menghapus data harga ini?')) {
-                $.ajax({
-                    url: "<?= base_url('master/master_customer/delete_harga'); ?>",
-                    type: "POST",
-                    data: {
-                        id_master_harga: id
-                    },
-                    success: function(res) {
-                        alert('Data berhasil dihapus');
-                        // reload tabel harga (panggil ulang tombol detail)
-                        $('.btn-detail[data-id_customer="' + $('#v_kode_customer').val() + '"]').click();
-                    },
-                    error: function() {
-                        alert('Gagal menghapus data.');
-                    }
-                });
-            }
-        });
-
         // tampilkan modal edit
         $(document).on('click', '.btn-edit', function() {
             let id = $(this).data('id');
@@ -756,23 +737,6 @@
             let id = $('#edit_id_harga').val();
             let harga = $('#edit_harga').val();
 
-            $.ajax({
-                url: "<?= base_url('master/master_customer/update_harga'); ?>",
-                type: "POST",
-                data: {
-                    id_master_harga: id,
-                    harga: harga
-                },
-                success: function() {
-                    $('#modalEditHarga').modal('hide');
-                    alert('Harga berhasil diperbarui');
-                    // reload tabel harga
-                    $('.btn-detail[data-id_customer="' + $('#v_kode_customer').val() + '"]').click();
-                },
-                error: function() {
-                    alert('Gagal menyimpan perubahan.');
-                }
-            });
         });
     </script>
 
@@ -922,9 +886,9 @@
                                         <button class="btn btn-warning btn-sm btn-edit" data-id="${item.id_master_harga}" data-harga="${item.harga}">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm btn-delete" data-id="${item.id_master_harga}">
+                                        <a href="<?= base_url()?>master/master_customer/delete_harga/${item.id_master_harga}" class="btn btn-danger btn-sm btn-delete">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </td>
 

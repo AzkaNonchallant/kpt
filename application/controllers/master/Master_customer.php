@@ -74,14 +74,17 @@ class Master_customer extends MY_Controller
         ]);
     }
 
-    public function delete_harga()
+    public function delete_harga($id)
 {
-    $id = $this->input->post('id_master_harga');
 
-    $this->db->where('id_master_harga', $id);
-    $this->db->update('tb_master_harga', ['is_deleted' => 1]);
+    $respon = $this->M_master_customer->delete_harga($id);
 
-    header('location:' . base_url('master/master_customer') . '?alert=success&msg=Selamat anda berhasil menghapus harga');
+    if ($respon) {
+            header('location:' . base_url('master/master_customer') . '?alert=success&msg=Selamat anda berhasil menghapus harga customer');
+        } else {
+            header('location:' . base_url('master/master_customer') . '?alert=success&msg=Maaf anda gagal menghapus Harga customer');
+        }
+
 }
 
 public function update_harga()
@@ -90,14 +93,17 @@ public function update_harga()
     $id = $this->input->post('id_master_harga');
     $harga = $this->input->post('harga');
 
-    $this->db->where('id_master_harga', $id);
-    $this->db->update('tb_master_harga', [
-        'harga' => $harga,
-        'updated_at' => date('Y-m-d H:i:s'),
-        'updated_by' => $id_user
-    ]);
+   $data['id_user'] = $id_user;
+   $data['id'] = $id;
+   $data['harga'] = $harga;
 
-    header('location:' . base_url('master/master_customer') . '?alert=success&msg=Selamat anda berhasil mengupdate harga');
+   $respon = $this->M_master_customer->update_harga($data);
+    
+    if ($respon) {
+            header('location:' . base_url('master/master_customer') . '?alert=success&msg=Selamat anda berhasil update harga customer');
+        } else {
+            header('location:' . base_url('master/master_customer') . '?alert=success&msg=Maaf anda gagal update Harga customer');
+        }
 }
 
 
