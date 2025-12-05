@@ -33,6 +33,9 @@ $level = $this->session->userdata('level');
                     <li class="nav-item <?=$uri == ''?'active':''?>">
                         <a href="<?=base_url()?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+                    <li class="nav-item <?=$uri == ''?'active':''?>">
+                        <a href="<?=base_url('profile/profile')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Profile</span></a>
+                    </li>
                     <?php if ($departemen == 'Marketing' || $departemen== 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
                         <label>Master </label>
@@ -90,7 +93,7 @@ $level = $this->session->userdata('level');
                         <label>Marketing </label>
                     </li>
                     <li class="nav-item <?=$uri == 'marketing/po_customer'?'active':''?>">
-                        <a href="<?=base_url('marketing/po_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Customer</span></a>
+                        <a href="<?=base_url('marketing/po_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">Order Customer</span></a>
                     </li>
                      <li class="nav-item <?=$uri == 'marketing/po_customer'?'active':''?>">
                         <a href="<?=base_url('marketing/po_sample')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Sample</span></a>

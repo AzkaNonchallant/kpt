@@ -960,11 +960,6 @@
     });
 
 
-    document.getElementById('jumlah_po').addEventListener('keyup', function(e) {
-      let value = this.value.replace(/\D/g, '');
-      value = new Intl.NumberFormat('id-ID').format(value);
-      this.value = value;
-    });
 
     document.getElementById('harga_po').addEventListener('keyup', function(e) {
       let value = this.value.replace(/\D/g, ''); // Hanya angka

@@ -902,11 +902,11 @@
       });
 
 
-      document.getElementById('jumlah_kirim').addEventListener('keyup', function(e) {
-        let value = this.value.replace(/\D/g, '');
-        value = new Intl.NumberFormat('id-ID').format(value);
-        this.value = value;
-      });
+        document.getElementById('jumlah_kirim').addEventListener('keyup', function(e) {
+          let value = this.value.replace(/\D/g, '');
+          value = new Intl.NumberFormat('id-ID').format(value);
+          this.value = value;
+        });
 
       document.getElementById('harga_kirim').addEventListener('keyup', function(e) {
         let value = this.value.replace(/\D/g, '');
