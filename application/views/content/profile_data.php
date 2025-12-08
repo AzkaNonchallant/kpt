@@ -688,17 +688,7 @@
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
                                                 <div class="info-box">
-                                                    <strong>Status:</strong> 
-                                                    <?php if ($daysLeft > 30): ?>
-                                                        <span class="status-valid">Valid</span>
-                                                        <span class="status-badge badge-success">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php elseif ($daysLeft > 0 && $daysLeft <= 30): ?>
-                                                        <span class="status-warning">Akan Kadaluarsa</span>
-                                                        <span class="status-badge badge-warning">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php else: ?>
-                                                        <span class="status-expired">Kadaluarsa</span>
-                                                        <span class="status-badge badge-danger">Expired</span>
-                                                    <?php endif; ?>
+                                                   
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
                                                 </div>
@@ -738,17 +728,7 @@
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
                                                 <div class="info-box">
-                                                    <strong>Status:</strong> 
-                                                    <?php if ($daysLeft > 30): ?>
-                                                        <span class="status-valid">Valid</span>
-                                                        <span class="status-badge badge-success">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php elseif ($daysLeft > 0 && $daysLeft <= 30): ?>
-                                                        <span class="status-warning">Akan Kadaluarsa</span>
-                                                        <span class="status-badge badge-warning">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php else: ?>
-                                                        <span class="status-expired">Kadaluarsa</span>
-                                                        <span class="status-badge badge-danger">Expired</span>
-                                                    <?php endif; ?>
+                                                   
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
                                                 </div>
@@ -788,17 +768,7 @@
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
                                                 <div class="info-box">
-                                                    <strong>Status:</strong> 
-                                                    <?php if ($daysLeft > 30): ?>
-                                                        <span class="status-valid">Valid</span>
-                                                        <span class="status-badge badge-success">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php elseif ($daysLeft > 0 && $daysLeft <= 30): ?>
-                                                        <span class="status-warning">Akan Kadaluarsa</span>
-                                                        <span class="status-badge badge-warning">Sisa <?= $daysLeft ?> hari</span>
-                                                    <?php else: ?>
-                                                        <span class="status-expired">Kadaluarsa</span>
-                                                        <span class="status-badge badge-danger">Expired</span>
-                                                    <?php endif; ?>
+                                                    
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
                                                 </div>
