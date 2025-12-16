@@ -25,6 +25,8 @@ class M_po_import_tf extends CI_Model
             a.shipment,
             a.pic1,
             a.pic2,
+            a.status_po_import,
+            a.payment,
             a.prc_admin
         FROM tb_prc_po_import_tf a
         WHERE a.is_deleted = 0

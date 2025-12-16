@@ -670,13 +670,20 @@
 
           <div class="row">
 
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">No PO</label>
                 <input type="text" class="form-control" id="no_po" name="no_po" placeholder="No PO" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                 <div id="validationServer03Feedback" class="invalid-feedback">
                   Maaf No PO sudah ada.
                 </div>
+              </div>
+            </div> -->
+
+             <div class="col-md-4">
+              <div class="form-group">
+                <label for="exampleFormControlInput1">No PO</label>
+                <input class="form-control" type="text" id="no_po" name="no_po" placeholder="No PO" value="<?= $generate_no_po ?>" readonly>
               </div>
             </div>
 

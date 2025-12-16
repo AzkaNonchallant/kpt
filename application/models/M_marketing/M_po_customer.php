@@ -106,6 +106,28 @@ class M_po_customer extends CI_Model
         return $this->db->query($sql);
     }
 
+
+    public function generate_no_po()
+{
+    $this->db->select('no_po_customer');
+    $this->db->from('tb_mkt_po_customer');
+    $this->db->order_by('id_mkt_po_customer', 'DESC');
+    $this->db->limit(1);
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        $last_no = $query->row()->no_po_customer; 
+        // format: PO-12 → ambil angka setelah "PO-"
+        $last_number = (int) str_replace('PO-', '', $last_no);
+        $new_number = $last_number + 1;
+    } else {
+        $new_number = 1;
+    }
+
+    return "PO-" . $new_number;
+}
+
+
     public function jml_barang_masuk($data)
     {
         // $kode_user = $this->kode_user();

@@ -45,7 +45,8 @@ class M_admin_sample_keluar extends CI_Model {
             f.kode_sample_out
         FROM tb_mkt_po_sample a
         LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
-        LEFT JOIN tb_gudang_barang_masuk d ON d.id_prc_po_pembelian = a.id_mkt_po_sample
+        LEFT JOIN tb_sample_masuk sm ON a.id_mkt_po_sample = sm.id_mkt_po_sample
+        LEFT JOIN tb_gudang_barang_masuk d ON sm.no_batch = d.no_batch
         LEFT JOIN tb_master_customer e ON a.id_customer = e.id_customer
         LEFT JOIN tb_sample_keluar f ON a.id_mkt_po_sample = f.id_mkt_po_sample
         WHERE a.is_deleted = 0 AND f.kode_sample_out IS NOT NULL
@@ -55,7 +56,6 @@ class M_admin_sample_keluar extends CI_Model {
 
 return $this->db->query($sql)->result_array();
 
-        return $this->db->query($sql)->result_array();
     }
 
     // TAMBAHAN: Function proses untuk PO Sample

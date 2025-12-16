@@ -470,7 +470,7 @@
                                                     $today = time();
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
-                                                <div class="info-box">
+                                                <!-- <div class="info-box">
                                                     <strong>Status:</strong> 
                                                     <?php if ($daysLeft > 30): ?>
                                                         <span class="status-valid">Valid</span>
@@ -484,7 +484,7 @@
                                                     <?php endif; ?>
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
-                                                </div>
+                                                </div> -->
                                                 <?php endif; ?>
                                             </div>
                                             
@@ -527,7 +527,7 @@
                                                     $today = time();
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
-                                                <div class="info-box">
+                                                <!-- <div class="info-box">
                                                     <strong>Status:</strong> 
                                                     <?php if ($daysLeft > 30): ?>
                                                         <span class="status-valid">Valid</span>
@@ -541,7 +541,7 @@
                                                     <?php endif; ?>
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
-                                                </div>
+                                                </div> -->
                                                 <?php endif; ?>
                                             </div>
                                             
@@ -584,7 +584,7 @@
                                                     $today = time();
                                                     $daysLeft = ceil(($expiryDate - $today) / (60 * 60 * 24));
                                                 ?>
-                                                <div class="info-box">
+                                                <!-- <div class="info-box">
                                                     <strong>Status:</strong> 
                                                     <?php if ($daysLeft > 30): ?>
                                                         <span class="status-valid">Valid</span>
@@ -598,7 +598,7 @@
                                                     <?php endif; ?>
                                                     <br>
                                                     <small>Available: <?= date('d/m/Y', $availableDate) ?> | Expired: <?= date('d/m/Y', $expiryDate) ?></small>
-                                                </div>
+                                                </div> -->
                                                 <?php endif; ?>
                                             </div>
                                             
@@ -623,7 +623,6 @@
                                             <i class="fas fa-times"></i> Batal
                                         </button>
                                         <p style="margin-top: 10px; font-size: 12px; color: var(--gray);">
-                                            <i class="fas fa-info-circle"></i> Pastikan semua data telah diisi dengan benar sebelum menyimpan
                                         </p>
                                     </div>
                                 </form>
@@ -667,7 +666,9 @@
                                         <div class="form-card">
                                             <div class="card-header">
                                                 <div class="card-icon icon-success">
-                                                    <i class="fas fa-file-certificate"></i>
+                                                    <i class="fas fa-file-alt"></i>
+
+
                                                 </div>
                                                 <div>
                                                     <h3 class="card-title">Izin PBF</h3>

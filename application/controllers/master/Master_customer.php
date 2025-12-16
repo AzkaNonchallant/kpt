@@ -118,6 +118,9 @@ public function update_harga()
         $data['kota_kab'] = $this->input->post('kota_kab', TRUE);
         $data['provinsi'] = $this->input->post('provinsi', TRUE);
         $data['nib'] = $this->input->post('nib', TRUE);
+        $data['npwp'] = $this->input->post('npwp', TRUE);
+        $data['alamat_kirim'] = $this->input->post('alamat_kirim', TRUE);
+        $data['alamat_pjk'] = $this->input->post('alamat_pjk', TRUE);
         $respon = $this->M_master_customer->add($data);
 
         if ($respon) {
@@ -136,6 +139,8 @@ public function update_harga()
         $data['provinsi'] = $this->input->post('provinsi', TRUE);
         $data['kota_kab'] = $this->input->post('kota_kab', TRUE);
         $data['nib'] = $this->input->post('nib', TRUE);
+        $data['npwp'] = $this->input->post('npwp', TRUE);
+        $data['alamat_kirim'] = $this->input->post('alamat_kirim', TRUE);
         $respon = $this->M_master_customer->update($data);
         // echo $respon;
         if ($respon) {

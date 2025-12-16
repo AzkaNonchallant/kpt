@@ -37,9 +37,10 @@ class M_barang_masuk extends CI_Model {
         $where = implode(" ", $where);
 
         $sql = "
-            SELECT a.*,b.id_barang,b.jumlah_po_pembelian,b.harga_po_pembelian,c.nama_barang,c.kode_barang_bpom,c.mesh,c.bloom,c.satuan,d.nama_supplier FROM tb_gudang_barang_masuk a
-            LEFT JOIN tb_prc_po_pembelian b ON a.id_prc_po_pembelian = b.id_prc_po_pembelian
-            LEFT JOIN tb_master_barang c ON b.id_barang = c.id_barang
+            SELECT a.*,imp.jumlah,imp.harga_perunit,c.nama_barang,c.kode_barang_bpom,c.mesh,c.bloom,c.satuan,d.nama_supplier FROM tb_gudang_barang_masuk a
+            LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
+            LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
+            LEFT JOIN tb_master_barang c ON imp.id_barang = c.id_barang
             LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
 
             WHERE a.is_deleted = 0 $where ORDER BY a.id_barang_masuk DESC";
@@ -56,9 +57,10 @@ class M_barang_masuk extends CI_Model {
         public function get3($id = null ){
             
         $sql = "
-            SELECT a.*,b.id_barang,b.jumlah_po_pembelian,b.harga_po_pembelian,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan,d.nama_supplier,d.pic_supplier FROM tb_gudang_barang_masuk a
-            LEFT JOIN tb_prc_po_pembelian b ON a.id_prc_po_pembelian = b.id_prc_po_pembelian
-            LEFT JOIN tb_master_barang c ON b.id_barang = c.id_barang
+            SELECT a.*,imp.id_barang,imp.jumlah,imp.harga_perunit,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan,d.nama_supplier,d.pic_supplier FROM tb_gudang_barang_masuk a
+            LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
+            LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
+            LEFT JOIN tb_master_barang c ON imp.id_barang = c.id_barang
             LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
 
             WHERE a.is_deleted = 0 ORDER BY a.id_barang_masuk DESC";
@@ -81,7 +83,8 @@ class M_barang_masuk extends CI_Model {
             a.gdg_qty_in,
             h.harga AS harga_customer
         FROM tb_gudang_barang_masuk a
-        LEFT JOIN tb_prc_po_pembelian b ON a.id_prc_po_pembelian = b.id_prc_po_pembelian
+        LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
+        LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
         LEFT JOIN tb_master_barang c ON b.id_barang = c.id_barang
         LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
         LEFT JOIN tb_master_harga h ON h.id_barang = c.id_barang
@@ -94,7 +97,28 @@ class M_barang_masuk extends CI_Model {
     return $this->db->query($sql, [$id_customer])->result_array();
 }
 
+public function get_barang_by_supplier($id_supplier)
+{
+    $sql = "
+        SELECT 
+            c.id_barang,
+            c.kode_barang,
+            c.nama_barang,
+            c.id_supplier,
+            c.satuan,
+            d.nama_supplier,
+            d.pic_supplier,
+            d.kode_po,
+            c.is_deleted
+        FROM tb_master_barang c
+        LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
+        WHERE c.is_deleted = 0
+        AND c.id_supplier = ?
+        ORDER BY c.nama_barang ASC
+    ";
 
+    return $this->db->query($sql, [$id_supplier])->result_array();
+}
 
         public function jml_barang_masuk($data){
         $sql = "

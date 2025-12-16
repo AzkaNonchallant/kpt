@@ -529,7 +529,6 @@
                               <th>Nama Customer</th>
                               <th>No Batch</th>
                               <th class="text-center">Jumlah</th>
-                              <th class="text-center">Aksi</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -552,11 +551,30 @@
                                     ?>
                                   </td>
                                   <td>
-                                    <?php if (!empty($row['kode_sample_in'])): ?>
+                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                      <span type="button" 
+                                        class="badge bg-primary" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#detailModal"
+                                        data-id_sample_masuk="<?= $row['id_sample_masuk'] ?? '' ?>"
+                                        data-tgl_masuk_sample="<?= $row['tgl_masuk_sample'] ?? '' ?>"
+                                        data-kode_sample_in="<?= $row['kode_sample_in'] ?? '' ?>"
+                                        data-nama_barang="<?= $row['nama_barang'] ?? '' ?>"
+                                        data-nama_customer="<?= $row['nama_customer'] ?? '' ?>"
+                                        data-id_barang="<?= $row['id_barang'] ?? '' ?>"
+                                        data-jumlah_masuk="<?= $row['jumlah_masuk'] ?? '' ?>"
+                                        
+                                        data-ket_masuk="<?= $row['ket_masuk'] ?? '' ?>"
+                                        data-gudang_admin="<?= $row['gudang_admin'] ?? '' ?>"
+                                      >
+                                        <i class=""></i> <?php if (!empty($row['kode_sample_in'])): ?>
                                       <span class="badge bg-primary"><?= $row['kode_sample_in'] ?></span>
                                     <?php else: ?>
                                       -
                                     <?php endif; ?>
+                                    </span>
+                                    </div>
+                                    
                                   </td>
                                   <td><?= $row['nama_barang'] ?? '-' ?></td>
                                   <td><?= $row['nama_customer'] ?? '-' ?></td>
@@ -571,27 +589,7 @@
                                     ?>
                                   </td>
                                  
-                                  <td class="text-center">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                      <button type="button" 
-                                        class="btn btn-info btn-sm" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#detailModal"
-                                        data-id_sample_masuk="<?= $row['id_sample_masuk'] ?? '' ?>"
-                                        data-tgl_masuk_sample="<?= $row['tgl_masuk_sample'] ?? '' ?>"
-                                        data-kode_sample_in="<?= $row['kode_sample_in'] ?? '' ?>"
-                                        data-nama_barang="<?= $row['nama_barang'] ?? '' ?>"
-                                        data-nama_customer="<?= $row['nama_customer'] ?? '' ?>"
-                                        data-id_barang="<?= $row['id_barang'] ?? '' ?>"
-                                        data-jumlah_masuk="<?= $row['jumlah_masuk'] ?? '' ?>"
-                                        
-                                        data-ket_masuk="<?= $row['ket_masuk'] ?? '' ?>"
-                                        data-gudang_admin="<?= $row['gudang_admin'] ?? '' ?>"
-                                      >
-                                        <i class="fas fa-eye me-1"></i> Detail
-                                      </button>
-                                    </div>
-                                  </td>
+                                  
                                 </tr>
                               <?php endforeach; ?>
                             <?php else: ?>

@@ -90,12 +90,11 @@ class M_sample_keluar extends CI_Model
             b.nama_barang,
             b.bloom,
             b.mesh,
-            c.id_prc_po_pembelian,
             d.gdg_qty_in
         FROM tb_sample_keluar a
         LEFT JOIN tb_master_barang b ON a.id_barang = b.id_barang
         LEFT JOIN tb_prc_po_pembelian c ON  a.id_barang = c.id_barang
-        LEFT JOIN tb_gudang_barang_masuk d ON c.id_prc_po_pembelian = d.id_prc_po_pembelian
+        LEFT JOIN tb_gudang_barang_masuk d ON a.no_batch = d.no_batch
         WHERE a.is_deleted = 0
         ORDER BY a.created_at ASC
     ";

@@ -60,32 +60,30 @@ $level = $this->session->userdata('level');
                     <li class="nav-item pcoded-menu-caption">
                         <label>Purchasing </label>
                     </li>
-                    <li class="nav-item <?=$uri == 'purchasing/po_pembelian'?'active':''?>">
+                    <!-- <li class="nav-item <?=$uri == 'purchasing/po_pembelian'?'active':''?>">
                         <a href="<?=base_url('purchasing/po_pembelian')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">PO Pembelian</span></a>
-                    </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                        <a id="badge-1" href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
-                            <span class="pcoded-mtext">Purchasing</span>
-                        </a>
-                        <ul class="pcoded-submenu">
-                            <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                                <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Import</span></a>
-                                <ul class="pcoded-submenu">
-                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_import') ?>" class="feather icon-plus-circle">PO Import</a></li>
-                                    <!-- <li class="nav-item <?= $uri == 'Supplier' ? 'active' : '' ?>"><a href="<?= base_url('Purchasing/Po_rekap/Prc_po_rekap') ?>" class="">Rekap Import</a></li> -->
-                                   
-                                </ul>
-                            </li>    
-                        </ul>
-                        <ul class="pcoded-submenu">
-                            <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                                <a href="javascript:" class="nav-link "><span class="pcoded-mitext">PO Reg</span></a>
-                                <ul class="pcoded-submenu">
-                                    <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>"><a href="<?= base_url('purchasing/po_regional/po_reg') ?>" class="feather icon-plus-circle">PO Regional</a></li>
-                                </ul>
-                            </li>    
-                        </ul>
-                    </li>
+                    </li> -->
+                    <li class="nav-item pcoded-hasmenu">
+    <a id="badge-1" href="javascript:" class="nav-link">
+        <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+        <span class="pcoded-mtext">Purchasing</span>
+    </a>
+
+    <ul class="pcoded-submenu">
+        <li class="nav-item <?= $uri == 'PO Import' ? 'active' : '' ?>">
+            <a href="<?= base_url('purchasing/po_import') ?>" class="nav-link">
+                <span class="feather icon-plus-circle"></span> PO Import
+            </a>
+        </li>
+
+        <li class="nav-item <?= $uri == 'PO Reg' ? 'active' : '' ?>">
+            <a href="<?= base_url('purchasing/po_regional/po_reg') ?>" class="nav-link">
+                <span class="feather icon-plus-circle"></span> PO Reg
+            </a>
+        </li>
+    </ul>
+</li>
+
                     <?php endif; ?>
 
                     <?php if ($departemen == 'Marketing' || $level == 0) : ?>

@@ -406,6 +406,7 @@
                                                                         data-alamat_supplier="<?=$k['alamat_supplier']?>"
                                                                         data-negara_asal="<?=$k['negara_asal']?>"
                                                                         data-pic_supplier="<?=$k['pic_supplier']?>"
+                                                                        data-kode_po="<?=$k['kode_po']?>"
                                                                         data-no_sertif_halal="<?=$k['no_sertif_halal']?>">
                                                                         <span ><?=$k['kode_supplier']?></span>
                                                               </span>
@@ -427,6 +428,7 @@
                                                                             data-kode_supplier="<?=$k['kode_supplier']?>"
                                                                             data-nama_supplier="<?=$k['nama_supplier']?>"
                                                                             data-alamat_supplier="<?=$k['alamat_supplier']?>"
+                                                                            data-kode_po="<?=$k['kode_po']?>"
                                                                             data-negara_asal="<?=$k['negara_asal']?>"
                                                                             data-pic_supplier="<?=$k['pic_supplier']?>"
                                                                             data-no_sertif_halal="<?=$k['no_sertif_halal']?>">
@@ -460,75 +462,175 @@
         </div>
     </section>
 
-    <!-- Modal Tambah -->
-    <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-supp">
-                    <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Supplier</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" action="<?=base_url()?>master/master_supplier/add">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Kode Supplier</label>
-                                    <input type="text" class="form-control" id="kode_supplier" name="kode_supplier" placeholder="Kode Supplier" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        Maaf Kode supplier sudah ada.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Nama Supplier</label>
-                                    <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" placeholder="Nama Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">PIC Supplier</label>
-                                    <input type="text" class="form-control" id="pic_supplier" name="pic_supplier" placeholder="PIC Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-                    
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Negara Asal</label>
-                                    <input type="text" class="form-control" id="negara_asal" name="negara_asal" placeholder="Negara Asal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Alamat Supplier</label>
-                                    <textarea class="form-control" id="alamat_supplier" name="alamat_supplier" rows="3" placeholder="Alamat Supplier" autocomplete="off"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Nomor Sertifikat Halal</label>
-                                    <input type="text" class="form-control" id="no_sertif_halal" name="no_sertif_halal" placeholder="No Sertifikat Halal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+<div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-supp">
+                <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Supplier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="<?=base_url()?>master/master_supplier/add" id="formTambah">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kode Supplier *</label>
+                                <input type="text" class="form-control" id="kode_supplier" name="kode_supplier" placeholder="Kode Supplier" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                               <div id="validationServer03Feedback" class="invalid-feedback">
+                                    Maaf Kode supplier sudah ada.
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Nama Supplier *</label>
+                                <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" placeholder="Nama Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">PIC Supplier *</label>
+                                <input type="text" class="form-control" id="pic_supplier" name="pic_supplier" placeholder="PIC Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kode PO </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="kode_po" name="kode_po" placeholder="KODE PO" maxlength="100" autocomplete="off" style="text-transform:uppercase; background-color: #f8f9fa; color: #495057;" readonly required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="loading-indicator" style="display:none;">
+                                            <i class="fas fa-spinner fa-spin fa-fw"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Negara Asal *</label>
+                                <input type="text" class="form-control" id="negara_asal" name="negara_asal" placeholder="Negara Asal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Alamat Supplier</label>
+                                <textarea class="form-control" id="alamat_supplier" name="alamat_supplier" rows="3" placeholder="Alamat Supplier" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Nomor Sertifikat Halal *</label>
+                                <input type="text" class="form-control" id="no_sertif_halal" name="no_sertif_halal" placeholder="No Sertifikat Halal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick = "if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
-                            <i class="fas fa-save"></i> Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" id="simpan" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-up">
+                <h5 class="modal-tittle" style="color: white;"><i class="fas fa-edit" style="color: white;"></i> Update Supplier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="<?=base_url()?>master/master_supplier/update" id="formEdit">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kode Supplier *</label>
+                                <input type="hidden" id="e-id_supplier" name="id_supplier">
+                                <input type="text" class="form-control" id="e-kode_supplier" name="kode_supplier" placeholder="Kode Supplier" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Nama Supplier *</label>
+                                <input type="text" class="form-control" id="e-nama_supplier" name="nama_supplier" placeholder="Nama Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">PIC Supplier *</label>
+                                <input type="text" class="form-control" id="e-pic_supplier" name="pic_supplier" placeholder="PIC Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- Kode PO di Edit -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kode PO </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="e-kode_po" name="kode_po" placeholder="KODE PO" maxlength="100" autocomplete="off" style="text-transform:uppercase; background-color: #f8f9fa; color: #495057;" readonly required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="loading-indicator-edit" style="display:none;">
+                                            <i class="fas fa-spinner fa-spin fa-fw"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted" id="e-kode-po-info">
+                                    Akan di-generate ulang jika nama supplier diubah
+                                </small>
+                            </div>
+                        </div>
+                
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Negara Asal *</label>
+                                <input type="text" class="form-control" id="e-negara_asal" name="negara_asal" placeholder="Negara Asal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Alamat Supplier</label>
+                                <textarea class="form-control" id="e-alamat_supplier" name="alamat_supplier" rows="3" placeholder="Alamat Supplier" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Nomor Sertifikat Halal *</label>
+                                <input type="text" class="form-control" id="e-no_sertif_halal" name="no_sertif_halal" placeholder="No Sertifikat Halal" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" id="simpan_edit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
     <!-- Modal Detail -->
     <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -562,6 +664,13 @@
                                 <input type="text" class="form-control" id="v-pic_supplier" name="pic_supplier" readonly>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kode PO</label>
+                                <input type="text" class="form-control" id="v-kode_po" name="kode_po" readonly>
+                            </div>
+                        </div>
                 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -593,7 +702,7 @@
     </div>
 
     <!-- Modal Edit -->
-    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-up">
@@ -629,6 +738,13 @@
                                     <input type="text" class="form-control" id="e-pic_supplier" name="pic_supplier" placeholder="PIC Supplier" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Kode PO</label>
+                                    <input type="text" class="form-control" id="e-kode_po" name="kode_po" placeholder="KODE PO" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
                     
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -661,89 +777,431 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- JavaScript tetap sama -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#kode_supplier").keyup(function(){
-                var kode_supplier =  $("#kode_supplier").val();
-                jQuery.ajax({
-                    url: "<?=base_url()?>master/master_supplier/cek_kode_supplier",
-                    dataType:'text',
-                    type: "post",
-                    data:{kode_supplier:kode_supplier},
-                    success:function(response){
-                        if (response =="true") {
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Timer untuk debounce
+        var delayTimer;
+        var currentYear = new Date().getFullYear();
+        
+        // Fungsi untuk generate preview kode PO via AJAX
+        function generateKodePOPreview(nama_supplier, isEdit = false, id_supplier = null) {
+            // Validasi panjang nama
+            if(nama_supplier.length < 2) {
+                if(isEdit) {
+                    $('#e-kode_po').val('');
+                    $('#loading-indicator-edit').hide();
+                    $('#e-kode-po-info').html('Akan di-generate ulang jika nama supplier diubah atau tahun berubah');
+                } else {
+                    $('#kode_po').val('');
+                    $('#loading-indicator').hide();
+                    $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
+                }
+                return;
+            }
+            
+            // Tampilkan loading
+            if(isEdit) {
+                $('#loading-indicator-edit').show();
+                $('#e-kode-po-info').html('<span class="text-info"><i class="fas fa-spinner fa-spin"></i> Menghitung nomor urut untuk tahun ' + currentYear + '...</span>');
+            } else {
+                $('#loading-indicator').show();
+                $('#kode-po-info').html('<span class="text-info"><i class="fas fa-spinner fa-spin"></i> Menghitung nomor urut untuk tahun ' + currentYear + '...</span>');
+            }
+            
+            // Kirim request AJAX
+            $.ajax({
+                url: "<?=base_url()?>master/master_supplier/generate_preview_kode_po",
+                type: "POST",
+                data: {
+                    nama_supplier: nama_supplier,
+                    id_supplier: id_supplier
+                },
+                dataType: "json",
+                success: function(response) {
+                    if(isEdit) {
+                        // Untuk edit mode
+                        $('#e-kode_po').val(response.kode_po);
+                        let tahunInfo = '';
+                        
+                        // Cek apakah tahun berubah dari data lama
+                        let oldKodePO = $('#e-kode_po').attr('data-old');
+                        let oldYear = '';
+                        if(oldKodePO) {
+                            let oldParts = oldKodePO.split('/');
+                            if(oldParts.length >= 3) {
+                                oldYear = oldParts[1];
+                                if(oldYear != response.tahun) {
+                                    tahunInfo = '<br><span class="text-warning"><i class="fas fa-exclamation-triangle"></i> Tahun berubah dari ' + oldYear + ' ke ' + response.tahun + '! Nomor urut direset.</span>';
+                                }
+                            }
+                        }
+                        
+                        let infoText = `<span class="text-success">
+                            <i class="fas fa-check-circle"></i> 
+                            <strong>${response.kode_po}</strong><br>
+                            <small>
+                                Urutan ke-${response.nomor_urut} untuk "${nama_supplier}"<br>
+                                Tahun ${response.tahun} | Total ada: ${response.count} supplier dengan nama serupa di tahun ${response.tahun}
+                            </small>
+                            ${tahunInfo}
+                        </span>`;
+                        $('#e-kode-po-info').html(infoText);
+                        $('#loading-indicator-edit').hide();
+                    } else {
+                        // Untuk tambah mode
+                        $('#kode_po').val(response.kode_po);
+                        let infoText = `<span class="text-success">
+                            <i class="fas fa-check-circle"></i> 
+                            <strong>${response.kode_po}</strong><br>
+                            <small>
+                                Urutan ke-${response.nomor_urut} untuk "${nama_supplier}"<br>
+                                Tahun ${response.tahun} | Total ada: ${response.count} supplier dengan nama serupa di tahun ${response.tahun}
+                            </small>
+                        </span>`;
+                        $('#kode-po-info').html(infoText);
+                        $('#loading-indicator').hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error generating Kode PO:", error);
+                    if(isEdit) {
+                        $('#e-kode_po').val('');
+                        $('#e-kode-po-info').html('<span class="text-danger"><i class="fas fa-exclamation-circle"></i> Gagal menghitung kode PO. Silakan coba lagi.</span>');
+                        $('#loading-indicator-edit').hide();
+                    } else {
+                        $('#kode_po').val('');
+                        $('#kode-po-info').html('<span class="text-danger"><i class="fas fa-exclamation-circle"></i> Gagal menghitung kode PO. Silakan coba lagi.</span>');
+                        $('#loading-indicator').hide();
+                    }
+                }
+            });
+        }
+
+        // Real-time generate untuk tambah data dengan debounce
+        $('#nama_supplier').on('keyup', function() {
+            clearTimeout(delayTimer);
+            let nama = $(this).val().toUpperCase().trim();
+            
+            delayTimer = setTimeout(function() {
+                if(nama.length >= 2) {
+                    generateKodePOPreview(nama, false);
+                } else {
+                    $('#kode_po').val('');
+                    $('#loading-indicator').hide();
+                    $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
+                }
+            }, 300);
+        });
+
+        // Real-time generate untuk edit data dengan debounce
+        $('#e-nama_supplier').on('keyup', function() {
+            clearTimeout(delayTimer);
+            let nama = $(this).val().toUpperCase().trim();
+            let id_supplier = $('#e-id_supplier').val();
+            
+            delayTimer = setTimeout(function() {
+                if(nama.length >= 2) {
+                    generateKodePOPreview(nama, true, id_supplier);
+                } else {
+                    $('#e-kode_po').val('');
+                    $('#loading-indicator-edit').hide();
+                    $('#e-kode-po-info').html('Akan di-generate ulang jika nama supplier diubah atau tahun berubah');
+                }
+            }, 300);
+        });
+
+        // Reset saat modal ditutup
+        $('#add').on('hidden.bs.modal', function () {
+            $('#kode_po').val('');
+            $('#loading-indicator').hide();
+            $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
+            $('#nama_supplier').val('');
+            $('#kode_supplier').val('');
+            $('#kode_supplier').removeClass("is-invalid");
+            $("#simpan").removeAttr("disabled");
+        });
+
+        $('#edit').on('hidden.bs.modal', function () {
+            $('#loading-indicator-edit').hide();
+            $('#e-kode-po-info').html('Akan di-generate ulang jika nama supplier diubah atau tahun berubah');
+            $('#e-kode_supplier').removeClass("is-invalid");
+            $("#simpan_edit").removeAttr("disabled");
+        });
+
+        // Saat modal edit dibuka
+        $('#edit').on('show.bs.modal', function (event) {
+            // Ambil data dari button
+            var id_supplier = $(event.relatedTarget).data('id_supplier') 
+            var kode_supplier = $(event.relatedTarget).data('kode_supplier') 
+            var nama_supplier = $(event.relatedTarget).data('nama_supplier') 
+            var alamat_supplier = $(event.relatedTarget).data('alamat_supplier')
+            var negara_asal = $(event.relatedTarget).data('negara_asal') 
+            var pic_supplier = $(event.relatedTarget).data('pic_supplier') 
+            var kode_po = $(event.relatedTarget).data('kode_po') 
+            var no_sertif_halal = $(event.relatedTarget).data('no_sertif_halal') 
+
+            // Set nilai ke form
+            $(this).find('#e-id_supplier').val(id_supplier)
+            $(this).find('#e-kode_supplier').val(kode_supplier)
+            $(this).find('#e-nama_supplier').val(nama_supplier)
+            $(this).find('#e-alamat_supplier').val(alamat_supplier)
+            $(this).find('#e-negara_asal').val(negara_asal)
+            $(this).find('#e-pic_supplier').val(pic_supplier)
+            $(this).find('#e-kode_po').val(kode_po)
+            $(this).find('#e-kode_po').attr('data-old', kode_po) // Simpan kode PO lama
+            $(this).find('#e-no_sertif_halal').val(no_sertif_halal)
+            
+            // Validasi kode supplier untuk edit
+            setTimeout(function() {
+                if(kode_supplier) {
+                    validateKodeSupplier(kode_supplier, true);
+                }
+            }, 100);
+            
+            // Generate preview
+            setTimeout(function() {
+                generateKodePOPreview(nama_supplier, true, id_supplier);
+            }, 500);
+        });
+
+        // Saat modal tambah dibuka
+        $('#add').on('shown.bs.modal', function () {
+            $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
+            $('#nama_supplier').focus();
+        });
+
+        // Fungsi validasi kode supplier
+        function validateKodeSupplier(kode_supplier, isEdit = false) {
+            if(kode_supplier.length < 1) {
+                if(isEdit) {
+                    $("#e-kode_supplier").removeClass("is-invalid");
+                    $("#simpan_edit").removeAttr("disabled");
+                } else {
+                    $("#kode_supplier").removeClass("is-invalid");
+                    $("#simpan").removeAttr("disabled");
+                }
+                return;
+            }
+            
+            $.ajax({
+                url: "<?=base_url()?>master/master_supplier/cek_kode_supplier",
+                dataType:'text',
+                type: "post",
+                data:{kode_supplier:kode_supplier},
+                success:function(response){
+                    if (response == "true") {
+                        if(isEdit) {
+                            $("#e-kode_supplier").addClass("is-invalid");
+                            $("#simpan_edit").attr("disabled","disabled");
+                        } else {
                             $("#kode_supplier").addClass("is-invalid");
                             $("#simpan").attr("disabled","disabled");
-                        }else{
+                        }
+                    } else {
+                        if(isEdit) {
+                            $("#e-kode_supplier").removeClass("is-invalid");
+                            $("#simpan_edit").removeAttr("disabled");
+                        } else {
                             $("#kode_supplier").removeClass("is-invalid");
                             $("#simpan").removeAttr("disabled");
                         }
-                    }            
-                });
+                    }
+                },
+                error: function() {
+                    if(isEdit) {
+                        $("#e-kode_supplier").removeClass("is-invalid");
+                        $("#simpan_edit").removeAttr("disabled");
+                    } else {
+                        $("#kode_supplier").removeClass("is-invalid");
+                        $("#simpan").removeAttr("disabled");
+                    }
+                }
             });
+        }
 
-            $('#detail').on('show.bs.modal', function (event) {
-                var id_supplier = $(event.relatedTarget).data('id_supplier') 
-                var kode_supplier = $(event.relatedTarget).data('kode_supplier') 
-                var nama_supplier = $(event.relatedTarget).data('nama_supplier') 
-                var alamat_supplier = $(event.relatedTarget).data('alamat_supplier') 
-                var negara_asal = $(event.relatedTarget).data('negara_asal')
-                var pic_supplier = $(event.relatedTarget).data('pic_supplier')
-                var no_sertif_halal = $(event.relatedTarget).data('no_sertif_halal')
-
-                $(this).find('#v-kode_supplier').val(kode_supplier)
-                $(this).find('#v-nama_supplier').val(nama_supplier)
-                $(this).find('#v-alamat_supplier').val(alamat_supplier)
-                $(this).find('#v-negara_asal').val(negara_asal)
-                $(this).find('#v-pic_supplier').val(pic_supplier)
-                $(this).find('#v-no_sertif_halal').val(no_sertif_halal)
-            });
-
-            $('#edit').on('show.bs.modal', function (event) {
-                var id_supplier = $(event.relatedTarget).data('id_supplier') 
-                var kode_supplier = $(event.relatedTarget).data('kode_supplier') 
-                var nama_supplier = $(event.relatedTarget).data('nama_supplier') 
-                var alamat_supplier = $(event.relatedTarget).data('alamat_supplier')
-                var negara_asal = $(event.relatedTarget).data('negara_asal') 
-                var pic_supplier = $(event.relatedTarget).data('pic_supplier') 
-                var no_sertif_halal = $(event.relatedTarget).data('no_sertif_halal') 
-
-                $(this).find('#e-id_supplier').val(id_supplier)
-                $(this).find('#e-kode_supplier').val(kode_supplier)
-                $(this).find('#e-nama_supplier').val(nama_supplier)
-                $(this).find('#e-alamat_supplier').val(alamat_supplier)
-                $(this).find('#e-negara_asal').val(negara_asal)
-                $(this).find('#e-pic_supplier').val(pic_supplier)
-                $(this).find('#e-no_sertif_halal').val(no_sertif_halal)
-            });
-
-            $("#e-kode_supplier").keyup(function(){
-                var kode_supplier =  $("#e-kode_supplier").val();
-                jQuery.ajax({
-                    url: "<?=base_url()?>master/master_supplier/cek_kode_supplier",
-                    dataType:'text',
-                    type: "post",
-                    data:{kode_supplier:kode_supplier},
-                    success:function(response){
-                        if (response =="true") {
-                            $("#e-kode_supplier").addClass("is-invalid");
-                            $("#simpan").attr("disabled","disabled");
-                        }else{
-                            $("#e-kode_supplier").removeClass("is-invalid");
-                            $("#simpan").removeAttr("disabled");
-                        }
-                    }            
-                });
-            });
-
-            $('#export').click(function () {
-                var url = "<?=base_url()?>master/master_supplier/pdf_vendor_list/";
-                window.open(url, 'pdf_laporan_vendor_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-            });
+        // Validasi kode supplier untuk tambah
+        $("#kode_supplier").keyup(function(){
+            var kode_supplier = $(this).val().trim();
+            validateKodeSupplier(kode_supplier, false);
         });
-    </script>
+
+        // Validasi kode supplier untuk edit
+        $("#e-kode_supplier").keyup(function(){
+            var kode_supplier = $(this).val().trim();
+            validateKodeSupplier(kode_supplier, true);
+        });
+
+        // Shortcut: Enter untuk fokus ke field berikutnya
+        $('#nama_supplier').keypress(function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                $('#pic_supplier').focus();
+            }
+        });
+        
+        $('#e-nama_supplier').keypress(function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                $('#e-pic_supplier').focus();
+            }
+        });
+
+        // Auto uppercase untuk semua field
+        $('input[style*="text-transform:uppercase"]').on('keyup', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Modal detail
+        $('#detail').on('show.bs.modal', function (event) {
+            var id_supplier = $(event.relatedTarget).data('id_supplier') 
+            var kode_supplier = $(event.relatedTarget).data('kode_supplier') 
+            var nama_supplier = $(event.relatedTarget).data('nama_supplier') 
+            var alamat_supplier = $(event.relatedTarget).data('alamat_supplier') 
+            var negara_asal = $(event.relatedTarget).data('negara_asal')
+            var pic_supplier = $(event.relatedTarget).data('pic_supplier')
+            var kode_po = $(event.relatedTarget).data('kode_po')
+            var no_sertif_halal = $(event.relatedTarget).data('no_sertif_halal')
+
+            $(this).find('#v-kode_supplier').val(kode_supplier)
+            $(this).find('#v-nama_supplier').val(nama_supplier)
+            $(this).find('#v-alamat_supplier').val(alamat_supplier)
+            $(this).find('#v-negara_asal').val(negara_asal)
+            $(this).find('#v-pic_supplier').val(pic_supplier)
+            $(this).find('#v-kode_po').val(kode_po)
+            $(this).find('#v-no_sertif_halal').val(no_sertif_halal)
+        });
+
+        // Export PDF
+        $('#export').click(function () {
+            var url = "<?=base_url()?>master/master_supplier/pdf_vendor_list/";
+            window.open(url, 'pdf_laporan_vendor_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+        });
+
+        // Konfirmasi sebelum submit
+        $('#formTambah').submit(function(e) {
+            if(!confirm('Apakah Anda yakin untuk menyimpan data ini? Pastikan data sudah benar.')) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Validasi final
+            if($('#kode_supplier').hasClass('is-invalid')) {
+                alert('Kode supplier sudah digunakan. Silakan ganti dengan kode lain.');
+                e.preventDefault();
+                return false;
+            }
+            
+            if(!$('#nama_supplier').val() || $('#nama_supplier').val().length < 2) {
+                alert('Nama supplier minimal 2 karakter.');
+                e.preventDefault();
+                return false;
+            }
+            
+            return true;
+        });
+
+        $('#formEdit').submit(function(e) {
+            if(!confirm('Apakah Anda yakin untuk mengupdate data ini? Pastikan data sudah benar.')) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Validasi final
+            if($('#e-kode_supplier').hasClass('is-invalid')) {
+                alert('Kode supplier sudah digunakan. Silakan ganti dengan kode lain.');
+                e.preventDefault();
+                return false;
+            }
+            
+            if(!$('#e-nama_supplier').val() || $('#e-nama_supplier').val().length < 2) {
+                alert('Nama supplier minimal 2 karakter.');
+                e.preventDefault();
+                return false;
+            }
+            
+            return true;
+        });
+
+        // Tampilkan notifikasi jika ada alert
+        <?php if(isset($_GET['alert']) && isset($_GET['msg'])): ?>
+        $(document).ready(function(){
+            var alertType = "<?php echo $_GET['alert']; ?>";
+            var message = "<?php echo $_GET['msg']; ?>";
+            var icon = alertType == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            var title = alertType == 'success' ? 'Sukses!' : 'Error!';
+            
+            var alertHtml = `<div class="alert alert-${alertType} alert-dismissible fade show" role="alert" style="margin: 15px;">
+                <i class="fas ${icon} mr-2"></i>
+                <strong>${title}</strong> ${message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`;
+            
+            $('.page-header').after(alertHtml);
+            
+            // Auto dismiss setelah 5 detik
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 5000);
+        });
+        <?php endif; ?>
+
+        // Tooltip untuk badge kode supplier
+        $('[data-toggle="modal"]').tooltip({
+            title: "Klik untuk lihat detail",
+            placement: "top"
+        });
+
+        // Fitur pencarian di tabel (jika menggunakan DataTables)
+        if($.fn.DataTable) {
+            $('.datatable').DataTable({
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ data",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "infoFiltered": "(disaring dari _MAX_ total data)",
+                    "zeroRecords": "Data tidak ditemukan",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+        }
+
+        // Refresh tahun setiap menit (untuk handle pergantian tahun)
+        setInterval(function() {
+            var newYear = new Date().getFullYear();
+            if(newYear != currentYear) {
+                currentYear = newYear;
+                console.log('Tahun berubah menjadi: ' + currentYear);
+                
+                // Jika modal tambah terbuka, update info
+                if($('#add').hasClass('show')) {
+                    $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
+                    if($('#nama_supplier').val().length >= 2) {
+                        generateKodePOPreview($('#nama_supplier').val().toUpperCase(), false);
+                    }
+                }
+                
+                // Jika modal edit terbuka, update info
+                if($('#edit').hasClass('show')) {
+                    $('#e-kode-po-info').html('Akan di-generate ulang jika nama supplier diubah atau tahun berubah');
+                    if($('#e-nama_supplier').val().length >= 2) {
+                        generateKodePOPreview($('#e-nama_supplier').val().toUpperCase(), true, $('#e-id_supplier').val());
+                    }
+                }
+            }
+        }, 60000); // Cek setiap 1 menit
+    });
+</script>
 </body>
 </html>

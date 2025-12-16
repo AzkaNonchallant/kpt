@@ -41,14 +41,15 @@ class M_admin_sample extends CI_Model {
                     a.*, 
                     a.status, 
                     c.kode_barang, c.nama_barang, c.mesh, c.bloom, c.satuan, c.id_supplier,
-                    d.tgl_msk_gdg, d.no_batch,
+                    g.tgl_msk_gdg, g.no_batch,
                     e.nama_customer,
-                    f.kode_sample_in
+                    f.kode_sample_in,
+                    f.no_batch
                 FROM tb_mkt_po_sample a
                 LEFT JOIN tb_master_barang c ON a.id_barang = c.id_barang
-                LEFT JOIN tb_gudang_barang_masuk d ON d.id_prc_po_pembelian = a.id_mkt_po_sample
                 LEFT JOIN tb_master_customer e ON a.id_customer = e.id_customer
                 LEFT JOIN tb_sample_masuk f ON a.id_mkt_po_sample = f.id_mkt_po_sample
+                LEFT JOIN tb_gudang_barang_masuk g ON f.no_batch = g.no_batch
                 WHERE a.is_deleted = 0 AND f.kode_sample_in IS NOT NULL
                 $where
                 ORDER BY a.tgl_po_sample DESC

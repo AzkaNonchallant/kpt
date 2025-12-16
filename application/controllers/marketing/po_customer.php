@@ -27,6 +27,7 @@ class po_customer extends MY_Controller
 
         $tgl = $this->input->get('date_from');
         $tgl2 = $this->input->get('date_until');
+         $data['generate_no_po'] = $this->M_po_customer->generate_no_po();
         $nama_barang = $this->input->get('nama_barang');
         $nama_customer = $this->input->get('nama_customer');
 
@@ -70,9 +71,9 @@ class po_customer extends MY_Controller
         $data['id_barang'] = $this->input->post('id_barang', TRUE);
         $data['kode_tf_in'] = $this->input->post('kode_tf_in', TRUE);
         $data['jumlah_po'] = $this->input->post('jumlah_po', TRUE);
-        $data['jumlah_po'] = str_replace('.', '', $data['jumlah_po']); // Hapus titik pemisah ribuan
+        $data['jumlah_po'] = str_replace('.', '', $data['jumlah_po']); 
         $data['harga_po'] = $this->input->post('harga_po', TRUE);
-        $data['harga_po'] = str_replace('.', '', $data['harga_po']); // Hapus titik pemisah ribuan
+        $data['harga_po'] = str_replace('.', '', $data['harga_po']); 
         $data['keterangan'] = $this->input->post('keterangan', TRUE);
         $data['jenis_pembayaran'] = $this->input->post('jenis_pembayaran', TRUE);
         $data['tgl_batas_waktu'] = $this->convertDate($this->input->post('tgl_batas_waktu', TRUE));

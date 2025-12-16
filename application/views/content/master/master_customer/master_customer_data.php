@@ -459,7 +459,10 @@
                                                                     data-alamat_customer="<?= $k['alamat_customer'] ?>"
                                                                     data-provinsi="<?= $k['provinsi'] ?>"
                                                                     data-kota_kab="<?= $k['kota_kab'] ?>"
-                                                                    data-nib="<?= $k['nib'] ?>">
+                                                                    data-nib="<?= $k['nib'] ?>"
+                                                                    data-npwp="<?= $k['npwp'] ?>"
+                                                                    data-alamat_kirim="<?= $k['alamat_kirim'] ?>"
+                                                                    data-alamat_pjk="<?= $k['alamat_pjk'] ?>"
                                                                     <span class="badge badge-primary"><?= $k['kode_customer'] ?></span>
                                                                 </span>
 
@@ -492,7 +495,10 @@
                                                                         data-alamat_customer="<?= $k['alamat_customer'] ?>"
                                                                         data-provinsi="<?= $k['provinsi'] ?>"
                                                                         data-kota_kab="<?= $k['kota_kab'] ?>"
-                                                                        data-nib="<?= $k['nib'] ?>">
+                                                                        data-nib="<?= $k['nib'] ?>"
+                                                                        data-nib="<?= $k['npwp'] ?>"
+                                                                        data-nib="<?= $k['alamat_kirim'] ?>>"
+                                                                        data-nib="<?= $k['alamat_pjk'] ?>">
                                                                         <i class="fas fa-edit"></i> Edit
                                                                     </button>
                                                                     <a
@@ -524,85 +530,151 @@
     </section>
 
     <!-- Modal Tambah -->
-    <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-cust">
-                    <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Customer</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" action="<?= base_url() ?>master/master_customer/add">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Kode Customer</label>
-                                    <input type="text" class="form-control" id="kode_customer" name="kode_customer" placeholder="Kode Customer" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        Maaf Kode Customer sudah ada.
-                                    </div>
-                                </div>
-                            </div>
+ <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Nama Customer</label>
-                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer" placeholder="Nama Customer" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
+            <!-- Header -->
+            <div class="modal-cust d-flex justify-content-between align-items-center p-3">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-circle"></i> Tambah Customer
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Kegiatan Usaha</label>
-                                    <select class="form-control chosen-select" id="kegiatan_usaha" name="kegiatan_usaha" autocomplete="off">
-                                        <option value="">- Pilih Kegiatan Usaha -</option>
-                                        <option value="Produksi">Produksi</option>
-                                        <option value="Distributor">Distributor</option>
-                                    </select>
-                                </div>
-                            </div>
+            <!-- Form -->
+            <form method="post" action="<?= base_url() ?>master/master_customer/add">
+                <div class="modal-body">
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Alamat Customer</label>
-                                    <textarea class="form-control" id="alamat_customer" name="alamat_customer" rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Provinsi</label>
-                                    <input type="text" class="form-control" id="provinsi" name="provinsi" placeholder="Provinsi" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Kota/Kab</label>
-                                    <input type="text" class="form-control" id="kota_kab" name="kota_kab" placeholder="Kota/Kab" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">NIB</label>
-                                    <input type="text" class="form-control" id="nib" name="nib" placeholder="NIB" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                    <div class="row">
+                        <!-- Kode Customer -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kode Customer</label>
+                                <input type="text" class="form-control" id="kode_customer" name="kode_customer"
+                                    placeholder="Kode Customer" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                    Maaf Kode Customer sudah ada.
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Nama Customer -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nama Customer</label>
+                                <input type="text" class="form-control" id="nama_customer" name="nama_customer"
+                                    placeholder="Nama Customer" maxlength="100" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- Kegiatan Usaha -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kegiatan Usaha</label>
+                                <select class="form-control chosen-select" id="kegiatan_usaha" name="kegiatan_usaha">
+                                    <option value="">- Pilih Kegiatan Usaha -</option>
+                                    <option value="Produksi">Produksi</option>
+                                    <option value="Distributor">Distributor</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Alamat Customer -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Alamat Customer</label>
+                                <textarea class="form-control" id="alamat_customer" name="alamat_customer"
+                                    rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Provinsi -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Provinsi</label>
+                                <input type="text" class="form-control" id="provinsi" name="provinsi"
+                                    placeholder="Provinsi" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- Kota/Kab -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kota/Kab</label>
+                                <input type="text" class="form-control" id="kota_kab" name="kota_kab"
+                                    placeholder="Kota/Kab" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- NIB -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>NIB</label>
+                                <input type="text" class="form-control" id="nib" name="nib"
+                                    placeholder="NIB" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- NPWP -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>NPWPT</label>
+                                <input type="text" class="form-control" id="npwp" name="npwp"
+                                    placeholder="NPWP" autocomplete="off"
+                                    style="text-transform:uppercase"
+                                    onkeyup="this.value = this.value.toUpperCase()" required>
+                            </div>
+                        </div>
+
+                        <!-- Alamat Kirim -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Alamat Kirim</label>
+                                <textarea class="form-control" id="alamat_kirim" name="alamat_kirim"
+                                    rows="3" placeholder="Alamat Kirim" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Alamat PJK</label>
+                                <textarea class="form-control" id="alamat_pjk" name="alamat_pjk"
+                                    rows="3" placeholder="Alamat Pajak" autocomplete="off"></textarea>
+                            </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
-                            <i class="fas fa-save"></i> Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Batal
+                    </button>
+
+                    <button type="submit" class="btn btn-primary"
+                        onclick="return confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+
+            </form>
+
         </div>
     </div>
+</div>
+
 
     <!-- Modal Detail -->
     <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -914,6 +986,9 @@
                 var provinsi = $(event.relatedTarget).data('provinsi')
                 var kota_kab = $(event.relatedTarget).data('kota_kab')
                 var nib = $(event.relatedTarget).data('nib')
+                var npwp = $(event.relatedTarget).data('npwp')
+                var alamat_kirim = $(event.relatedTarget).data('alamat_kirim')
+                var alamat_pjk = $(event.relatedTarget).data('alamat_pjk')
 
                 $(this).find('#e_id_customer').val(id_customer)
                 $(this).find('#e_kode_customer').val(kode_customer)
