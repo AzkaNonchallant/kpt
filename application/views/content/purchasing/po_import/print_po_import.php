@@ -142,7 +142,7 @@
 
   <!-- JUDUL -->
   <div class="judul">
-    <h3>Master Barang List</h3>
+    <h3> PO IMPORT </h3>
   </div>
 
   <!-- TABEL -->
@@ -150,24 +150,32 @@
     <thead>
       <tr>
         <th style="width:5%;">#</th>
-        <th style="width:20%;">Kode BB BPOM</th>
-        <th style="width:20%;">Kode BB INTL</th>
-        <th style="width:35%;">Nama Bahan Baku</th>
-        <th style="width:10%;">Satuan</th>
+        <th style="width:20%;">Nama Barang</th>
+        <th style="width:20%;">No PO</th>
+        <th style="width:35%;">Status</th>
+        <th style="width:10%;">Nama Supplier</th>
+        <th style="width:10%;">Jumlah</th>
       </tr>
     </thead>
-    <tbody>
-      <?php $no = 1;
-      foreach ($result as $k) { ?>
+   <tbody>
+<?php if (!empty($result)) : ?>
+    <?php $no = 1; foreach ($result as $k) : ?>
         <tr>
-          <td class="text-center"><?= $no++ ?></td>
-          <td class="text-center"><?= $k['kode_barang_bpom'] ?></td>
-          <td class="text-center"><?= $k['kode_barang'] ?></td>
-          <td class="text-left"><?= strtoupper($k['nama_barang'] . " (B " . $k['bloom'] . " M  " . $k['mesh'] . ")") ?></td>
-          <td class="text-center"><?= strtoupper($k['satuan']) ?></td>
+            <td class="text-center"><?= $no++ ?></td>
+            <td class="text-center"><?= $k['nama_barang'] ?></td>
+            <td class="text-center"><?= $k['no_po_import'] ?></td>
+            <td class="text-center"><?= $k['status_po_import'] ?></td>
+            <td class="text-center"><?= $k['nama_supplier'] ?></td>
+            <td class="text-center"><?= $k['jumlah'] ?></td>
         </tr>
-      <?php } ?>
-    </tbody>
+    <?php endforeach; ?>
+<?php else : ?>
+    <tr>
+        <td colspan="4" class="text-center">Data tidak tersedia</td>
+    </tr>
+<?php endif; ?>
+</tbody>
+
   </table>
 
   <!-- FOOTER -->

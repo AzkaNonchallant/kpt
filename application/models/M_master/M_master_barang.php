@@ -18,6 +18,7 @@ class M_master_barang extends CI_Model
         $sql = "
         SELECT a.*,b.nama_supplier FROM tb_master_barang a
         LEFT JOIN tb_master_supplier b ON a.id_supplier = b.id_supplier
+        LEFT JOIN tb_prc_po_import c ON a.id_barang = c.id_barang
 
         WHERE a.is_deleted = 0 ORDER BY a.created_at ASC";
 

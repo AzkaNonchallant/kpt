@@ -12,8 +12,8 @@ class M_laporan_barang_masuk extends CI_Model {
 public function get($id_barang = null)
 {
     $where = '';
-    if ($id_barang != null) {
-        $where = "AND c.id_barang = '$id_barang'";
+    if ($id_barang !== null) {
+        $where = "AND c.id_barang = " . $this->db->escape($id_barang);
     }
 
     $sql = "
@@ -23,38 +23,57 @@ public function get($id_barang = null)
             b.nama_supplier,
             c.satuan,
             COALESCE(SUM(a.gdg_qty_in), 0) AS total_masuk,
+
             (
                 SELECT COALESCE(SUM(x.gdg_qty_out), 0)
                 FROM tb_gudang_barang_keluar x
-                LEFT JOIN tb_gudang_barang_masuk y ON x.kode_tf_in = y.kode_tf_in
-                LEFT JOIN tb_prc_po_pembelian p2 ON y.id_prc_po_pembelian = p2.id_prc_po_pembelian
+                LEFT JOIN tb_gudang_barang_masuk y 
+                    ON x.kode_tf_in = y.kode_tf_in
+                LEFT JOIN tb_prc_po_import p2 
+                    ON y.id_prc_po_import = p2.id_prc_po_import
                 WHERE p2.id_barang = c.id_barang
                 AND x.is_deleted = 0
             ) AS total_keluar,
+
             (
                 COALESCE(SUM(a.gdg_qty_in), 0) -
                 (
                     SELECT COALESCE(SUM(x.gdg_qty_out), 0)
                     FROM tb_gudang_barang_keluar x
-                    LEFT JOIN tb_gudang_barang_masuk y ON x.kode_tf_in = y.kode_tf_in
-                    LEFT JOIN tb_prc_po_pembelian p2 ON y.id_prc_po_pembelian = p2.id_prc_po_pembelian
+                    LEFT JOIN tb_gudang_barang_masuk y 
+                        ON x.kode_tf_in = y.kode_tf_in
+                    LEFT JOIN tb_prc_po_import p2 
+                        ON y.id_prc_po_import = p2.id_prc_po_import
                     WHERE p2.id_barang = c.id_barang
                     AND x.is_deleted = 0
                 )
             ) AS stok_akhir,
+
             MAX(a.tgl_msk_gdg) AS tgl_terakhir
+
         FROM tb_gudang_barang_masuk a
-        LEFT JOIN tb_prc_po_pembelian p ON a.id_prc_po_pembelian = p.id_prc_po_pembelian
-        LEFT JOIN tb_master_barang c ON p.id_barang = c.id_barang
-        LEFT JOIN tb_master_supplier b ON c.id_supplier = b.id_supplier
-        WHERE a.is_deleted = 0 
+        LEFT JOIN tb_prc_po_import p 
+            ON a.id_prc_po_import = p.id_prc_po_import
+        LEFT JOIN tb_master_barang c 
+            ON p.id_barang = c.id_barang
+        LEFT JOIN tb_master_supplier b 
+            ON c.id_supplier = b.id_supplier
+
+        WHERE a.is_deleted = 0
         $where
-        GROUP BY c.id_barang, c.nama_barang, b.nama_supplier, c.satuan
-        ORDER BY tgl_terakhir ASC;
+
+        GROUP BY 
+            c.id_barang, 
+            c.nama_barang, 
+            b.nama_supplier, 
+            c.satuan
+
+        ORDER BY tgl_terakhir ASC
     ";
 
     return $this->db->query($sql);
 }
+
 
 public function data_export($id_barang=null)
 {
@@ -100,7 +119,7 @@ public function data_export($id_barang=null)
             ), 0)) AS stok_akhir
 
         FROM tb_gudang_barang_masuk a
-        LEFT JOIN tb_prc_po_pembelian p ON a.id_prc_po_pembelian = p.id_prc_po_pembelian
+        LEFT JOIN tb_prc_po_import p ON a.id_prc_po_import = p.id_prc_po_import
         LEFT JOIN tb_master_barang c ON p.id_barang = c.id_barang
         WHERE a.is_deleted = 0
         $where

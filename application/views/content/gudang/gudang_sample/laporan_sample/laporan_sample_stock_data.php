@@ -193,11 +193,11 @@
             border: 1px solid rgba(76, 201, 240, 0.2);
         }
 
-        .badge-warning {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--warning);
-            border: 1px solid rgba(247, 37, 133, 0.2);
-        }
+       .badge-warning {
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
 
         .badge-danger {
             background-color: rgba(230, 57, 70, 0.1);

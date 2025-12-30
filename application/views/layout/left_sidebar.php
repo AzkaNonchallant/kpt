@@ -33,7 +33,7 @@ $level = $this->session->userdata('level');
                     <li class="nav-item <?=$uri == ''?'active':''?>">
                         <a href="<?=base_url()?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
-                    <li class="nav-item <?=$uri == ''?'active':''?>">
+                      <li class="nav-item <?=$uri == 'profile'?'active':''?>">
                         <a href="<?=base_url('profile/profile')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Profile</span></a>
                     </li>
                     <?php if ($departemen == 'Marketing' || $departemen== 'Purchasing' || $level == 0) : ?>
@@ -46,15 +46,16 @@ $level = $this->session->userdata('level');
                         <a href="<?=base_url('master/master_supplier')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download"></i></span><span class="pcoded-mtext">Supplier</span></a>
                     </li>
                     <?php endif; ?>
-                    <?php if ($departemen == 'Marketing' || $level == 0) : ?>
-                    <li class="nav-item <?=$uri == 'customer'?'active':''?>">
-                        <a href="<?=base_url('master/master_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Customer</span></a>
-                    </li>
-                    <?php endif; ?>
+                   
                     <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item <?=$uri == 'master_barang'?'active':''?>">
                         <a href="<?=base_url('master/master_barang')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Bahan Baku</span></a>
                     </li>
+                     <?php if ($departemen == 'Marketing' || $level == 0) : ?>
+                    <li class="nav-item <?=$uri == 'customer'?'active':''?>">
+                        <a href="<?=base_url('master/master_customer')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Customer</span></a>
+                    </li>
+                    <?php endif; ?>
                     <?php endif; ?>
                     <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
@@ -85,6 +86,16 @@ $level = $this->session->userdata('level');
 </li>
 
                     <?php endif; ?>
+                    <?php if ($departemen == 'Purchasing' || $level == 0) : ?>
+                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_spbm'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_admin/admin_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPBM
+                            <?php if ($cek_spbm != 0) { ?>
+                                <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
+                            <?php } ?>
+                            </span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
 
                     <?php if ($departemen == 'Marketing' || $level == 0) : ?>
                     <li class="nav-item pcoded-menu-caption">
@@ -105,10 +116,10 @@ $level = $this->session->userdata('level');
                         <label>Gudang Administrasi </label>
                     </li>
                     <?php if ($departemen == 'Gudang' || $level == 0) : ?>
-                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/admin_spbm'?'active':''?>">
-                        <a href="<?=base_url('gudang/gudang_admin/admin_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPBM
-                            <?php if ($cek_spbm != 0) { ?>
-                                <span class="badge badge-pill badge-warning"><?= $cek_spbm ?></span>
+                    <li class="nav-item  <?=$uri == 'gudang/gudang_admin/gudang_spbm'?'active':''?>">
+                        <a href="<?=base_url('gudang/gudang_admin/gudang_spbm')?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span><span class="pcoded-mtext">SPBM
+                            <?php if ($cek_gspbm != 0) { ?>
+                                <span class="badge badge-pill badge-warning"><?= $cek_gspbm ?></span>
                             <?php } ?>
                             </span>
                         </a>

@@ -102,7 +102,6 @@ class Master_supplier extends MY_Controller {
         }
     }
 
-    // Fungsi untuk generate preview kode PO real-time
     public function generate_preview_kode_po() {
         $nama_supplier = $this->input->post('nama_supplier', TRUE);
         $id_supplier = $this->input->post('id_supplier', TRUE);
@@ -124,7 +123,7 @@ class Master_supplier extends MY_Controller {
         $nomor_urut = $count + 1;
         $nomor_format = str_pad($nomor_urut, 3, '0', STR_PAD_LEFT);
         
-        $kode_po = $nomor_format . '/' . $tahun . '/' .'KPT' . '/' . $inisial;
+        $kode_po = $nomor_format . '/' . $tahun . '/' .'KPT' . '-' . $inisial;
         
         echo json_encode(array(
             'kode_po' => $kode_po,
@@ -135,7 +134,6 @@ class Master_supplier extends MY_Controller {
         ));
     }
 
-    // Fungsi untuk generate kode PO final
     private function generate_kode_po($nama_supplier, $exclude_id = null) {
         // Ambil inisial
         $nama_clean = preg_replace('/[^A-Z]/', '', strtoupper($nama_supplier));
@@ -149,7 +147,6 @@ class Master_supplier extends MY_Controller {
             $inisial = 'XXX';
         }
         
-        // Ambil tahun sekarang
         $tahun = date('Y');
         
         // Hitung count untuk supplier dengan nama yang sama DAN TAHUN YANG SAMA

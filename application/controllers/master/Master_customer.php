@@ -116,7 +116,9 @@ public function update_harga()
         $data['kegiatan_usaha'] = $this->input->post('kegiatan_usaha', TRUE);
         $data['alamat_customer'] = $this->input->post('alamat_customer', TRUE);
         $data['kota_kab'] = $this->input->post('kota_kab', TRUE);
+        $data['kota_nama'] = $this->input->post('kota_nama', TRUE);
         $data['provinsi'] = $this->input->post('provinsi', TRUE);
+        $data['provinsi_nama'] = $this->input->post('provinsi_nama', TRUE);
         $data['nib'] = $this->input->post('nib', TRUE);
         $data['npwp'] = $this->input->post('npwp', TRUE);
         $data['alamat_kirim'] = $this->input->post('alamat_kirim', TRUE);

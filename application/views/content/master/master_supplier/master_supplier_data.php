@@ -918,6 +918,7 @@
             $('#loading-indicator').hide();
             $('#kode-po-info').html('Format: 001/' + currentYear + '/BDI (Otomatis berdasarkan nama supplier dan tahun)');
             $('#nama_supplier').val('');
+            $('#pic_supplier').val('');
             $('#kode_supplier').val('');
             $('#kode_supplier').removeClass("is-invalid");
             $("#simpan").removeAttr("disabled");

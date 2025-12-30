@@ -205,10 +205,10 @@
         }
 
         .badge-warning {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--warning);
-        }
-
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
         .badge-danger {
             background-color: rgba(230, 57, 70, 0.1);
             color: var(--danger);
@@ -401,7 +401,7 @@
                                                         <div class="input-group-append">
                                                             <button class="btn btn-secondary" id="lihat" type="button">Lihat</button>
                                                             <button class="btn btn-primary" id="export" type="button">Cetak</button>
-                                                            <a href="<?=base_url()?>laporan_kartu_stok" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
+                                                            <a href="<?=base_url()?>gudang/gudang_barang/barang_stok/Laporan_kartu_stok" style="width: 40px;" class="btn btn-warning" id="export" type="button"><i class="feather icon-refresh-ccw"></i></a>
                                                         </div>
                                                     </div>
                                             </div>

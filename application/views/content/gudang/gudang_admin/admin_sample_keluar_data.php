@@ -228,9 +228,9 @@
     }
     
     .badge-warning {
-        background-color: rgba(247, 37, 133, 0.15);
-        color: #f72585;
-        border: 1px solid #f72585;
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
     }
     
     .modal-content {
@@ -518,7 +518,7 @@
     .datepicker {
         font-size: 16px !important; /* Prevents zoom on iOS */
     }
-</style>s
+</style>
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">

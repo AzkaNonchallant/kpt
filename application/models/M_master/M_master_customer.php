@@ -19,8 +19,8 @@ class M_master_customer extends CI_Model {
     {
         $id_user = $this->id_user();
         $sql = "
-        INSERT INTO `tb_master_customer`( `kode_customer`, `nama_customer`, `kegiatan_usaha`, `alamat_customer`,`kota_kab`,`provinsi`,`nib`,`npwp`,`alamat_kirim`,`alamat_pjk`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
-        VALUES ('$data[kode_customer]','$data[nama_customer]','$data[kegiatan_usaha]','$data[alamat_customer]','$data[kota_kab]','$data[provinsi]','$data[nib]','$data[npwp]','$data[alamat_kirim]','$data[alamat_kirim]',NOW(),'$id_user','0000-00-00 00:00:00','','0')
+        INSERT INTO `tb_master_customer`( `kode_customer`, `nama_customer`, `kegiatan_usaha`, `alamat_customer`,`kota_kab`,`provinsi`,`kota_nama`,`provinsi_nama`,`nib`,`npwp`,`alamat_kirim`,`alamat_pjk`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) 
+        VALUES ('$data[kode_customer]','$data[nama_customer]','$data[kegiatan_usaha]','$data[alamat_customer]','$data[kota_kab]','$data[provinsi]','$data[kota_nama]','$data[provinsi_nama]','$data[nib]','$data[npwp]','$data[alamat_kirim]','$data[alamat_kirim]',NOW(),'$id_user','0000-00-00 00:00:00','','0')
         ";
 
         return $this->db->query($sql);

@@ -37,13 +37,35 @@ class M_barang_masuk extends CI_Model {
         $where = implode(" ", $where);
 
         $sql = "
-            SELECT a.*,imp.jumlah,imp.harga_perunit,c.nama_barang,c.kode_barang_bpom,c.mesh,c.bloom,c.satuan,d.nama_supplier FROM tb_gudang_barang_masuk a
-            LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
-            LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
-            LEFT JOIN tb_master_barang c ON imp.id_barang = c.id_barang
-            LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
-
-            WHERE a.is_deleted = 0 $where ORDER BY a.id_barang_masuk DESC";
+            SELECT 
+    a.id_barang_masuk,
+    a.tgl_msk_gdg,
+    a.gdg_qty_in,
+    a.no_batch,
+    a.kode_tf_in,
+    a.gdg_admin,
+    imp.id_barang,
+    imp.id_prc_po_import,
+    imp.jumlah,
+    imp.harga_perunit,
+    imp.status_po_import,
+    c.nama_barang,
+    c.kode_barang_bpom,
+    c.mesh,
+    c.bloom,
+    c.satuan,
+    d.nama_supplier
+FROM tb_gudang_barang_masuk a
+LEFT JOIN tb_prc_po_import imp 
+    ON a.id_prc_po_import = imp.id_prc_po_import
+LEFT JOIN tb_master_barang c 
+    ON imp.id_barang = c.id_barang
+LEFT JOIN tb_master_supplier d 
+    ON c.id_supplier = d.id_supplier
+WHERE a.is_deleted = 0
+AND imp.status_po_import = 'diterima'
+ORDER BY a.id_barang_masuk DESC
+        ";
         return $this->db->query($sql)->result_array();
     }
 
@@ -58,12 +80,11 @@ class M_barang_masuk extends CI_Model {
             
         $sql = "
             SELECT a.*,imp.id_barang,imp.jumlah,imp.harga_perunit,c.kode_barang,c.nama_barang,c.mesh,c.bloom,c.satuan,d.nama_supplier,d.pic_supplier FROM tb_gudang_barang_masuk a
-            LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
-            LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
+            LEFT JOIN tb_prc_po_import imp ON a.id_prc_po_import = imp.id_prc_po_import
             LEFT JOIN tb_master_barang c ON imp.id_barang = c.id_barang
             LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
 
-            WHERE a.is_deleted = 0 ORDER BY a.id_barang_masuk DESC";
+            WHERE a.is_deleted = 0 AND imp.status_po_import = 'diterima' ORDER BY a.id_barang_masuk DESC";
         return $this->db->query($sql);
     }
 
@@ -73,7 +94,7 @@ class M_barang_masuk extends CI_Model {
         SELECT 
             a.kode_tf_in,
             a.no_batch,
-            b.id_barang,
+            c.id_barang,
             c.kode_barang,
             c.nama_barang,
             c.mesh,
@@ -85,7 +106,7 @@ class M_barang_masuk extends CI_Model {
         FROM tb_gudang_barang_masuk a
         LEFT JOIN tb_prc_po_import_tf b ON a.id_prc_po_import_tf = b.id_prc_po_import_tf
         LEFT JOIN tb_prc_po_import imp ON b.no_po_import = imp.no_po_import
-        LEFT JOIN tb_master_barang c ON b.id_barang = c.id_barang
+        LEFT JOIN tb_master_barang c ON imp.id_barang = c.id_barang
         LEFT JOIN tb_master_supplier d ON c.id_supplier = d.id_supplier
         LEFT JOIN tb_master_harga h ON h.id_barang = c.id_barang
         WHERE a.is_deleted = 0
@@ -106,6 +127,8 @@ public function get_barang_by_supplier($id_supplier)
             c.nama_barang,
             c.id_supplier,
             c.satuan,
+            c.mesh,
+            c.bloom,
             d.nama_supplier,
             d.pic_supplier,
             d.kode_po,

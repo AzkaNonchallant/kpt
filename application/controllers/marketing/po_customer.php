@@ -27,7 +27,6 @@ class po_customer extends MY_Controller
 
         $tgl = $this->input->get('date_from');
         $tgl2 = $this->input->get('date_until');
-         $data['generate_no_po'] = $this->M_po_customer->generate_no_po();
         $nama_barang = $this->input->get('nama_barang');
         $nama_customer = $this->input->get('nama_customer');
 

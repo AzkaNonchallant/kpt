@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sppb Marketing</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+<style>
     :root {
       --primary: #4361ee;
       --barang: #436;
-      --upd: #f72585;
+      --upd: #f7ed25ff;
       --secondary: #3f37c9;
       --success: #4cc9f0;
       --info: #4895ef;
-      --warning: #ae4976ff;
+      --warning: #fffb00ff;
       --danger: #e63946;
       --light: #f8f9fa;
       --dark: #212529;
@@ -127,12 +127,12 @@
     }
 
     .btn-warning {
-      background: linear-gradient(135deg, var(--warning), #b5179e);
+      background: linear-gradient(135deg, var(--warning), #ffa513ff);
       color: white;
     }
 
     .btn-danger {
-      background: linear-gradient(135deg, var(--danger), #d00000);
+      background: linear-gradient(135deg, var(--danger), #a72701ff);
       color: white;
     }
 
@@ -157,7 +157,7 @@
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       border: none;
-      padding: 8px 9px;
+      padding: 13px 10px;
       font-weight: 600;
       text-transform: uppercase;
       font-size: 12px;
@@ -205,7 +205,7 @@
     }
 
     .badge-warning {
-      background-color: rgba(247, 37, 133, 0.1);
+    
       color: var(--warning);
     }
 
@@ -297,14 +297,14 @@
     }
 
     .table .btn-sm {
-      padding: 6px 10px;
+      padding: 4px 8px;
       font-size: 11px;
       line-height: 1.5;
       white-space: nowrap;
     }
 
     .table .btn i {
-      font-size: 15px;
+      font-size: 10px;
       margin-right: 2px;
     }
 

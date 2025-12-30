@@ -204,9 +204,10 @@
         }
         
         .badge-warning {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--warning);
-        }
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
         
         .modal-content {
             border: none;

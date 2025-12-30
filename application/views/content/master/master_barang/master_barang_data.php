@@ -599,7 +599,7 @@
                                         <?php 
                                         foreach($res_supplier as $s){ 
                                         ?>
-                                        <option value="<?=$s['id_supplier']?>">(<?=$s['kode_supplier']?>) <?=$s['nama_supplier']?> || <?=$s['kode_po']?></option>
+                                        <option value="<?=$s['id_supplier']?>">(<?=$s['kode_supplier']?>) <?=$s['nama_supplier']?> </option>
                                         <?php
                                         }
                                         ?>

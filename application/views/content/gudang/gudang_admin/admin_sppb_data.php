@@ -9,11 +9,11 @@
         :root {
             --primary: #4361ee;
             --barang: #436;
-            --upd: #f72585;
+            --upd: #f79c25ff;
             --secondary: #3f37c9;
             --success: #4cc9f0;
             --info: #4895ef;
-            --warning: #ae4976ff;
+            --warning: #ffffffff;
             --danger: #e63946;
             --light: #f8f9fa;
             --dark: #212529;
@@ -125,11 +125,11 @@
             color: white;
         }
         
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #b5179e);
-            color: white;
-        }
-        
+       .badge-warning {
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
         .btn-danger {
             background: linear-gradient(135deg, var(--danger), #d00000);
             color: white;
@@ -203,10 +203,11 @@
             color: var(--primary);
         }
         
-        .badge-warning {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--warning);
-        }
+       .badge-warning {
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
         
         .modal-content {
             border: none;

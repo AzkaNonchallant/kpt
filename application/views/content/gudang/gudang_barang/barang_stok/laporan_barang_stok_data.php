@@ -114,10 +114,11 @@
             box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #b5179e);
-            color: white;
-        }
+       .badge-warning {
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
 
         .btn-warning:hover {
             transform: translateY(-2px);
@@ -193,11 +194,11 @@
             border: 1px solid rgba(76, 201, 240, 0.2);
         }
 
-        .badge-warning {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--warning);
-            border: 1px solid rgba(247, 37, 133, 0.2);
-        }
+       .badge-warning {
+        background-color: rgba(205, 148, 3, 0.96);
+        color: #000000ff;
+       
+    }
 
         .badge-danger {
             background-color: rgba(230, 57, 70, 0.1);
@@ -520,6 +521,7 @@
             })
             window.location = "<?= base_url() ?>gudang/gudang_barang/barang_stok/laporan_barang_stok/index?" + query.toString()
         })
+
         
         $('#export').click(function() {
             var filter_barang = $('#filter_barang').find(':selected').val();

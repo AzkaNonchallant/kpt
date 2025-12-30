@@ -13,11 +13,11 @@
     :root {
       --primary: #4361ee;
       --barang: #436;
-      --upd: #f72585;
+      --upd: #f7ed25ff;
       --secondary: #3f37c9;
       --success: #4cc9f0;
       --info: #4895ef;
-      --warning: #ae4976ff;
+      --warning: #fffb00ff;
       --danger: #e63946;
       --light: #f8f9fa;
       --dark: #212529;
@@ -130,12 +130,12 @@
     }
 
     .btn-warning {
-      background: linear-gradient(135deg, var(--warning), #b5179e);
+      background: linear-gradient(135deg, var(--warning), #ffe313ff);
       color: white;
     }
 
     .btn-danger {
-      background: linear-gradient(135deg, var(--danger), #d00000);
+      background: linear-gradient(135deg, var(--danger), #a72701ff);
       color: white;
     }
 
@@ -208,7 +208,7 @@
     }
 
     .badge-warning {
-      background-color: rgba(247, 37, 133, 0.1);
+    
       color: var(--warning);
     }
 
@@ -242,6 +242,7 @@
     .modal-title {
       font-weight: 700;
       font-size: 18px;
+      left: 100%;
       color: white;
     }
 

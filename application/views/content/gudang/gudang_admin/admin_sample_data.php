@@ -228,9 +228,9 @@
     }
     
     .badge-warning {
-        background-color: rgba(247, 37, 133, 0.15);
-        color: #f72585;
-        border: 1px solid #f72585;
+        background-color: rgba(205, 158, 3, 0.96);
+        color: #000000ff;
+       
     }
     
     .modal-content {
@@ -597,7 +597,7 @@
                                                             <td><?= $k['nama_customer'] ?></td>
                                                             <td><?= $k['nama_barang'] ?></td>
                                                             <td class="text-right"><?= number_format($k['jumlah_po_sample'], 0, ",", ".") ?> <?= $k['satuan'] ?></td>
-                                                            <td><?= $k['jumlah_po_sample'] / 25 ?>s</td>
+                                                            <td><?= $k['jumlah_po_sample'] / 25 ?> Zak</td>
                                                             <td><?= $k['kode_sample_in'] ?></td>
                                                             <td><?= $k['ket_po_sample'] ?></td>
 

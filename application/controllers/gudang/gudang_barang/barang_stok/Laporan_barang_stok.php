@@ -25,7 +25,12 @@ class Laporan_barang_stok extends MY_Controller
         $id_barang = $this->input->get('id_barang');
 
         $result = $this->M_laporan_barang_masuk->get($id_barang);
-        $data['result'] = is_array($result) ? $result : $result->result_array();
+        if (is_object($result)) {
+            $data['result'] = $result->result_array();
+        } else {
+            $data['result'] = $result; // sudah array
+        }
+
 
         
 
@@ -46,60 +51,53 @@ class Laporan_barang_stok extends MY_Controller
 
 
     
-    public function get_rincian_barang()
+   public function get_rincian_barang()
 {
     $nama_barang = $this->input->post('nama_barang');
 
-    // Ambil data barang masuk
-    $barang_masuk = $this->db->select('
-            a.id_barang_masuk,
-            p.no_po_pembelian,
+    $data = $this->db->select('
+            p.no_po_import AS no_po,
             a.kode_tf_in,
             a.no_batch,
-            a.tgl_msk_gdg,
+            a.tgl_msk_gdg AS tgl_masuk,
             a.tgl_exp,
-            a.jenis_transaksi_gudang,
-            a.gdg_qty_in,
+            a.jenis_transaksi_gudang AS jumlah_out,
+            SUM(a.gdg_qty_in) AS total_masuk,
             c.nama_barang,
             c.satuan
         ')
         ->from('tb_gudang_barang_masuk a')
-        ->join('tb_prc_po_pembelian p', 'a.id_prc_po_pembelian = p.id_prc_po_pembelian', 'left')
+        ->join('tb_prc_po_import p', 'a.id_prc_po_import_tf = p.id_prc_po_import_tf', 'left')
         ->join('tb_master_barang c', 'p.id_barang = c.id_barang', 'left')
         ->where('a.is_deleted', 0)
         ->where('c.nama_barang', $nama_barang)
+        ->group_by([
+            'p.no_po_import',
+            'a.kode_tf_in',
+            'a.no_batch',
+            'a.tgl_msk_gdg',
+            'a.tgl_exp',
+            'a.jenis_transaksi_gudang',
+            'c.nama_barang',
+            'c.satuan'
+        ])
         ->order_by('a.tgl_msk_gdg', 'ASC')
         ->get()
         ->result_array();
 
-    $hasil = [];
-
-    foreach ($barang_masuk as $row) {
-        // Cari total keluar berdasarkan kode_tf_in
-        $barang_keluar = $this->db->select('SUM(gdg_qty_out) as total_keluar')
+    // ambil total keluar SEKALI
+    foreach ($data as &$row) {
+        $keluar = $this->db->select('SUM(gdg_qty_out) as total_keluar')
             ->from('tb_gudang_barang_keluar')
             ->where('kode_tf_in', $row['kode_tf_in'])
             ->where('is_deleted', 0)
             ->get()
             ->row_array();
 
-        $total_keluar = $barang_keluar['total_keluar'] ?? 0;
-        $stok_akhir = ($row['gdg_qty_in'] ?? 0) - $total_keluar;
-
-        $hasil[] = [
-            'no_po'         => $row['no_po_pembelian'],
-            'tgl_masuk'     => $row['tgl_msk_gdg'],
-            'kode_tf_in'    => $row['kode_tf_in'],
-            'nama_barang'   => $row['nama_barang'],
-            'no_batch'      => $row['no_batch'],
-            'tgl_exp'       => $row['tgl_exp'],
-            'jumlah_out'    => $row['jenis_transaksi_gudang'],
-            'stok_akhir'    => $stok_akhir,
-            'satuan'        => $row['satuan'],
-        ];
+        $row['stok_akhir'] = ($row['total_masuk'] ?? 0) - ($keluar['total_keluar'] ?? 0);
     }
 
-    echo json_encode($hasil);
+    echo json_encode($data);
 }
 
 

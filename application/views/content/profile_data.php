@@ -389,7 +389,7 @@
                                     <i class="fas fa-building"></i> Profile Perusahaan
                                 </div>
                                 <button type="button" class="btn btn-edit" id="btn-edit-profile">
-                                    <i class="fas fa-edit"></i> Edit Profile
+                                    <i class="fas fa-edit" style="color: white;"></i> Edit Profile
                                 </button>
                             </h1>
                             
@@ -430,7 +430,7 @@
                                                 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="nama_apy" class="required">Nama APT</label>
+                                                        <label for="nama_apy" class="required">Nama APJ</label>
                                                         <input type="text" class="form-control editable" id="nama_apy" 
                                                                name="nama_apy" value="<?= htmlspecialchars($profile['nama_apy']) ?>" 
                                                                placeholder="Masukkan Nama APY" required>
@@ -455,7 +455,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label for="izin_pbf_available" class="required">Tanggal Available</label>
+                                                <label for="izin_pbf_available" class="required">Tanggal Terbit</label>
                                                 <div class="datepicker-wrapper">
                                                     <input type="text" class="form-control datepicker editable" id="izin_pbf_available" 
                                                            name="izin_pbf_available" 
@@ -512,7 +512,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label for="cdob_available" class="required">Tanggal Available</label>
+                                                <label for="cdob_available" class="required">Tanggal Terbit</label>
                                                 <div class="datepicker-wrapper">
                                                     <input type="text" class="form-control datepicker editable" id="cdob_available" 
                                                            name="cdob_available" 
@@ -569,7 +569,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label for="no_spa_available" class="required">Tanggal Available</label>
+                                                <label for="no_spa_available" class="required">Tanggal Terbit</label>
                                                 <div class="datepicker-wrapper">
                                                     <input type="text" class="form-control datepicker editable" id="no_spa_available" 
                                                            name="no_spa_available" 
@@ -652,7 +652,7 @@
                                                 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Nama APT</label>
+                                                        <label>Nama APJ</label>
                                                         <div class="form-control view-only"><?= htmlspecialchars($profile['nama_apy']) ?></div>
                                                     </div>
                                                 </div>
@@ -676,7 +676,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label>Tanggal Available</label>
+                                                <label> Tanggal Terbit</label>
                                                 <div class="form-control view-only">
                                                     <?= !empty($profile['izin_pbf_available']) && $profile['izin_pbf_available'] != '0000-00-00' ? date('d/m/Y', strtotime($profile['izin_pbf_available'])) : '-' ?>
                                                 </div>
@@ -716,7 +716,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label>Tanggal Available</label>
+                                                <label>Tanggal Terbit</label>
                                                 <div class="form-control view-only">
                                                     <?= !empty($profile['cdob_available']) && $profile['cdob_available'] != '0000-00-00' ? date('d/m/Y', strtotime($profile['cdob_available'])) : '-' ?>
                                                 </div>
@@ -756,7 +756,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label>Tanggal Available</label>
+                                                <label>Tanggal Terbit</label>
                                                 <div class="form-control view-only">
                                                     <?= !empty($profile['no_spa_available']) && $profile['no_spa_available'] != '0000-00-00' ? date('d/m/Y', strtotime($profile['no_spa_available'])) : '-' ?>
                                                 </div>
@@ -887,7 +887,7 @@ $(document).ready(function() {
                 minlength: "Minimal 3 karakter"
             },
             izin_pbf_available: {
-                required: "Tanggal available harus diisi",
+                required: "Tanggal Terbit harus diisi",
                 date: "Format tanggal tidak valid (DD/MM/YYYY)"
             },
             izin_pbf_exp: {
@@ -895,7 +895,7 @@ $(document).ready(function() {
                 date: "Format tanggal tidak valid (DD/MM/YYYY)"
             },
             cdob_available: {
-                required: "Tanggal available harus diisi",
+                required: "Tanggal Terbit harus diisi",
                 date: "Format tanggal tidak valid (DD/MM/YYYY)"
             },
             cdob_exp: {
@@ -903,7 +903,7 @@ $(document).ready(function() {
                 date: "Format tanggal tidak valid (DD/MM/YYYY)"
             },
             no_spa_available: {
-                required: "Tanggal available harus diisi",
+                required: "Tanggal Terbit harus diisi",
                 date: "Format tanggal tidak valid (DD/MM/YYYY)"
             },
             no_spa_exp: {
@@ -945,7 +945,7 @@ $(document).ready(function() {
                     if (expiredDate <= availableDate) {
                         expiredField.closest('.form-group').addClass('has-error');
                         if (!expiredField.next('.help-block').length) {
-                            expiredField.after(`<span class="help-block text-danger">Tanggal expired harus setelah tanggal available</span>`);
+                            expiredField.after(`<span class="help-block text-danger">Tanggal expired harus setelah Tanggal Terbit</span>`);
                         }
                         isValid = false;
                     }

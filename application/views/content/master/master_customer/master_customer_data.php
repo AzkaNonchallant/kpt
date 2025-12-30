@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Customer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -61,7 +62,7 @@
         }
 
         .card {
-            width: 135%;
+            width: 100%;
             border: none;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -166,7 +167,6 @@
             white-space: nowrap;
         }
 
-
         .table tbody td {
             padding: 12px;
             vertical-align: middle;
@@ -201,13 +201,11 @@
         .table thead th:nth-child(3),
         .table tbody td:nth-child(3) {
             width: 30px;
-
         }
 
         .table thead th:nth-child(4),
         .table tbody td:nth-child(4) {
             width: 30px;
-
         }
 
         .table thead th:nth-child(5),
@@ -320,10 +318,7 @@
             font-size: 11px;
             line-height: 3.0;
             white-space: nowrap;
-
         }
-
-
 
         .table .btn i {
             font-size: 11px;
@@ -360,6 +355,16 @@
             font-weight: 600;
         }
 
+        .loading {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .loading-error {
+            color: #dc3545;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             .card-header {
                 flex-direction: column;
@@ -376,13 +381,10 @@
                 flex-direction: column;
                 gap: 3px;
             }
-
-            /* .table .btn-sm {
-                padding: 20px 20px;
-                font-size: 20px;
-            } */
-
-
+            
+            .card {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -413,268 +415,275 @@
                     <div class="main-body">
                         <div class="page-wrapper">
                             <!-- [ Main Content ] start -->
-
-                            <div class="col-md-9">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5><i class="fas fa-list"></i> Daftar Customer</h5>
-                                        <div class="btn-group">
-                                            <button class="btn btn-success btn-sm" id="export" type="button">
-                                                <i class="fas fa-print"></i> Cetak List Customer
-                                            </button>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
-                                                <i class="fas fa-plus-circle"></i> Tambah Customer
-                                            </button>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5><i class="fas fa-list"></i> Daftar Customer</h5>
+                                            <div class="btn-group">
+                                                <button class="btn btn-success btn-sm" id="export" type="button">
+                                                    <i class="fas fa-print"></i> Cetak List Customer
+                                                </button>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add">
+                                                    <i class="fas fa-plus-circle"></i> Tambah Customer
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-block table-border-style">
-                                        <div class="table-responsive">
-                                            <table class="table datatable table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Kode Customer</th>
-                                                        <th>Nama Customer</th>
-                                                        <th>Kegiatan Usaha</th>
-
-                                                        <th class="text-center">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $no = 1;
-                                                    foreach ($result as $k) {
-                                                    ?>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table datatable table-hover">
+                                                    <thead>
                                                         <tr>
-                                                            <th scope="row"><?= $no++ ?></th>
-                                                            <td>
-                                                                <span type="button"
-                                                                    class="btn-detail"
-                                                                    data-toggle="modal"
-                                                                    data-target="#detail"
-                                                                    data-id_customer="<?= $k['id_customer'] ?>"
-                                                                    data-kode_customer="<?= $k['kode_customer'] ?>"
-                                                                    data-nama_customer="<?= $k['nama_customer'] ?>"
-                                                                    data-kegiatan_usaha="<?= $k['kegiatan_usaha'] ?>"
-                                                                    data-alamat_customer="<?= $k['alamat_customer'] ?>"
-                                                                    data-provinsi="<?= $k['provinsi'] ?>"
-                                                                    data-kota_kab="<?= $k['kota_kab'] ?>"
-                                                                    data-nib="<?= $k['nib'] ?>"
-                                                                    data-npwp="<?= $k['npwp'] ?>"
-                                                                    data-alamat_kirim="<?= $k['alamat_kirim'] ?>"
-                                                                    data-alamat_pjk="<?= $k['alamat_pjk'] ?>"
-                                                                    <span class="badge badge-primary"><?= $k['kode_customer'] ?></span>
-                                                                </span>
-
-                                                            </td>
-                                                            <td>
-                                                                <strong><?= $k['nama_customer'] ?></strong>
-                                                            </td>
-                                                            <td><?= $k['kegiatan_usaha'] ?></td>
-
-                                                            <td class="text-center">
-                                                                <div class="action-buttons">
-                                                                    <button
-                                                                        type="button"
-                                                                        class="btn btn-success"
+                                                            <th>#</th>
+                                                            <th>Kode Customer</th>
+                                                            <th>Nama Customer</th>
+                                                            <th>Kegiatan Usaha</th>
+                                                            <th class="text-center">Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $no = 1;
+                                                        foreach ($result as $k) {
+                                                        ?>
+                                                            <tr>
+                                                                <th scope="row"><?= $no++ ?></th>
+                                                                <td>
+                                                                    <span type="button"
+                                                                        class="btn-detail badge badge-primary"
                                                                         data-toggle="modal"
-                                                                        data-target="#harga"
-                                                                        data-id_customer="<?= $k['id_customer'] ?>"
-                                                                        data-kode_customer="<?= $k['kode_customer'] ?>"
-                                                                        data-nama_customer="<?= $k['nama_customer'] ?>">
-                                                                        +
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="btn btn-warning btn-sm btn-action"
-                                                                        data-toggle="modal"
-                                                                        data-target="#edit"
+                                                                        data-target="#detail"
                                                                         data-id_customer="<?= $k['id_customer'] ?>"
                                                                         data-kode_customer="<?= $k['kode_customer'] ?>"
                                                                         data-nama_customer="<?= $k['nama_customer'] ?>"
                                                                         data-kegiatan_usaha="<?= $k['kegiatan_usaha'] ?>"
                                                                         data-alamat_customer="<?= $k['alamat_customer'] ?>"
                                                                         data-provinsi="<?= $k['provinsi'] ?>"
+                                                                        data-provinsi_nama="<?= $k['provinsi_nama'] ?>"
                                                                         data-kota_kab="<?= $k['kota_kab'] ?>"
+                                                                        data-kota_nama="<?= $k['kota_nama'] ?>"
                                                                         data-nib="<?= $k['nib'] ?>"
-                                                                        data-nib="<?= $k['npwp'] ?>"
-                                                                        data-nib="<?= $k['alamat_kirim'] ?>>"
-                                                                        data-nib="<?= $k['alamat_pjk'] ?>">
-                                                                        <i class="fas fa-edit"></i> Edit
-                                                                    </button>
-                                                                    <a
-                                                                        href="<?= base_url() ?>master/master_customer/delete/<?= $k['id_customer'] ?>"
-                                                                        class="btn btn-danger btn-sm btn-action"
-                                                                        onclick="if (! confirm('Apakah Anda Yakin?')) { return false; }">
-                                                                        <i class="fas fa-trash"></i> Hapus
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
+                                                                        data-npwp="<?= $k['npwp'] ?>"
+                                                                        data-alamat_kirim="<?= $k['alamat_kirim'] ?>"
+                                                                        data-alamat_pjk="<?= $k['alamat_pjk'] ?>">
+                                                                        <span class=""><?= $k['kode_customer'] ?></span>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <strong><?= $k['nama_customer'] ?></strong>
+                                                                </td>
+                                                                <td><?= $k['kegiatan_usaha'] ?></td>
+                                                                <td class="text-center">
+                                                                    <div class="action-buttons">
+                                                                        <button
+                                                                            type="button"
+                                                                            class="btn btn-success"
+                                                                            data-toggle="modal"
+                                                                            data-target="#harga"
+                                                                            data-id_customer="<?= $k['id_customer'] ?>"
+                                                                            data-kode_customer="<?= $k['kode_customer'] ?>"
+                                                                            data-nama_customer="<?= $k['nama_customer'] ?>">
+                                                                            +
+                                                                        </button>
+                                                                        <button type="button"
+                                                                            class="btn btn-warning btn-sm btn-action"
+                                                                            data-toggle="modal"
+                                                                            data-target="#edit"
+                                                                            data-id_customer="<?= $k['id_customer'] ?>"
+                                                                            data-kode_customer="<?= $k['kode_customer'] ?>"
+                                                                            data-nama_customer="<?= $k['nama_customer'] ?>"
+                                                                            data-kegiatan_usaha="<?= $k['kegiatan_usaha'] ?>"
+                                                                            data-alamat_customer="<?= $k['alamat_customer'] ?>"
+                                                                            data-provinsi="<?= $k['provinsi'] ?>"
+                                                                            data-provinsi_nama="<?= $k['provinsi_nama'] ?>"
+                                                                            data-kota_kab="<?= $k['kota_kab'] ?>"
+                                                                            data-kota_nama="<?= $k['kota_nama'] ?>"
+                                                                            data-nib="<?= $k['nib'] ?>"
+                                                                            data-npwp="<?= $k['npwp'] ?>"
+                                                                            data-alamat_kirim="<?= $k['alamat_kirim'] ?>"
+                                                                            data-alamat_pjk="<?= $k['alamat_pjk'] ?>">
+                                                                            <i class="fas fa-edit"></i> Edit
+                                                                        </button>
+                                                                        <a
+                                                                            href="<?= base_url() ?>master/master_customer/delete/<?= $k['id_customer'] ?>"
+                                                                            class="btn btn-danger btn-sm btn-action"
+                                                                            onclick="return confirm('Apakah Anda Yakin?')">
+                                                                            <i class="fas fa-trash"></i> Hapus
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- [ Main Content ] end -->
                         </div>
                     </div>
-                    <!-- [ Main Content ] end -->
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     </section>
 
     <!-- Modal Tambah -->
- <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-cust d-flex justify-content-between align-items-center p-3">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle"></i> Tambah Customer
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-            <!-- Header -->
-            <div class="modal-cust d-flex justify-content-between align-items-center p-3">
-                <h5 class="modal-title">
-                    <i class="fas fa-plus-circle"></i> Tambah Customer
-                </h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <!-- Form -->
+                <form method="post" action="<?= base_url() ?>master/master_customer/add" id="formTambah">
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Kode Customer -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kode Customer</label>
+                                    <input type="text" class="form-control" id="kode_customer" name="kode_customer"
+                                        placeholder="Kode Customer" autocomplete="off"
+                                        style="text-transform:uppercase"
+                                        onkeyup="this.value = this.value.toUpperCase()" required>
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        Maaf Kode Customer sudah ada.
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- Form -->
-            <form method="post" action="<?= base_url() ?>master/master_customer/add">
-                <div class="modal-body">
+                            <!-- Nama Customer -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama Customer</label>
+                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer"
+                                        placeholder="Nama Customer" maxlength="100" autocomplete="off"
+                                        style="text-transform:uppercase"
+                                        onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <!-- Kode Customer -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Kode Customer</label>
-                                <input type="text" class="form-control" id="kode_customer" name="kode_customer"
-                                    placeholder="Kode Customer" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                    Maaf Kode Customer sudah ada.
+                            <!-- Kegiatan Usaha -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kegiatan Usaha</label>
+                                    <select class="form-control chosen-select" id="kegiatan_usaha" name="kegiatan_usaha">
+                                        <option value="">- Pilih Kegiatan Usaha -</option>
+                                        <option value="Produksi">Produksi</option>
+                                        <option value="Distributor">Distributor</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Alamat Customer -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Alamat Customer</label>
+                                    <textarea class="form-control" id="alamat_customer" name="alamat_customer"
+                                        rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- PROVINSI DAN KOTA/KAB - PERBAIKAN -->
+                            <!-- Hidden inputs untuk menyimpan nama provinsi dan kota -->
+                            <input type="hidden" id="provinsi_nama" name="provinsi_nama">
+                            <input type="hidden" id="kota_nama" name="kota_nama">
+                            
+                            <!-- Provinsi -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provinsi">Provinsi</label>
+                                    <select class="form-control chosen-select" id="provinsi" name="provinsi" required>
+                                        <option value="" disabled selected hidden>- Pilih Provinsi -</option>
+                                        <!-- Data akan diisi via AJAX -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Kota/Kabupaten -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="kota_kab">Kota / Kabupaten</label>
+                                    <select class="form-control chosen-select" id="kota_kab" name="kota_kab" required disabled>
+                                        <option value="" disabled selected hidden>- Pilih Kota -</option>
+                                        <!-- Data akan diisi via AJAX -->
+                                    </select>
+                                    <small class="form-text text-muted">Pilih provinsi terlebih dahulu</small>
+                                </div>
+                            </div>
+
+                            <!-- NIB -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>NIB</label>
+                                    <input type="text" class="form-control" id="nib" name="nib"
+                                        placeholder="NIB" autocomplete="off"
+                                        style="text-transform:uppercase"
+                                        onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
+
+                            <!-- NPWP -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>NPWP</label>
+                                    <input type="text" class="form-control" id="npwp" name="npwp"
+                                        placeholder="NPWP" autocomplete="off"
+                                        style="text-transform:uppercase"
+                                        onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Marketing Admin</label>
+                                    <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" placeholder="Mkt admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" style="text-transform:uppercase" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Alamat Kirim -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Alamat Kirim</label>
+                                    <textarea class="form-control" id="alamat_kirim" name="alamat_kirim"
+                                        rows="3" placeholder="Alamat Kirim" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Alamat PJK -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Alamat PJK</label>
+                                    <textarea class="form-control" id="alamat_pjk" name="alamat_pjk"
+                                        rows="3" placeholder="Alamat Pajak" autocomplete="off"></textarea>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Nama Customer -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Nama Customer</label>
-                                <input type="text" class="form-control" id="nama_customer" name="nama_customer"
-                                    placeholder="Nama Customer" maxlength="100" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                            </div>
-                        </div>
-
-                        <!-- Kegiatan Usaha -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Kegiatan Usaha</label>
-                                <select class="form-control chosen-select" id="kegiatan_usaha" name="kegiatan_usaha">
-                                    <option value="">- Pilih Kegiatan Usaha -</option>
-                                    <option value="Produksi">Produksi</option>
-                                    <option value="Distributor">Distributor</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Alamat Customer -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Alamat Customer</label>
-                                <textarea class="form-control" id="alamat_customer" name="alamat_customer"
-                                    rows="3" placeholder="Alamat Customer" autocomplete="off"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Provinsi -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Provinsi</label>
-                                <input type="text" class="form-control" id="provinsi" name="provinsi"
-                                    placeholder="Provinsi" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                            </div>
-                        </div>
-
-                        <!-- Kota/Kab -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Kota/Kab</label>
-                                <input type="text" class="form-control" id="kota_kab" name="kota_kab"
-                                    placeholder="Kota/Kab" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                            </div>
-                        </div>
-
-                        <!-- NIB -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>NIB</label>
-                                <input type="text" class="form-control" id="nib" name="nib"
-                                    placeholder="NIB" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                            </div>
-                        </div>
-
-                        <!-- NPWP -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>NPWPT</label>
-                                <input type="text" class="form-control" id="npwp" name="npwp"
-                                    placeholder="NPWP" autocomplete="off"
-                                    style="text-transform:uppercase"
-                                    onkeyup="this.value = this.value.toUpperCase()" required>
-                            </div>
-                        </div>
-
-                        <!-- Alamat Kirim -->
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Alamat Kirim</label>
-                                <textarea class="form-control" id="alamat_kirim" name="alamat_kirim"
-                                    rows="3" placeholder="Alamat Kirim" autocomplete="off"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Alamat PJK</label>
-                                <textarea class="form-control" id="alamat_pjk" name="alamat_pjk"
-                                    rows="3" placeholder="Alamat Pajak" autocomplete="off"></textarea>
-                            </div>
                     </div>
-                </div>
 
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Batal
-                    </button>
-
-                    <button type="submit" class="btn btn-primary"
-                        onclick="return confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')">
-                        <i class="fas fa-save"></i> Simpan
-                    </button>
-                </div>
-
-            </form>
-
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="btnSimpanTambah">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
 
     <!-- Modal Detail -->
     <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -736,6 +745,27 @@
                                 <input type="text" class="form-control" id="v_nib" name="nib" readonly>
                             </div>
                         </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">NPWP</label>
+                                <input type="text" class="form-control" id="v_npwp" name="npwp" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Alamat Kirim</label>
+                                <textarea class="form-control" id="v_alamat_kirim" name="alamat_kirim" rows="3" readonly></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Alamat PJK</label>
+                                <textarea class="form-control" id="v_alamat_pjk" name="alamat_pjk" rows="3" readonly></textarea>
+                            </div>
+                        </div>
                     </div>
 
                     <hr>
@@ -767,8 +797,7 @@
         </div>
     </div>
 
-    <!-- === MODAL EDIT HARGA -->
-
+    <!-- Modal Edit Harga -->
     <div class="modal fade" id="modalEditHarga" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -776,43 +805,24 @@
                     <h6 class="modal-title"><i class="fas fa-edit"></i> Edit Harga</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="<?= base_url() ?>master/master_customer/update_harga" method="post">
+                <form action="<?= base_url() ?>master/master_customer/update_harga" method="post" id="formEditHarga">
                     <div class="modal-body">
                         <input type="hidden" id="edit_id_harga" name="id_master_harga">
                         <div class="form-group">
-                            <label>Harga</label>
-                            <input type="number" id="edit_harga" name="harga" class="form-control">
+                            <label>Harga(KG)</label>
+                            <input type="text" id="edit_harga" name="harga" class="form-control" placeholder="Rp 0">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary btn-sm" id="btnSaveEditHarga">Simpan</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary btn-sm" id="btnSaveEditHarga">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-    <script type="text/javascript">
-        // tampilkan modal edit
-        $(document).on('click', '.btn-edit', function() {
-            let id = $(this).data('id');
-            let harga = $(this).data('harga');
-            $('#edit_id_harga').val(id);
-            $('#edit_harga').val(harga);
-            $('#modalEditHarga').modal('show');
-        });
-
-        // simpan edit harga
-        $('#btnSaveEditHarga').on('click', function() {
-            let id = $('#edit_id_harga').val();
-            let harga = $('#edit_harga').val();
-
-        });
-    </script>
-
-    <!-- Modal Edit -->
+    <!-- Modal Edit Customer -->
     <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -822,8 +832,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="<?= base_url() ?>master/master_customer/update">
+                <form method="post" action="<?= base_url() ?>master/master_customer/update" id="formEdit">
                     <input type="hidden" id="e_id_customer" name="id_customer">
+                    <!-- Hidden inputs untuk edit -->
+                    <input type="hidden" id="e_provinsi_nama" name="provinsi_nama">
+                    <input type="hidden" id="e_kota_nama" name="kota_nama">
+                    
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -861,17 +875,26 @@
                                 </div>
                             </div>
 
+                            <!-- PROVINSI EDIT -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Provinsi</label>
-                                    <input type="text" class="form-control" id="e_provinsi" name="provinsi" placeholder="Provinsi" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                    <select class="form-control chosen-select" id="e_provinsi" name="provinsi" autocomplete="off" required>
+                                        <option value="" disabled selected hidden>- Pilih Provinsi -</option>
+                                        <!-- Data akan diisi via AJAX -->
+                                    </select>
                                 </div>
                             </div>
 
+                            <!-- KOTA/KAB EDIT -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Kota/Kab</label>
-                                    <input type="text" class="form-control" id="e_kota_kab" name="kota_kab" placeholder="Kota/Kab" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                    <select class="form-control chosen-select" id="e_kota_kab" name="kota_kab" autocomplete="off" required disabled>
+                                        <option value="" disabled selected hidden>- Pilih Kota -</option>
+                                        <!-- Data akan diisi via AJAX -->
+                                    </select>
+                                    <small class="form-text text-muted">Pilih provinsi terlebih dahulu</small>
                                 </div>
                             </div>
 
@@ -881,11 +904,33 @@
                                     <input type="text" class="form-control" id="e_nib" name="nib" placeholder="NIB" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">NPWP</label>
+                                    <input type="text" class="form-control" id="e_npwp" name="npwp" placeholder="NPWP" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Alamat Kirim</label>
+                                    <textarea class="form-control" id="e_alamat_kirim" name="alamat_kirim" rows="3" placeholder="Alamat Kirim" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Alamat PJK</label>
+                                    <textarea class="form-control" id="e_alamat_pjk" name="alamat_pjk" rows="3" placeholder="Alamat Pajak" autocomplete="off"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
+                        <button type="submit" id="btnSimpanEdit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Update
                         </button>
                     </div>
@@ -894,9 +939,376 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Modal Tambah Harga -->
+    <div class="modal fade" id="harga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-cust">
+                    <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Harga</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="<?= base_url() ?>master/master_customer/add_harga" id="formTambahHarga">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Kode Customer</label>
+                                    <input type="text" class="form-control" id="h-kode_customer" name="kode_customer" placeholder="Kode Customer" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" readonly>
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        Maaf Kode Customer sudah ada.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="h-id_customer" name="id_customer">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Customer</label>
+                                    <input type="text" class="form-control" id="h-nama_customer" name="nama_customer" placeholder="Nama Customer" maxlength="100" autocomplete="off" style="text-transform:uppercase" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Barang</label>
+                                    <select class="form-control chosen-select" id="h-id_barang" name="id_barang" autocomplete="off" required>
+                                        <option value="">- Pilih Barang -</option>
+                                        <?php
+                                        foreach ($res_barang as $c) {
+                                        ?>
+                                            <option value="<?= $c['id_barang'] ?>">(<?= $c['kode_barang'] ?>) <?= $c['nama_barang'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Harga(KG)</label>
+                                    <input type="text" class="form-control" id="h-harga" name="harga" placeholder="Rp 0" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Marketing Admin</label>
+                                    <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" placeholder="Mkt admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" style="text-transform:uppercase" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" id="btnSimpanHarga" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
+            // Inisialisasi chosen select
+            $('.chosen-select').chosen({
+                width: '100%',
+                search_contains: true,
+                no_results_text: "Tidak ditemukan"
+            });
+
+            // ============================================
+            // LOAD DATA PROVINSI DARI API
+            // ============================================
+            function loadProvinsi(selectElement, selectedId = null, callback = null) {
+                $.ajax({
+                    url: 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json',
+                    method: 'GET',
+                    beforeSend: function() {
+                        $(selectElement).empty().append('<option value="" disabled selected hidden>Loading...</option>');
+                        $(selectElement).trigger('chosen:updated');
+                    },
+                    success: function(data) {
+                        $(selectElement).empty().append('<option value="" disabled selected hidden>- Pilih Provinsi -</option>');
+                        
+                        $.each(data, function(i, provinsi) {
+                            let option = $('<option>', {
+                                value: provinsi.id,
+                                'data-nama': provinsi.name,
+                                text: provinsi.name
+                            });
+                            
+                            // Set selected jika ada nilai yang dipilih
+                            if (selectedId && provinsi.id == selectedId) {
+                                option.prop('selected', true);
+                                // Simpan nama provinsi ke hidden input
+                                let hiddenInput = $(selectElement).attr('id') === 'provinsi' ? '#provinsi_nama' : '#e_provinsi_nama';
+                                $(hiddenInput).val(provinsi.name);
+                            }
+                            
+                            $(selectElement).append(option);
+                        });
+                        
+                        // Refresh chosen
+                        $(selectElement).prop('disabled', false).trigger('chosen:updated');
+                        
+                        // Jalankan callback jika ada
+                        if (typeof callback === 'function') {
+                            callback();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Gagal memuat provinsi:', error);
+                        $(selectElement).empty().append('<option value="" disabled selected hidden class="loading-error">Gagal memuat data</option>');
+                        $(selectElement).trigger('chosen:updated');
+                        alert('Gagal memuat daftar provinsi. Silakan refresh halaman.');
+                    }
+                });
+            }
+
+            // ============================================
+            // LOAD DATA KOTA/KAB DARI API
+            // ============================================
+            function loadKotaKab(provinsiId, selectElement, selectedId = null, callback = null) {
+                if (!provinsiId) {
+                    $(selectElement).empty().append('<option value="" disabled selected hidden>- Pilih Provinsi terlebih dahulu -</option>');
+                    $(selectElement).prop('disabled', true).trigger('chosen:updated');
+                    return;
+                }
+                
+                $.ajax({
+                    url: 'https://www.emsifa.com/api-wilayah-indonesia/api/regencies/' + provinsiId + '.json',
+                    method: 'GET',
+                    beforeSend: function() {
+                        $(selectElement).empty().append('<option value="" disabled selected hidden>Loading...</option>');
+                        $(selectElement).prop('disabled', true).trigger('chosen:updated');
+                    },
+                    success: function(data) {
+                        $(selectElement).empty().append('<option value="" disabled selected hidden>- Pilih Kota/Kab -</option>');
+                        
+                        $.each(data, function(i, kota) {
+                            let option = $('<option>', {
+                                value: kota.id,
+                                'data-nama': kota.name,
+                                text: kota.name
+                            });
+                            
+                            // Set selected jika ada nilai yang dipilih
+                            if (selectedId && kota.id == selectedId) {
+                                option.prop('selected', true);
+                                // Simpan nama kota ke hidden input
+                                let hiddenInput = $(selectElement).attr('id') === 'kota_kab' ? '#kota_nama' : '#e_kota_nama';
+                                $(hiddenInput).val(kota.name);
+                            }
+                            
+                            $(selectElement).append(option);
+                        });
+                        
+                        // Enable dan refresh chosen
+                        $(selectElement).prop('disabled', false).trigger('chosen:updated');
+                        
+                        // Jalankan callback jika ada
+                        if (typeof callback === 'function') {
+                            callback();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Gagal memuat kota:', error);
+                        $(selectElement).empty().append('<option value="" disabled selected hidden class="loading-error">Gagal memuat data</option>');
+                        $(selectElement).trigger('chosen:updated');
+                        alert('Gagal memuat daftar kota/kabupaten.');
+                    }
+                });
+            }
+
+            // ============================================
+            // LOAD PROVINSI SAAT MODAL TAMBAH DIBUKA
+            // ============================================
+            $('#add').on('show.bs.modal', function() {
+                loadProvinsi('#provinsi');
+                
+                // Reset kota/kab
+                $('#kota_kab').empty().append('<option value="" disabled selected hidden>- Pilih Provinsi terlebih dahulu -</option>');
+                $('#kota_kab').prop('disabled', true).trigger('chosen:updated');
+                
+                // Reset hidden fields
+                $('#provinsi_nama').val('');
+                $('#kota_nama').val('');
+                
+                // Reset form lainnya
+                $('#kode_customer').val('').focus();
+                $('#nama_customer').val('');
+                $('#kegiatan_usaha').val('').trigger('chosen:updated');
+                $('#alamat_customer').val('');
+                $('#nib').val('');
+                $('#npwp').val('');
+                $('#alamat_kirim').val('');
+                $('#alamat_pjk').val('');
+            });
+
+            // ============================================
+            // EVENT CHANGE PROVINSI (TAMBAH)
+            // ============================================
+            $('#provinsi').on('change', function() {
+                let provinsiId = $(this).val();
+                let provinsiNama = $(this).find(':selected').data('nama');
+                
+                // Simpan nama provinsi ke hidden input
+                $('#provinsi_nama').val(provinsiNama);
+                
+                // Load kota/kab berdasarkan provinsi
+                loadKotaKab(provinsiId, '#kota_kab');
+                
+                // Reset hidden kota
+                $('#kota_nama').val('');
+            });
+
+            // ============================================
+            // EVENT CHANGE KOTA/KAB (TAMBAH)
+            // ============================================
+            $('#kota_kab').on('change', function() {
+                let kotaNama = $(this).find(':selected').data('nama');
+                $('#kota_nama').val(kotaNama);
+            });
+
+            // ============================================
+            // LOAD DATA EDIT SAAT MODAL EDIT DIBUKA
+            // ============================================
+            $('#edit').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id_customer = button.data('id_customer');
+                var kode_customer = button.data('kode_customer');
+                var nama_customer = button.data('nama_customer');
+                var kegiatan_usaha = button.data('kegiatan_usaha');
+                var alamat_customer = button.data('alamat_customer');
+                var provinsiId = button.data('provinsi'); // ID provinsi
+                var provinsiNama = button.data('provinsi_nama'); // Nama provinsi
+                var kotaId = button.data('kota_kab'); // ID kota
+                var kotaNama = button.data('kota_nama'); // Nama kota
+                var nib = button.data('nib');
+                var npwp = button.data('npwp');
+                var alamat_kirim = button.data('alamat_kirim');
+                var alamat_pjk = button.data('alamat_pjk');
+
+                // Set nilai ke form
+                $('#e_id_customer').val(id_customer);
+                $('#e_kode_customer').val(kode_customer);
+                $('#e_nama_customer').val(nama_customer);
+                $('#e_kegiatan_usaha').val(kegiatan_usaha);
+                $('#e_alamat_customer').val(alamat_customer);
+                $('#e_nib').val(nib);
+                $('#e_npwp').val(npwp);
+                $('#e_alamat_kirim').val(alamat_kirim);
+                $('#e_alamat_pjk').val(alamat_pjk);
+                
+                // Set hidden values
+                $('#e_provinsi_nama').val(provinsiNama);
+                $('#e_kota_nama').val(kotaNama);
+                
+                // Load provinsi dengan selected value
+                loadProvinsi('#e_provinsi', provinsiId, function() {
+                    // Trigger chosen update untuk kegiatan usaha
+                    $('#e_kegiatan_usaha').trigger("chosen:updated");
+                    
+                    // Setelah provinsi diload, load kota jika ada provinsiId
+                    if (provinsiId) {
+                        // Small delay untuk memastikan provinsi sudah terload
+                        setTimeout(function() {
+                            loadKotaKab(provinsiId, '#e_kota_kab', kotaId);
+                        }, 300);
+                    }
+                });
+            });
+
+            // ============================================
+            // EVENT CHANGE PROVINSI (EDIT)
+            // ============================================
+            $('#e_provinsi').on('change', function() {
+                let provinsiId = $(this).val();
+                let provinsiNama = $(this).find(':selected').data('nama');
+                
+                // Simpan nama provinsi ke hidden input
+                $('#e_provinsi_nama').val(provinsiNama);
+                
+                // Load kota/kab berdasarkan provinsi
+                loadKotaKab(provinsiId, '#e_kota_kab');
+                
+                // Reset hidden kota
+                $('#e_kota_nama').val('');
+            });
+
+            // ============================================
+            // EVENT CHANGE KOTA/KAB (EDIT)
+            // ============================================
+            $('#e_kota_kab').on('change', function() {
+                let kotaNama = $(this).find(':selected').data('nama');
+                $('#e_kota_nama').val(kotaNama);
+            });
+
+            // ============================================
+            // FUNGSI FORMAT RUPIAH
+            // ============================================
+            
+            // Fungsi untuk format Rupiah
+            function formatRupiah(angka, prefix = 'Rp ') {
+                if (!angka) return '';
+                let number_string = angka.toString().replace(/[^,\d]/g, ''),
+                    split = number_string.split(','),
+                    sisa = split[0].length % 3,
+                    rupiah = split[0].substr(0, sisa),
+                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    let separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+                
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix + rupiah;
+            }
+
+            // Fungsi untuk menghapus format Rupiah (mengembalikan angka saja)
+            function unformatRupiah(rupiah) {
+                if (!rupiah) return 0;
+                return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+            }
+
+            // Fungsi untuk auto format input Rupiah
+            function setupRupiahInput(inputId) {
+                $(inputId).on('keyup', function(e) {
+                    // Simpan posisi cursor
+                    let cursorPosition = this.selectionStart;
+                    let originalLength = this.value.length;
+                    
+                    // Hapus semua karakter selain angka
+                    let value = this.value.replace(/[^0-9]/g, '');
+                    
+                    // Format ke Rupiah
+                    this.value = formatRupiah(value);
+                    
+                    // Kembalikan posisi cursor
+                    let newLength = this.value.length;
+                    let cursorOffset = newLength - originalLength;
+                    this.setSelectionRange(cursorPosition + cursorOffset, cursorPosition + cursorOffset);
+                });
+            }
+
+            // Setup format Rupiah untuk input harga
+            setupRupiahInput('#h-harga');
+            setupRupiahInput('#edit_harga');
+
+            // ============================================
+            // VALIDASI KODE CUSTOMER (TAMBAH)
+            // ============================================
             $("#kode_customer").keyup(function() {
                 var kode_customer = $("#kode_customer").val();
                 jQuery.ajax({
@@ -909,16 +1321,58 @@
                     success: function(response) {
                         if (response == "true") {
                             $("#kode_customer").addClass("is-invalid");
-                            $("#simpan").attr("disabled", "disabled");
+                            $("#btnSimpanTambah").attr("disabled", "disabled");
                         } else {
                             $("#kode_customer").removeClass("is-invalid");
-                            $("#simpan").removeAttr("disabled");
+                            $("#btnSimpanTambah").removeAttr("disabled");
                         }
                     }
                 });
             });
 
-            // ketika klik tombol detail
+            // ============================================
+            // VALIDASI KODE CUSTOMER (EDIT)
+            // ============================================
+            $("#e_kode_customer").keyup(function() {
+                var kode_customer = $("#e_kode_customer").val();
+                var original_kode = $("#e_kode_customer").data('original') || '';
+                
+                // Skip validation if the code hasn't changed
+                if (kode_customer === original_kode) {
+                    $("#e_kode_customer").removeClass("is-invalid");
+                    $("#btnSimpanEdit").removeAttr("disabled");
+                    return;
+                }
+                
+                jQuery.ajax({
+                    url: "<?= base_url() ?>master/master_customer/cek_kode_customer",
+                    dataType: 'text',
+                    type: "post",
+                    data: {
+                        kode_customer: kode_customer
+                    },
+                    success: function(response) {
+                        if (response == "true") {
+                            $("#e_kode_customer").addClass("is-invalid");
+                            $("#btnSimpanEdit").attr("disabled", "disabled");
+                        } else {
+                            $("#e_kode_customer").removeClass("is-invalid");
+                            $("#btnSimpanEdit").removeAttr("disabled");
+                        }
+                    }
+                });
+            });
+
+            // Simpan kode original saat modal edit dibuka
+            $('#edit').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var kode_customer = button.data('kode_customer');
+                $('#e_kode_customer').data('original', kode_customer);
+            });
+
+            // ============================================
+            // MODAL DETAIL CUSTOMER
+            // ============================================
             $('.btn-detail').on('click', function() {
                 var id_customer = $(this).data('id_customer');
 
@@ -936,39 +1390,48 @@
                             $('#v_nama_customer').val(c.nama_customer);
                             $('#v_kegiatan_usaha').val(c.kegiatan_usaha);
                             $('#v_alamat_customer').val(c.alamat_customer);
-                            $('#v_provinsi').val(c.provinsi);
-                            $('#v_kota_kab').val(c.kota_kab);
+                            $('#v_provinsi').val(c.provinsi_nama || c.provinsi);
+                            $('#v_kota_kab').val(c.kota_nama || c.kota_kab);
                             $('#v_nib').val(c.nib);
+                            $('#v_npwp').val(c.npwp);
+                            $('#v_alamat_kirim').val(c.alamat_kirim);
+                            $('#v_alamat_pjk').val(c.alamat_pjk);
                         }
 
-                        // isi tabel harga
+                        // Isi tabel harga dengan format Rupiah
                         let tbody = $('#tblHargaCustomer tbody');
                         tbody.empty();
 
-                        if (response.harga.length > 0) {
+                        if (response.harga && response.harga.length > 0) {
                             $.each(response.harga, function(i, item) {
+                                // Format harga ke Rupiah
+                                let hargaFormatted = formatRupiah(item.harga);
+                                
                                 tbody.append(`
-                            <tr>
-                                <td>${i+1}</td>
-                                <td>${item.kode_barang}</td>
-                                <td>${item.nama_barang}</td>
-                                <td>${new Intl.NumberFormat('id-ID').format(item.harga)}</td>
-                                <td class="center">
-                                    <div style="display: flex;">
-                                        <button class="btn btn-warning btn-sm btn-edit" data-id="${item.id_master_harga}" data-harga="${item.harga}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <a href="<?= base_url()?>master/master_customer/delete_harga/${item.id_master_harga}" class="btn btn-danger btn-sm btn-delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        `);
+                                    <tr>
+                                        <td class="text-center">${i+1}</td>
+                                        <td>${item.kode_barang || '-'}</td>
+                                        <td>${item.nama_barang || '-'}</td>
+                                        <td class="harga-rupiah">${hargaFormatted}</td>
+                                        <td class="text-center">
+                                            <div style="display: flex; justify-content: center; gap: 5px;">
+                                                <button class="btn btn-warning btn-sm btn-edit" 
+                                                        data-id="${item.id_master_harga}" 
+                                                        data-harga="${item.harga}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <a href="<?= base_url()?>master/master_customer/delete_harga/${item.id_master_harga}" 
+                                                   class="btn btn-danger btn-sm btn-delete" 
+                                                   onclick="return confirm('Apakah Anda Yakin?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `);
                             });
                         } else {
-                            tbody.append(`<tr><td colspan="6" class="text-center text-muted">Belum ada harga untuk customer ini.</td></tr>`);
+                            tbody.append(`<tr><td colspan="5" class="text-center text-muted">Belum ada harga untuk customer ini.</td></tr>`);
                         }
                     },
                     error: function() {
@@ -977,187 +1440,223 @@
                 });
             });
 
-            $('#edit').on('show.bs.modal', function(event) {
-                var id_customer = $(event.relatedTarget).data('id_customer')
-                var kode_customer = $(event.relatedTarget).data('kode_customer')
-                var nama_customer = $(event.relatedTarget).data('nama_customer')
-                var kegiatan_usaha = $(event.relatedTarget).data('kegiatan_usaha')
-                var alamat_customer = $(event.relatedTarget).data('alamat_customer')
-                var provinsi = $(event.relatedTarget).data('provinsi')
-                var kota_kab = $(event.relatedTarget).data('kota_kab')
-                var nib = $(event.relatedTarget).data('nib')
-                var npwp = $(event.relatedTarget).data('npwp')
-                var alamat_kirim = $(event.relatedTarget).data('alamat_kirim')
-                var alamat_pjk = $(event.relatedTarget).data('alamat_pjk')
-
-                $(this).find('#e_id_customer').val(id_customer)
-                $(this).find('#e_kode_customer').val(kode_customer)
-                $(this).find('#e_nama_customer').val(nama_customer)
-                $(this).find('#e_kegiatan_usaha').val(kegiatan_usaha)
-                $(this).find('#e_kegiatan_usaha').trigger("chosen:updated");
-                $(this).find('#e_alamat_customer').val(alamat_customer)
-                $(this).find('#e_provinsi').val(provinsi)
-                $(this).find('#e_kota_kab').val(kota_kab)
-                $(this).find('#e_nib').val(nib)
+            // ============================================
+            // MODAL EDIT HARGA
+            // ============================================
+            $(document).on('click', '.btn-edit', function() {
+                let id = $(this).data('id');
+                let harga = $(this).data('harga');
+                
+                $('#edit_id_harga').val(id);
+                $('#edit_harga').val(formatRupiah(harga));
+                $('#modalEditHarga').modal('show');
             });
 
-            $("#e_kode_customer").keyup(function() {
-                var kode_customer = $("#e_kode_customer").val();
-                jQuery.ajax({
-                    url: "<?= base_url() ?>master/master_customer/cek_kode_customer",
-                    dataType: 'text',
-                    type: "post",
-                    data: {
-                        kode_customer: kode_customer
-                    },
-                    success: function(response) {
-                        if (response == "true") {
-                            $("#e_kode_customer").addClass("is-invalid");
-                            $("#simpan").attr("disabled", "disabled");
-                        } else {
-                            $("#e_kode_customer").removeClass("is-invalid");
-                            $("#simpan").removeAttr("disabled");
-                        }
-                    }
-                });
-            });
-
-            $('#export').click(function() {
-                var url = "<?= base_url() ?>master/master_customer/pdf_customer_list/";
-                window.open(url, 'pdf_laporan_customer_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
-            });
-        });
-    </script>
-
-
-    <div class="modal fade" id="harga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-cust">
-                    <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Tambah Harga</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" id="harga" action="<?= base_url() ?>master/master_customer/add_harga">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Kode Customer</label>
-                                    <input type="text" class="form-control" id="h-kode_customer" name="kode_customer" placeholder="Kode Customer" autocomplete="off" aria-describedby="validationServer03Feedback" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        Maaf Kode Customer sudah ada.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="hidden" id="h-id_customer" name="id_customer">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Nama Customer</label>
-                                    <input type="text" class="form-control" id="h-nama_customer" name="nama_customer" placeholder="Nama Customer" maxlength="100" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Nama Barang</label>
-                                    <select class="form-control chosen-select" id="h-id_barang" name="id_barang" autocomplete="off">
-                                        <option value="">- Pilih Barang -</option>
-                                        <?php
-                                        foreach ($res_barang as $c) {
-                                        ?>
-                                            <option value="<?= $c['id_barang'] ?>">(<?= $c['kode_barang'] ?>) <?= $c['nama_barang'] ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Harga</label>
-                                    <input type="text" class="form-control" id="h-harga" name="harga" placeholder="Harga" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label">Marketing Admin</label>
-                                    <input type="text" class="form-control" id="mkt_admin" name="mkt_admin" placeholder="Mkt admin" value="<?= $this->session->userdata('nama') ?>" autocomplete="off" style="text-transform:uppercase" onkeyup="this.value = this.value.toUpperCase()" readonly>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" id="simpan" class="btn btn-primary" onclick="if (! confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) { return false; }">
-                            <i class="fas fa-save"></i> Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            $('#harga').on('show.bs.modal', function(event) {
-                function unformatRupiah(rupiah) {
-                    if (!rupiah) return 0;
-                    return parseInt(rupiah.toString().replace(/[^0-9]/g, ''), 10);
+            // Form submit edit harga
+            $('#formEditHarga').submit(function(e) {
+                // Hapus format Rupiah sebelum submit
+                let hargaInput = $('#edit_harga');
+                let hargaValue = unformatRupiah(hargaInput.val());
+                
+                // Validasi harga
+                if (hargaValue <= 0) {
+                    e.preventDefault();
+                    alert('Harga harus lebih dari 0');
+                    hargaInput.focus();
+                    return false;
                 }
+                
+                // Set nilai tanpa format
+                hargaInput.val(hargaValue);
+                
+                // Konfirmasi
+                if (!confirm('Apakah Anda yakin ingin mengubah harga?')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
 
-                var id_customer = $(event.relatedTarget).data('id_customer');
-                var kode_customer = $(event.relatedTarget).data('kode_customer');
-                var nama_customer = $(event.relatedTarget).data('nama_customer');
+            // ============================================
+            // MODAL TAMBAH HARGA
+            // ============================================
+            $('#harga').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id_customer = button.data('id_customer');
+                var kode_customer = button.data('kode_customer');
+                var nama_customer = button.data('nama_customer');
 
                 $('#h-kode_customer').val(kode_customer);
                 $('#h-nama_customer').val(nama_customer);
                 $('#h-id_customer').val(id_customer);
-
-                // 🔹 Panggil AJAX untuk ambil barang customer ini
-                $.ajax({
-                    url: "<?= base_url('master/master_customer/get_barang_customer') ?>",
-                    type: "POST",
-                    data: {
-                        id_customer: id_customer
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        let dropdown = $('#h-id_barang');
-                        dropdown.empty(); // kosongkan dulu
-                        dropdown.append('<option value="">- Pilih Barang -</option>');
-                        if (data.length > 0) {
-                            $.each(data, function(i, item) {
-                                dropdown.append('<option value="' + item.id_barang + '">(' + item.kode_barang + ') ' + item.nama_barang + '</option>');
-                            });
-                        } else {
-                            dropdown.append('<option value="" disabled>(Tidak ada barang tersedia untuk diberi harga)</option>');
-                        }
-                        dropdown.trigger("chosen:updated"); // refresh plugin chosen jika dipakai
-                    }
-                });
-
-                // Format input harga
-                document.getElementById('h-harga').addEventListener('keyup', function(e) {
-                    let value = this.value.replace(/\D/g, '');
-                    value = new Intl.NumberFormat('id-ID').format(value);
-                    this.value = value;
-                });
-
-                // Ubah format harga sebelum submit
-                $('#harga').on('submit', function(e) {
-                    const harga_po = unformatRupiah($('#h-harga').val());
-                    $('#h-harga').val(harga_po);
-                });
+                
+                // Reset form
+                $('#h-id_barang').val('').trigger('chosen:updated');
+                $('#h-harga').val('');
+                
+                // Fokus ke input barang
+                setTimeout(function() {
+                    $('#h-id_barang').focus();
+                }, 500);
             });
 
+            // Form submit tambah harga
+            $('#formTambahHarga').submit(function(e) {
+                // Validasi pilihan barang
+                let barang = $('#h-id_barang').val();
+                if (!barang) {
+                    e.preventDefault();
+                    alert('Silakan pilih barang terlebih dahulu');
+                    $('#h-id_barang').focus();
+                    return false;
+                }
+                
+                // Hapus format Rupiah sebelum submit
+                let hargaInput = $('#h-harga');
+                let hargaValue = unformatRupiah(hargaInput.val());
+                
+                // Validasi harga
+                if (hargaValue <= 0) {
+                    e.preventDefault();
+                    alert('Harga harus lebih dari 0');
+                    hargaInput.focus();
+                    return false;
+                }
+                
+                // Set nilai tanpa format
+                hargaInput.val(hargaValue);
+                
+                // Konfirmasi
+                if (!confirm('Apakah Anda yakin ingin menambah harga?')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+
+            // ============================================
+            // VALIDASI FORM TAMBAH CUSTOMER
+            // ============================================
+            $('#formTambah').submit(function(e) {
+                // Validasi apakah provinsi dan kota sudah dipilih
+                if (!$('#provinsi').val()) {
+                    e.preventDefault();
+                    alert('Silakan pilih provinsi');
+                    $('#provinsi').trigger('chosen:open');
+                    return false;
+                }
+                
+                if (!$('#kota_kab').val()) {
+                    e.preventDefault();
+                    alert('Silakan pilih kota/kabupaten');
+                    $('#kota_kab').trigger('chosen:open');
+                    return false;
+                }
+                
+                // Validasi kode customer
+                if ($('#kode_customer').hasClass('is-invalid')) {
+                    e.preventDefault();
+                    alert('Kode Customer sudah ada, silakan gunakan kode yang lain');
+                    $('#kode_customer').focus();
+                    return false;
+                }
+                
+                // Konfirmasi sebelum submit
+                if (!confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+
+            // ============================================
+            // VALIDASI FORM EDIT CUSTOMER
+            // ============================================
+            $('#formEdit').submit(function(e) {
+                // Validasi apakah provinsi dan kota sudah dipilih
+                if (!$('#e_provinsi').val()) {
+                    e.preventDefault();
+                    alert('Silakan pilih provinsi');
+                    $('#e_provinsi').trigger('chosen:open');
+                    return false;
+                }
+                
+                if (!$('#e_kota_kab').val()) {
+                    e.preventDefault();
+                    alert('Silakan pilih kota/kabupaten');
+                    $('#e_kota_kab').trigger('chosen:open');
+                    return false;
+                }
+                
+                // Validasi kode customer
+                if ($('#e_kode_customer').hasClass('is-invalid')) {
+                    e.preventDefault();
+                    alert('Kode Customer sudah ada, silakan gunakan kode yang lain');
+                    $('#e_kode_customer').focus();
+                    return false;
+                }
+                
+                // Konfirmasi sebelum submit
+                if (!confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Untuk Di Check Kembali.')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+
+            // ============================================
+            // EKSPORT PDF
+            // ============================================
+            $('#export').click(function() {
+                var url = "<?= base_url() ?>master/master_customer/pdf_customer_list/";
+                window.open(url, 'pdf_laporan_customer_list', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+            });
+
+            // ============================================
+            // FUNGSI TAMBAHAN
+            // ============================================
+            
+            // Fungsi untuk format input angka saat ketik
+            function formatAngka(input) {
+                // Hapus semua karakter selain angka
+                let angka = input.value.replace(/\D/g, '');
+                
+                // Format dengan pemisah ribuan
+                if (angka.length > 3) {
+                    let bagian = [];
+                    while (angka.length > 3) {
+                        bagian.unshift(angka.slice(-3));
+                        angka = angka.slice(0, -3);
+                    }
+                    bagian.unshift(angka);
+                    input.value = 'Rp ' + bagian.join('.');
+                } else if (angka) {
+                    input.value = 'Rp ' + angka;
+                } else {
+                    input.value = '';
+                }
+            }
+
+            // Fungsi untuk format angka ke Rupiah (tampilan saja)
+            function tampilkanRupiah(angka) {
+                if (!angka || isNaN(angka)) return 'Rp 0';
+                
+                let number_string = angka.toString();
+                let sisa = number_string.length % 3;
+                let rupiah = number_string.substr(0, sisa);
+                let ribuan = number_string.substr(sisa).match(/\d{3}/g);
+                
+                if (ribuan) {
+                    let separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+                
+                return 'Rp ' + rupiah;
+            }
         });
     </script>
 

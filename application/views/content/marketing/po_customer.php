@@ -10,11 +10,11 @@
     :root {
       --primary: #4361ee;
       --barang: #436;
-      --upd: #f72585;
+      --upd: #f7ed25ff;
       --secondary: #3f37c9;
       --success: #4cc9f0;
       --info: #4895ef;
-      --warning: #ae4976ff;
+      --warning: #fffb00ff;
       --danger: #e63946;
       --light: #f8f9fa;
       --dark: #212529;
@@ -127,12 +127,12 @@
     }
 
     .btn-warning {
-      background: linear-gradient(135deg, var(--warning), #b5179e);
+      background: linear-gradient(135deg, var(--warning), #ffe313ff);
       color: white;
     }
 
     .btn-danger {
-      background: linear-gradient(135deg, var(--danger), #d00000);
+      background: linear-gradient(135deg, var(--danger), #a72701ff);
       color: white;
     }
 
@@ -205,7 +205,7 @@
     }
 
     .badge-warning {
-      background-color: rgba(247, 37, 133, 0.1);
+    
       color: var(--warning);
     }
 
@@ -683,7 +683,7 @@
              <div class="col-md-4">
               <div class="form-group">
                 <label for="exampleFormControlInput1">No PO</label>
-                <input class="form-control" type="text" id="no_po" name="no_po" placeholder="No PO" value="<?= $generate_no_po ?>" readonly>
+                <input class="form-control" type="text" id="no_po" name="no_po" placeholder="No PO"  required>
               </div>
             </div>
 
@@ -1017,6 +1017,7 @@
 
           <div class="col-md-6">
             <div class="form-group">
+              
               <label for="id_barang">Nama Barang</label>
               <input type="text" class="form-control" id="v-id_barang" name="id_barang" autocomplete="off" readonly>
             </div>
@@ -1211,6 +1212,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
+               
                 <label for="id_barang">Nama Barang</label>
                 <select class="form-control chosen-select" id="e-id_barang" name="id_barang" autocomplete="off" required>
                   <option value="">-Pilih Nama Barang -</option>

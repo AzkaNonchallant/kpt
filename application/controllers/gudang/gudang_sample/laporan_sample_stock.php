@@ -37,7 +37,6 @@ class Laporan_sample_stock extends MY_Controller
             'tgl_selesai' => $tgl_selesai
         ]);
 
-        // Ambil data stok sample yang sudah di-group
         $result = $this->M_laporan_sample_stock->get_sample_stock_grouped($id_barang, $id_customer, $tgl_mulai, $tgl_selesai);
         
         // Pastikan $result adalah array

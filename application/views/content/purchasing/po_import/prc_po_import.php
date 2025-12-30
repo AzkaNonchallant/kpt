@@ -10,11 +10,11 @@
     :root {
       --primary: #4361ee;
       --cust: #436;
-      --upd: #f72585;
+      --upd: #f7e625ff;
       --secondary: #3f37c9;
       --success: #4cc9f0;
       --info: #4895ef;
-      --warning: #ae4976ff;
+      --warning: #000000ff;
       --danger: #e63946;
       --light: #f8f9fa;
       --dark: #212529;
@@ -132,10 +132,7 @@
       color: white;
     }
 
-    .btn-warning {
-      background: linear-gradient(135deg, var(--warning), #b5179e);
-      color: white;
-    }
+    
 
     .btn-danger {
       background: linear-gradient(135deg, var(--danger), #d00000);
@@ -167,7 +164,6 @@
       white-space: nowrap;
     }
 
-
     .table tbody td {
       padding: 12px 15px;
       vertical-align: middle;
@@ -190,29 +186,33 @@
 
     .table thead th:nth-child(1),
     .table tbody td:nth-child(1) {
-      width: 50px;
+      width: 30px;
       text-align: center;
     }
 
     .table thead th:nth-child(2),
     .table tbody td:nth-child(2) {
-      width: 120px;
+      width: 50px;
+      text-align: center;
     }
 
     .table thead th:nth-child(3),
     .table tbody td:nth-child(3) {
-      width: 150px;
-
+      width: 120px;
     }
 
     .table thead th:nth-child(4),
     .table tbody td:nth-child(4) {
-      width: 100px;
-
+      width: 150px;
     }
 
     .table thead th:nth-child(5),
     .table tbody td:nth-child(5) {
+      width: 100px;
+    }
+
+    .table thead th:nth-child(6),
+    .table tbody td:nth-child(6) {
       width: 200px;
       text-align: center;
     }
@@ -232,6 +232,11 @@
     .badge-primary {
       background-color: rgba(67, 97, 238, 0.1);
       color: var(--primary);
+    }
+
+    .badge-warning {
+      background-color: rgba(255, 192, 4, 0.7);
+      color: var(--warning);
     }
 
     .modal-content {
@@ -359,6 +364,11 @@
       font-weight: 600;
     }
 
+    .checkbox-col {
+      width: 30px;
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       .card-header {
         flex-direction: column;
@@ -414,16 +424,20 @@
                 <div class="col-xl-12">
                   <div class="card">
                     <div class="card-header">
-
                       <h5>Data PO Import <b>(Approval)</b></h5>
+                      <div class="btn-group">
+                        <!-- Button Print -->
 
+                        <button type="button" class="btn btn-success float-right btn-sm" id="printAllBtn">
+                          <i class="fas fa-print"></i> Print Semua
+                        </button>
 
-
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal"
-                        data-target="#add">
-                        <i class="feather icon-plus"></i>Tambah Data
-                      </button>
+                        <!-- Button Tambah Data -->
+                        <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal"
+                          data-target="#add">
+                          <i class="feather icon-plus"></i>Tambah Data
+                        </button>
+                      </div>
                     </div>
                     <div class="card-block table-border-style">
                       <div class="table-responsive">
@@ -437,75 +451,73 @@
                               <th class="text-center">Aksi</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="d-items">
                             <?php
                             $level = $this->session->userdata('level');
                             $no = 1;
                             foreach ($result as $k) {
                               $tgl_po_import = explode('-', $k['tgl_po_import'])[2] . "/" . explode('-', $k['tgl_po_import'])[1] . "/" . explode('-', $k['tgl_po_import'])[0];
                               ?>
-                             <tr>
-    <th scope="row"><?= $no++ ?></th>
+                              <tr>
+                                <th scope="row"><?= $no++ ?></th>
 
-    <td class="text-center">
-        <?= $tgl_po_import ?>
-    </td>
+                                <td class="text-center">
+                                  <?= $tgl_po_import ?>
+                                </td>
 
-    <td>
-        <div class="action-buttons">
-            <span type="button" class="btn btn-info btn-sm"
-                data-toggle="modal"
-                data-target="#detail"
-                data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf'] ?>"
-                data-no_po_import="<?= $k['no_po_import'] ?>"
-                data-tgl_po_import="<?= $tgl_po_import ?>"
-                data-pic1="<?= $k['pic1'] ?>"
-                data-pic2="<?= $k['pic2'] ?>"
-                data-payment="<?= $k['payment'] ?>">
-                <i class=""></i><?= $k['no_po_import'] ?>
-            </span>
-        </div>
-    </td>
+                                <td>
+                                  <div class="action-buttons">
+                                    <span class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail"
+                                      data-id="<?= $k['id_prc_po_import_tf'] ?>" data-no_po="<?= $k['no_po_import'] ?>"
+                                      data-tgl="<?= $k['tgl_po_import'] ?>" data-pic1="<?= $k['pic1'] ?>"
+                                      data-pic2="<?= $k['pic2'] ?>" data-payment="<?= $k['payment'] ?>">
+                                      <?= $k['no_po_import'] ?>
+                                    </span>
 
-    <td>
-        <?php if ($k['status_po_import'] == 'Proses'): ?>
-            <span class="badge badge-warning"><?= $k['status_po_import'] ?></span>
-        <?php elseif ($k['status_po_import'] == 'Selesai'): ?>
-            <span class="badge badge-success"><?= $k['status_po_import'] ?></span>
-        <?php else: ?>
-            <span class="badge badge-primary"><?= $k['status_po_import'] ?></span>
-        <?php endif; ?>
-    </td>
+                                  </div>
+                                </td>
 
-    <td class="text-center">
-        <?php if (strtolower($k['status_po_import']) == 'proses'): ?>
-            <div class="action-buttons">
-                <button type="button" class="btn btn-primary btn-sm"
-                    data-toggle="modal"
-                    data-target="#edit"
-                    data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf'] ?>"
-                    data-prc_admin="<?= $k['prc_admin'] ?>"
-                    data-no_po_import="<?= $k['no_po_import'] ?>"
-                    data-tgl_po_import="<?= $tgl_po_import ?>"
-                    data-metode="<?= $k['metode'] ?>"
-                    data-pic1="<?= $k['pic1'] ?>"
-                    data-pic2="<?= $k['pic2'] ?>"
-                    data-payment="<?= $k['payment'] ?>">
-                    <i class="feather icon-edit-2"></i>Edit
-                </button>
+                                <td>
+                                  <?php if ($k['status_po_import'] == 'Proses'): ?>
+                                    <span class="badge badge-warning"><?= $k['status_po_import'] ?></span>
+                                  <?php elseif ($k['status_po_import'] == 'Selesai'): ?>
+                                    <span class="badge badge-success"><?= $k['status_po_import'] ?></span>
+                                  <?php else: ?>
+                                    <span class="badge badge-primary"><?= $k['status_po_import'] ?></span>
+                                  <?php endif; ?>
+                                </td>
 
-                <a href="<?= base_url() ?>purchasing/po_import/delete/<?= $k['no_po_import'] ?>"
-                    class="btn btn-danger btn-sm"
-                    onclick="return confirm('Apakah Anda Yakin?')">
-                    <i class="feather icon-trash-2"></i>Hapus
-                </a>
-            </div>
-        <?php endif; ?>
-         <?php } ?>
-    </td>
-</tr>
+                                <td class="text-center">
+                                  <?php if (strtolower($k['status_po_import']) == 'proses'): ?>
+                                    <div class="action-buttons">
+                                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#edit" data-id_prc_po_import_tf="<?= $k['id_prc_po_import_tf'] ?>"
+                                        data-no_po_import="<?= $k['no_po_import'] ?>"
+                                        data-tgl_po_import="<?= $tgl_po_import ?>" data-metode="<?= $k['metode'] ?>"
+                                        data-pic1="<?= $k['pic1'] ?>" data-pic2="<?= $k['pic2'] ?>"
+                                        data-payment="<?= $k['payment'] ?>">
+                                        <i class="feather icon-edit-2"></i>Edit
+                                      </button>
 
-                            <?php  ?>
+                                      <a href="<?= base_url('purchasing/po_import/delete/' . str_replace('/', '--', $k['id_prc_po_import_tf'])) ?>"
+                                        class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda Yakin?')">
+                                        <i class="feather icon-trash-2"></i>Hapus
+                                      </a>
+
+                                      <!-- Tombol Print Single -->
+                                      <a target="_blank" class="btn btn-info btn-sm text-light" onclick="window.open(
+     '<?= base_url('purchasing/po_import/import_print/' . str_replace('/', '--', $k['no_po_import'])) ?>',
+     'import_print',
+     'location=yes,height=700,width=1300,scrollbars=yes,status=yes'
+   );">
+                                        <i class="feather icon-file"></i> Cetak PDF
+                                      </a>
+
+                                    </div>
+                                  <?php endif; ?>
+                                </td>
+                              </tr>
+                            <?php } ?>
                           </tbody>
                         </table>
                       </div>
@@ -524,7 +536,6 @@
   <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-
         <!-- HEADER -->
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Tambah PO Import</h5>
@@ -532,11 +543,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <!-- FORM -->
         <form method="post" id="form_add" action="<?= base_url() ?>Purchasing/po_import/add/">
           <div class="modal-body">
-
             <!-- ROW 1 -->
             <div class="row">
               <!-- Tanggal -->
@@ -544,10 +553,9 @@
                 <div class="form-group">
                   <label for="tgl_po_import">Tanggal PO Import</label>
                   <input type="text" class="form-control datepicker" id="tgl_po_import" name="tgl_po_import"
-                         placeholder="Tanggal PO Import" autocomplete="off" required>
+                    placeholder="Tanggal PO Import" autocomplete="off" required>
                 </div>
               </div>
-
               <!-- Supplier -->
               <div class="col-md-3">
                 <div class="form-group">
@@ -555,39 +563,33 @@
                   <select class="form-control chosen-select" id="id_supplier" name="id_supplier" required>
                     <option disabled selected hidden value="">- Pilih Supplier -</option>
                     <?php foreach ($res_supplier as $s) { ?>
-                      <option value="<?= $s['id_supplier'] ?>"
-                              data-nama_supplier="<?= $s['nama_supplier'] ?>"
-                              data-pic_supplier="<?= $s['pic_supplier'] ?>"
-                              data-no_po_import="<?= $s['kode_po'] ?>">
+                      <option value="<?= $s['id_supplier'] ?>" data-nama_supplier="<?= $s['nama_supplier'] ?>"
+                        data-pic_supplier="<?= $s['pic_supplier'] ?>" data-no_po_import="<?= $s['kode_po'] ?>">
                         <?= $s['nama_supplier'] ?>
                       </option>
                     <?php } ?>
                   </select>
                 </div>
               </div>
-
               <!-- PIC Supplier -->
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="pic_supplier">PIC Supplier</label>
                   <input type="text" class="form-control" id="pic_supplier" name="pic_supplier"
-                         placeholder="PIC Supplier" autocomplete="off" readonly>
+                    placeholder="PIC Supplier" autocomplete="off" readonly>
                 </div>
               </div>
-
               <!-- Kode PO -->
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="no_po_import">Kode PO</label>
-                  <input type="text" class="form-control" id="no_po_import" name="no_po_import"
-                         placeholder="Kode PO" autocomplete="off" readonly>
+                  <input type="text" class="form-control" id="no_po_import" name="no_po_import" placeholder="Kode PO"
+                    autocomplete="off" readonly>
                 </div>
               </div>
             </div>
-
             <!-- ROW 2 -->
             <div class="row">
-
               <!-- Metode -->
               <div class="col-md-3">
                 <div class="form-group">
@@ -599,33 +601,30 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="pic1">PIC Kapsulindo 1</label>
-                  <input type="text" class="form-control" id="pic1" name="pic1"
-                         placeholder="PIC 1" autocomplete="off">
+                  <input type="text" class="form-control" style="text-transform:uppercase" id="pic1" name="pic1"
+                    placeholder="PIC 1" autocomplete="off">
                 </div>
               </div>
-
-               <div class="col-md-3">
-                <div class="form-group">
-                  <label for="pic2">PIC Kapsulindo 2</label>
-                  <input type="text" class="form-control" id="pic2" name="pic2"
-                         placeholder="PIC 2" autocomplete="off">
-                </div>
-              </div>
-
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="payment">Payment</label>
-                  <input type="text" class="form-control datepicker" id="payment" name="payment"
-                         placeholder="Tanggal payment" autocomplete="off" required>
+                  <label for="pic2">PIC Kapsulindo 2</label>
+                  <input type="text" class="form-control" style="text-transform:uppercase" id="pic2" name="pic2"
+                    placeholder="PIC 2" autocomplete="off">
                 </div>
               </div>
-
-              
-
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-label">Payment</label>
+                  <select class="form-control chosen-select" id="payment" name="payment" autocomplete="off" >
+                    <option value="">- Pilih Payment -</option>
+                    <option value="25-50-25">25-50-25</option>
+                    <option value="50--50">50-50</option>
+                  </select>
+                </div>
+              </div>
               <!-- Checkbox Shipment -->
               <div class="col-md-4">
                 <div class="form-group">
@@ -637,26 +636,18 @@
                   </div>
                 </div>
               </div>
-
               <!-- Tanggal Shipment (Tersembunyi Default) -->
               <div class="col-md-3 shipment-date-section" style="display: none;">
                 <div class="form-group">
                   <label for="shipment">Tanggal Shipment</label>
                   <input type="text" class="form-control datepicker" id="shipment" name="shipment"
-                         placeholder="Pilih Tanggal" autocomplete="off">
+                    placeholder="Pilih Tanggal" autocomplete="off">
                 </div>
               </div>
-
               <input type="hidden" id="shipment2" name="shipment2" value="SECEPATNYA">
-
-            
-              
-
             </div>
-
             <!-- ROW 3 -->
             <div class="row">
-
               <!-- Nama Barang -->
               <div class="col-md-3">
                 <div class="form-group">
@@ -666,64 +657,61 @@
                   </select>
                 </div>
               </div>
-
               <!-- Jumlah -->
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="jumlah">Jumlah</label>
-                  <input type="text" class="form-control" id="jumlah" name="jumlah"
-                         placeholder="Jumlah" autocomplete="off" required>
+                  <label for="jumlah">Jumlah(kg)</label>
+                  <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah"
+                    autocomplete="off">
                 </div>
               </div>
-
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="form-label">Jumlah (kg)</label>
-                  <input type="text" class="form-control" id="jumlah_po_pembelian" name="jumlah_po_pembelian" placeholder="Jumlah (Kg)" autocomplete="off" style="text-transform:uppercase" readonly>
+                  <label class="form-label">Jumlah (zak)</label>
+                  <input type="text" class="form-control" id="jumlah_po_pembelian" name="jumlah_po_pembelian"
+                    placeholder="Jumlah (Kg)" autocomplete="off" style="text-transform:uppercase" readonly>
                 </div>
               </div>
-
               <!-- Satuan -->
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="satuan">Satuan</label>
-                  <input type="text" class="form-control" id="satuan" name="satuan"
-                         placeholder="Satuan" readonly>
+                  <input type="text" class="form-control" id="satuan" name="satuan" placeholder="Satuan" readonly>
                 </div>
               </div>
-
             </div>
-
             <!-- ROW 4 -->
             <div class="row">
-
               <!-- Harga Perunit -->
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="harga_perunit">Harga Perunit</label>
+                  <label for="harga_perunit">Harga Per-kilo</label>
                   <input type="text" class="form-control" id="harga_perunit" name="harga_perunit"
-                         placeholder="Harga Perunit" autocomplete="off" oninput="calculateTotal()">
+                    placeholder="Harga Per-kilo" autocomplete="off" oninput="calculateTotal()">
                 </div>
               </div>
-
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-label">Kurs($1)</label>
+                  <input type="text" class="form-control" id="kurs_pib" name="kurs_pib"
+                    placeholder="Kurs" autocomplete="off" style="text-transform:uppercase" >
+                </div>
+              </div>
               <!-- Total Harga -->
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="total_harga">Total Harga</label>
-                  <input type="text" class="form-control" id="total_harga" name="total_harga"
-                         placeholder="Total Harga" readonly>
+                  <input type="text" class="form-control" id="total_harga" name="total_harga" placeholder="Total Harga"
+                    readonly>
                 </div>
               </div>
-
               <!-- Button Input -->
               <div class="col-md-1.5">
                 <a href="javascript:void(0)" id="input" class="btn btn-primary" style="margin-top: 31px;">
                   <b class="text">Input</b>
                 </a>
               </div>
-
             </div>
-
             <!-- TABLE -->
             <div class="table-responsive mt-3">
               <table class="table table-bordered table-sm">
@@ -739,27 +727,160 @@
                 <tbody id="insert_batch"></tbody>
               </table>
             </div>
-
           </div>
-
           <!-- FOOTER -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             <button type="submit" id="simpan" class="btn btn-primary"
               onclick="return confirm('Apakah Anda Yakin Untuk Menyimpan Data Ini? Tolong Cek Kembali, dan Jangan Lupa Menginputkan Barangnya');">
               Simpan
             </button>
           </div>
-
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit -->
+  <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit PO Import</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" id="form_add" action="<?= base_url() ?>purchasing/po_import/update/">
+          <div class="modal-body">
+            <input type="hidden" id="e-id_prc_po_import" name="id_prc_po_import_tf">
+            <input type="hidden" id="e-prc_admin" name="prc_admin">
+            <input type="hidden" id="e-shipment2" name="shipment2" value="SECEPATNYA">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="v-tgl_po_import">Tanggal PO Import</label>
+                  <input type="text" class="form-control datepicker" id="e-tgl_po_import" name="tgl_po_import"
+                    placeholder="Tanggal PO Import" autocomplete="off" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="v-no_po_import">No PO Import</label>
+                  <input type="text" class="form-control" id="e-no_po_import" name="no_po_import" maxlength="20"
+                    placeholder="No PO Import" aria-describedby="validationServer03Feedback" autocomplete="off"
+                    readonly>
+                  <div id="validationServer03Feedback" class="invalid-feedback">
+                    Maaf Nomor PO Import sudah ada.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                    <th>Harga Perunit</th>
+                    <th>Total Harga</th>
+                  </tr>
+                </thead>
+                <tbody id="e-ppb_po_barang"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="simpan" class="btn btn-primary"
+              onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detail -->
+  <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content shadow-lg">
+
+        <!-- HEADER -->
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="detailModalLabel">
+            <i class="fas fa-file-invoice"></i> Detail PO Import
+          </h5>
+          <button type="button" class="close text-white" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+
+          <div class="card mb-3">
+            <div class="card-header font-weight-bold">
+              <i class="fas fa-boxes"></i> Daftar Barang
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-sm table-striped mb-0">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="text-center" width="50" style="color: white;">#</th>
+                      <th style="color: white;">Nama Barang</th>
+                      <th class="text-center" width="100" style="color: white;">Jumlah</th>
+                      <th class="text-right" width="150" style="color: white;">Harga Perunit</th>
+                      <th class="text-right" width="150" style="color: white;">Total Harga</th>
+                      <th class="text-right" width="150" style="color: white;"> Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detail-barang">
+                    <tr>
+                      <td colspan="5" class="text-center text-muted">
+                        <i class="fas fa-spinner fa-spin"></i> Memuat data...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      
+        <div class="modal-footer">
+  <button class="btn btn-secondary" data-dismiss="modal">
+    <i class="fas fa-times"></i> Tutup
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-info btn-sm text-light"
+    onclick="window.open(
+      '<?= base_url('purchasing/po_import/import_print/' . str_replace('/', '--', $k['no_po_import'])) ?>',
+      'import_print',
+      'location=yes,height=700,width=1300,scrollbars=yes,status=yes'
+    );"
+  >
+    <i class="feather icon-file"></i> Cetak PDF
+  </button>
+</div>
+
+
 
       </div>
     </div>
   </div>
 
- <script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
     $(document).ready(function () {
+      console.log('JQUERY HIDUP 🔥');
+      console.log('NO PO:', no_po_import);
 
       // === LOGIKA CHECKBOX SHIPMENT ===
       $('#use_ship').change(function () {
@@ -782,6 +903,19 @@
         if ($(this).val() !== '') {
           $('#shipment2').val(''); // Kosongkan shipment2
         }
+      });
+
+      $('#add').on('hidden.bs.modal', function () {
+        $('#form_add')[0].reset();
+        $('.chosen-select').val('').trigger('chosen:updated');
+        $('#use_ship').prop('checked', false);
+        $('.shipment-date-section').hide();
+        $('#shipment').prop('required', false).val('');
+        $('#shipment2').val('SECEPATNYA');
+        $('#insert_batch').html('');
+        $('#total_harga').val('');
+        $('#satuan').val('');
+        $('#jumlah_po_pembelian').val('');
       });
 
       // === FORMAT RUPIAH ===
@@ -808,16 +942,16 @@
       function formatDollar(angka) {
         if (!angka) return '$0';
         let number_string = angka.toString().replace(/[^,\d]/g, ''),
-            split = number_string.split(','),
-            sisa = split[0].length % 3,
-            dollar = split[0].substr(0, sisa),
-            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-        
+          split = number_string.split(','),
+          sisa = split[0].length % 3,
+          dollar = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
         if (ribuan) {
-            let separator = sisa ? ',' : '';
-            dollar += separator + ribuan.join(',');
+          let separator = sisa ? ',' : '';
+          dollar += separator + ribuan.join(',');
         }
-        
+
         dollar = split[1] != undefined ? dollar + '.' + split[1] : dollar;
         return '$' + dollar;
       }
@@ -832,17 +966,23 @@
       }
 
       function calculateTotal() {
-        const jumlah = unformatRupiah($('#jumlah').val());
-        const harga = unformatRupiah($('#harga_perunit').val());
-        $('#total_harga').val(formatDollar(jumlah * harga));
-      }
+  const jumlah = Number(unformatRupiah($('#jumlah').val())) || 0;
+  const harga  = Number(unformatRupiah($('#harga_perunit').val())) || 0;
+  const kurs   = Number(unformatRupiah($('#kurs_pib').val())) || 1;
+
+  console.log({ jumlah, harga, kurs });
+
+  const total = (jumlah * harga) / kurs;
+  $('#total_harga').val(formatDollar(total));
+}
+
 
       function formatAngka(input) {
         let angka = input.value.replace(/\D/g, '');
         input.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
       }
 
-      $('#jumlah, #harga_perunit').on('input', function () {
+      $('#jumlah, #harga_perunit, #kurs_pib').on('input', function () {
         formatAngka(this);
         calculateTotal();
       });
@@ -850,20 +990,13 @@
       // === SUPPLIER CHANGE ===
       $('#id_supplier').on('change', function () {
         let selected = $(this).find(':selected');
-
-        // FIX: ambil id supplier normal
         let id_supplier = selected.val();
-
-        // FIX: ambil data dari data-attributes (bukan dari index string)
         let nama_supplier = selected.data('nama_supplier') || "";
         let pic_supplier = selected.data('pic_supplier') || "";
         let no_po_import = selected.data('no_po_import') || "";
 
-        console.log("ID SUPPLIER:", id_supplier);
-
         $('#pic_supplier').val(pic_supplier);
         $('#no_po_import').val(no_po_import);
-
         $('#satuan').val('');
 
         // === GET BARANG DARI SUPPLIER ===
@@ -873,8 +1006,6 @@
           data: { id_supplier: id_supplier },
           dataType: "json",
           success: function (res) {
-            console.log("Res barang:", res);
-
             let html = '<option value="">-- Pilih Barang --</option>';
             res.forEach(item => {
               html += `
@@ -882,13 +1013,17 @@
             value="${item.id_barang}"
             data-satuan="${item.satuan}"
         >
-            ${item.nama_barang}
+            ${item.nama_barang} B ${item.bloom} M ${item.mesh}  
         </option>
     `;
             });
+            $('#id_barang').on('change', function () {
+              let selected = $(this).find(':selected');
+              let satuan = selected.data('satuan') || '';
+
+              $('#satuan').val(satuan);
+            });
             $('#id_barang').html(html).trigger("chosen:updated");
-
-
           },
           error: function (xhr, status, error) {
             console.error('Error:', error);
@@ -903,30 +1038,9 @@
         window.active_no_po_import = no_po_import;
       });
 
-      // $('#metode').on('change', function () {
-      //   const metode = $(this).val();
-
-      //   if (!metode) {
-      //       $('#shipment').val('');
-      //       return;
-      //   }
-
-      //   // Ambil kata SEA atau AIR
-      //   const match = metode.match(/SEA|AIR/i);
-      //   const shipment = match ? match[0] : metode;
-
-      //   $('#shipment').val(shipment);
-      // });
-
-      // === BARANG CHANGE ===
-      $('#id_barang').on('change', function () {
-        const selected = $(this).find(':selected');
-        $('#satuan').val(selected.data('satuan'));
-      });
-
-      $('#jumlah').on('input', function() {
+      $('#jumlah').on('input', function () {
         let zak = unformatRupiah($(this).val());
-        let kg = zak * 25; // 1 zak = 25kg
+        let kg = zak / 25; // 1 zak = 25kg
         $('#jumlah_po_pembelian').val(formatRupiah(kg));
         calculateTotal();
       });
@@ -954,13 +1068,13 @@
         <input type="hidden" name="nama_barang[]" value="${nama_barang}">
         <input type="hidden" name="nama_supplier[]" value="${window.active_supplier}">
         <input type="hidden" name="pic_supplier[]" value="${window.active_pic}">
+        <input type="hidden" name="prc_admmin[]" value="${window.active_prc_admin}">
         <input type="hidden" name="no_po_import[]" value="${window.active_no_po_import}">
         <input type="hidden" name="jumlah[]" value="${unformatRupiah(jumlah)}">
         <input type="hidden" name="harga_perunit[]" value="${unformatRupiah(harga_perunit)}">
         <input type="hidden" name="total_harga[]" value="${unformatDollar(total_harga)}">
 
         <td>${nama_barang}</td>
-        
         <td>${jumlah} ${satuan}</td>
         <td>${formatRupiah(unformatRupiah(harga_perunit))}</td>
         <td>${formatDollar(unformatDollar(total_harga))}</td>
@@ -986,36 +1100,31 @@
         var button = $(event.relatedTarget);
         var shipment = button.data('shipment');
         var shipment2 = button.data('shipment2');
-        
-        console.log("Shipment data:", shipment, "Shipment2 data:", shipment2);
-        
+
         // Jika ada tanggal shipment
         if (shipment && shipment !== '0000-00-00' && shipment !== null && shipment !== 'null') {
           $('#e-shipment').val(shipment);
           $('#e-shipment2').val('');
           $('#e-use_ship').prop('checked', true);
           $('.shipment-date-section-edit').show();
-          console.log("Mode: Dengan tanggal shipment");
-        } 
+        }
         // Jika ada keterangan shipment2
         else if (shipment2 && shipment2 !== 'null') {
           $('#e-shipment2').val(shipment2);
           $('#e-shipment').val('');
           $('#e-use_ship').prop('checked', false);
           $('.shipment-date-section-edit').hide();
-          console.log("Mode: Dengan keterangan shipment2:", shipment2);
-        } 
+        }
         // Default (tidak ada data)
         else {
           $('#e-shipment2').val('SECEPATNYA');
           $('#e-shipment').val('');
           $('#e-use_ship').prop('checked', false);
           $('.shipment-date-section-edit').hide();
-          console.log("Mode: Default");
         }
-        
+
         // Event handler untuk checkbox di modal edit
-        $('#e-use_ship').off('change').on('change', function() {
+        $('#e-use_ship').off('change').on('change', function () {
           if ($(this).is(':checked')) {
             $('.shipment-date-section-edit').slideDown(300);
             $('#e-shipment2').val('');
@@ -1027,129 +1136,138 @@
         });
 
         // Saat tanggal shipment diubah di modal edit
-        $('#e-shipment').off('change').on('change', function() {
+        $('#e-shipment').off('change').on('change', function () {
           if ($(this).val() !== '') {
             $('#e-shipment2').val('');
           }
         });
       });
 
+      $('#detail').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let no_po_import = button.data('no_po');
+
+        // Clear previous data
+        $('#d-no_po_import').text('');
+        $('#d-tgl_po_import').text('');
+        $('#d-pic1').text('');
+        $('#d-pic2').text('');
+        $('#d-payment').text('');
+        $('#d-status').text('').removeClass().addClass('badge');
+        $('#detail-barang').empty();
+
+        $('#printDetailBtn').data('no_po_import', no_po_import);
+
+        $.ajax({
+          url: "<?= base_url('purchasing/po_import/detail') ?>",
+          type: "POST",
+          data: { no_po_import: no_po_import },
+          dataType: "JSON",
+          success: function (res) {
+            console.log(res);
+            console.log(res.po);
+            console.log(res.barang);
+
+
+            // === INFO PO ===
+            $('#d-no_po_import').text(res.po.no_po_import || '-');
+            $('#d-tgl_po_import').text(res.po.tgl_po_import || '-');
+            $('#d-pic1').text(res.po.pic1 || '-');
+            $('#d-pic2').text(res.po.pic2 || '-');
+            $('#d-payment').text(res.po.payment || '-');
+            $('#d-status').text(res.po.status_po_import || '-');
+
+            // Add status badge class
+            let status = res.po.status_po_import || '';
+            if (status === 'Proses') {
+              $('#d-status').addClass('badge-warning');
+            } else if (status === 'Selesai') {
+              $('#d-status').addClass('badge-success');
+            } else {
+              $('#d-status').addClass('badge-primary');
+            }
+
+            // === BARANG DETAIL ===
+            let html = '';
+            if (res.barang && res.barang.length > 0) {
+              res.barang.forEach((item, index) => {
+                let status = item.status_po_import || '-';
+                html += `
+                    <tr>
+                        <td class="text-center">${index + 1}</td>
+                        <td>${item.nama_barang || '-'}</td>
+                        <td class="text-center">${item.jumlah || 0}</td>
+                        <td class="text-right">${formatRupiah(item.harga_perunit) || 0}</td>
+                        <td class="text-right">${formatRupiah(item.total_harga) || 0}</td>
+                        <td class="text-center">
+        <span class="badge badge-info">${status}</span>
+    </td>
+                    </tr>
+                    `;
+              });
+            } else {
+              html = `
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        <i class="fas fa-box-open"></i> Tidak ada barang
+                    </td>
+                </tr>
+                `;
+            }
+            $('#detail-barang').html(html);
+          },
+          error: function (xhr, status, error) {
+            console.error('Error:', error);
+            alert('Gagal mengambil data detail.');
+          }
+        });
+      });
+
+      // Set data untuk print dari modal detail
+      $('#printDetailBtn').data('no_po_import', no_po_import);
+    });
+
+    // === CHECKBOX SELECT ALL ===
+    $('#selectAll').change(function () {
+      $('.po-checkbox').prop('checked', $(this).prop('checked'));
+    });
+
+    // === PRINT SELECTED ===
+    $('#printSelectedBtn').click(function () {
+      let selected = [];
+      $('.po-checkbox:checked').each(function () {
+        selected.push($(this).val());
+      });
+
+      if (selected.length === 0) {
+        alert('Pilih minimal satu PO Import untuk dicetak!');
+        return;
+      }
+
+      // Open print window for selected items
+      window.open("<?= base_url('purchasing/po_import/print_po/') ?>" + selected.join(',') + "?type=selected", '_blank');
+    });
+
+    // === PRINT ALL ===
+
+
+    $('#printAllBtn').click(function () {
+      var url = "<?= base_url() ?>purchasing/po_import/import_print_all/";
+      window.open(url, 'import_print', 'location=yes,height=700,width=1300,scrollbars=yes,status=yes');
+    });
+
+    // === PRINT SINGLE ===
+    $('.print-single-btn').click(function () {
+      let no_po_import = $(this).data('no_po_import');
+      window.open("<?= base_url('purchasing/po_import/print_po/') ?>" + no_po_import, '_blank');
+    });
+
+    // === PRINT FROM DETAIL MODAL ===
+    $('#printDetailBtn').click(function () {
+      let no_po_import = $(this).data('no_po_import');
+      window.open("<?= base_url('purchasing/po_import/print_po/') ?>" + no_po_import, '_blank');
     });
   </script>
-
-  <!-- Modal Edit -->
-  <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit PO Import</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="post" id="form_add" action="<?= base_url() ?>purchasing/po_import/update/">
-          <div class="modal-body">
-            <input type="hidden" id="e-id_prc_po_import" name="id_prc_po_import_tf">
-            <input type="hidden" id="e-prc_admin" name="prc_admin">
-            <input type="hidden" id="e-shipment2" name="shipment2" value="SECEPATNYA">
-
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="v-tgl_po_import">Tanggal PO Import</label>
-                  <input type="text" class="form-control datepicker" id="e-tgl_po_import" name="tgl_po_import"
-                    placeholder="Tanggal PO Import" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="v-no_po_import">No PO Import</label>
-                  <input type="text" class="form-control" id="e-no_po_import" name="no_po_import" maxlength="20"
-                    placeholder="No PO Import" aria-describedby="validationServer03Feedback" autocomplete="off"
-                    readonly>
-                  <div id="validationServer03Feedback" class="invalid-feedback">
-                    Maaf Nomor PO Import sudah ada.
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="table-responsive">
-              <table class="table table-bordered table-sm">
-                <thead>
-                  <tr>
-                    <th>Nama Barang</th>
-                    <th>Jumlah</th>
-                    <th>Harga Perunit</th>
-                    <th>Total Harga</th>
-                  </tr>
-                </thead>
-                <tbody id="e-ppb_po_barang"></tbody>
-              </table>
-            </div>
-
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="v-metode">Metode</label>
-                  <input type="text" class="form-control" id="e-metode" name="metode" placeholder="Metode" required>
-                </div>
-              </div>
-
-              <!-- Checkbox Shipment untuk Edit -->
-              <div class="col-md-4">
-                <div class="form-group">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="e-use_ship" name="use_ship">
-                    <label class="form-check-label" for="e-use_ship">
-                      <i class="fas fa-calendar-alt"></i> Atur Tanggal Shipment
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tanggal Shipment untuk Edit -->
-              <div class="col-md-3 shipment-date-section-edit" style="display: none;">
-                <div class="form-group">
-                  <label for="e-shipment">Tanggal Shipment</label>
-                  <input type="text" class="form-control datepicker" id="e-shipment" name="shipment"
-                         placeholder="Pilih Tanggal" autocomplete="off">
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="v-pic1">PIC Kapsulindo 1</label>
-                  <input type="text" class="form-control" id="e-pic1" name="pic1" placeholder="Pic1" required>
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="v-pic2">PIC Kapsulindo 2</label>
-                  <input type="text" class="form-control" id="e-pic2" name="pic2" placeholder="Pic2" required>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="v-payment">Tanggal Payment</label>
-                <input type="text" class="form-control datepicker" id="e-payment" name="payment"
-                  placeholder="Tanggal Payment" autocomplete="off" required>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" id="simpan" class="btn btn-primary"
-              onclick="if (! confirm('Apakah Anda Yakin Untuk Menimpan Data Ini? Tolong Untuk Di Check Kembali. Dan Jangan Lupa Untuk Menginputkan Barangnya')) { return false; }">Simpan</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <!-- jQuery untuk Modal Edit -->
   <script type="text/javascript">
@@ -1198,7 +1316,7 @@
         }
 
         // Event handler untuk checkbox di modal edit
-        $('#e-use_ship').change(function() {
+        $('#e-use_ship').change(function () {
           if ($(this).is(':checked')) {
             $('.shipment-date-section-edit').slideDown(300);
             $('#e-shipment2').val('');
@@ -1210,13 +1328,11 @@
         });
 
         // Saat tanggal shipment diubah di modal edit
-        $('#e-shipment').on('change', function() {
+        $('#e-shipment').on('change', function () {
           if ($(this).val() !== '') {
             $('#e-shipment2').val('');
           }
         });
-
-        
 
         $("#e-no_po_import").keyup(function () {
           var no_po_import = $("#e-no_po_import").val();
@@ -1239,7 +1355,6 @@
           });
         });
 
-        
         $(this).find('#e-tgl_po_import').datepicker().on('show.bs.modal', function (event) {
           event.stopImmediatePropagation();
         });
@@ -1251,8 +1366,6 @@
         $(this).find('#e-shipment').datepicker().on('show.bs.modal', function (event) {
           event.stopImmediatePropagation();
         });
-
-        
 
         jQuery.ajax({
           url: "<?= base_url() ?>purchasing/po_import/det_ppb_barang",
@@ -1281,4 +1394,5 @@
     });
   </script>
 </body>
+
 </html>

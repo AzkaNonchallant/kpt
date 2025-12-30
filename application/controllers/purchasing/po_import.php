@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+require_once FCPATH . 'vendor/autoload.php';
 class po_import extends MY_Controller
 {
     function __construct()
@@ -41,54 +41,102 @@ class po_import extends MY_Controller
         echo json_encode($data);
     }
 
+   public function detail()
+{
+    $no_po = $this->input->post('no_po_import');
+
+    $po = $this->db
+        ->where('no_po_import', $no_po)
+        ->get('tb_prc_po_import_tf')
+        ->row_array(); // ⬅️ INI PENTING
+
+    $barang = $this->db
+        ->select('c.nama_barang, b.jumlah,b.status_po_import, b.harga_perunit, b.total_harga')
+        ->from('tb_prc_po_import b')
+        ->join('tb_master_barang c', 'b.id_barang = c.id_barang', 'left')
+        ->where('b.no_po_import', $no_po)
+        ->get()
+        ->result_array();
+
+    echo json_encode([
+        'po' => $po,       
+        'barang' => $barang
+    ]);
+}
+
     public function add()
-    {
-        $data['id_prc_po_import_tf'] = $this->input->post('id_prc_po_import_tf', TRUE);
-        $data['prc_admin'] = $this->input->post('prc_admin', TRUE);
-        $no_po = $this->input->post('no_po_import');
-        $data['no_po_import'] = is_array($no_po) ? $no_po[0] : $no_po;
-        $data['tgl_po_import'] = $this->convertDate($this->input->post('tgl_po_import', TRUE));
-        $data['payment'] = $this->convertDate($this->input->post('payment', TRUE));
-        $data['metode'] = $this->input->post('metode', TRUE);
-        
-        // LOGIKA SHIPMENT vs SHIPMENT2
-        $shipment = $this->input->post('shipment', TRUE);
-        $shipment2 = $this->input->post('shipment2', TRUE);
-        
-        if (!empty($shipment)) {
-            $data['shipment'] = $this->convertDate($shipment);
-            $data['shipment2'] = null; // NULL karena ada tanggal
-        } else {
-            $data['shipment'] = null;
-            $data['shipment2'] = !empty($shipment2) ? $shipment2 : 'SECEPATNYA';
-        }
-        
-        $data['pic1'] = $this->input->post('pic1', TRUE);
-        $data['pic2'] = $this->input->post('pic2', TRUE);
-        $data['id_barang'] = $this->input->post('id_barang', TRUE);
-        $data['jumlah'] = $this->input->post('jumlah', TRUE);
-        $data['jumlah'] = str_replace('.', '', $data['jumlah']);
-        $data['harga_perunit'] = $this->input->post('harga_perunit', TRUE);
-        $data['total_harga'] = $this->input->post('total_harga', TRUE);
-        
-        $respon = $this->M_po_import->add_import_transfer($data);
+{
+    
+    
+    $no_po = $this->input->post('no_po_import');
+    $no_po_import = is_array($no_po) ? $no_po[0] : $no_po;
 
-        if ($respon) {
-            for ($i = 0; $i < count($data['jumlah']); $i++) {
-                // echo $data['jumlah'][$i]."<br>";
-                $d['no_po_import'] = $data['no_po_import'];
-                $d['id_barang'] = $data['id_barang'][$i];
-                $d['jumlah'] = $data['jumlah'][$i];
-                $d['harga_perunit'] = $data['harga_perunit'][$i];
-                $d['total_harga'] = $data['total_harga'][$i];
+    $shipment  = $this->input->post('shipment', TRUE);
+    $shipment2 = $this->input->post('shipment2', TRUE);
 
-                $respon = $this->M_po_import->add_po_import($d);
-            }
-            header('location:' . base_url('purchasing/po_import') . '?alert=success&msg=Selamat anda berhasil menambah Barang');
-        } else {
-            header('location:' . base_url('purchasing/po_import') . '?alert=error&msg=Maaf anda gagal menambah Barang');
-        }
+   
+    $header = [
+        'prc_admin' => $this->session->userdata('username'),
+        'no_po_import'   => $no_po_import,
+        'tgl_po_import'  => $this->convertDate($this->input->post('tgl_po_import', TRUE)),
+        'payment'       => $this->convertDate(str_replace('_','-',$this->input->post('payment', TRUE))),
+        'metode'         => $this->input->post('metode', TRUE),
+        'shipment'       => !empty($shipment) ? $this->convertDate($shipment) : null,
+        'shipment2'      => empty($shipment) ? (!empty($shipment2) ? $shipment2 : 'SECEPATNYA') : null,
+        'pic1'           => $this->input->post('pic1', TRUE),
+        'pic2'           => $this->input->post('pic2', TRUE),
+    ];
+
+   
+    $id_barang     = $this->input->post('id_barang', TRUE);
+    
+    $jumlah        = $this->input->post('jumlah', TRUE);
+    $harga         = $this->input->post('harga_perunit', TRUE);
+    $total         = $this->input->post('total_harga', TRUE);
+
+    // bersihin format angka
+    $jumlah = array_map(function ($v) {
+        return str_replace('.', '', $v);
+    }, $jumlah);
+
+   
+    $this->db->trans_start();
+
+    // INSERT HEADER
+    $id_prc_po_import_tf = $this->M_po_import->add_import_transfer($header);
+
+    if (!$id_prc_po_import_tf) {
+        $this->db->trans_rollback();
+        redirect('purchasing/po_import?alert=error&msg=Gagal menyimpan header PO');
+        return;
     }
+
+    // INSERT DETAIL BARANG
+    for ($i = 0; $i < count($id_barang); $i++) {
+        $detail = [
+            'id_prc_po_import_tf' => $id_prc_po_import_tf,
+            'no_po_import'        => $no_po_import,
+            'id_barang'           => $id_barang[$i],
+            'jumlah'              => $jumlah[$i],
+            'harga_perunit'       => $harga[$i],
+            'total_harga'         => $total[$i],
+            'status_po_import'         => 'proses'
+        ];
+
+        $this->M_po_import->add_po_import($detail);
+    }
+
+    $this->db->trans_complete();
+
+    
+    if ($this->db->trans_status() === FALSE) {
+        redirect('purchasing/po_import?alert=error&msg=Gagal menyimpan PO Import');
+    } else {
+        redirect('purchasing/po_import?alert=success&msg=PO Import berhasil ditambahkan');
+    }
+    
+}
+
 
     public function update()
     {
@@ -127,9 +175,9 @@ class po_import extends MY_Controller
         }
     }
 
-    public function delete($no_po_import)
+    public function delete($id_prc_po_import_tf)
     {
-        $data['no_po_import'] = str_replace('--', '/', $no_po_import);
+        $data['id_prc_po_import_tf'] = str_replace('--', '/', $id_prc_po_import_tf);
         $respon = $this->M_po_import->delete($data);
  
         if ($respon) {
@@ -187,6 +235,13 @@ class po_import extends MY_Controller
         echo json_encode($result);
     }
 
+    public function get_items_by_po()
+    {
+        $no_po_import = $this->input->post('no_po_import', TRUE);
+        $items = $this->M_po_import->get_items_by_po($no_po_import)->result_array();
+        echo json_encode($items);
+    }
+
     public function data_ppb_barang() 
     { 
         $no_ppb_accounting = $this->input->post('no_ppb_accounting', TRUE);
@@ -195,4 +250,122 @@ class po_import extends MY_Controller
 
         echo json_encode($result);
     }
+
+    public function import_print_all()
+{
+    while (ob_get_level()) ob_end_clean();
+
+    try {
+        $options = new \Dompdf\Options();
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('isRemoteEnabled', true);
+        $options->set('chroot', FCPATH);
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+        // AMBIL SEMUA DATA
+        $import['result'] = $this->M_po_import->pdf_import()->result_array();
+
+
+        $html = $this->load->view(
+            'content/purchasing/po_import/print_po_import',
+            $import,
+            true
+        );
+
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("po_import_all.pdf", ["Attachment" => false]);
+
+    } catch (Exception $e) {
+        log_message('error', $e->getMessage());
+        show_error('Gagal memuat PDF', 500);
+    }
+    exit;
+}
+
+
+public function import_print($no_po_import)
+{
+    // DECODE ID
+    $no_po_import = str_replace('--', '/', $no_po_import);
+
+    // BERSIHKAN OUTPUT BUFFER
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+
+    try {
+
+        // VALIDASI ID
+        if (empty($no_po_import)) {
+            throw new Exception('ID tidak valid');
+        }
+
+        // AMBIL DATA
+        $result = $this->M_po_import->import_pdf($no_po_import)->result_array();
+
+        // VALIDASI DATA
+        if (empty($result)) {
+            throw new Exception('Data PO Import tidak ditemukan');
+        }
+
+        // DOMPDF OPTIONS
+        $options = new \Dompdf\Options();
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('enable_font_subsetting', true);
+        $options->set('dpi', 100);
+        $options->set('isRemoteEnabled', true);
+        $options->set('chroot', FCPATH);
+
+        // CACHE PATH
+        $cachePath = FCPATH . 'application/cache/dompdf/';
+        if (!is_dir($cachePath)) {
+            mkdir($cachePath, 0777, true);
+        }
+
+        $options->set('fontCache', $cachePath);
+        $options->set('tempDir', $cachePath);
+
+        $dompdf = new \Dompdf\Dompdf($options);
+
+        // DATA KE VIEW
+        $data['result'] = $result;
+
+        // LOAD VIEW
+        $html = $this->load->view(
+            'content/purchasing/po_import/print_po_import',
+            $data,
+            true
+        );
+
+        // RENDER PDF
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // NAMA FILE AMAN (TANPA /)
+        $filename = 'import_print_' . str_replace('/', '-', $no_po_import) . '.pdf';
+
+        // STREAM
+        $dompdf->stream($filename, [
+            'Attachment' => false
+        ]);
+
+    } catch (Exception $e) {
+
+        log_message('error', 'PDF ERROR: ' . $e->getMessage());
+
+        show_error(
+            $e->getMessage(),
+            500,
+            'PDF Error'
+        );
+    }
+
+    exit;
+}
+
+
 }
